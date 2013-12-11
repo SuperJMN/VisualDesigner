@@ -1,0 +1,125 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:designSurface="clr-namespace:Glass.Design.DesignSurface"
+    xmlns:design="clr-namespace:Glass.Design"
+    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type designSurface:DesignSurface}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type designSurface:DesignSurface}">
+                    <Border
+                        Background="{TemplateBinding Background}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type designSurface:DesignerItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type designSurface:DesignerItem}">
+                    <Border Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}" d:DesignWidth="93" d:DesignHeight="84">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ResizeThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Width" Value="5"/>
+        <Setter Property="Height" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border BorderBrush="#6494EC" BorderThickness="1" Background="White"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type design:SizingControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type design:SizingControl}">
+                    <Border Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}" d:DesignWidth="93" d:DesignHeight="84">
+                        <Grid Margin="-2.5">
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                               Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Top"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" AllowVerticalResize="False" VerticalAlignment="Center"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" AllowVerticalResize="False" VerticalAlignment="Center"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Bottom"/>
+                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MoveThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Cursor" Value="SizeAll"></Setter>
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Background>
+                            <RadialGradientBrush SpreadMethod="Reflect">
+                                <GradientStop Color="#16000000" Offset="0"/>
+                                <GradientStop Color="#19FFFFFF" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type design:MovingControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type design:MovingControl}">
+                    <design:MoveThumb  x:Name="PART_Thumb" Style="{StaticResource MoveThumbStyle}"  CanvasItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanvasItem}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

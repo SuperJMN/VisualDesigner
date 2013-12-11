@@ -1,0 +1,17 @@
+﻿<Application x:Class="Glass.Design.WpfTester.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:wpfTester="clr-namespace:Glass.Design.WpfTester"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Glass.Design;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <wpfTester:ModelColorToSolidColorBrush x:Key="ColorConverter" />
+            <wpfTester:DesignModeConverter x:Key="OperationModeConverter" />
+        </ResourceDictionary>
+        
+    </Application.Resources>
+</Application>
