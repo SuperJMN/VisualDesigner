@@ -33,13 +33,13 @@ namespace Glass.Design
 
         private void OnWidthChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
         {
-            SetWidth(sizeChangeEventArgs);
+            SetWidth(sizeChangeEventArgs, Left);
         }
 
         private void OnHeightChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
         {
             Children.SwapCoordinates();
-            SetWidth(sizeChangeEventArgs);
+            SetWidth(sizeChangeEventArgs, Top);
             Children.SwapCoordinates();
         }
 
@@ -119,23 +119,23 @@ namespace Glass.Design
             }
         }
 
-        protected void SetWidth(SizeChangeEventArgs sizeChangeEventArgs)
+        protected void SetWidth(SizeChangeEventArgs sizeChangeEventArgs, double currentParentLeft)
         {
             foreach (var canvasItem in Children)
             {
-                Resize(canvasItem, sizeChangeEventArgs);
+                Resize(canvasItem, sizeChangeEventArgs, currentParentLeft);
             }
         }
 
-        private void Resize(ICanvasItem canvasItem, SizeChangeEventArgs sizeChange)
+        private void Resize(ICanvasItem canvasItem, SizeChangeEventArgs sizeChange, double currentParentLeft)
         {
-            var currentLeft = canvasItem.Left - Left;
+            var currentLeft = canvasItem.Left - currentParentLeft;
             var currentWidth = canvasItem.Width;
 
             var leftProportion = currentLeft / sizeChange.OldValue;
             var widthProportion = currentWidth / sizeChange.OldValue;
 
-            canvasItem.Left = Left + sizeChange.NewValue * leftProportion;
+            canvasItem.Left = currentParentLeft + sizeChange.NewValue * leftProportion;
             canvasItem.Width = sizeChange.NewValue * widthProportion;
         }
 

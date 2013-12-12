@@ -15,7 +15,7 @@ namespace Glass.Design.DesignSurface
     public class DesignerItem : ContentControl, ICanvasItem
     {
         public static readonly DependencyProperty TopProperty =
-            DependencyProperty.Register("Top", typeof (double), typeof (DesignerItem),
+            DependencyProperty.Register("Top", typeof(double), typeof(DesignerItem),
                 new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
 
         public DesignerItem()
@@ -25,7 +25,7 @@ namespace Glass.Design.DesignSurface
 
         public double Top
         {
-            get { return (double) GetValue(TopProperty); }
+            get { return (double)GetValue(TopProperty); }
             set { SetValue(TopProperty, value); }
         }
 
@@ -49,16 +49,15 @@ namespace Glass.Design.DesignSurface
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
+            var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Height, 
+                sizeChangedEventArgs.NewSize.Height);
+
             if (sizeChangedEventArgs.HeightChanged)
             {
-                var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Height,
-                    sizeChangedEventArgs.NewSize.Height);
                 OnHeightChanged(sizeChangeEventArgs);
             }
             if (sizeChangedEventArgs.WidthChanged)
             {
-                var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Width,
-                    sizeChangedEventArgs.NewSize.Width);
                 OnWidthChanged(sizeChangeEventArgs);
             }
         }
@@ -77,8 +76,8 @@ namespace Glass.Design.DesignSurface
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (DesignerItem) d;
-            var oldTop = (double) e.OldValue;
+            var target = (DesignerItem)d;
+            var oldTop = (double)e.OldValue;
             var newTop = target.Top;
             target.OnTopChanged(oldTop, newTop);
         }
@@ -104,19 +103,19 @@ namespace Glass.Design.DesignSurface
         #region Left
 
         public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof (double), typeof (DesignerItem),
+            DependencyProperty.Register("Left", typeof(double), typeof(DesignerItem),
                 new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
 
         public double Left
         {
-            get { return (double) GetValue(LeftProperty); }
+            get { return (double)GetValue(LeftProperty); }
             set { SetValue(LeftProperty, value); }
         }
 
         private static void OnLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (DesignerItem) d;
-            var oldLeft = (double) e.OldValue;
+            var target = (DesignerItem)d;
+            var oldLeft = (double)e.OldValue;
             var newLeft = target.Left;
             target.OnLeftChanged(oldLeft, newLeft);
         }

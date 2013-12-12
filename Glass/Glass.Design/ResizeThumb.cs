@@ -145,7 +145,6 @@ namespace Glass.Design
             return new Vector(leftProportion, topProportion);
         }
 
-        public new event EventHandler SizeChanged;
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
         public event EventHandler<SizeChangeEventArgs> WidthChanged;
         public ObservableCollection<ICanvasItem> Children { get; private set; }

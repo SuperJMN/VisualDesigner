@@ -7,7 +7,8 @@ using Glass.Basics.Core;
 
 namespace Glass.Basics.Presentation
 {
-    public class WrappingAdorner : Adorner {
+    public class WrappingAdorner : Adorner
+    {
 
         private UIElement chrome;
         private ICanvasItem canvasItem;
@@ -19,27 +20,36 @@ namespace Glass.Basics.Presentation
             CanvasItem = canvasItem;
         }
 
-        protected override int VisualChildrenCount {
-            get {
+        protected override int VisualChildrenCount
+        {
+            get
+            {
                 return 1;
             }
         }
 
-        protected override Visual GetVisualChild(int index) {
+        protected override Visual GetVisualChild(int index)
+        {
             if (index != 0)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             return chrome;
         }
 
-        public UIElement Chrome {
+        public UIElement Chrome
+        {
             get { return chrome; }
-            set {
-                if (chrome != null) {
+            set
+            {
+                if (chrome != null)
+                {
                     RemoveVisualChild(chrome);
                 }
                 chrome = value;
-                if (chrome != null) {
+                if (chrome != null)
+                {
                     AddVisualChild(chrome);
                 }
             }
@@ -52,15 +62,17 @@ namespace Glass.Basics.Presentation
             {
                 if (canvasItem != null)
                 {
-                    canvasItem.LeftChanged -= CanvasItemOnLeftChanged; 
+                    canvasItem.LeftChanged -= CanvasItemOnPositionChanged;
+                    canvasItem.TopChanged -= CanvasItemOnPositionChanged;
                     canvasItem.WidthChanged -= CanvasItemOnSizeChanged;
-                    canvasItem.HeightChanged-= CanvasItemOnSizeChanged;
+                    canvasItem.HeightChanged -= CanvasItemOnSizeChanged;
                 }
                 canvasItem = value;
 
                 if (canvasItem != null)
                 {
-                    canvasItem.LeftChanged += CanvasItemOnLeftChanged;
+                    canvasItem.LeftChanged += CanvasItemOnPositionChanged;
+                    canvasItem.TopChanged += CanvasItemOnPositionChanged;
                     canvasItem.WidthChanged += CanvasItemOnSizeChanged;
                     canvasItem.HeightChanged += CanvasItemOnSizeChanged;
                 }
@@ -72,17 +84,19 @@ namespace Glass.Basics.Presentation
             InvalidateVisual();
         }
 
-        private void CanvasItemOnLeftChanged(object sender, LocationChangedEventArgs eventArgs)
+        private void CanvasItemOnPositionChanged(object sender, LocationChangedEventArgs eventArgs)
         {
             InvalidateVisual();
         }
 
-        protected override Size MeasureOverride(Size constraint) {
+        protected override Size MeasureOverride(Size constraint)
+        {
             chrome.Measure(constraint);
             return chrome.DesiredSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize) {
+        protected override Size ArrangeOverride(Size finalSize)
+        {
             var size = new Size(CanvasItem.Width, CanvasItem.Height);
             chrome.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
             return size;

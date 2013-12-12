@@ -102,7 +102,7 @@ namespace Glass.Design
             set
             {
                 var oldValue = width;
-                var newValue = value;
+                var newValue = Math.Max(value, 0);
 
                 width = value;
 
@@ -116,7 +116,7 @@ namespace Glass.Design
             set
             {
                 var oldValue = height;
-                var newValue = value;
+                var newValue = Math.Max(value, 0);
 
                 height = value;
 
