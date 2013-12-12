@@ -44,12 +44,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics">
-      <HintPath>..\packages\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="MathNet.Numerics.IO">
-      <HintPath>..\packages\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.IO.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
@@ -67,24 +61,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspectRatioKeeper.cs" />
+    <Compile Include="CanvasItem.cs" />
     <Compile Include="CanvasItemGroup.cs" />
     <Compile Include="CanvasItemResizeInfo.cs" />
+    <Compile Include="ChildrenExpandableCanvasItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="Converters\WindowsSizeCursorsThumbCursorConverter.cs" />
-    <Compile Include="DesignSurface\DesignerItem.cs" />
+    <Compile Include="DeltaEventArgs.cs" />
+    <Compile Include="DeltaMoveEventHandler.cs" />
     <Compile Include="DesignSurface\DesignOperation.cs" />
-    <Compile Include="DesignSurface\DesignSurface.cs" />
+    <Compile Include="DesignSurface\DesignSurface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DesignSurface\DesignerItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DesignSurface\IMultiSelector.cs" />
     <Compile Include="DesignSurface\SelectionAdorner.cs" />
     <Compile Include="DesignSurface\DesignAidsProvider.cs" />
     <Compile Include="DesignSurface\SelectionHandler.cs" />
     <Compile Include="DesignSurface\SelectionMode.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FrameworkElementToCanvasItemAdapter.cs" />
     <Compile Include="DesignSurface\IDesignSurface.cs" />
     <Compile Include="Geometrics.cs" />
     <Compile Include="IMoveThumb.cs" />
-    <Compile Include="Math.cs" />
+    <Compile Include="MathOperations.cs" />
     <Compile Include="MoveThumb.cs" />
     <Compile Include="MovingControl.cs" />
     <Compile Include="PointCollection.cs" />
@@ -92,10 +95,6 @@
     <Compile Include="ResizeThumb.cs" />
     <Compile Include="SizingControl.cs" />
     <Compile Include="ThumbCursorConverterFactory.cs" />
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,7 +114,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -131,6 +129,13 @@
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
       <Name>Glass.Design.Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

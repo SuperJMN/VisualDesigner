@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CanvasGroupItemTest.cs" />
+    <Compile Include="ExtensionsTest.cs" />
     <Compile Include="MathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

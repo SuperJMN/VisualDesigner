@@ -20,21 +20,26 @@ namespace Glass.Design.DesignSurface
             {
                 if (canvasItem != null)
                 {
-                    canvasItem.LocationChanged -= CanvasItemOnLayoutChanged;
-                    canvasItem.WidthChanged -= CanvasItemOnLayoutChanged;
-                    canvasItem.HeightChanged -= CanvasItemOnLayoutChanged;
+                    canvasItem.LeftChanged -= CanvasItemOnLayoutChanged;
+                    canvasItem.WidthChanged -= CanvasItemOnSizeChanged;
+                    canvasItem.HeightChanged -= CanvasItemOnSizeChanged;
                 }
                 canvasItem = value;
                 if (canvasItem != null)
                 {
-                    canvasItem.LocationChanged += CanvasItemOnLayoutChanged;
-                    canvasItem.WidthChanged += CanvasItemOnLayoutChanged;
-                    canvasItem.HeightChanged += CanvasItemOnLayoutChanged;
+                    canvasItem.LeftChanged += CanvasItemOnLayoutChanged;
+                    canvasItem.WidthChanged += CanvasItemOnSizeChanged;
+                    canvasItem.HeightChanged += CanvasItemOnSizeChanged;
                 }
             }
         }
 
-        private void CanvasItemOnLayoutChanged(object sender, EventArgs eventArgs)
+        private void CanvasItemOnSizeChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
+        {
+            InvalidateVisual();
+        }
+
+        private void CanvasItemOnLayoutChanged(object sender, LocationChangedEventArgs eventArgs)
         {
             InvalidateVisual();
         }

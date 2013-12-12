@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using Design.Interfaces;
@@ -58,7 +59,18 @@ namespace Glass.Design
             }
         }
 
-        public event EventHandler LocationChanged;
+        public event EventHandler<LocationChangedEventArgs> LeftChanged;
+        public event EventHandler<LocationChangedEventArgs> TopChanged;
+
+        public void SetTopCoercionMethod(CoercionHandler handler)
+        {
+            
+        }
+
+        public void SetLeftCoercionMethod(CoercionHandler handler)
+        {
+            
+        }
 
         #region CanvasItem
         public static readonly DependencyProperty CanvasItemProperty =
@@ -134,8 +146,9 @@ namespace Glass.Design
         }
 
         public new event EventHandler SizeChanged;
-        public event EventHandler HeightChanged;
-        public event EventHandler WidthChanged;
+        public event EventHandler<SizeChangeEventArgs> HeightChanged;
+        public event EventHandler<SizeChangeEventArgs> WidthChanged;
+        public ObservableCollection<ICanvasItem> Children { get; private set; }
     }
     
 }

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Design.Interfaces;
+using Glass.Basics.Core;
 
 namespace Glass.Basics.Presentation
 {
@@ -51,7 +52,7 @@ namespace Glass.Basics.Presentation
             {
                 if (canvasItem != null)
                 {
-                    canvasItem.LocationChanged -= CanvasItemOnLocationChanged; 
+                    canvasItem.LeftChanged -= CanvasItemOnLeftChanged; 
                     canvasItem.WidthChanged -= CanvasItemOnSizeChanged;
                     canvasItem.HeightChanged-= CanvasItemOnSizeChanged;
                 }
@@ -59,19 +60,19 @@ namespace Glass.Basics.Presentation
 
                 if (canvasItem != null)
                 {
-                    canvasItem.LocationChanged += CanvasItemOnLocationChanged;
+                    canvasItem.LeftChanged += CanvasItemOnLeftChanged;
                     canvasItem.WidthChanged += CanvasItemOnSizeChanged;
                     canvasItem.HeightChanged += CanvasItemOnSizeChanged;
                 }
             }
         }
 
-        private void CanvasItemOnSizeChanged(object sender, EventArgs eventArgs)
+        private void CanvasItemOnSizeChanged(object sender, SizeChangeEventArgs eventArgs)
         {
             InvalidateVisual();
         }
 
-        private void CanvasItemOnLocationChanged(object sender, EventArgs eventArgs)
+        private void CanvasItemOnLeftChanged(object sender, LocationChangedEventArgs eventArgs)
         {
             InvalidateVisual();
         }
