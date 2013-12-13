@@ -5,7 +5,7 @@ using Design.Interfaces;
 namespace Glass.Design
 {
 
-    public class SizingControl : Control
+    public sealed class SizingControl : Control
     {
 
         static SizingControl()
@@ -17,7 +17,7 @@ namespace Glass.Design
 
         public static readonly DependencyProperty CanvasItemProperty =
             DependencyProperty.Register("CanvasItem", typeof(ICanvasItem), typeof(SizingControl),
-                new FrameworkPropertyMetadata((ICanvasItem)null,
+                new FrameworkPropertyMetadata(null,
                     new PropertyChangedCallback(OnCanvasItemChanged)));
 
         public ICanvasItem CanvasItem
@@ -34,7 +34,7 @@ namespace Glass.Design
             target.OnCanvasItemChanged(oldCanvasItem, newCanvasItem);
         }
 
-        protected virtual void OnCanvasItemChanged(ICanvasItem oldCanvasItem, ICanvasItem newCanvasItem)
+        private void OnCanvasItemChanged(ICanvasItem oldCanvasItem, ICanvasItem newCanvasItem)
         {
             //if (newCanvasItem != null)
             //{

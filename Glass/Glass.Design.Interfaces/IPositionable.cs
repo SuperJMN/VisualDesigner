@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace Design.Interfaces
 {
@@ -10,8 +9,6 @@ namespace Design.Interfaces
         
         event EventHandler<LocationChangedEventArgs> LeftChanged;
         event EventHandler<LocationChangedEventArgs> TopChanged;
-        void SetTopCoercionMethod(CoercionHandler coerceMethod);
-        void SetLeftCoercionMethod(CoercionHandler coerceMethod);
     }
 
     public class LocationChangedEventArgs
@@ -29,8 +26,5 @@ namespace Design.Interfaces
         public double OldValue { get; set; }
         public double NewValue { get; set; }
     }
-
-    public delegate object CoercionHandler(object desiredValue);
-
-    
+     
 }

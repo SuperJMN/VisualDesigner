@@ -15,16 +15,6 @@ namespace SampleModel
 
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        public void SetTopCoercionMethod(CoercionHandler handler)
-        {
-            
-        }
-
-        public void SetLeftCoercionMethod(CoercionHandler handler)
-        {
-            
-        }
-
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
         public event EventHandler<SizeChangeEventArgs> WidthChanged;
         public ObservableCollection<ICanvasItem> Children { get; private set; }

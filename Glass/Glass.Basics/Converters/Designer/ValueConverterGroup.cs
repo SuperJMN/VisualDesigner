@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Glass.Basics.Converters.Designer
 {
@@ -17,7 +18,7 @@ namespace Glass.Basics.Converters.Designer
     /// value converter's type is not decorated with the ValueConversionAttribute, an InvalidOperationException will be
     /// thrown when the converter is added to the Converters collection.
     /// </summary>
-    [System.Windows.Markup.ContentProperty("Converters")]
+    [ContentProperty("Converters")]
     public class ValueConverterGroup : IValueConverter
     {
         #region Data
@@ -31,7 +32,7 @@ namespace Glass.Basics.Converters.Designer
 
         public ValueConverterGroup()
         {
-            this.converters.CollectionChanged += this.OnConvertersCollectionChanged;
+            converters.CollectionChanged += OnConvertersCollectionChanged;
         }
 
         #endregion // Constructor
@@ -43,7 +44,7 @@ namespace Glass.Basics.Converters.Designer
         /// </summary>
         public ObservableCollection<IValueConverter> Converters
         {
-            get { return this.converters; }
+            get { return converters; }
         }
 
         #endregion // Converters
@@ -54,10 +55,10 @@ namespace Glass.Basics.Converters.Designer
         {
             var output = value;
 
-            for (var i = 0; i < this.Converters.Count; ++i)
+            for (var i = 0; i < Converters.Count; ++i)
             {
-                var converter = this.Converters[i];
-                var currentTargetType = this.GetTargetType(i, targetType, true);
+                var converter = Converters[i];
+                var currentTargetType = GetTargetType(i, targetType, true);
                 output = converter.Convert(output, currentTargetType, parameter, culture);
 
                 // If the converter returns 'DoNothing' then the binding operation should terminate.
@@ -72,10 +73,10 @@ namespace Glass.Basics.Converters.Designer
         {
             var output = value;
 
-            for (var i = this.Converters.Count - 1; i > -1; --i)
+            for (var i = Converters.Count - 1; i > -1; --i)
             {
-                var converter = this.Converters[i];
-                var currentTargetType = this.GetTargetType(i, targetType, false);
+                var converter = Converters[i];
+                var currentTargetType = GetTargetType(i, targetType, false);
                 output = converter.ConvertBack(output, currentTargetType, parameter, culture);
 
                 // When a converter returns 'DoNothing' the binding operation should terminate.
@@ -105,9 +106,9 @@ namespace Glass.Basics.Converters.Designer
             IValueConverter nextConverter = null;
             if (convert)
             {
-                if (converterIndex < this.Converters.Count - 1)
+                if (converterIndex < Converters.Count - 1)
                 {
-                    nextConverter = this.Converters[converterIndex + 1];
+                    nextConverter = Converters[converterIndex + 1];
                     if (nextConverter == null)
                         throw new InvalidOperationException("The Converters collection of the ValueConverterGroup contains a null reference at index: " + (converterIndex + 1));
                 }
@@ -116,7 +117,7 @@ namespace Glass.Basics.Converters.Designer
             {
                 if (converterIndex > 0)
                 {
-                    nextConverter = this.Converters[converterIndex - 1];
+                    nextConverter = Converters[converterIndex - 1];
                     if (nextConverter == null)
                         throw new InvalidOperationException("The Converters collection of the ValueConverterGroup contains a null reference at index: " + (converterIndex - 1));
                 }
@@ -153,12 +154,12 @@ namespace Glass.Basics.Converters.Designer
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (IValueConverter converter in e.OldItems)
-                    this.cachedAttributes.Remove(converter);
+                    cachedAttributes.Remove(converter);
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset)
             {
-                this.cachedAttributes.Clear();
-                convertersToProcess = this.converters;
+                cachedAttributes.Clear();
+                convertersToProcess = converters;
             }
 
             if (convertersToProcess != null && convertersToProcess.Count > 0)
@@ -170,7 +171,7 @@ namespace Glass.Basics.Converters.Designer
                     if (attributes.Length != 1)
                         throw new InvalidOperationException("All value converters added to a ValueConverterGroup must be decorated with the ValueConversionAttribute attribute exactly once.");
 
-                    this.cachedAttributes.Add(converter, attributes[0] as ValueConversionAttribute);
+                    cachedAttributes.Add(converter, attributes[0] as ValueConversionAttribute);
                 }
             }
         }

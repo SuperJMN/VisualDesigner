@@ -139,7 +139,7 @@ namespace Glass.Basics.Behaviors.DragDrop
 
         private void StartDrag()
         {
-            var data = new DataObject(GetItemToExport(this.childInDrag));
+            var data = new DataObject(GetItemToExport(childInDrag));
             System.Windows.DragDrop.DoDragDrop(AssociatedObject, data, DragDropEffects.Move);
 
             isDragging = false;

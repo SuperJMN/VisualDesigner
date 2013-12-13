@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows.Data;
 
 namespace Glass.Basics.Converters
@@ -8,7 +9,7 @@ namespace Glass.Basics.Converters
     /// </summary>
     public class IsEqualConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             
             if (targetType != typeof(bool) && targetType != typeof(bool?))
@@ -29,7 +30,7 @@ namespace Glass.Basics.Converters
             return value.Equals(parameter);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

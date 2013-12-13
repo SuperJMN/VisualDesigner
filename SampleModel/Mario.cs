@@ -1,6 +1,4 @@
-﻿using Design.Interfaces;
-
-namespace SampleModel
+﻿namespace SampleModel
 {
     public class Mario : CanvasItem
     {

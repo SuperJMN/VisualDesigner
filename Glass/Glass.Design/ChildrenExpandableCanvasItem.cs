@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Windows.Documents;
 using Design.Interfaces;
 
 namespace Glass.Design
@@ -25,10 +23,10 @@ namespace Glass.Design
             Width = GetWidthFromChildren(Children);
             Height = GetHeightFromChildren(Children);
 
-            this.LeftChanged += OnLeftChanged;
-            this.TopChanged += OnTopChanged;
-            this.WidthChanged += OnWidthChanged;            
-            this.HeightChanged += OnHeightChanged;
+            LeftChanged += OnLeftChanged;
+            TopChanged += OnTopChanged;
+            WidthChanged += OnWidthChanged;            
+            HeightChanged += OnHeightChanged;
         }
 
         private void OnWidthChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)

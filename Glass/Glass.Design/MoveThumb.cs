@@ -4,11 +4,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Design.Interfaces;
 using Glass.Basics.Extensions;
-using Glass.Design.Converters;
 
 namespace Glass.Design
 {
-    public class MoveThumb : Thumb, IMoveThumb
+    public sealed class MoveThumb : Thumb, IMoveThumb
     {
         public MoveThumb()
         {
@@ -63,7 +62,7 @@ namespace Glass.Design
 
         public event DeltaMoveEventHandler MoveDelta;
 
-        protected virtual void OnMoveDelta(DeltaEventArgs args)
+        private void OnMoveDelta(DeltaEventArgs args)
         {
             var handler = MoveDelta;
             if (handler != null) handler(this, args);

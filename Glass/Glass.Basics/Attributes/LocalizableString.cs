@@ -21,14 +21,14 @@ namespace Glass.Basics.Attributes
             [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
-                return this.propertyValue;
+                return propertyValue;
             }
             set
             {
-                if (!(this.propertyValue != value))
+                if (!(propertyValue != value))
                     return;
-                this.ClearCache();
-                this.propertyValue = value;
+                ClearCache();
+                propertyValue = value;
             }
         }
 
@@ -37,14 +37,14 @@ namespace Glass.Basics.Attributes
             [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
-                return this.resourceType;
+                return resourceType;
             }
             set
             {
-                if (!(this.resourceType != value))
+                if (!(resourceType != value))
                     return;
-                this.ClearCache();
-                this.resourceType = value;
+                ClearCache();
+                resourceType = value;
             }
         }
 
@@ -56,17 +56,17 @@ namespace Glass.Basics.Attributes
 
         public string GetLocalizableValue()
         {
-            if (this.cachedResult == null)
+            if (cachedResult == null)
             {
-                if (this.propertyValue == null || this.resourceType == null)
+                if (propertyValue == null || resourceType == null)
                 {
-                    this.cachedResult = () => this.propertyValue;
+                    cachedResult = () => propertyValue;
                 }
                 else
                 {
-                    var property = this.resourceType.GetProperty(this.propertyValue);
+                    var property = resourceType.GetProperty(propertyValue);
                     var flag = false;
-                    if (!this.resourceType.IsVisible || property == null || property.PropertyType != typeof(string))
+                    if (!resourceType.IsVisible || property == null || property.PropertyType != typeof(string))
                     {
                         flag = true;
                     }
@@ -78,22 +78,22 @@ namespace Glass.Basics.Attributes
                     }
                     if (flag)
                     {
-                        var exceptionMessage = string.Format(CultureInfo.CurrentCulture, Resources.LocalizableString_LocalizationFailed, (object)this.propertyName, (object)this.resourceType.FullName, (object)this.propertyValue);
-                        this.cachedResult = () =>
+                        var exceptionMessage = string.Format(CultureInfo.CurrentCulture, Resources.LocalizableString_LocalizationFailed, (object)propertyName, (object)resourceType.FullName, (object)propertyValue);
+                        cachedResult = () =>
                                             {
                                                 throw new InvalidOperationException(string.Format("{0}: {1}", exceptionMessage, propertyValue));
                                             };
                     }
                     else
-                        this.cachedResult = () => (string)property.GetValue(null, null);
+                        cachedResult = () => (string)property.GetValue(null, null);
                 }
             }
-            return this.cachedResult();
+            return cachedResult();
         }
 
         private void ClearCache()
         {
-            this.cachedResult = null;
+            cachedResult = null;
         }
     }
 }

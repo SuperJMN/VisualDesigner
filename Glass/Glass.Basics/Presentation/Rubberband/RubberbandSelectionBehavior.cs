@@ -51,7 +51,7 @@ namespace Glass.Basics.Presentation.Rubberband
         {
             base.OnDragCompleted(rect);
 
-            if (!this.IsEnabled)
+            if (!IsEnabled)
                 return;
 
             SelectedItems = panel.GetChildrenWithBounds(rect);

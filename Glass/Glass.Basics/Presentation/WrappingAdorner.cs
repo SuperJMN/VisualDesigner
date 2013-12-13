@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Design.Interfaces;
-using Glass.Basics.Core;
 
 namespace Glass.Basics.Presentation
 {

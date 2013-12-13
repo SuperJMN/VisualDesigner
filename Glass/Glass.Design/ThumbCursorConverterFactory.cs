@@ -4,7 +4,7 @@ using Glass.Design.Converters;
 
 namespace Glass.Design
 {
-    public class ThumbCursorConverterFactory
+    public static class ThumbCursorConverterFactory
     {
         public static IThumbCursorConverter Create(IResizeThumb resizeThumb)
         {

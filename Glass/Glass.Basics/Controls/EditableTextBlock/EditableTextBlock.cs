@@ -54,7 +54,7 @@ namespace Glass.Basics.Controls.EditableTextBlock
 
         private void TurnOnEditMode()
         {
-            textOldValue = this.Text;
+            textOldValue = Text;
             IsEditing = true;
             generatedContainerFocusableOldValue = IsGeneratedContainerFocusable;
             IsGeneratedContainerFocusable = false;
@@ -143,7 +143,7 @@ namespace Glass.Basics.Controls.EditableTextBlock
         private void TurnOffEditMode()
         {
             IsEditing = false;
-            IsGeneratedContainerFocusable = this.generatedContainerFocusableOldValue;
+            IsGeneratedContainerFocusable = generatedContainerFocusableOldValue;
         }
 
         #region IsEditing

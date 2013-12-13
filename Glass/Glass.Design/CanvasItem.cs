@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using Design.Interfaces;
 
 namespace Glass.Design
@@ -10,19 +11,11 @@ namespace Glass.Design
         private double top;
         private double width;
         private double height;
-        private CoercionHandler CoerceTop { get; set; }
-        private CoercionHandler CoerceLeft { get; set; }
-
+        
         public CanvasItem()
         {
             Children = new ObservableCollection<ICanvasItem>();
-            CoerceTop = DefaultCoercionHandler();
-            CoerceLeft = DefaultCoercionHandler();
-        }
-
-        private static CoercionHandler DefaultCoercionHandler()
-        {
-            return value => value;
+        
         }
 
         public ObservableCollection<ICanvasItem> Children { get; private set; }
@@ -38,13 +31,9 @@ namespace Glass.Design
                     return;
                 }
 
-                var coercedValue = (double)CoerceLeft(value);
-
                 var oldValue = left;
-                var newValue = coercedValue;
-
+                var newValue = value;
                 left = newValue;
-
                 OnLeftChanged(new LocationChangedEventArgs(oldValue, newValue));
             }
         }
@@ -59,13 +48,10 @@ namespace Glass.Design
                 {
                     return;
                 }
-                var coercedValue = (double)CoerceTop(value);
-
+                
                 var oldValue = top;
-                var newValue = coercedValue;
-
+                var newValue = value;
                 top = newValue;
-
                 OnTopChanged(new LocationChangedEventArgs(oldValue, newValue));
             }
         }
@@ -73,27 +59,16 @@ namespace Glass.Design
         public event EventHandler<LocationChangedEventArgs> LeftChanged;
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        protected virtual void OnTopChanged(LocationChangedEventArgs e)
+        protected void OnTopChanged(LocationChangedEventArgs e)
         {
             var handler = TopChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected virtual void OnLeftChanged(LocationChangedEventArgs e)
+        protected void OnLeftChanged(LocationChangedEventArgs e)
         {
             var handler = LeftChanged;
             if (handler != null) handler(this, e);
-        }
-
-
-        public void SetTopCoercionMethod(CoercionHandler handler)
-        {
-            CoerceTop = handler;
-        }
-
-        public void SetLeftCoercionMethod(CoercionHandler handler)
-        {
-            CoerceLeft = handler;
         }
 
         public double Width

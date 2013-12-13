@@ -83,7 +83,7 @@ namespace Glass.Basics.Behaviors {
 
             foreach (var uiElement in elementsToObserveFocusLoss)
             {
-                uiElement.PreviewLostKeyboardFocus -= this.AssociatedObjectOnPreviewLostKeyboardFocus;
+                uiElement.PreviewLostKeyboardFocus -= AssociatedObjectOnPreviewLostKeyboardFocus;
             }
         }
     }

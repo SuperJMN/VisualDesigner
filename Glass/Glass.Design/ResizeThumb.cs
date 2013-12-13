@@ -62,16 +62,7 @@ namespace Glass.Design
         public event EventHandler<LocationChangedEventArgs> LeftChanged;
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        public void SetTopCoercionMethod(CoercionHandler handler)
-        {
-            
-        }
-
-        public void SetLeftCoercionMethod(CoercionHandler handler)
-        {
-            
-        }
-
+        
         #region CanvasItem
         public static readonly DependencyProperty CanvasItemProperty =
           DependencyProperty.Register("CanvasItem", typeof(ICanvasItem), typeof(ResizeThumb),

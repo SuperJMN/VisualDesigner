@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Glass.Basics.Converters
 {
@@ -17,7 +18,7 @@ namespace Glass.Basics.Converters
     /// value converter's type is not decorated with the ValueConversionAttribute, an InvalidOperationException will be
     /// thrown when the converter is added to the Converters collection.
     /// </summary>
-    [System.Windows.Markup.ContentProperty("Converters")]
+    [ContentProperty("Converters")]
     public sealed class ValueConverterGroup : IValueConverter
     {
         #region Data

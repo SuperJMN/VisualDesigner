@@ -42,7 +42,7 @@ namespace Glass.Basics.Presentation.Rubberband
         {
             base.OnDragCompleted(rect);
 
-            if (!this.IsEnabled)
+            if (!IsEnabled)
                 return;
 
             

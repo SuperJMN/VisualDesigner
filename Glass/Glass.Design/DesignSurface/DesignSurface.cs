@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -17,8 +16,8 @@ namespace Glass.Design.DesignSurface
 
         public DesignSurface()
         {
-            this.MouseLeftButtonDown += OnMouseLeftButtonDown;
-            this.SelectionChanged += OnSelectionChanged;                   
+            MouseLeftButtonDown += OnMouseLeftButtonDown;
+            SelectionChanged += OnSelectionChanged;                   
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
         }
@@ -125,7 +124,7 @@ namespace Glass.Design.DesignSurface
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
-            this.Focus();
+            Focus();
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)

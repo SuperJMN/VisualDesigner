@@ -101,7 +101,7 @@ namespace Glass.Basics.Behaviors.RubberBand {
 
         private IEnumerable<ISelectable> GetSelectableContainers()
         {
-            var items = this.AssociatedObject.Items;
+            var items = AssociatedObject.Items;
             var itemContainerGenerator = AssociatedObject.ItemContainerGenerator;
 
             var containers = new List<DependencyObject>();

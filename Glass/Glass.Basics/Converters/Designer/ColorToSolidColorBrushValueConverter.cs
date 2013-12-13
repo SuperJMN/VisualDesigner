@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -7,7 +8,7 @@ namespace Glass.Basics.Converters.Designer
     public class ColorToSolidColorBrushValueConverter : IValueConverter
     {
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (null == value)
             {
@@ -26,7 +27,7 @@ namespace Glass.Basics.Converters.Designer
             throw new InvalidOperationException("Unsupported type [" + type.Name + "]");
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // If necessary, here you can convert back. Check if which brush it is (if its one),
             // get its Color-value and return it.

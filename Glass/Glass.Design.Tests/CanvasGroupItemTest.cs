@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using Design.Interfaces;
 using Glass.Design;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

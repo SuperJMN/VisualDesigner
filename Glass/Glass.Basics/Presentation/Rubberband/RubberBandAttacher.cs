@@ -20,7 +20,7 @@ namespace Glass.Basics.Presentation.Rubberband
         public RubberBandAttacher(UIElement element)
         {
             this.element = element;
-            this.adornerLayer = AdornerLayer.GetAdornerLayer(element);
+            adornerLayer = AdornerLayer.GetAdornerLayer(element);
 
             var highlightColor = SystemColors.HighlightBrush.Color;
             fill = new SolidColorBrush(Color.FromArgb(32, highlightColor.R, highlightColor.G, highlightColor.B));

@@ -7,8 +7,8 @@ namespace Glass.Basics.Presentation.Rubberband
         public RubberBandAdorner(UIElement adornedElement, UIElement chrome) : base(adornedElement, chrome)
         {
             Chrome.IsHitTestVisible = false;
-            this.Width = 0;
-            this.Height = 0;
+            Width = 0;
+            Height = 0;
         }
 
         #region Left

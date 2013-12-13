@@ -12,7 +12,7 @@ using Design.Interfaces;
 namespace Glass.Design.DesignSurface
 {
     [DefaultProperty("Content")]
-    public class DesignerItem : ContentControl, ICanvasItem
+    public sealed class DesignerItem : ContentControl, ICanvasItem
     {
         public static readonly DependencyProperty TopProperty =
             DependencyProperty.Register("Top", typeof(double), typeof(DesignerItem),
@@ -32,15 +32,6 @@ namespace Glass.Design.DesignSurface
         public event EventHandler<LocationChangedEventArgs> LeftChanged;
 
         public event EventHandler<LocationChangedEventArgs> TopChanged;
-
-        public void SetTopCoercionMethod(CoercionHandler handler)
-        {
-        }
-
-        public void SetLeftCoercionMethod(CoercionHandler handler)
-        {
-        }
-
 
         public ObservableCollection<ICanvasItem> Children { get; private set; }
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
@@ -62,13 +53,13 @@ namespace Glass.Design.DesignSurface
             }
         }
 
-        protected virtual void OnLeftChanged(LocationChangedEventArgs e)
+        private void OnLeftChanged(LocationChangedEventArgs e)
         {
             var handler = LeftChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected virtual void OnTopChanged(LocationChangedEventArgs e)
+        private void OnTopChanged(LocationChangedEventArgs e)
         {
             var handler = TopChanged;
             if (handler != null) handler(this, e);
@@ -82,19 +73,19 @@ namespace Glass.Design.DesignSurface
             target.OnTopChanged(oldTop, newTop);
         }
 
-        protected virtual void OnTopChanged(double oldTop, double newTop)
+        private void OnTopChanged(double oldTop, double newTop)
         {
             Canvas.SetTop(this, newTop);
             OnTopChanged(new LocationChangedEventArgs(oldTop, newTop));
         }
 
-        protected virtual void OnHeightChanged(SizeChangeEventArgs e)
+        private void OnHeightChanged(SizeChangeEventArgs e)
         {
             var handler = HeightChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected virtual void OnWidthChanged(SizeChangeEventArgs e)
+        private void OnWidthChanged(SizeChangeEventArgs e)
         {
             var handler = WidthChanged;
             if (handler != null) handler(this, e);
@@ -120,7 +111,7 @@ namespace Glass.Design.DesignSurface
             target.OnLeftChanged(oldLeft, newLeft);
         }
 
-        protected virtual void OnLeftChanged(double oldLeft, double newLeft)
+        private void OnLeftChanged(double oldLeft, double newLeft)
         {
             Canvas.SetLeft(this, newLeft);
             OnLeftChanged(new LocationChangedEventArgs(oldLeft, newLeft));
