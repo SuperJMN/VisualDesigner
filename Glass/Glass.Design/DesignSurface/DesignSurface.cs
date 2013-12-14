@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Design.Interfaces;
+using Glass.Design.DesignSurface.VisualAids;
 
 namespace Glass.Design.DesignSurface
 {

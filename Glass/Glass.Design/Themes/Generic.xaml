@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:designSurface="clr-namespace:Glass.Design.DesignSurface"
     xmlns:design="clr-namespace:Glass.Design"
+    xmlns:visualAids="clr-namespace:Glass.Design.DesignSurface.VisualAids"
     mc:Ignorable="d">
 
     <Style TargetType="{x:Type designSurface:DesignSurface}">
@@ -60,29 +61,29 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type design:SizingControl}">
+    <Style TargetType="{x:Type visualAids:SizingControl}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type design:SizingControl}">
+                <ControlTemplate TargetType="{x:Type visualAids:SizingControl}">
                     <Border Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}" d:DesignWidth="93" d:DesignHeight="84">
                         <Grid Margin="-2.5">
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Top"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" AllowVerticalResize="False" VerticalAlignment="Center"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" AllowVerticalResize="False" VerticalAlignment="Center"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Bottom"/>
-                            <design:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <visualAids:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                         </Grid>
                     </Border>
@@ -112,11 +113,11 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type design:MovingControl}">
+    <Style TargetType="{x:Type visualAids:MovingControl}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type design:MovingControl}">
-                    <design:MoveThumb  x:Name="PART_Thumb" Style="{StaticResource MoveThumbStyle}"  CanvasItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanvasItem}" />
+                <ControlTemplate TargetType="{x:Type visualAids:MovingControl}">
+                    <Thumb  x:Name="PART_Thumb" Style="{StaticResource MoveThumbStyle}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

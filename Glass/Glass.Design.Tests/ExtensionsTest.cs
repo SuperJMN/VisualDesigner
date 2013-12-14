@@ -1,4 +1,5 @@
 ﻿using Glass.Design;
+using Glass.Design.CanvasItem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1

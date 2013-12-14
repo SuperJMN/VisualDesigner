@@ -4,8 +4,9 @@ using System.Windows;
 using System.Windows.Documents;
 using Design.Interfaces;
 using Glass.Basics.Presentation;
+using Glass.Design.CanvasItem;
 
-namespace Glass.Design.DesignSurface
+namespace Glass.Design.DesignSurface.VisualAids
 {
     internal class DesignAidsProvider
     {
@@ -13,12 +14,18 @@ namespace Glass.Design.DesignSurface
         public DesignAidsProvider(FrameworkElement visual)
         {
             Visual = visual;
-            visual.Loaded += VisualOnLoaded;
+            Visual.Loaded += VisualOnLoaded;
+     
+
             SelectionAdorners = new Dictionary<ICanvasItem, SelectionAdorner>();
             DesignOperation = DesignOperation.Resize;
+            DragOperationHost = new DragOperationHost(Visual);
         }
 
-        private CanvasItemGroup groupedItems;
+        public DragOperationHost DragOperationHost { get; set; }
+
+
+       private CanvasItemGroup groupedItems;
 
         private CanvasItemGroup GroupedItems
         {
@@ -35,7 +42,11 @@ namespace Glass.Design.DesignSurface
 
                 if (groupedItems != null)
                 {
-                    MovingAdorner = new WrappingAdorner(Visual, new MovingControl { CanvasItem = GroupedItems }, GroupedItems);
+                    var movingControl = new MovingControl();
+                    
+                    DragOperationHost.SetDragTarget(movingControl, GroupedItems);
+
+                    MovingAdorner = new WrappingAdorner(Visual, movingControl, GroupedItems);
                     ResizingAdorner = new WrappingAdorner(Visual, new SizingControl { CanvasItem = GroupedItems }, GroupedItems);
                     AdornerLayer.Add(ResizingAdorner);
                     AdornerLayer.Add(MovingAdorner);

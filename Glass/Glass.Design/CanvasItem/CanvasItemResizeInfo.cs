@@ -1,4 +1,4 @@
-﻿namespace Glass.Design
+﻿namespace Glass.Design.CanvasItem
 {
     internal struct CanvasItemResizeInfo
     {

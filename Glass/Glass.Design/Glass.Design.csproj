@@ -60,17 +60,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspectRatioKeeper.cs" />
-    <Compile Include="CanvasItem.cs" />
-    <Compile Include="CanvasItemGroup.cs" />
-    <Compile Include="CanvasItemResizeInfo.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
+    <Compile Include="CanvasItem\CanvasItem.cs" />
+    <Compile Include="CanvasItem\CanvasItemExtensions.cs" />
+    <Compile Include="CanvasItem\CanvasItemGroup.cs" />
+    <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="Converters\WindowsSizeCursorsThumbCursorConverter.cs" />
-    <Compile Include="DeltaEventArgs.cs" />
-    <Compile Include="DeltaMoveEventHandler.cs" />
     <Compile Include="DesignSurface\DesignOperation.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs">
       <SubType>Code</SubType>
@@ -78,22 +77,22 @@
     <Compile Include="DesignSurface\DesignerItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
     <Compile Include="DesignSurface\IMultiSelector.cs" />
-    <Compile Include="DesignSurface\SelectionAdorner.cs" />
-    <Compile Include="DesignSurface\DesignAidsProvider.cs" />
-    <Compile Include="DesignSurface\SelectionHandler.cs" />
-    <Compile Include="DesignSurface\SelectionMode.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
+    <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="DesignSurface\IDesignSurface.cs" />
     <Compile Include="Geometrics.cs" />
-    <Compile Include="IMoveThumb.cs" />
     <Compile Include="MathOperations.cs" />
-    <Compile Include="MoveThumb.cs" />
-    <Compile Include="MovingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
     <Compile Include="PointCollection.cs" />
     <Compile Include="ProportionalResizer.cs" />
-    <Compile Include="ResizeThumb.cs" />
-    <Compile Include="SizingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
     <Compile Include="ThumbCursorConverterFactory.cs" />
   </ItemGroup>
   <ItemGroup>

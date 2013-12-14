@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Design.Interfaces;
 
-namespace Glass.Design
+namespace Glass.Design.CanvasItem
 {
     public class CanvasItemGroup : ChildrenExpandableCanvasItem
     {        
-        public CanvasItemGroup(IList<ICanvasItem> children) : base(children)
+        public CanvasItemGroup(IEnumerable<ICanvasItem> children) : base(children)
         {            
         }
     }

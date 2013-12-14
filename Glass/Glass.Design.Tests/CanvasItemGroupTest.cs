@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Design.Interfaces;
-using Glass.Design;
+using Glass.Design.CanvasItem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
 {
     [TestClass]
-    public class CanvasGroupItemTest
+    public class CanvasItemGroupTest
     {
         private static CanvasItem Item1
         {

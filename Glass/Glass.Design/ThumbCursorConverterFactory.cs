@@ -1,6 +1,7 @@
 ﻿using System;
 using Design.Interfaces;
 using Glass.Design.Converters;
+using Glass.Design.DesignSurface.VisualAids;
 
 namespace Glass.Design
 {

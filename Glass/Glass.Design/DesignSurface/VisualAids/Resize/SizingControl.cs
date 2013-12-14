@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Design.Interfaces;
 
-namespace Glass.Design
+namespace Glass.Design.DesignSurface.VisualAids
 {
 
     public sealed class SizingControl : Control

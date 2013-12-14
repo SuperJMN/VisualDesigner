@@ -6,6 +6,8 @@ namespace Glass.Design
 {
     public static class Extensions
     {
+        
+
         public static void SwapCoordinates(this IEnumerable<ICanvasItem> items)
         {
             foreach (var canvasItem in items)

@@ -7,9 +7,9 @@ using Design.Interfaces;
 
 namespace Glass.Design
 {
-    public class ChildrenExpandableCanvasItem : CanvasItem
+    public class ChildrenExpandableCanvasItem : CanvasItem.CanvasItem
     {
-        public ChildrenExpandableCanvasItem(IEnumerable<ICanvasItem> children)
+        protected ChildrenExpandableCanvasItem(IEnumerable<ICanvasItem> children)
         {
             foreach (var canvasItem in children)
             {
@@ -108,7 +108,7 @@ namespace Glass.Design
             throw new NotImplementedException();
         }
 
-        protected void SetLeft(double oldLeft, double newLeft)
+        private void SetLeft(double oldLeft, double newLeft)
         {            
             var delta = newLeft - oldLeft;
             foreach (var canvasItem in Children)
@@ -117,7 +117,7 @@ namespace Glass.Design
             }
         }
 
-        protected void SetWidth(SizeChangeEventArgs sizeChangeEventArgs, double currentParentLeft)
+        private void SetWidth(SizeChangeEventArgs sizeChangeEventArgs, double currentParentLeft)
         {
             foreach (var canvasItem in Children)
             {
@@ -125,7 +125,7 @@ namespace Glass.Design
             }
         }
 
-        private void Resize(ICanvasItem canvasItem, SizeChangeEventArgs sizeChange, double currentParentLeft)
+        private static void Resize(ICanvasItem canvasItem, SizeChangeEventArgs sizeChange, double currentParentLeft)
         {
             var currentLeft = canvasItem.Left - currentParentLeft;
             var currentWidth = canvasItem.Width;
@@ -136,28 +136,5 @@ namespace Glass.Design
             canvasItem.Left = currentParentLeft + sizeChange.NewValue * leftProportion;
             canvasItem.Width = sizeChange.NewValue * widthProportion;
         }
-
-        private class SizeChange
-        {
-            private readonly double newSize;
-            private readonly double currentSize;
-
-            public SizeChange(double currentSize, double newSize)
-            {
-                this.newSize = newSize;
-                this.currentSize = currentSize;
-            }
-
-            public double NewSize
-            {
-                get { return newSize; }
-            }
-
-            public double CurrentSize
-            {
-                get { return currentSize; }
-            }
-        }
-
     }
 }

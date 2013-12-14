@@ -1,7 +1,7 @@
 ﻿using System;
 using Design.Interfaces;
 
-namespace Glass.Design
+namespace Glass.Design.DesignSurface.VisualAids
 {
     public class AspectRatioKeeper : IDisposable
     {

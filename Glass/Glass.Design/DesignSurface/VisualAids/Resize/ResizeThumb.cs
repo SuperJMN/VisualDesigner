@@ -6,7 +6,7 @@ using Design.Interfaces;
 using Glass.Basics.Extensions;
 using Glass.Design.Converters;
 
-namespace Glass.Design
+namespace Glass.Design.DesignSurface.VisualAids
 {
     public class ResizeThumb : Thumb, IResizeThumb
     {

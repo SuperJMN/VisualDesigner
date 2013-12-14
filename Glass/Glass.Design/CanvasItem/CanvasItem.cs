@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using Design.Interfaces;
 
-namespace Glass.Design
+namespace Glass.Design.CanvasItem
 {
     public class CanvasItem : ICanvasItem
     {
