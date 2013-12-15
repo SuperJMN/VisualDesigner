@@ -18,6 +18,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,10 +86,14 @@
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
-    <Compile Include="Core\Point.cs" />
-    <Compile Include="Core\Vector.cs" />
-    <Compile Include="Core\Rect.cs" />
-    <Compile Include="Core\Size.cs" />
+    <Compile Include="Converters\IThumbCursorConverter.cs" />
+    <Compile Include="Core\ServiceLocator.cs" />
+    <Compile Include="Core\CoreTypesFactory.cs" />
+    <Compile Include="Core\ICursor.cs" />
+    <Compile Include="Core\IPoint.cs" />
+    <Compile Include="Core\IRect.cs" />
+    <Compile Include="Core\ISize.cs" />
+    <Compile Include="Core\IVector.cs" />
     <Compile Include="DesignSurface\DesignOperation.cs" />
     <Compile Include="DesignSurface\IDesignerItem.cs" />
     <Compile Include="DesignSurface\IDesignSurface.cs" />
@@ -116,6 +122,7 @@
     <Compile Include="ProportionalResizer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

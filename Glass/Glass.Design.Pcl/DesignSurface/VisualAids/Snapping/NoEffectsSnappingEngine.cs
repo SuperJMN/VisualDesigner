@@ -4,7 +4,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     class NoEffectsSnappingEngine : ISnappingEngine
     {
-        public Point SnapPoint(Point pointToSnap)
+        public IPoint SnapPoint(IPoint pointToSnap)
         {
             return pointToSnap;
         }

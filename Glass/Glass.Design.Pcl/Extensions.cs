@@ -5,9 +5,7 @@ using Glass.Design.Pcl.Core;
 namespace Glass.Design.Pcl
 {
     public static class Extensions
-    {
-        
-
+    {       
         public static void SwapCoordinates(this IEnumerable<ICanvasItem> items)
         {
             foreach (var canvasItem in items)
@@ -38,14 +36,14 @@ namespace Glass.Design.Pcl
             b = temp;
         }
 
-        public static Rect ToRect(this ICanvasItem item)
+        public static IRect ToRect(this ICanvasItem item)
         {
-            return new Rect(item.Left, item.Top, item.Width, item.Height);
+            return ServiceLocator.CoreTypesFactory.CreateRect(item.Left, item.Top, item.Width, item.Height);
         }
 
-        public static Point DiscretizeUsingAverage(this Rect item)
+        public static IPoint DiscretizeUsingAverage(this IRect item)
         {
-            return new Point(item.Left + item.Width / 2, item.Top + item.Height / 2);
+            return ServiceLocator.CoreTypesFactory.CreatePoint(item.Left + item.Width / 2, item.Top + item.Height / 2);
         }
     }
 }

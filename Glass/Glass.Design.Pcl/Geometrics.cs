@@ -5,7 +5,7 @@ namespace Glass.Design.Pcl
 {
     public static class Geometrics
     {
-        public static double GetDegress(Point origin, Point destination)
+        public static double GetDegress(IPoint origin, IPoint destination)
         {
             var p = new PointCollection { destination };
             p.Offset(-origin.X, -origin.Y);
@@ -27,13 +27,13 @@ namespace Glass.Design.Pcl
             return degrees;
         }
 
-        public static double EdgeOfEquivaletSquare(this Size original)
+        public static double EdgeOfEquivaletSquare(this ISize original)
         {
             var edgeSize = Math.Sqrt(original.Width*original.Height);
             return edgeSize;
         }
 
-        public static Point GetOpposite(Point a, Rect rect)
+        public static IPoint GetOpposite(IPoint a, IRect rect)
         {
             var halfPointX = rect.Left + rect.Width / 2;
             var distanceX = halfPointX - a.X;
@@ -43,12 +43,12 @@ namespace Glass.Design.Pcl
             var distanceY = halfPointY - a.Y;
             var y = halfPointY + distanceY;
 
-            var opposite = new Point(x, y);
+            var opposite = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
 
             return opposite;
         }
 
-        public static double Slope(Point start, Point end)
+        public static double Slope(IPoint start, IPoint end)
         {
             var rise = end.Y - start.Y;
             var run = end.X - start.X;

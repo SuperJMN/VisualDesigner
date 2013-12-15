@@ -3,7 +3,7 @@ using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl
 {
-    public class PointCollection : Collection<Point>
+    public class PointCollection : Collection<IPoint>
     {
         public void Offset(double x, double y)
         {

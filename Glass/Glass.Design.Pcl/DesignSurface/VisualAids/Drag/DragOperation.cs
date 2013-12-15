@@ -8,12 +8,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
     public class DragOperation
     {
         private ICanvasItem Child { get; set; }
-        private Point StartingPoint { get; set; }
+        private IPoint StartingPoint { get; set; }
 
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
 
-        public DragOperation(ICanvasItem child, Point startingPoint)
+        public DragOperation(ICanvasItem child, IPoint startingPoint)
         {
             Child = child;
 
@@ -21,12 +21,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             ChildStartingPoint = child.GetLocation();
         }
 
-        public Point ChildStartingPoint { get; set; }
+        public IPoint ChildStartingPoint { get; set; }
 
-        public void NotifyNewPosition(Point newPoint)
+        public void NotifyNewPosition(IPoint newPoint)
         {
-            var delta = newPoint - StartingPoint;
-            var newChildLocation = ChildStartingPoint + delta;
+            var delta = newPoint.Subtract(StartingPoint);
+            var newChildLocation = ChildStartingPoint.Add(delta);
 
             var resultingLocation = SnappingEngine.SnapPoint(newChildLocation);
 

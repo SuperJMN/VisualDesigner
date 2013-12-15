@@ -15,12 +15,13 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         protected List<double> HorizontalEdges { get; private set; }
         protected List<double> VerticalEdges { get; private set; }
 
-        public Point SnapPoint(Point pointToSnap)
+        public IPoint SnapPoint(IPoint pointToSnap)
         {
             var snappedX = Snap(pointToSnap.X, HorizontalEdges);
             var snappedY = Snap(pointToSnap.Y, VerticalEdges);
             
-            var snapResult = new Point(snappedX, snappedY);
+            
+            var snapResult =  ServiceLocator.CoreTypesFactory.CreatePoint(snappedX, snappedY);
             return snapResult;
         }
 
