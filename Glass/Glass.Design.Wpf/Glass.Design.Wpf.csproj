@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B9D1218F-5566-469D-B66C-AC5FFDE1BE2D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Glass.Design.Wpf</RootNamespace>
+    <AssemblyName>Glass.Design.Wpf</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CanvasItem\CanvasItemGroupWpf.cs" />
+    <Compile Include="CanvasItem\CanvasItemWpf.cs" />
+    <Compile Include="DesignSurface\DesignSurface.cs" />
+    <Compile Include="DesignSurface\DesignerItem.cs" />
+    <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThumbCursorConverterFactory.cs" />
+    <Compile Include="WindowsSizeCursorsThumbCursorConverter.cs" />
+    <Compile Include="WrappingAdorner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass.Basics\Glass.Basics.csproj">
+      <Project>{76c3d50b-ca51-480f-8fcd-40f0ea98f4c6}</Project>
+      <Name>Glass.Basics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
+      <Project>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</Project>
+      <Name>Glass.Design.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Design\Glass.Design.csproj">
+      <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
+      <Name>Glass.Design</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

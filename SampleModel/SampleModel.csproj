@@ -38,16 +38,12 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Glass\Glass.Design.Interfaces\Glass.Design.Interfaces.csproj">
+    <ProjectReference Include="..\Glass\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
-      <Name>Glass.Design.Interfaces</Name>
+      <Name>Glass.Design.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CanvasItem.cs" />
-    <Compile Include="CanvasRectangle.cs" />
-    <Compile Include="Color.cs" />
-    <Compile Include="Mario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -64,9 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Interfaces.csproj">
+    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
       <Project>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</Project>
-      <Name>Glass.Design.Interfaces</Name>
+      <Name>Glass.Design.Pcl</Name>
     </ProjectReference>
     <ProjectReference Include="..\Glass.Design\Glass.Design.csproj">
       <Project>{38715D1F-E3D5-499E-B381-1F3AD813137D}</Project>

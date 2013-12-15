@@ -1,13 +1,17 @@
 ﻿using System.Windows;
-using Design.Interfaces;
+using Glass.Design.Annotations;
 using Glass.Design.CanvasItem;
+using Glass.Design.DesignSurface.VisualAids.Snapping;
 
-namespace Glass.Design.DesignSurface.VisualAids
+namespace Glass.Design.DesignSurface.VisualAids.Drag
 {
     public class DragOperation
     {
         private ICanvasItem Child { get; set; }
         private Point StartingPoint { get; set; }
+
+        [NotNull]
+        public ISnappingEngine SnappingEngine { get; set; }
 
         public DragOperation(ICanvasItem child, Point startingPoint)
         {
@@ -24,23 +28,9 @@ namespace Glass.Design.DesignSurface.VisualAids
             var delta = newPoint - StartingPoint;
             var newChildLocation = ChildStartingPoint + delta;
 
-            var resultingLocation = SnapToGrid(newChildLocation, new Size(24, 24), new Vector(0.6, 0.6));
+            var resultingLocation = SnappingEngine.SnapPoint(newChildLocation);
 
             Child.SetLocation(resultingLocation);
-        }
-
-        private Point SnapToGrid(Point newChildLocation, Size size, Vector power)
-        {
-            var scopeX = (power.X * size.Width) /2;
-            var scopeY = (power.Y * size.Height) / 2;
-
-            var nearestGridX = MathOperations.NearestMultiple(newChildLocation.X, size.Width);
-            var x = MathOperations.Snap(newChildLocation.X, nearestGridX, scopeX);
-
-            var nearestGridY = MathOperations.NearestMultiple(newChildLocation.Y, size.Height);
-            var y = MathOperations.Snap(newChildLocation.Y, nearestGridY, scopeY);
-
-            return new Point(x, y);
         }
     }
 }

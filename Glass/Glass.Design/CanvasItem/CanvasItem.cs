@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Design.Interfaces;
+using Glass.Design.DesignSurface;
 
 namespace Glass.Design.CanvasItem
 {
@@ -58,13 +58,13 @@ namespace Glass.Design.CanvasItem
         public event EventHandler<LocationChangedEventArgs> LeftChanged;
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        protected void OnTopChanged(LocationChangedEventArgs e)
+        protected virtual void OnTopChanged(LocationChangedEventArgs e)
         {
             var handler = TopChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected void OnLeftChanged(LocationChangedEventArgs e)
+        protected virtual void OnLeftChanged(LocationChangedEventArgs e)
         {
             var handler = LeftChanged;
             if (handler != null) handler(this, e);

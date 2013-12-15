@@ -7,7 +7,7 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Glass.Design;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="/Glass.Design.Wpf;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <wpfTester:ModelColorToSolidColorBrush x:Key="ColorConverter" />
             <wpfTester:DesignModeConverter x:Key="OperationModeConverter" />

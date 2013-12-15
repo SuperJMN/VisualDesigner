@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using Design.Interfaces;
+using Glass.Design.CanvasItem;
 
 namespace Glass.Design
 {

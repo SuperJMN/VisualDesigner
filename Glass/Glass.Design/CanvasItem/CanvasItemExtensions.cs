@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Design.Interfaces;
+using Glass.Design.DesignSurface;
 
 namespace Glass.Design.CanvasItem
 {

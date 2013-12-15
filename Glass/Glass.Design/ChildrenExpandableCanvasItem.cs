@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using Design.Interfaces;
+using Glass.Design.CanvasItem;
+using Glass.Design.DesignSurface;
 
 namespace Glass.Design
 {

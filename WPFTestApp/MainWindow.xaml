@@ -1,16 +1,16 @@
 ﻿<Window x:Class="Glass.Design.WpfTester.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sampleModel="clr-namespace:SampleModel;assembly=SampleModel"
         xmlns:designSurface="clr-namespace:Glass.Design.DesignSurface;assembly=Glass.Design"
-        xmlns:interfaces="clr-namespace:Design.Interfaces;assembly=Design.Interfaces"
-        xmlns:design="clr-namespace:Glass.Design;assembly=Glass.Design"
+        xmlns:designSurface1="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
+        xmlns:sampleModel1="clr-namespace:SampleModel;assembly=SampleModelNoPCL"
+        xmlns:sampleModelNoPcl="clr-namespace:SampleModelNoPCL;assembly=SampleModelNoPCL"
         Title="MainWindow" Height="390.789" Width="619.737">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
+        <DataTemplate DataType="{x:Type sampleModel1:CanvasRectangle}">
             <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type sampleModel:Mario}">
+        <DataTemplate DataType="{x:Type sampleModelNoPcl:Mario}">
             <Image Stretch="Fill" Source="/Images/Mario.png"  />
         </DataTemplate>
     </Window.Resources>
@@ -20,26 +20,26 @@
                 <ToggleButton Content="Move Mode" IsChecked="{Binding ElementName=DesignSurface, Path=OperationMode, Converter={StaticResource OperationModeConverter}}"></ToggleButton>
             </ToolBar>
         </ToolBarTray>
-        <designSurface:DesignSurface Background="Azure" x:Name="DesignSurface" >
-            <designSurface:DesignSurface.ItemContainerStyle>
-                <Style TargetType="{x:Type designSurface:DesignerItem}">
-                    <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(interfaces:IPositionable.Left)}" />
-                    <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(interfaces:IPositionable.Top)}" />
-                    <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(interfaces:ISizable.Width)}" />
-                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(interfaces:ISizable.Height)}" />
+        <designSurface1:DesignSurface Background="Azure" x:Name="DesignSurface" >
+            <designSurface1:DesignSurface.ItemContainerStyle>
+                <Style TargetType="{x:Type designSurface1:DesignerItem}">
+                    <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
+                    <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Top)}" />
+                    <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Width)}" />
+                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Height)}" />
                 </Style>
-            </designSurface:DesignSurface.ItemContainerStyle>
-            <sampleModel:CanvasRectangle Top="0" Left="0" Width="100" Height="100">
-                <sampleModel:CanvasRectangle.FillColor>
-                    <sampleModel:Color R="255" G="230" B="10"  />
-                </sampleModel:CanvasRectangle.FillColor>
-            </sampleModel:CanvasRectangle>
-            <sampleModel:Mario Top="50" Left="50" Width="80" Height="80" />
-            <sampleModel:CanvasRectangle Top="133" Left="245" Width="800" Height="200" >
-                <sampleModel:CanvasRectangle.FillColor>
-                    <sampleModel:Color R="0" G="0" B="0"/>
-                </sampleModel:CanvasRectangle.FillColor>
-            </sampleModel:CanvasRectangle>
-        </designSurface:DesignSurface>
+            </designSurface1:DesignSurface.ItemContainerStyle>
+            <sampleModel1:CanvasRectangle Top="0" Left="0" Width="100" Height="100">
+                <sampleModel1:CanvasRectangle.FillColor>
+                    <sampleModel1:Color R="255" G="230" B="10"  />
+                </sampleModel1:CanvasRectangle.FillColor>
+            </sampleModel1:CanvasRectangle>
+            <sampleModelNoPcl:Mario Top="50" Left="50" Width="80" Height="80" />
+            <sampleModel1:CanvasRectangle Top="133" Left="245" Width="800" Height="200" >
+                <sampleModel1:CanvasRectangle.FillColor>
+                    <sampleModel1:Color R="0" G="0" B="0"/>
+                </sampleModel1:CanvasRectangle.FillColor>
+            </sampleModel1:CanvasRectangle>
+        </designSurface1:DesignSurface>
     </DockPanel>
 </Window>

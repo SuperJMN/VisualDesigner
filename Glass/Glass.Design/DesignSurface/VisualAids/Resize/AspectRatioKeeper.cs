@@ -1,7 +1,6 @@
 ﻿using System;
-using Design.Interfaces;
 
-namespace Glass.Design.DesignSurface.VisualAids
+namespace Glass.Design.DesignSurface.VisualAids.Resize
 {
     public class AspectRatioKeeper : IDisposable
     {

@@ -14,6 +14,7 @@ namespace Glass.Design.WpfTester
 
         }
 
+        // ReSharper disable once TooManyArguments
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             

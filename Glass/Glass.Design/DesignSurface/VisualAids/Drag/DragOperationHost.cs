@@ -1,17 +1,25 @@
 using System.Windows;
 using System.Windows.Input;
-using Design.Interfaces;
+using Glass.Design.Annotations;
+using Glass.Design.CanvasItem;
+using Glass.Design.DesignSurface.VisualAids.Snapping;
 
-namespace Glass.Design.DesignSurface.VisualAids
+namespace Glass.Design.DesignSurface.VisualAids.Drag
 {
-    internal class DragOperationHost
+
+    public class DragOperationHost
     {
+        [NotNull]
         private ICanvasItem ItemToDrag { get; set; }
+        [NotNull]
         private IInputElement FrameOfReference { get; set; }
+        [NotNull]
+        public ICanvasItemSnappingEngine SnappingEngine { get; set; }
 
         public DragOperationHost(IInputElement frameOfReference)
         {
-            FrameOfReference = frameOfReference;            
+            FrameOfReference = frameOfReference;        
+            SnappingEngine = new NoEffectsCanvasItemSnappingEngine();
         }
 
         private void FrameOfReferenceOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
@@ -43,6 +51,7 @@ namespace Glass.Design.DesignSurface.VisualAids
             args.Handled = true;
 
             DragOperation = new DragOperation(ItemToDrag, args.GetPosition(FrameOfReference));
+            DragOperation.SnappingEngine = SnappingEngine;
 
             FrameOfReference.CaptureMouse();
 

@@ -107,17 +107,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass\Glass.Design.Interfaces\Glass.Design.Interfaces.csproj">
+    <ProjectReference Include="..\Glass\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
       <Name>Glass.Design.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\glass\Glass.Design.Wpf\Glass.Design.Wpf.csproj">
+      <Project>{b9d1218f-5566-469d-b66c-ac5ffde1be2d}</Project>
+      <Name>Glass.Design.Wpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Glass\Glass.Design\Glass.Design.csproj">
       <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
       <Name>Glass.Design</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SampleModel\SampleModel.csproj">
-      <Project>{D0D18B5A-F5FB-4CF2-BCAC-08603A1FEFDC}</Project>
-      <Name>SampleModel</Name>
+    <ProjectReference Include="..\SampleModelNoPCL\SampleModelNoPCL.csproj">
+      <Project>{e945b290-9446-4613-b149-01937a8677d5}</Project>
+      <Name>SampleModelNoPCL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +136,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

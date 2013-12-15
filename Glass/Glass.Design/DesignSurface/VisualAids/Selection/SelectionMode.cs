@@ -1,4 +1,4 @@
-namespace Glass.Design.DesignSurface
+namespace Glass.Design.DesignSurface.VisualAids.Selection
 {
     public enum SelectionMode
     {

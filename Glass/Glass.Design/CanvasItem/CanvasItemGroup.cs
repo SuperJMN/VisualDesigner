@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Design.Interfaces;
 
 namespace Glass.Design.CanvasItem
 {

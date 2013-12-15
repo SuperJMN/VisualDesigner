@@ -60,40 +60,40 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
+    <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="CanvasItem\CanvasItem.cs" />
     <Compile Include="CanvasItem\CanvasItemExtensions.cs" />
     <Compile Include="CanvasItem\CanvasItemGroup.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
+    <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\IThumbCursorConverter.cs" />
-    <Compile Include="Converters\WindowsSizeCursorsThumbCursorConverter.cs" />
     <Compile Include="DesignSurface\DesignOperation.cs" />
-    <Compile Include="DesignSurface\DesignSurface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DesignSurface\DesignerItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
-    <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
+    <Compile Include="DesignSurface\IDesignerItem.cs" />
+    <Compile Include="DesignSurface\IDesignSurface.cs" />
     <Compile Include="DesignSurface\IMultiSelector.cs" />
-    <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
-    <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
+    <Compile Include="DesignSurface\IPositionable.cs" />
+    <Compile Include="DesignSurface\IResizeThumb.cs" />
+    <Compile Include="DesignSurface\ISizable.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\EdgeSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\GridSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\ICanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\ISnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsCanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsSnappingEngine.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="DesignSurface\IDesignSurface.cs" />
     <Compile Include="Geometrics.cs" />
     <Compile Include="MathOperations.cs" />
-    <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
     <Compile Include="PointCollection.cs" />
     <Compile Include="ProportionalResizer.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
-    <Compile Include="ThumbCursorConverterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -120,22 +120,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Basics\Glass.Basics.csproj">
-      <Project>{76c3d50b-ca51-480f-8fcd-40f0ea98f4c6}</Project>
-      <Name>Glass.Basics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Interfaces.csproj">
+    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
-      <Name>Glass.Design.Interfaces</Name>
+      <Name>Glass.Design.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
