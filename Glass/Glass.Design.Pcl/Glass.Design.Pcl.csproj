@@ -84,8 +84,6 @@
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
-    <Compile Include="Converters\Cursor.cs" />
-    <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="Core\Point.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\Rect.cs" />
