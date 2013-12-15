@@ -64,10 +64,6 @@
       <Project>{76c3d50b-ca51-480f-8fcd-40f0ea98f4c6}</Project>
       <Name>Glass.Basics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
-      <Project>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</Project>
-      <Name>Glass.Design.Pcl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Glass.Design\Glass.Design.csproj">
       <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
       <Name>Glass.Design</Name>

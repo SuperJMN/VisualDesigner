@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Glass.Design.Pcl</RootNamespace>
+    <AssemblyName>Glass.Design.Pcl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Annotations\CanBeNullAttribute.cs" />
+    <Compile Include="Annotations\AspMvcActionAttribute.cs" />
+    <Compile Include="Annotations\AspMvcActionSelectorAttribute.cs" />
+    <Compile Include="Annotations\AspMvcAreaAttribute.cs" />
+    <Compile Include="Annotations\AspMvcAreaMasterLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\AspMvcAreaPartialViewLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\AspMvcAreaViewLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\AspMvcControllerAttribute.cs" />
+    <Compile Include="Annotations\AspMvcDisplayTemplateAttribute.cs" />
+    <Compile Include="Annotations\AspMvcEditorTemplateAttribute.cs" />
+    <Compile Include="Annotations\AspMvcMasterAttribute.cs" />
+    <Compile Include="Annotations\AspMvcMasterLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\AspMvcModelTypeAttribute.cs" />
+    <Compile Include="Annotations\AspMvcPartialViewAttribute.cs" />
+    <Compile Include="Annotations\AspMvcPartialViewLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\AspMvcSupressViewErrorAttribute.cs" />
+    <Compile Include="Annotations\AspMvcTemplateAttribute.cs" />
+    <Compile Include="Annotations\AspMvcViewAttribute.cs" />
+    <Compile Include="Annotations\AspMvcViewLocationFormatAttribute.cs" />
+    <Compile Include="Annotations\BaseTypeRequiredAttribute.cs" />
+    <Compile Include="Annotations\CannotApplyEqualityOperatorAttribute.cs" />
+    <Compile Include="Annotations\ContractAnnotationAttribute.cs" />
+    <Compile Include="Annotations\HtmlAttributeValueAttribute.cs" />
+    <Compile Include="Annotations\HtmlElementAttributesAttribute.cs" />
+    <Compile Include="Annotations\ImplicitUseKindFlags.cs" />
+    <Compile Include="Annotations\ImplicitUseTargetFlags.cs" />
+    <Compile Include="Annotations\InstantHandleAttribute.cs" />
+    <Compile Include="Annotations\InvokerParameterNameAttribute.cs" />
+    <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
+    <Compile Include="Annotations\MeansImplicitUseAttribute.cs" />
+    <Compile Include="Annotations\NotifyPropertyChangedInvocatorAttribute.cs" />
+    <Compile Include="Annotations\NotNullAttribute.cs" />
+    <Compile Include="Annotations\PathReferenceAttribute.cs" />
+    <Compile Include="Annotations\PublicAPIAttribute.cs" />
+    <Compile Include="Annotations\PureAttribute.cs" />
+    <Compile Include="Annotations\RazorSectionAttribute.cs" />
+    <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
+    <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />
+    <Compile Include="CanvasItem\CanvasItem.cs" />
+    <Compile Include="CanvasItem\CanvasItemExtensions.cs" />
+    <Compile Include="CanvasItem\CanvasItemGroup.cs" />
+    <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
+    <Compile Include="CanvasItem\ICanvasItem.cs" />
+    <Compile Include="ChildrenExpandableCanvasItem.cs" />
+    <Compile Include="Converters\Cursor.cs" />
+    <Compile Include="Converters\IThumbCursorConverter.cs" />
+    <Compile Include="Core\Point.cs" />
+    <Compile Include="Core\Vector.cs" />
+    <Compile Include="Core\Rect.cs" />
+    <Compile Include="Core\Size.cs" />
+    <Compile Include="DesignSurface\DesignOperation.cs" />
+    <Compile Include="DesignSurface\IDesignerItem.cs" />
+    <Compile Include="DesignSurface\IDesignSurface.cs" />
+    <Compile Include="DesignSurface\IMultiSelector.cs" />
+    <Compile Include="DesignSurface\IPositionable.cs" />
+    <Compile Include="DesignSurface\IResizeThumb.cs" />
+    <Compile Include="DesignSurface\ISizable.cs" />
+    <Compile Include="DesignSurface\LocationChangedEventArgs.cs" />
+    <Compile Include="DesignSurface\SizeChangeEventArgs.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\EdgeSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\GridSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\ICanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\ISnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsCanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsSnappingEngine.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Geometrics.cs" />
+    <Compile Include="MathOperations.cs" />
+    <Compile Include="PointCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProportionalResizer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

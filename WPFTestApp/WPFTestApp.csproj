@@ -107,10 +107,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
-      <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
-      <Name>Glass.Design.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\glass\Glass.Design.Wpf\Glass.Design.Wpf.csproj">
       <Project>{b9d1218f-5566-469d-b66c-ac5ffde1be2d}</Project>
       <Name>Glass.Design.Wpf</Name>

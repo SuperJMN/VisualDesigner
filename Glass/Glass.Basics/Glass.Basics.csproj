@@ -182,12 +182,6 @@
   <ItemGroup>
     <Folder Include="Behaviors\KeepFocusOnError\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
-      <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
-      <Name>Glass.Design.Pcl</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

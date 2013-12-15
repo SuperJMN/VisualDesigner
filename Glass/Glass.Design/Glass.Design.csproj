@@ -119,12 +119,6 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Glass.Design.Interfaces\Glass.Design.Pcl.csproj">
-      <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
-      <Name>Glass.Design.Pcl</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
