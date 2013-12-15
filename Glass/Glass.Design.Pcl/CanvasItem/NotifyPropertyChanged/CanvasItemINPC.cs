@@ -5,7 +5,7 @@ using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
 {
-    public class CanvasItemINPC : Pcl.CanvasItem.CanvasItem, INotifyPropertyChanged
+    public class CanvasItemINPC : CanvasItem, INotifyPropertyChanged
     {
         public CanvasItemINPC()
         {
