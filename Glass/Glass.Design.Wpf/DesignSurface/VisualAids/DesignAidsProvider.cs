@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
-using Glass.Design.CanvasItem;
-using Glass.Design.DesignSurface;
-using Glass.Design.DesignSurface.VisualAids.Drag;
-using Glass.Design.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.CanvasItem;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;

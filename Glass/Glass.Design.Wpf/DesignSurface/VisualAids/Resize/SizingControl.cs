@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Glass.Design.CanvasItem;
-using Glass.Design.DesignSurface.VisualAids.Resize;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {

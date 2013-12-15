@@ -1,7 +1,6 @@
 ﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
-using SampleModel;
 
-namespace SampleModelNoPCL
+namespace SampleModel
 {
     public class CanvasRectangle : CanvasItemINPC
     {

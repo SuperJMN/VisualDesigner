@@ -7,8 +7,8 @@
     <ProjectGuid>{E945B290-9446-4613-B149-01937A8677D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleModelNoPCL</RootNamespace>
-    <AssemblyName>SampleModelNoPCL</AssemblyName>
+    <RootNamespace>SampleModel</RootNamespace>
+    <AssemblyName>SampleModel</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -46,13 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\glass\Glass.Design.Wpf\Glass.Design.Wpf.csproj">
-      <Project>{B9D1218F-5566-469D-B66C-AC5FFDE1BE2D}</Project>
-      <Name>Glass.Design.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Glass\Glass.Design\Glass.Design.csproj">
-      <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
-      <Name>Glass.Design</Name>
+    <ProjectReference Include="..\Glass\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
+      <Project>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</Project>
+      <Name>Glass.Design.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

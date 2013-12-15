@@ -19,7 +19,7 @@ namespace Glass.Design.Pcl
             return new CanvasItemResizeInfo(positionDelta, sizeDelta);
         }
 
-        public void DeltaResize(Vector resize)
+        public void DeltaResize(IVector resize)
         {
             var horzResize = DeltaResize(resize.X, HookPoint.X);
             var vertResize = DeltaResize(resize.Y, HookPoint.Y);
@@ -38,6 +38,6 @@ namespace Glass.Design.Pcl
             }
         }
 
-        public Vector HookPoint { get; set; }
+        public IVector HookPoint { get; set; }
     }
 }

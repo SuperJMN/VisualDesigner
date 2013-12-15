@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Converters;
+using Glass.Design.Pcl;
+using Glass.Design.Pcl.Core;
+using Glass.Design.Wpf.Converters;
+using ImpromptuInterface;
+using Point = System.Windows.Point;
+
 
 namespace Glass.Design.Wpf
 {
     public class WindowsSizeCursorsThumbCursorConverter : IThumbCursorConverter
     {
 
-        public Cursor GetCursor(Rect handleRect, Rect parentRect)
+        public Cursor GetCursor(IRect handleRect, IRect parentRect)
         {
             var discretizedHandle = handleRect.DiscretizeUsingAverage();
             var edgeSizeOfEquivalentSquare = parentRect.Size.EdgeOfEquivaletSquare();
@@ -27,7 +32,7 @@ namespace Glass.Design.Wpf
 
             var center = new Point(halfSide, halfSide);
 
-            var deg = Geometrics.GetDegress(center, end);
+            var deg = Geometrics.GetDegress(center.ActLike<IPoint>(), end.ActLike<IPoint>());
 
             var segment = GetHotSpotSegment(deg);
 
@@ -66,6 +71,4 @@ namespace Glass.Design.Wpf
             return Cursors.Arrow;
         }
     }
-
-
 }

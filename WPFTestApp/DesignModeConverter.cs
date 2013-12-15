@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using Glass.Design.DesignSurface;
+using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.WpfTester
 {

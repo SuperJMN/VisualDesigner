@@ -1,7 +1,8 @@
 ﻿using System;
-using Glass.Design.Converters;
-using Glass.Design.DesignSurface;
+using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Wpf.Converters;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;
+
 
 namespace Glass.Design.Wpf
 {

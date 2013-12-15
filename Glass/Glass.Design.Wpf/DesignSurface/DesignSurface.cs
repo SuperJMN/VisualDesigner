@@ -5,11 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using Glass.Design.CanvasItem;
-using Glass.Design.DesignSurface;
-using Glass.Design.DesignSurface.VisualAids.Selection;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Wpf.DesignSurface.VisualAids;
-using SelectionMode = Glass.Design.DesignSurface.VisualAids.Selection.SelectionMode;
+using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
 namespace Glass.Design.Wpf.DesignSurface
 {

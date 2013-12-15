@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.DesignSurface;
-using Glass.Design.Wpf.Annotations;
 
-namespace Glass.Design.Wpf.CanvasItem
+namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
 {
-    internal class CanvasItemGroupWpf : CanvasItemGroup, INotifyPropertyChanged
+    internal class CanvasItemGroupINPC : CanvasItemGroup, INotifyPropertyChanged
     {
-        public CanvasItemGroupWpf(IEnumerable<ICanvasItem> items)
+        public CanvasItemGroupINPC(IEnumerable<ICanvasItem> items)
             : base(items)
         {
             
@@ -39,7 +38,6 @@ namespace Glass.Design.Wpf.CanvasItem
             base.OnLeftChanged(e);
             OnPropertyChanged("Left");
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImpromptuInterface">
+      <HintPath>..\..\packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -45,10 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CanvasItem\CanvasItemGroupWpf.cs" />
-    <Compile Include="CanvasItem\CanvasItemWpf.cs" />
+    <Compile Include="CanvasItem\CanvasItemNotifyPropertyChanged.cs" />
+    <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\DesignerItem.cs" />
     <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
@@ -64,9 +71,9 @@
       <Project>{76c3d50b-ca51-480f-8fcd-40f0ea98f4c6}</Project>
       <Name>Glass.Basics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Glass.Design\Glass.Design.csproj">
-      <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
-      <Name>Glass.Design</Name>
+    <ProjectReference Include="..\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
+      <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
+      <Name>Glass.Design.Pcl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +82,11 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

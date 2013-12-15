@@ -1,6 +1,6 @@
 ﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
 
-namespace SampleModelNoPCL
+namespace SampleModel
 {
     public class Mario : CanvasItemINPC
     {

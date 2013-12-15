@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Glass.Design.DesignSurface;
-using Glass.Design.Wpf.Properties;
+using Glass.Design.Pcl.Annotations;
+using Glass.Design.Pcl.DesignSurface;
 
-namespace Glass.Design.Wpf.CanvasItem
+namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
 {
-    public class CanvasItemWpf : Design.CanvasItem.CanvasItem, INotifyPropertyChanged
+    public class CanvasItemINPC : Pcl.CanvasItem.CanvasItem, INotifyPropertyChanged
     {
-        public CanvasItemWpf()
+        public CanvasItemINPC()
         {
             
         }

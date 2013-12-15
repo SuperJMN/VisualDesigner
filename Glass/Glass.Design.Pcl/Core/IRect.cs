@@ -5,6 +5,7 @@ namespace Glass.Design.Pcl.Core
         double Left { get; set; }
         double Top { get; set; }
         double Width { get; set; }
-        double Height { get; set; }        
+        double Height { get; set; }
+        ISize Size { get; set; }
     }
 }

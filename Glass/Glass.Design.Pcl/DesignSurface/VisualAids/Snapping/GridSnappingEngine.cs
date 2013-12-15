@@ -5,9 +5,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
     public class GridSnappingEngine : ISnappingEngine
     {
         public ISize GridSize { get; set; }
-        public Vector Power { get; set; }
+        public IVector Power { get; set; }
 
-        public GridSnappingEngine(ISize gridSize, Vector power)
+        public GridSnappingEngine(ISize gridSize, IVector power)
         {
             GridSize = gridSize;
             Power = power;

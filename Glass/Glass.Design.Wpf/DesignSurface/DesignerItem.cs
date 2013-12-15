@@ -5,8 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Glass.Design.CanvasItem;
-using Glass.Design.DesignSurface;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.DesignSurface;
 
 #endregion
 

@@ -39,9 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Annotations\CanBeNullAttribute.cs" />
     <Compile Include="Annotations\AspMvcActionAttribute.cs" />
     <Compile Include="Annotations\AspMvcActionSelectorAttribute.cs" />
@@ -84,9 +81,11 @@
     <Compile Include="CanvasItem\CanvasItemExtensions.cs" />
     <Compile Include="CanvasItem\CanvasItemGroup.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
+    <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemGroupINPC.cs" />
+    <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemNotifyPropertyChanged.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
-    <Compile Include="Converters\IThumbCursorConverter.cs" />
+    <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="Core\ServiceLocator.cs" />
     <Compile Include="Core\CoreTypesFactory.cs" />
     <Compile Include="Core\ICursor.cs" />

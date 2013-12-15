@@ -48,6 +48,10 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="ImpromptuInterface, Version=6.2.2.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -107,17 +111,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
+      <Project>{39FA9863-7A33-4DB8-B009-553CD76A9D5F}</Project>
+      <Name>Glass.Design.Pcl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\glass\Glass.Design.Wpf\Glass.Design.Wpf.csproj">
       <Project>{b9d1218f-5566-469d-b66c-ac5ffde1be2d}</Project>
       <Name>Glass.Design.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Glass\Glass.Design\Glass.Design.csproj">
-      <Project>{38715d1f-e3d5-499e-b381-1f3ad813137d}</Project>
-      <Name>Glass.Design</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SampleModelNoPCL\SampleModelNoPCL.csproj">
-      <Project>{e945b290-9446-4613-b149-01937a8677d5}</Project>
-      <Name>SampleModelNoPCL</Name>
+    <ProjectReference Include="..\SampleModel\SampleModel.csproj">
+      <Project>{d0d18b5a-f5fb-4cf2-bcac-08603a1fefdc}</Project>
+      <Name>SampleModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,12 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using Glass.Basics.Extensions;
-using Glass.Design.CanvasItem;
-using Glass.Design.Converters;
-using Glass.Design.DesignSurface;
+using Glass.Design.Pcl;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Wpf.Converters;
+using ImpromptuInterface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
@@ -24,8 +27,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         private void SetCursor()
         {
             var myBounds = this.GetRectRelativeToParent();
-            
-            Cursor = cursorConverter.GetCursor(myBounds, CanvasItem.ToRect());
+
+            var handleRect = myBounds.ActLike<IRect>();
+            var cursor = cursorConverter.GetCursor(handleRect, CanvasItem.ToRect());
+            Cursor = cursor;
         }
 
 
@@ -82,7 +87,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         public void DeltaMove(double horizontalChange, double verticalChange)
         {
             var proportionalResizer = new ProportionalResizer(CanvasItem);
-            proportionalResizer.HookPoint = GetHookPointFromMyPosition();
+            proportionalResizer.HookPoint = GetHookPointFromMyPosition().ActLike<IVector>();
 
             if (!AllowHorizontalResize)
             {
@@ -93,7 +98,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 verticalChange = 0;
             }
 
-            proportionalResizer.DeltaResize(new Vector(horizontalChange, verticalChange));
+            var resize = new Vector(horizontalChange, verticalChange);
+            proportionalResizer.DeltaResize(resize.ActLike<IVector>());
         }
 
         #region AllowVerticalResize

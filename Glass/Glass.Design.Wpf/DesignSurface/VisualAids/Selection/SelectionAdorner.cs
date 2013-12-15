@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Glass.Design.CanvasItem;
-using Glass.Design.DesignSurface;
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Selection
 {

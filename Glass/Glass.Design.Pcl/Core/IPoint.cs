@@ -21,14 +21,6 @@
         int GetHashCode();
 
         
-        void Offset(double offsetX, double offsetY);
-
-        
-        IPoint Add(Vector vector);
-
-        
-        IPoint Subtract(Vector vector);
-
-        Vector Subtract(IPoint point2);
+        void Offset(double offsetX, double offsetY);              
     }
 }
