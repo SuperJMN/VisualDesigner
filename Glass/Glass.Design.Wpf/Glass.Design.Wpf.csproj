@@ -49,8 +49,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CanvasItem\CanvasItemGroupWpf.cs" />
-    <Compile Include="CanvasItem\CanvasItemNotifyPropertyChanged.cs" />
     <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\DesignerItem.cs" />
