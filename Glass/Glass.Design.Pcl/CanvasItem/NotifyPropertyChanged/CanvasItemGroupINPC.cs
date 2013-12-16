@@ -6,7 +6,7 @@ using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
 {
-    internal class CanvasItemGroupINPC : CanvasItemGroup, INotifyPropertyChanged
+    public class CanvasItemGroupINPC : CanvasItemGroup, INotifyPropertyChanged
     {
         public CanvasItemGroupINPC(IEnumerable<ICanvasItem> items)
             : base(items)

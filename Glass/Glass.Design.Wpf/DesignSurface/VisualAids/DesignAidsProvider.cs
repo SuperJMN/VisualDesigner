@@ -3,9 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using Glass.Design.Wpf.CanvasItem;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
@@ -109,7 +109,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             var items = SelectionAdorners.Keys.ToList();
             if (items.Any())
             {
-                GroupedItems = new CanvasItemGroupWpf(items);
+                GroupedItems = new CanvasItemGroupINPC(items);
             }
             else
             {
