@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Glass.Design.Pcl.CanvasItem;
 
@@ -11,6 +12,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         }
 
         private IEnumerable<ICanvasItem> items;
+
+        public EventHandler ItemSnapped;
 
         public IEnumerable<ICanvasItem> Items
         {

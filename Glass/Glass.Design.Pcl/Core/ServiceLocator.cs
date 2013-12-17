@@ -2,6 +2,6 @@
 {
     public static class ServiceLocator
     {
-        public static CoreTypesFactory CoreTypesFactory { get; set; }
+        public static ICoreTypesFactory CoreTypesFactory { get; set; }
     }
 }

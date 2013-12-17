@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Design.Interfaces;
-using Glass.Design.CanvasItem;
+using Glass.Design.Pcl.CanvasItem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1

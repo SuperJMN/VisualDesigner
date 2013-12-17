@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Wpf.Core;
 using ImpromptuInterface;
 using Point = System.Windows.Point;
 
@@ -18,16 +19,5 @@ namespace Glass.Design.WpfTester
         }
     }
 
-    public class CoreTypesFactoryWpf : CoreTypesFactory
-    {
-        public override IPoint CreatePoint(double x, double y)
-        {
-            return new Point(x, y).ActLike<IPoint>();
-        }
-
-        public override IRect CreateRect(double left, double top, double width, double height)
-        {
-            return new Rect(left, top, width, height).ActLike<IRect>();
-        }
-    }
+    
 }

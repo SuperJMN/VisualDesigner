@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\IThumbCursorConverter.cs" />
+    <Compile Include="Core\CoreTypesFactoryWpf.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\DesignerItem.cs" />
     <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />

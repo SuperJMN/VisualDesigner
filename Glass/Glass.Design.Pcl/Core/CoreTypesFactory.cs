@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Glass.Design.Pcl.Core
 {
-    public abstract class CoreTypesFactory
+    public interface ICoreTypesFactory
     {
-        public abstract IPoint CreatePoint(double x, double y);
+        IPoint CreatePoint(double x, double y);
 
         // ReSharper disable once TooManyArguments
-        public abstract IRect CreateRect(double left, double top, double width, double height);
+        IRect CreateRect(double left, double top, double width, double height);
     }
 }
