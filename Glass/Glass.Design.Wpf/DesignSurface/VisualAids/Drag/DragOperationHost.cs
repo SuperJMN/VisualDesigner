@@ -26,8 +26,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         }
 
         private void FrameOfReferenceOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
-        {            
-            DragOperation.NotifyNewPosition(mouseEventArgs.GetPosition(FrameOfReference).ActLike<IPoint>());            
+        {
+            var position = mouseEventArgs.GetPosition(FrameOfReference);
+            var newPoint = position.ActLike<IPoint>();
+            DragOperation.NotifyNewPosition(newPoint);
         }
 
         private void InputElementOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)

@@ -5,6 +5,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class NoEffectsCanvasItemSnappingEngine : NoEffectsSnappingEngine, ICanvasItemSnappingEngine
     {
-        public IEnumerable<ICanvasItem> Items { get; set; }
+        public IEnumerable<ICanvasItem> Magnets { get; set; }
     }
 }

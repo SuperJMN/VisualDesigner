@@ -32,7 +32,7 @@ namespace UnitTestProject1
                               };
 
 
-            snappingEngine.Items = canvasItems;
+            snappingEngine.Magnets = canvasItems;
         }
     }
 }

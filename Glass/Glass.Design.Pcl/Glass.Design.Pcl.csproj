@@ -81,6 +81,7 @@
     <Compile Include="CanvasItem\CanvasItemExtensions.cs" />
     <Compile Include="CanvasItem\CanvasItemGroup.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
+    <Compile Include="CanvasItem\FakeCanvasItem.cs" />
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemGroupINPC.cs" />
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemINPC.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
@@ -107,12 +108,14 @@
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\Edge.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeSnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\GridSnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\ICanvasItemSnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\ISnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsCanvasItemSnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsSnappingEngine.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\SnappingEngine.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Geometrics.cs" />
     <Compile Include="MathOperations.cs" />

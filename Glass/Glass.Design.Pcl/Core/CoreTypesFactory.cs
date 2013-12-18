@@ -12,5 +12,6 @@ namespace Glass.Design.Pcl.Core
 
         // ReSharper disable once TooManyArguments
         IRect CreateRect(double left, double top, double width, double height);
+        ISize CreateSize(double width, double height);
     }
 }

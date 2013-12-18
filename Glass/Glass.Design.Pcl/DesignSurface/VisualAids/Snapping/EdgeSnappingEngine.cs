@@ -4,37 +4,33 @@ using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
-    public abstract class EdgeSnappingEngine : ISnappingEngine
+    public abstract class EdgeSnappingEngine : SnappingEngine
     {
         public EdgeSnappingEngine()
         {
-            HorizontalEdges = new List<double>();
-            VerticalEdges = new List<double>();
+            HorizontalEdges = new List<Edge>();
+            VerticalEdges = new List<Edge>();
         }
 
-        protected List<double> HorizontalEdges { get; private set; }
-        protected List<double> VerticalEdges { get; private set; }
+        protected List<Edge> HorizontalEdges { get; private set; }
+        protected List<Edge> VerticalEdges { get; private set; }
 
-        public IPoint SnapPoint(IPoint pointToSnap)
+        public override double SnapPoint(double value)
         {
-            var snappedX = Snap(pointToSnap.X, HorizontalEdges);
-            var snappedY = Snap(pointToSnap.Y, VerticalEdges);
-            
-            
-            var snapResult =  ServiceLocator.CoreTypesFactory.CreatePoint(snappedX, snappedY);
-            return snapResult;
+            var snappedX = Snap(value, HorizontalEdges);
+            return snappedX;
         }
-
-        private static double Snap(double pointToSnap, IEnumerable<double> edges)
+       
+        private static double Snap(double pointToSnap, IEnumerable<Edge> edges)
         {
             double snappedX = 0;
             var snapped = false;
             var enumerator = edges.GetEnumerator();
             while (enumerator.MoveNext() && !snapped)
             {
-                var horizontalEdge = enumerator.Current;
+                var edge = enumerator.Current;
 
-                snappedX = MathOperations.Snap(pointToSnap, horizontalEdge, 10);
+                snappedX = MathOperations.Snap(pointToSnap, edge.Origin, 10);
                 if (Math.Abs(snappedX - pointToSnap) > 0.1)
                 {
                     snapped = true;

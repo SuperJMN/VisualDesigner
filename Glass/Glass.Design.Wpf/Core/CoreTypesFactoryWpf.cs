@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.Remoting.Channels;
+using System.Windows;
 using Glass.Design.Pcl.Core;
 using ImpromptuInterface;
 
@@ -14,6 +15,12 @@ namespace Glass.Design.Wpf.Core
         public IRect CreateRect(double left, double top, double width, double height)
         {
             return new Rect(left, top, width, height).ActLike<IRect>();
+        }
+
+        public ISize CreateSize(double width, double height)
+        {
+
+            return new Size(width, height).ActLike<ISize>();
         }
     }
 }

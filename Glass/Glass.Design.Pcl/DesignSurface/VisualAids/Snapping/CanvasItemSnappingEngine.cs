@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
@@ -11,31 +14,41 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
            
         }
 
-        private IEnumerable<ICanvasItem> items;
+        private IEnumerable<ICanvasItem> magnets;
 
         public EventHandler ItemSnapped;
 
-        public IEnumerable<ICanvasItem> Items
+        public IEnumerable<ICanvasItem> Magnets
         {
-            get { return items; }
+            get { return magnets; }
             set
             {
-                items = value;
+                magnets = value;
                 GenerateEdges();
             }
         }
+
+        public IEnumerable<Edge> GetSnappingEdges(IRect rect)
+        {
+            var snappingEdges = from horizontalEdge in HorizontalEdges
+                where ShouldSnap(horizontalEdge, rect.Left)
+                select horizontalEdge;
+
+            return snappingEdges;
+        }
+
 
         private void GenerateEdges()
         {
             HorizontalEdges.Clear();
             VerticalEdges.Clear();
 
-            foreach (var canvasItem in Items)
+            foreach (var canvasItem in Magnets)
             {
-                HorizontalEdges.Add(canvasItem.Left);
-                HorizontalEdges.Add(canvasItem.Left + canvasItem.Width);
-                VerticalEdges.Add(canvasItem.Left);
-                VerticalEdges.Add(canvasItem.Top + canvasItem.Height);
+                HorizontalEdges.Add(new Edge(canvasItem.Left, canvasItem.Height));
+                HorizontalEdges.Add(new Edge(canvasItem.Left + canvasItem.Width, canvasItem.Height));
+                VerticalEdges.Add(new Edge(canvasItem.Left, canvasItem.Width));
+                VerticalEdges.Add(new Edge(canvasItem.Top + canvasItem.Height, canvasItem.Width));
             }
         }
     }

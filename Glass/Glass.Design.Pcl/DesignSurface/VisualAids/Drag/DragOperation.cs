@@ -7,7 +7,23 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
 {
     public class DragOperation
     {
-        private ICanvasItem Child { get; set; }
+        private ICanvasItem child;
+
+        private ICanvasItem Child
+        {
+            get { return child; }
+            set
+            {
+                child = value;
+                var fakeCanvasItem = new FakeCanvasItem();
+                fakeCanvasItem.SetLocation(child.GetLocation());
+                fakeCanvasItem.SetSize(child.GetSize());
+                FakeCanvasItem = fakeCanvasItem;
+            }
+        }
+
+        public FakeCanvasItem FakeCanvasItem { get; set; }
+
         private IPoint StartingPoint { get; set; }
 
         [NotNull]
@@ -28,9 +44,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             var delta = newPoint.Subtract(StartingPoint);
             var newChildLocation = ChildStartingPoint.Add(delta);
 
-            var resultingLocation = SnappingEngine.SnapPoint(newChildLocation);
+            var snappedX = SnappingEngine.SnapPoint(newChildLocation.X);
+            var snappedY = SnappingEngine.SnapPoint(newChildLocation.Y);
 
-            Child.SetLocation(resultingLocation);
+            Child.Left = snappedX;
+            Child.Top = snappedY;
         }
     }
 }
+

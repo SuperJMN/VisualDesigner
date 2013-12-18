@@ -4,6 +4,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public interface ISnappingEngine
     {
-        IPoint SnapPoint(IPoint pointToSnap);
+        double SnapPoint(double value);
+        bool ShouldSnap(Edge edge, double value);
+        double Threshold { get; set; }
     }
 }

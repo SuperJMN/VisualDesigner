@@ -10,9 +10,9 @@ namespace Glass.Design.Pcl.CanvasItem
             return ServiceLocator.CoreTypesFactory.CreatePoint(positionable.Left, positionable.Top);
         }
 
-        public static IPoint GetSize(this ISizable sizable)
+        public static ISize GetSize(this ISizable sizable)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(sizable.Width, sizable.Height);
+            return ServiceLocator.CoreTypesFactory.CreateSize(sizable.Width, sizable.Height);
         }
 
         public static void SetSize(this ISizable sizable, ISize size)

@@ -63,7 +63,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             DragOperationHost.SetDragTarget(movingControl, GroupedItems);
             var canvasItems = Visual.CanvasItems.Where(item => !GroupedItems.Children.Contains(item)).ToList();
-            DragOperationHost.SnappingEngine.Items = canvasItems;
+            DragOperationHost.SnappingEngine.Magnets = canvasItems;
         }
 
 
