@@ -17,25 +17,20 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         public override double SnapPoint(double value)
         {
-            var snappedX = Snap(value, HorizontalEdges);
-            return snappedX;
-        }
-       
-        private static double Snap(double pointToSnap, IEnumerable<Edge> edges)
-        {
-            double snappedX = 0;
+            double snappedX1 = 0;
             var snapped = false;
-            var enumerator = edges.GetEnumerator();
+            var enumerator = ((IEnumerable<Edge>) HorizontalEdges).GetEnumerator();
             while (enumerator.MoveNext() && !snapped)
             {
                 var edge = enumerator.Current;
 
-                snappedX = MathOperations.Snap(pointToSnap, edge.Origin, 10);
-                if (Math.Abs(snappedX - pointToSnap) > 0.1)
+                snappedX1 = MathOperations.Snap(value, edge.Origin, 20);
+                if (Math.Abs(snappedX1 - value) > 0.1)
                 {
                     snapped = true;
                 }
             }
+            var snappedX = snappedX1;
             return snappedX;
         }
     }

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Glass.Design.Pcl.Annotations;
+using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public abstract class SnappingEngine : ISnappingEngine
     {
-        
+        private ICanvasItem snappable;
+
         public abstract double SnapPoint(double value);
 
         public bool ShouldSnap(Edge edge, double value)
@@ -18,5 +21,18 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         }
 
         public double Threshold { get; set; }
+
+        [NotNull]
+        public ICanvasItem Snappable
+        {
+            get { return snappable; }
+            set { snappable = value; }
+        }
+
+        public void SetSourceRect(IRect originalRect)
+        {
+            Snappable.Left = SnapPoint(originalRect.Left);
+            Snappable.Top = SnapPoint(originalRect.Top);
+        }
     }
 }

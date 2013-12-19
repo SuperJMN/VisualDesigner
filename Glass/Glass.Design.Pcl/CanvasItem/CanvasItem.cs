@@ -13,8 +13,7 @@ namespace Glass.Design.Pcl.CanvasItem
         
         public CanvasItem()
         {
-            Children = new ObservableCollection<ICanvasItem>();
-        
+            Children = new ObservableCollection<ICanvasItem>();        
         }
 
         public ObservableCollection<ICanvasItem> Children { get; private set; }

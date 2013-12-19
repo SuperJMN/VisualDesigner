@@ -1,3 +1,6 @@
+using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Core;
+
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class NoEffectsSnappingEngine : ISnappingEngine
@@ -13,5 +16,10 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         }
 
         public double Threshold { get; set; }
+        public ICanvasItem Snappable { get; set; }
+        public void SetSourceRect(IRect originalRect)
+        {
+            
+        }
     }
 }

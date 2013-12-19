@@ -55,8 +55,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         {
             args.Handled = true;
 
-            DragOperation = new DragOperation(ItemToDrag, args.GetPosition(FrameOfReference).ActLike<IPoint>());
-            DragOperation.SnappingEngine = SnappingEngine;
+            var startingPoint = args.GetPosition(FrameOfReference).ActLike<IPoint>();
+            DragOperation = new DragOperation(ItemToDrag, startingPoint, SnappingEngine);            
 
             FrameOfReference.CaptureMouse();
 

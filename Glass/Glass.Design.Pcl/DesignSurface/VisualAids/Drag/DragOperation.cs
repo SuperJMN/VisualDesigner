@@ -1,4 +1,5 @@
-﻿using Glass.Design.Pcl.Annotations;
+﻿using System.Diagnostics;
+using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
@@ -14,26 +15,21 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             get { return child; }
             set
             {
-                child = value;
-                var fakeCanvasItem = new FakeCanvasItem();
-                fakeCanvasItem.SetLocation(child.GetLocation());
-                fakeCanvasItem.SetSize(child.GetSize());
-                FakeCanvasItem = fakeCanvasItem;
+                child = value;                
+                SnappingEngine.Snappable = child;
             }
         }
-
-        public FakeCanvasItem FakeCanvasItem { get; set; }
 
         private IPoint StartingPoint { get; set; }
 
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
 
-        public DragOperation(ICanvasItem child, IPoint startingPoint)
+        public DragOperation(ICanvasItem child, IPoint startingPoint, ISnappingEngine snappingEngine)
         {
-            Child = child;
-
-            StartingPoint = startingPoint;
+            SnappingEngine = snappingEngine;
+            Child = child;                                   
+            StartingPoint = startingPoint;            
             ChildStartingPoint = child.GetLocation();
         }
 
@@ -44,11 +40,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             var delta = newPoint.Subtract(StartingPoint);
             var newChildLocation = ChildStartingPoint.Add(delta);
 
-            var snappedX = SnappingEngine.SnapPoint(newChildLocation.X);
-            var snappedY = SnappingEngine.SnapPoint(newChildLocation.Y);
+            var originalRect = ServiceLocator.CoreTypesFactory.CreateRect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);
 
-            Child.Left = snappedX;
-            Child.Top = snappedY;
+            SnappingEngine.SetSourceRect(originalRect);                                                
         }
     }
 }

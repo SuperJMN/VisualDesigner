@@ -17,6 +17,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         private IEnumerable<ICanvasItem> magnets;
 
         public EventHandler ItemSnapped;
+        private ICanvasItem snappable;
 
         public IEnumerable<ICanvasItem> Magnets
         {
@@ -36,7 +37,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
             return snappingEdges;
         }
-
 
         private void GenerateEdges()
         {
