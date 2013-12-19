@@ -15,22 +15,22 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
     internal class DesignAidsProvider
     {
 
-        public DesignAidsProvider(DesignSurface visual)
+        public DesignAidsProvider(DesignSurface designSurface)
         {
-            Visual = visual;
-            Visual.Loaded += VisualOnLoaded;
-     
+            DesignSurface = designSurface;
+            DesignSurface.Loaded += DesignSurfaceOnLoaded;
+
 
             SelectionAdorners = new Dictionary<ICanvasItem, SelectionAdorner>();
             DesignOperation = DesignOperation.Resize;
-            DragOperationHost = new DragOperationHost(Visual);
-            DragOperationHost.SnappingEngine = new CanvasItemSnappingEngine();
+            DragOperationHost = new DragOperationHost(DesignSurface);
+            DragOperationHost.SnappingEngine = new CanvasItemSnappingEngine(5);
         }
 
         public DragOperationHost DragOperationHost { get; set; }
 
 
-       private CanvasItemGroup groupedItems;
+        private CanvasItemGroup groupedItems;
 
         private CanvasItemGroup GroupedItems
         {
@@ -48,21 +48,21 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
                 if (groupedItems != null)
                 {
                     var movingControl = new MovingControl();
-                    
+
                     SetupDragOperationHost(movingControl);
 
-                    MovingAdorner = new WrappingAdorner(Visual, movingControl, GroupedItems);
-                    ResizingAdorner = new WrappingAdorner(Visual, new SizingControl { CanvasItem = GroupedItems }, GroupedItems);
+                    MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, GroupedItems);
+                    ResizingAdorner = new WrappingAdorner(DesignSurface, new SizingControl { CanvasItem = GroupedItems }, GroupedItems);
                     AdornerLayer.Add(ResizingAdorner);
                     AdornerLayer.Add(MovingAdorner);
                 }
             }
         }
 
-        private void SetupDragOperationHost(MovingControl movingControl)
+        private void SetupDragOperationHost(IInputElement movingControl)
         {
             DragOperationHost.SetDragTarget(movingControl, GroupedItems);
-            var canvasItems = Visual.CanvasItems.Where(item => !GroupedItems.Children.Contains(item)).ToList();
+            var canvasItems = DesignSurface.CanvasItems.Where(item => !GroupedItems.Children.Contains(item)).ToList();
             DragOperationHost.SnappingEngine.Magnets = canvasItems;
         }
 
@@ -71,7 +71,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
         private AdornerLayer AdornerLayer { get; set; }
 
-        private DesignSurface Visual
+        private DesignSurface DesignSurface
         {
             get;
             set;
@@ -80,9 +80,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         private Adorner ResizingAdorner { get; set; }
         private Adorner MovingAdorner { get; set; }
 
-        private void VisualOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void DesignSurfaceOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            AdornerLayer = AdornerLayer.GetAdornerLayer(Visual);
+            AdornerLayer = AdornerLayer.GetAdornerLayer(DesignSurface);
         }
 
         public void AddItemToSelection(ICanvasItem item)
@@ -99,7 +99,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
         private void AddSelectionAdorner(ICanvasItem canvasItem)
         {
-            var selectionAdorner = new SelectionAdorner(Visual, canvasItem) { IsHitTestVisible = false };
+            var selectionAdorner = new SelectionAdorner(DesignSurface, canvasItem) { IsHitTestVisible = false };
             AdornerLayer.Add(selectionAdorner);
             SelectionAdorners.Add(canvasItem, selectionAdorner);
         }
@@ -127,5 +127,5 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         public DesignOperation DesignOperation { get; set; }
     }
 
-    
+
 }

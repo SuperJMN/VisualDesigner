@@ -11,7 +11,10 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public abstract class SnappingEngine : ISnappingEngine
     {
-        private ICanvasItem snappable;
+        public SnappingEngine(double thresohold)
+        {
+            Threshold = thresohold;
+        }
 
         public abstract double SnapPoint(double value);
 
@@ -23,11 +26,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         public double Threshold { get; set; }
 
         [NotNull]
-        public ICanvasItem Snappable
-        {
-            get { return snappable; }
-            set { snappable = value; }
-        }
+        public ICanvasItem Snappable { get; set; }
 
         public void SetSourceRect(IRect originalRect)
         {

@@ -12,7 +12,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void MyTestMethod()
         {
-            var snappingEngine = new CanvasItemSnappingEngine();
+            var snappingEngine = new CanvasItemSnappingEngine(8);
             var canvasItems = new List<CanvasItem>()
                               {
                                   new CanvasItem

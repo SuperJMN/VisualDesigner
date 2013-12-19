@@ -9,9 +9,10 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class CanvasItemSnappingEngine : EdgeSnappingEngine, ICanvasItemSnappingEngine
     {
-        public CanvasItemSnappingEngine()
+        public CanvasItemSnappingEngine(double threshold)
+            : base(threshold)
         {
-           
+
         }
 
         private IEnumerable<ICanvasItem> magnets;
@@ -32,8 +33,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         public IEnumerable<Edge> GetSnappingEdges(IRect rect)
         {
             var snappingEdges = from horizontalEdge in HorizontalEdges
-                where ShouldSnap(horizontalEdge, rect.Left)
-                select horizontalEdge;
+                                where ShouldSnap(horizontalEdge, rect.Left)
+                                select horizontalEdge;
 
             return snappingEdges;
         }

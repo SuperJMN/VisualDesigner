@@ -6,7 +6,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public abstract class EdgeSnappingEngine : SnappingEngine
     {
-        public EdgeSnappingEngine()
+        public EdgeSnappingEngine(double threshold)
+            : base(threshold)
         {
             HorizontalEdges = new List<Edge>();
             VerticalEdges = new List<Edge>();
@@ -24,7 +25,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             {
                 var edge = enumerator.Current;
 
-                snappedX1 = MathOperations.Snap(value, edge.Origin, 20);
+                
+                snappedX1 = MathOperations.Snap(value, edge.Origin, Threshold);
                 if (Math.Abs(snappedX1 - value) > 0.1)
                 {
                     snapped = true;
