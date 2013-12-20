@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Input;
 using Glass.Design.Pcl.Annotations;
@@ -40,6 +41,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
                 FrameOfReference.ReleaseMouseCapture();
                 FrameOfReference.MouseMove -= FrameOfReferenceOnMouseMove;
                 DragOperation = null;
+                OnDragEnd();
+                SnappingEngine.ClearSnappedEdges();
             }
         }
 
@@ -62,6 +65,14 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
             FrameOfReference.MouseMove += FrameOfReferenceOnMouseMove;
             FrameOfReference.MouseLeftButtonUp += InputElementOnMouseLeftButtonUp;            
+        }
+
+        public event EventHandler DragEnd;
+
+        protected virtual void OnDragEnd()
+        {
+            var handler = DragEnd;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
     <Compile Include="Core\PointExtensions.cs" />
+    <Compile Include="Core\RangeExtensions.cs" />
     <Compile Include="Core\ServiceLocator.cs" />
     <Compile Include="Core\CoreTypesFactory.cs" />
     <Compile Include="Core\ICursor.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="DesignSurface\VisualAids\Snapping\ISnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsCanvasItemSnappingEngine.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\NoEffectsSnappingEngine.cs" />
+    <Compile Include="Core\Range.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\SnappingEngine.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Geometrics.cs" />

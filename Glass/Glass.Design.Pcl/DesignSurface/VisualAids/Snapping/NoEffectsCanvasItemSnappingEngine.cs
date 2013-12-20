@@ -7,5 +7,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
     {
         public IEnumerable<ICanvasItem> Magnets { get; set; }
         public ICanvasItem Snappable { get; set; }
+        public void ClearSnappedEdges()
+        {
+            
+        }
     }
 }

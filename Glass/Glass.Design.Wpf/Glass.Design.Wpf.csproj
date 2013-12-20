@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="Core\CoreTypesFactoryWpf.cs" />
+    <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\DesignerItem.cs" />
     <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
+    <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThumbCursorConverterFactory.cs" />

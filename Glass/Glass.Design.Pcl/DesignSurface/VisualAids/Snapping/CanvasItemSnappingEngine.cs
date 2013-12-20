@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 
@@ -17,9 +14,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         private IEnumerable<ICanvasItem> magnets;
 
-        public EventHandler ItemSnapped;
-        private ICanvasItem snappable;
-
         public IEnumerable<ICanvasItem> Magnets
         {
             get { return magnets; }
@@ -30,27 +24,31 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             }
         }
 
-        public IEnumerable<Edge> GetSnappingEdges(IRect rect)
-        {
-            var snappingEdges = from horizontalEdge in HorizontalEdges
-                                where ShouldSnap(horizontalEdge, rect.Left)
-                                select horizontalEdge;
-
-            return snappingEdges;
-        }
-
         private void GenerateEdges()
         {
-            HorizontalEdges.Clear();
-            VerticalEdges.Clear();
-
+            Edges.Clear();
+            
             foreach (var canvasItem in Magnets)
             {
-                HorizontalEdges.Add(new Edge(canvasItem.Left, canvasItem.Height));
-                HorizontalEdges.Add(new Edge(canvasItem.Left + canvasItem.Width, canvasItem.Height));
-                VerticalEdges.Add(new Edge(canvasItem.Left, canvasItem.Width));
-                VerticalEdges.Add(new Edge(canvasItem.Top + canvasItem.Height, canvasItem.Width));
+                AddHorizontalEdges(canvasItem);
+                AddVerticalEdges(canvasItem);
             }
+        }
+
+        private void AddHorizontalEdges(ICanvasItem canvasItem)
+        {
+            var range = new Range(canvasItem.Left, canvasItem.Left + canvasItem.Width);
+
+            Edges.Add(new Edge(canvasItem.Top, range, Orientation.Horizontal));
+            Edges.Add(new Edge(canvasItem.Top + canvasItem.Height, range, Orientation.Horizontal));
+        }
+
+        private void AddVerticalEdges(ICanvasItem canvasItem)
+        {
+            var range = new Range(canvasItem.Top, canvasItem.Top + canvasItem.Height);
+
+            Edges.Add(new Edge(canvasItem.Left, range, Orientation.Vertical));
+            Edges.Add(new Edge(canvasItem.Left + canvasItem.Width, range, Orientation.Vertical));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +15,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             Threshold = thresohold;
         }
 
-        public abstract double SnapPoint(double value);
-
-        public bool ShouldSnap(Edge edge, double value)
-        {
-            return Math.Abs(value - edge.Origin) < Threshold;
-        }
+        public abstract double SnapLeft(double value);
+        public abstract double SnapTop(double value);
 
         public double Threshold { get; set; }
 
@@ -30,8 +25,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         public void SetSourceRect(IRect originalRect)
         {
-            Snappable.Left = SnapPoint(originalRect.Left);
-            Snappable.Top = SnapPoint(originalRect.Top);
+            Snappable.Left = SnapLeft(originalRect.Left);
+            Snappable.Top = SnapTop(originalRect.Top);
         }
     }
 }

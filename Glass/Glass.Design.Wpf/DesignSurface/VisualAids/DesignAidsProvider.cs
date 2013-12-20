@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -9,6 +11,7 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
+using Glass.Design.Wpf.DesignSurface.VisualAids.Snapping;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids
 {
@@ -22,9 +25,51 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
 
             SelectionAdorners = new Dictionary<ICanvasItem, SelectionAdorner>();
+
+            EdgeAdorners = new Dictionary<Edge, EdgeAdorner>();
+
             DesignOperation = DesignOperation.Resize;
             DragOperationHost = new DragOperationHost(DesignSurface);
-            DragOperationHost.SnappingEngine = new CanvasItemSnappingEngine(5);
+            
+
+            var canvasItemSnappingEngine = new CanvasItemSnappingEngine(10);
+            var snappedEdges = canvasItemSnappingEngine.SnappedEdges;
+            ((INotifyCollectionChanged)snappedEdges).CollectionChanged += SnappedEdgesOnCollectionChanged;
+
+            DragOperationHost.SnappingEngine = canvasItemSnappingEngine;
+        }
+
+        public Dictionary<Edge, EdgeAdorner> EdgeAdorners { get; set; }
+
+        private void SnappedEdgesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Edge removedEdge in notifyCollectionChangedEventArgs.OldItems)
+                {
+                    var adorner = EdgeAdorners[removedEdge];
+                    AdornerLayer.Remove(adorner);
+                    EdgeAdorners.Remove(removedEdge);
+                }
+            }
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Edge addedEdge in notifyCollectionChangedEventArgs.NewItems)
+                {
+                    var edgeAdorner = new EdgeAdorner(DesignSurface, GroupedItems, addedEdge);
+                    EdgeAdorners.Add(addedEdge, edgeAdorner);
+                    AdornerLayer.Add(edgeAdorner);
+                }
+            }
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Reset)
+            {
+                foreach (var adorner in EdgeAdorners.Values)
+                {
+                    AdornerLayer.Remove(adorner);
+                }
+
+                EdgeAdorners.Clear();
+            }
         }
 
         public DragOperationHost DragOperationHost { get; set; }

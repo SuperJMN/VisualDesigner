@@ -12,13 +12,18 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             GridSize = gridSize;            
         }
 
-        public override double SnapPoint(double pointToSnap)                   
+        public override double SnapLeft(double pointToSnap)                   
         {                       
             var nearestGridX = MathOperations.NearestMultiple(pointToSnap, GridSize.Width);
             var x = MathOperations.Snap(pointToSnap, nearestGridX, Threshold);
             
             return x;
         
+        }
+
+        public override double SnapTop(double value)
+        {
+            return SnapLeft(value);
         }
     }
 }

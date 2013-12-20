@@ -1,14 +1,55 @@
-﻿namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
+﻿using Glass.Design.Pcl.Core;
+
+namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class Edge
     {
-        public Edge(double origin, double length)
+        private readonly Range range;
+
+        public Edge(double axisDistance, Range range, Orientation orientation)
         {
-            Origin = origin;
-            Length = length;
+            this.range = range;
+            AxisDistance = axisDistance;
+            
+            Orientation = orientation;            
         }
 
-        public double Origin { get; set; }
-        public double Length { get; set; }
+        public double AxisDistance { get; set; }
+
+
+        public Orientation Orientation { get; set; }
+
+        public Range Range
+        {
+            get { return range; }
+        }
+
+
+        protected bool Equals(Edge other)
+        {
+            return AxisDistance.Equals(other.AxisDistance) && Orientation == other.Orientation;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Edge) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (AxisDistance.GetHashCode()*397) ^ (int) Orientation;
+            }
+        }
+    }
+
+    public enum Orientation
+    {
+        Horizontal = 0, 
+        Vertical,
     }
 }

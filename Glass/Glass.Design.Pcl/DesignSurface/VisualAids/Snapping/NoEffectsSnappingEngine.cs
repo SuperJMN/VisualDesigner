@@ -5,7 +5,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class NoEffectsSnappingEngine : ISnappingEngine
     {
-        public double SnapPoint(double value)
+        public double SnapLeft(double value)
+        {
+            return value;
+        }
+
+        public double SnapTop(double value)
         {
             return value;
         }

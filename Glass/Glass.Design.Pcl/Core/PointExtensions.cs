@@ -20,5 +20,10 @@
         {
             return ServiceLocator.CoreTypesFactory.CreatePoint(point.X + vector.X, point.Y + vector.Y);
         }
+
+        public static IPoint Swap(this IPoint point)
+        {
+            return ServiceLocator.CoreTypesFactory.CreatePoint(point.Y, point.X);
+        }
     }
 }
