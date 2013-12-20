@@ -44,9 +44,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasRectangle.cs" />
+    <Compile Include="Ellipse.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Sonic.cs" />
-    <Compile Include="Rectangle.cs" />
+    <Compile Include="Shape.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Mario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

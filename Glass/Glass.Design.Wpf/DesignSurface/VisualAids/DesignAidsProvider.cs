@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
@@ -30,13 +31,31 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
             DesignOperation = DesignOperation.Resize;
             DragOperationHost = new DragOperationHost(DesignSurface);
-            
+            DragOperationHost.DragStarted += DragOperationHostOnDragStarted;
+            DragOperationHost.DragEnd += DragOperationHostOnDragEnd;
+
 
             var canvasItemSnappingEngine = new CanvasItemSnappingEngine(10);
             var snappedEdges = canvasItemSnappingEngine.SnappedEdges;
             ((INotifyCollectionChanged)snappedEdges).CollectionChanged += SnappedEdgesOnCollectionChanged;
 
             DragOperationHost.SnappingEngine = canvasItemSnappingEngine;
+        }
+
+        private void DragOperationHostOnDragEnd(object sender, EventArgs eventArgs)
+        {
+            if (ResizingAdorner != null)
+            {
+                ResizingAdorner.Visibility = Visibility.Visible;                
+            }
+        }
+
+        private void DragOperationHostOnDragStarted(object sender, EventArgs eventArgs)
+        {
+            if (ResizingAdorner != null)
+            {
+                ResizingAdorner.Visibility = Visibility.Hidden;
+            }
         }
 
         public Dictionary<Edge, EdgeAdorner> EdgeAdorners { get; set; }
@@ -107,8 +126,12 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         private void SetupDragOperationHost(IInputElement movingControl)
         {
             DragOperationHost.SetDragTarget(movingControl, GroupedItems);
-            var canvasItems = DesignSurface.CanvasItems.Where(item => !GroupedItems.Children.Contains(item)).ToList();
-            DragOperationHost.SnappingEngine.Magnets = canvasItems;
+
+            var items = DesignSurface.CanvasItems;
+
+            var allExceptTarget = items.Except(GroupedItems.Children);
+
+            DragOperationHost.SnappingEngine.Magnets = allExceptTarget.ToList();
         }
 
 

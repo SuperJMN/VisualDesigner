@@ -4,27 +4,29 @@
         xmlns:designSurface1="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
         xmlns:designSurface="clr-namespace:Glass.Design.Pcl.DesignSurface;assembly=Glass.Design.Pcl"
         xmlns:sampleModel="clr-namespace:SampleModel;assembly=SampleModel"
-        Title="MainWindow" Height="390.789" Width="619.737">
+        WindowStartupLocation="CenterScreen"
+        Title="Glass Design Demo" Width="700" Height="560">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
-            <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type sampleModel:Mario}">
-            <Image Stretch="Fill" Source="/Images/Mario.png"  />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type sampleModel:Sonic}">
-            <Image Stretch="Fill" Source="/Images/Sonic.png"  />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type sampleModel:Link}">
-            <Image Stretch="Fill" Source="/Images/Link.png"  />
-        </DataTemplate>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
+                <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type sampleModel:Ellipse}">
+                <Ellipse Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type sampleModel:Mario}">
+                <Image Stretch="Fill" Source="/Images/Mario.png"  />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type sampleModel:Link}">
+                <Image Stretch="Fill" Source="/Images/Link.png"  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type sampleModel:Sonic}">
+                <Image Stretch="Fill" Source="/Images/Sonic.png"  />
+            </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
-    <DockPanel>
-        <ToolBarTray Orientation="Horizontal" DockPanel.Dock="Top">
-            <ToolBar>
-                <ToggleButton Content="Move Mode" IsChecked="{Binding ElementName=DesignSurface, Path=OperationMode, Converter={StaticResource OperationModeConverter}}"></ToggleButton>
-            </ToolBar>
-        </ToolBarTray>
+    <Grid>        
         <designSurface1:DesignSurface Background="Azure" x:Name="DesignSurface" >
             <designSurface1:DesignSurface.ItemContainerStyle>
                 <Style TargetType="{x:Type designSurface1:DesignerItem}">
@@ -34,19 +36,20 @@
                     <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Height)}" />
                 </Style>
             </designSurface1:DesignSurface.ItemContainerStyle>
-            <sampleModel:CanvasRectangle Top="0" Left="0" Width="100" Height="100">
+            <sampleModel:CanvasRectangle Top="200" Left="500" Width="100" Height="100">
                 <sampleModel:CanvasRectangle.FillColor>
                     <sampleModel:Color R="255" G="230" B="10"  />
                 </sampleModel:CanvasRectangle.FillColor>
             </sampleModel:CanvasRectangle>
+            <sampleModel:Ellipse Top="400" Left="120" Width="100" Height="100">
+                <sampleModel:Ellipse.FillColor>
+                    <sampleModel:Color R="30" G="100" B="222"  />
+                </sampleModel:Ellipse.FillColor>
+            </sampleModel:Ellipse>
             <sampleModel:Mario Top="50" Left="50" Width="80" Height="80" />
-            <sampleModel:Sonic Top="80" Left="120" Width="100" Height="120" />
-            <sampleModel:Link Top="80" Left="150" Width="180" Height="180" />
-            <sampleModel:CanvasRectangle Top="133" Left="245" Width="200" Height="100" >
-                <sampleModel:CanvasRectangle.FillColor>
-                    <sampleModel:Color R="0" G="0" B="0"/>
-                </sampleModel:CanvasRectangle.FillColor>
-            </sampleModel:CanvasRectangle>
+            <sampleModel:Sonic Top="80" Left="140" Width="100" Height="120" />
+            <sampleModel:Link Top="80" Left="250" Width="180" Height="180" />            
         </designSurface1:DesignSurface>
-    </DockPanel>
+        <TextBlock Margin="10" FontSize="18" FontFamily="Verdana" Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
+    </Grid>
 </Window>

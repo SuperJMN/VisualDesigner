@@ -24,13 +24,20 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         {
             FrameOfReference = frameOfReference;        
             SnappingEngine = new NoEffectsCanvasItemSnappingEngine();
+            IsDragging = false;
         }
 
         private void FrameOfReferenceOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
-        {
+        {           
             var position = mouseEventArgs.GetPosition(FrameOfReference);
             var newPoint = position.ActLike<IPoint>();
             DragOperation.NotifyNewPosition(newPoint);
+
+            if (!IsDragging)
+            {
+                IsDragging = true;
+                OnDragStarted();
+            }
         }
 
         private void InputElementOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -40,13 +47,22 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
                 DragOperation.NotifyNewPosition(mouseButtonEventArgs.GetPosition(FrameOfReference).ActLike<IPoint>());
                 FrameOfReference.ReleaseMouseCapture();
                 FrameOfReference.MouseMove -= FrameOfReferenceOnMouseMove;
-                DragOperation = null;
-                OnDragEnd();
+                DragOperation = null;                
                 SnappingEngine.ClearSnappedEdges();
+
+                IsDragging = false;
+                OnDragEnd();
             }
         }
 
         public DragOperation DragOperation { get; set; }
+        public event EventHandler DragStarted;
+
+        protected virtual void OnDragStarted()
+        {
+            var handler = DragStarted;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
         public void SetDragTarget(IInputElement hitTestReceiver, ICanvasItem itemToDrag)
         {
@@ -74,5 +90,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
             var handler = DragEnd;
             if (handler != null) handler(this, EventArgs.Empty);
         }
+
+        private bool IsDragging { get; set; }
     }
 }
