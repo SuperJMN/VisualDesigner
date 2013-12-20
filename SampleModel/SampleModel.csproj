@@ -44,6 +44,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Link.cs" />
+    <Compile Include="Sonic.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Mario.cs" />

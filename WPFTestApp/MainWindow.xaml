@@ -12,6 +12,12 @@
         <DataTemplate DataType="{x:Type sampleModel:Mario}">
             <Image Stretch="Fill" Source="/Images/Mario.png"  />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type sampleModel:Sonic}">
+            <Image Stretch="Fill" Source="/Images/Sonic.png"  />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type sampleModel:Link}">
+            <Image Stretch="Fill" Source="/Images/Link.png"  />
+        </DataTemplate>
     </Window.Resources>
     <DockPanel>
         <ToolBarTray Orientation="Horizontal" DockPanel.Dock="Top">
@@ -34,7 +40,9 @@
                 </sampleModel:CanvasRectangle.FillColor>
             </sampleModel:CanvasRectangle>
             <sampleModel:Mario Top="50" Left="50" Width="80" Height="80" />
-            <sampleModel:CanvasRectangle Top="133" Left="245" Width="800" Height="200" >
+            <sampleModel:Sonic Top="80" Left="120" Width="100" Height="120" />
+            <sampleModel:Link Top="80" Left="150" Width="180" Height="180" />
+            <sampleModel:CanvasRectangle Top="133" Left="245" Width="200" Height="100" >
                 <sampleModel:CanvasRectangle.FillColor>
                     <sampleModel:Color R="0" G="0" B="0"/>
                 </sampleModel:CanvasRectangle.FillColor>
