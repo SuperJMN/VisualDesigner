@@ -35,7 +35,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             DragOperationHost.DragEnd += DragOperationHostOnDragEnd;
 
 
-            var canvasItemSnappingEngine = new CanvasItemSnappingEngine(10);
+            var canvasItemSnappingEngine = new CanvasItemSnappingEngine(4);
             var snappedEdges = canvasItemSnappingEngine.SnappedEdges;
             ((INotifyCollectionChanged)snappedEdges).CollectionChanged += SnappedEdgesOnCollectionChanged;
 
