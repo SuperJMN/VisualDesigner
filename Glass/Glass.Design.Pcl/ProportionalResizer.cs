@@ -38,6 +38,6 @@ namespace Glass.Design.Pcl
             }
         }
 
-        public IVector HookPoint { get; set; }
+        public IPoint HookPoint { get; set; }        
     }
 }

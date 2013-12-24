@@ -33,7 +33,7 @@ namespace Glass.Design.Pcl
             return edgeSize;
         }
 
-        public static IPoint GetOpposite(IPoint a, IRect rect)
+        public static IPoint GetOpposite(this IPoint a, IRect rect)
         {
             var halfPointX = rect.Left + rect.Width / 2;
             var distanceX = halfPointX - a.X;
@@ -47,6 +47,7 @@ namespace Glass.Design.Pcl
 
             return opposite;
         }
+        
 
         public static double Slope(IPoint start, IPoint end)
         {

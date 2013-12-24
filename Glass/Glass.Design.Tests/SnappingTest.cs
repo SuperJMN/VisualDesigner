@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Wpf.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
@@ -9,6 +11,11 @@ namespace UnitTestProject1
     [TestClass]
     public class SnappingTest
     {
+        public SnappingTest()
+        {
+            ServiceLocator.CoreTypesFactory = new CoreTypesFactoryWpf();
+        }
+
         [TestMethod]
         public void MyTestMethod()
         {

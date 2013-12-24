@@ -22,5 +22,10 @@ namespace Glass.Design.Wpf.Core
 
             return new Size(width, height).ActLike<ISize>();
         }
+
+        public IVector CreateVector(double x, double y)
+        {
+            return new Vector(x, y).ActLike<IVector>();
+        }
     }
 }
