@@ -28,43 +28,56 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
 
-        public ResizeOperation(ICanvasItem child, IPoint handleRelativeToParent, ISnappingEngine snappingEngine)
+        public ResizeOperation(ICanvasItem child, IPoint handlePosition, ISnappingEngine snappingEngine)
         {
             SnappingEngine = snappingEngine;
 
             Child = child;
 
-            UpdateCoordinates(handleRelativeToParent);
+            InitialRelativeHandlePosition = GetInitialPosition(handlePosition);
+            Anchor = GetAnchor(handlePosition);
+            InitialChildSize = Child.GetSize();
 
 
-
-            Resizer = new ProportionalResizer(Child) { HookPoint = HookPoint };
+            Resizer = new ProportionalResizer(Child) { Anchor = Anchor };
         }
 
-        private void UpdateCoordinates(IPoint startingHandlePosition)
+        private ISize InitialChildSize { get; set; }
+
+        private static IPoint GetAnchor(IPoint handlePosition)
         {
-            
-
-            var local = startingHandlePosition.FromParentToLocal(Child.GetLocation());
-
-            var bound = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, Child.Width, Child.Height);
-
-            var middlePoint = bound.GetMiddlePoint();
-            var opposite = local.GetOpposite(middlePoint);
-
-            InitialRelativeHandlePosition = startingHandlePosition;
-            HookPoint = ServiceLocator.CoreTypesFactory.CreatePoint(opposite.X/Child.Width, opposite.Y/Child.Height);
+            var middlePoint = ServiceLocator.CoreTypesFactory.CreatePoint(0.5, 0.5);
+            return handlePosition.GetOpposite(middlePoint);
         }
 
-        private IPoint HookPoint { get; set; }        
+        private IPoint GetInitialPosition(IPoint handlePosition)
+        {
+            var xAbsoluteToChild = Child.Width * handlePosition.X;
+            var yAbsoluteToChild = Child.Height * handlePosition.Y;
+
+            var pointAbsoluteToChild = ServiceLocator.CoreTypesFactory.CreatePoint(xAbsoluteToChild, yAbsoluteToChild);
+            var fromLocalToParent = pointAbsoluteToChild.FromLocalToParent(Child.GetLocation());
+            return fromLocalToParent;
+        }
+
+        private IPoint Anchor { get; set; }
 
 
         public void UpdateHandlePosition(IPoint newHandlePosition)
         {
-            var delta = newHandlePosition.Subtract(InitialRelativeHandlePosition);
-            var point = ServiceLocator.CoreTypesFactory.CreateVector(delta.X, delta.Y);
+            var delta = newHandlePosition.Subtract(InitialRelativeHandlePosition).ToVector();            
 
-            Resizer.DeltaResize(point);
+            if (Anchor.X > 0.5)
+            {
+                delta.X = -delta.X;
+            }
+            if (Anchor.Y > 0.5)
+            {
+                delta.Y = -delta.Y;
+            }
+
+            var childWidth = InitialChildSize.ToVector().Add(delta);
+            Resizer.Resize(childWidth.ToSize());
 
 
             //var originalRect = ServiceLocator.CoreTypesFactory.CreateRect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);

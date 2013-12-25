@@ -38,16 +38,8 @@ namespace Glass.Design.Pcl.Core
         double AngleBetween(IVector vector1, IVector vector2);
 
         
-        void Negate();
-
-        
-        IVector Add(IVector vector1, IVector vector2);
-
-        
-        IVector Subtract(IVector vector1, IVector vector2);
-
-        
-        IPoint Add(IVector vector, IPoint point);
+        void Negate();                     
+                        
 
         
         IVector Multiply(IVector vector, double scalar);

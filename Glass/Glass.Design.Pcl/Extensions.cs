@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -84,6 +85,7 @@ namespace Glass.Design.Pcl
             return ServiceLocator.CoreTypesFactory.CreatePoint(point.X + vector.X, point.Y + vector.Y);
         }
 
+
         public static IPoint Add(this IPoint point, IVector vector)
         {
             return ServiceLocator.CoreTypesFactory.CreatePoint(point.X + vector.X, point.Y + vector.Y);
@@ -116,9 +118,52 @@ namespace Glass.Design.Pcl
             return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
         }
 
+        public static IPoint FromLocalToParent(this IPoint origin, IPoint destination)
+        {
+            var x = origin.X + destination.X;
+            var y = origin.Y + destination.Y;
+            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+        }
+
         public static Range Swap(this Range range)
         {
             return new Range(range.SegmentEnd, range.SegmentStart);
+        }
+
+        public static IPoint GetHandlePoint(this IRect rect, ISize parentSize)
+        {
+            var horzCenterOfThumb = rect.Left + (rect.Width / 2);
+            var vertCenterOfThumb = rect.Top + (rect.Height / 2);
+
+            var horzRound = Math.Round(horzCenterOfThumb / parentSize.Width);
+            var vertRound = Math.Round(vertCenterOfThumb / parentSize.Height);
+
+            return ServiceLocator.CoreTypesFactory.CreatePoint(horzRound, vertRound);
+        }
+
+        public static IVector ToVector(this ISize size)
+        {
+            return ServiceLocator.CoreTypesFactory.CreateVector(size.Width, size.Height);
+        }
+
+        public static IVector ToVector(this IPoint point)
+        {
+            return ServiceLocator.CoreTypesFactory.CreateVector(point.X, point.Y);
+        }
+
+        public static ISize ToSize(this IVector vector)
+        {
+            return ServiceLocator.CoreTypesFactory.CreateSize(vector.X, vector.Y);
+        }
+
+        public static IVector Subtract(this IVector vector, IVector another)
+        {
+            return ServiceLocator.CoreTypesFactory.CreateVector(vector.X - another.X, vector.Y - another.Y);
+        }
+
+        public static IVector Add(this IVector vector, IVector another)
+        {
+            return ServiceLocator.CoreTypesFactory.CreateVector(vector.X + another.X, vector.Y + another.Y);
         }
     }
 }

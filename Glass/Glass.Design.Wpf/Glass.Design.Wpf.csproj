@@ -57,13 +57,12 @@
     <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\ResizeThumb.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\SizingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\WpfUIResizeOperationHandleConnector.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThumbCursorConverterFactory.cs" />
     <Compile Include="WindowsSizeCursorsThumbCursorConverter.cs" />
     <Compile Include="WrappingAdorner.cs" />
   </ItemGroup>

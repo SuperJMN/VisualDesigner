@@ -62,29 +62,29 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type resize:SizingControl}">
+    <Style TargetType="{x:Type resize:ResizeControl}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type resize:SizingControl}">
+                <ControlTemplate TargetType="{x:Type resize:ResizeControl}">
                     <Border Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}" d:DesignWidth="93" d:DesignHeight="84">
-                        <Grid Margin="-2.5">
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                        <Grid Margin="-2.5" x:Name="PART_ThumbContainer">
+                            <Thumb 
                                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
-                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Top"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <Thumb 
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
+                            <Thumb 
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
-                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" AllowVerticalResize="False" VerticalAlignment="Center"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <Thumb 
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                            <Thumb 
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
-                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right" AllowVerticalResize="False" VerticalAlignment="Center"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
-                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center" AllowHorizontalResize="False" VerticalAlignment="Bottom"/>
-                            <resize:ResizeThumb CanvasItem="{TemplateBinding CanvasItem}"
+                            <Thumb 
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+                            <Thumb 
+                                Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Center"  VerticalAlignment="Bottom"/>
+                            <Thumb 
                                 Style="{DynamicResource ResizeThumbStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                         </Grid>
                     </Border>

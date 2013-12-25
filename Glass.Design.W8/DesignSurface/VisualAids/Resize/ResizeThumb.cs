@@ -87,7 +87,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         public void DeltaMove(double horizontalChange, double verticalChange)
         {
             var proportionalResizer = new ProportionalResizer(CanvasItem);
-            proportionalResizer.HookPoint = GetHookPointFromMyPosition().ActLike<IPoint>();
+            proportionalResizer.HookPoint = GetHookPointFromMyPosition().ActLike<IVector>();
 
             if (!AllowHorizontalResize)
             {
@@ -129,7 +129,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         #endregion
 
 
-        private IPoint GetHookPointFromMyPosition()
+        private Vector GetHookPointFromMyPosition()
         {
             var horzCenterOfThumb = Left + (Width / 2);
             var vertCenterOfThumb = Top + (Height / 2);
@@ -140,7 +140,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             var leftProportion = 1 - horzRound;
             var topProportion = 1 - vertRound;
 
-            return new Point(leftProportion, topProportion).ActLike<IPoint>();
+            return new Vector(leftProportion, topProportion);
         }
 
         public event EventHandler<SizeChangeEventArgs> HeightChanged;

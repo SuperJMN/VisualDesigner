@@ -19,7 +19,6 @@ namespace Glass.Design.Wpf.Core
 
         public ISize CreateSize(double width, double height)
         {
-
             return new Size(width, height).ActLike<ISize>();
         }
 

@@ -116,7 +116,12 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
                     SetupDragOperationHost(movingControl);
 
                     MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, GroupedItems);
-                    ResizingAdorner = new WrappingAdorner(DesignSurface, new SizingControl { CanvasItem = GroupedItems }, GroupedItems);
+                    var resizeControl = new ResizeControl
+                                        {
+                                            CanvasItem = GroupedItems, 
+                                            FrameOfReference = DesignSurface
+                                        };
+                    ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, GroupedItems);
                     AdornerLayer.Add(ResizingAdorner);
                     AdornerLayer.Add(MovingAdorner);
                 }

@@ -1,5 +1,6 @@
 ﻿using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 
 namespace Glass.Design.Pcl
 {
@@ -15,14 +16,30 @@ namespace Glass.Design.Pcl
         private static CanvasItemResizeInfo DeltaResize(double delta, double hookOffset)
         {
             var sizeDelta = delta * (1 - hookOffset);
+
             var positionDelta = delta - sizeDelta;
+
+            if (hookOffset > 0.5)
+            {
+                positionDelta = -positionDelta;
+            }
+
             return new CanvasItemResizeInfo(positionDelta, sizeDelta);
+        }
+
+        public void Resize(ISize newSize)
+        {
+            var oldSizeVector = canvasItem.GetSize().ToVector();
+            var newSizeVector = newSize.ToVector();
+
+            var deltaSize = newSizeVector.Subtract(oldSizeVector);
+            DeltaResize(deltaSize);
         }
 
         public void DeltaResize(IVector resize)
         {
-            var horzResize = DeltaResize(resize.X, HookPoint.X);
-            var vertResize = DeltaResize(resize.Y, HookPoint.Y);
+            var horzResize = DeltaResize(resize.X, Anchor.X);
+            var vertResize = DeltaResize(resize.Y, Anchor.Y);
 
             canvasItem.Left += horzResize.PositionDelta;
 
@@ -38,6 +55,6 @@ namespace Glass.Design.Pcl
             }
         }
 
-        public IPoint HookPoint { get; set; }        
+        public IPoint Anchor { get; set; }        
     }
 }
