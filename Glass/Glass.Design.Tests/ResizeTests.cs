@@ -6,6 +6,8 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Core;
 using ImpromptuInterface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HorizontalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.HorizontalAlignment;
+using VerticalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.VerticalAlignment;
 
 namespace UnitTestProject1
 {
@@ -21,7 +23,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void IncreaseWidthTopRight()
         {
-            var canvasItem = new CanvasItem()
+            var canvasItem = new CanvasItem
                              {
                                  Width = 30,
                                  Height = 30,
@@ -32,66 +34,14 @@ namespace UnitTestProject1
             var hookPoint = new Point(40, 20).ActLike<IPoint>();
             var newPoint = new Point(50, 20).ActLike<IPoint>();
 
-            var resizeOperation = new ResizeOperation(canvasItem, hookPoint, new NoEffectsCanvasItemSnappingEngine());
+            var resizeOperation = new ResizeOperation(canvasItem, new ResizeHandle
+                                                                  {
+                                                                      HorizontalAlignment = HorizontalAlignment.Right,
+                                                                      VerticalAlignment = VerticalAlignment.Top,
+                                                                  }, new NoEffectsCanvasItemSnappingEngine());
             resizeOperation.UpdateHandlePosition(newPoint);
             Assert.AreEqual(40D, canvasItem.Width);
         }
 
-        [TestMethod]
-        public void IncreaseWidthTopLeft()
-        {
-            var canvasItem = new CanvasItem()
-            {
-                Width = 30,
-                Height = 30,
-                Left = 10,
-                Top = 20,
-            };
-
-            var hookPoint = new Point(10, 0).ActLike<IPoint>();
-            var newPoint = new Point(0, 0).ActLike<IPoint>();
-
-            var resizeOperation = new ResizeOperation(canvasItem, hookPoint, new NoEffectsCanvasItemSnappingEngine());
-            resizeOperation.UpdateHandlePosition(newPoint);
-            Assert.AreEqual(40D, canvasItem.Width);
-        }
-
-        [TestMethod]
-        public void IncreaseHeightTopLeft()
-        {
-            var canvasItem = new CanvasItem()
-            {
-                Width = 30,
-                Height = 30,
-                Left = 10,
-                Top = 20,
-            };
-
-            var hookPoint = new Point(10, 50).ActLike<IPoint>();
-            var newPoint = new Point(10, 65).ActLike<IPoint>();
-
-            var resizeOperation = new ResizeOperation(canvasItem, hookPoint, new NoEffectsCanvasItemSnappingEngine());
-            resizeOperation.UpdateHandlePosition(newPoint);
-            Assert.AreEqual(45D, canvasItem.Height);
-        }
-
-        [TestMethod]
-        public void IncreaseHeightBottomRight()
-        {
-            var canvasItem = new CanvasItem()
-            {
-                Width = 30,
-                Height = 30,
-                Left = 10,
-                Top = 20,
-            };
-
-            var hookPoint = new Point(40, 50).ActLike<IPoint>();
-            var newPoint = new Point(60, 70).ActLike<IPoint>();
-
-            var resizeOperation = new ResizeOperation(canvasItem, hookPoint, new NoEffectsCanvasItemSnappingEngine());
-            resizeOperation.UpdateHandlePosition(newPoint);
-            Assert.AreEqual(50D, canvasItem.Height);
-        }
     }
 }

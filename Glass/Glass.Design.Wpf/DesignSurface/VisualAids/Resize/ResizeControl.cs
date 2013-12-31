@@ -8,27 +8,35 @@ using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
     public sealed class ResizeControl : Control
     {
+        public ISnappingEngine SnappingEngine { get; set; }
 
         static ResizeControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizeControl), new FrameworkPropertyMetadata(typeof(ResizeControl)));
         }
 
-        public WindowsSizeCursorsThumbCursorConverter WindowsSizeCursorsThumbCursorConverter { get; set; }
-        public WpfUIResizeOperationHandleConnector WpfUIResizeOperationHandleConnector { get; set; }
+        public ResizeControl(CanvasItem itemToResize, IInputElement parent, ISnappingEngine snappingEngine)
+        {
+            SnappingEngine = snappingEngine;
+            FrameOfReference = parent;
+            CanvasItem = itemToResize;
+        }
+
+        private WindowsSizeCursorsThumbCursorConverter WindowsSizeCursorsThumbCursorConverter { get; set; }
+        private WpfUIResizeOperationHandleConnector WpfUIResizeOperationHandleConnector { get; set; }
 
         #region CanvasItem
 
         public static readonly DependencyProperty CanvasItemProperty =
             DependencyProperty.Register("CanvasItem", typeof(ICanvasItem), typeof(ResizeControl),
-                new FrameworkPropertyMetadata(null,
-                    new PropertyChangedCallback(OnCanvasItemChanged)));
+                new FrameworkPropertyMetadata(null, OnCanvasItemChanged));
 
         public ICanvasItem CanvasItem
         {
@@ -48,7 +56,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         {
             if (IsLoaded)
             {
-                RegisterThumbs();
+                RegisterHandles();
             }
             else
             {
@@ -58,17 +66,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            RegisterThumbs();
+            RegisterHandles();
             Loaded -= OnLoaded;
         }
 
-        private void RegisterThumbs()
+        private void RegisterHandles()
         {
-
-            if (CanvasItem == null || FrameOfReference == null)
-                return;
-
-            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, FrameOfReference);
+            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, FrameOfReference, SnappingEngine);
             WindowsSizeCursorsThumbCursorConverter = new WindowsSizeCursorsThumbCursorConverter();
 
 
@@ -82,11 +86,11 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 var parentSize = ServiceLocator.CoreTypesFactory.CreateSize(ActualWidth, ActualHeight);
                 var proportionalHandlePoint = GetProportionalHandlePoint(logicalChild, parentSize);
                 WpfUIResizeOperationHandleConnector.RegisterHandler(logicalChild, proportionalHandlePoint);
-                SetCursor(logicalChild);
+                SetCursorToHandle(logicalChild);
             }
         }
 
-        private void SetCursor(FrameworkElement handle)
+        private void SetCursorToHandle(FrameworkElement handle)
         {
             var handleRect = handle.GetRectRelativeToParent().ActLike<IRect>();
             var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, ActualWidth, ActualHeight);
@@ -106,8 +110,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
         public static readonly DependencyProperty FrameOfReferenceProperty =
             DependencyProperty.Register("FrameOfReference", typeof(IInputElement), typeof(ResizeControl),
-                new FrameworkPropertyMetadata((IInputElement)null,
-                    new PropertyChangedCallback(OnFrameOfReferenceChanged)));
+                new FrameworkPropertyMetadata(null, OnFrameOfReferenceChanged));
 
         public IInputElement FrameOfReference
         {
@@ -127,7 +130,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         {
             if (IsLoaded)
             {
-                RegisterThumbs();
+                RegisterHandles();
             }
             else
             {
@@ -136,7 +139,5 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         }
 
         #endregion
-
-
     }
 }

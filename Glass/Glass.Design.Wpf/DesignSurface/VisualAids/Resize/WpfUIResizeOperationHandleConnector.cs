@@ -6,23 +6,27 @@ using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;
+using HorizontalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.HorizontalAlignment;
+using VerticalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.VerticalAlignment;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
     public class WpfUIResizeOperationHandleConnector
     {
-        public ICanvasItem CanvasItem { get; set; }
-        public IInputElement Parent { get; set; }
+        private ICanvasItem CanvasItem { get; set; }
+        private IInputElement Parent { get; set; }
+        private ISnappingEngine SnappingEngine { get; set; }
 
-        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IInputElement parent)
+        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IInputElement parent, ISnappingEngine snappingEngine)
         {
             CanvasItem = canvasItem;
             Parent = parent;
+            SnappingEngine = snappingEngine;
             Handles = new Dictionary<IInputElement, IPoint>();
         }
 
-        public IDictionary<IInputElement, IPoint> Handles { get; set; }
-        public ResizeOperation ResizeOperation { get; set; }
+        private IDictionary<IInputElement, IPoint> Handles { get; set; }
+        private ResizeOperation ResizeOperation { get; set; }
 
 
         public void RegisterHandler(IInputElement handle, IPoint point)
@@ -36,7 +40,14 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             mouseButtonEventArgs.Handled = true;
 
             var point = Handles[(IInputElement)sender];
-            ResizeOperation = new ResizeOperation(CanvasItem, point, new NoEffectsCanvasItemSnappingEngine());
+
+            var resizeHandle = new ResizeHandle
+                               {
+                                   VerticalAlignment = VerticalAlignment.Bottom,
+                                   HorizontalAlignment = HorizontalAlignment.Center
+                               };
+
+            ResizeOperation = new ResizeOperation(CanvasItem, resizeHandle, SnappingEngine);
             Parent.CaptureMouse();
 
             Parent.MouseMove += ParentOnMouseMove;
@@ -59,8 +70,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         }
 
 
-
-        public bool IsDragging { get; set; }
+        private bool IsDragging { get; set; }
 
         private void ParentOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
         {

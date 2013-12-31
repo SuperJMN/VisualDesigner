@@ -43,7 +43,7 @@ namespace Glass.Design.Pcl
             return ServiceLocator.CoreTypesFactory.CreateRect(item.Left, item.Top, item.Width, item.Height);
         }
 
-        public static IPoint DiscretizeUsingAverage(this IRect item)
+        public static IPoint MiddlePoint(this IRect item)
         {
             return ServiceLocator.CoreTypesFactory.CreatePoint(item.Left + item.Width / 2, item.Top + item.Height / 2);
         }
@@ -68,6 +68,12 @@ namespace Glass.Design.Pcl
         {
             positionable.Left = location.X;
             positionable.Top = location.Y;
+        }
+
+        public static void SetLocation(this IPositionable positionable, double x, double y)
+        {
+            positionable.Left = x;
+            positionable.Top = y;
         }
 
         public static IPoint Subtract(this IPoint point, IVector vector)
@@ -96,12 +102,6 @@ namespace Glass.Design.Pcl
             return ServiceLocator.CoreTypesFactory.CreatePoint(point.Y, point.X);
         }
 
-        public static IPoint GetMiddlePoint(this IRect rect)
-        {
-            var x = rect.Left + rect.Width / 2;
-            var y = rect.Top + rect.Height / 2;
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
-        }
 
         public static IPoint GetOpposite(this IPoint handlePosition, IPoint middlePoint)
         {
@@ -164,6 +164,36 @@ namespace Glass.Design.Pcl
         public static IVector Add(this IVector vector, IVector another)
         {
             return ServiceLocator.CoreTypesFactory.CreateVector(vector.X + another.X, vector.Y + another.Y);
+        }
+
+        public static void SetBounds(this ICanvasItem canvasItem, IRect rect)
+        {
+            canvasItem.SetLocation(rect.Left, rect.Top);
+            canvasItem.SetSize(rect.Size);
+        }
+
+        public static void SetLeftKeepingRight(this IRect rect, double left)
+        {
+            var right = rect.Right;
+            rect.X = left;
+            rect.Width = right - left;
+        }
+
+        public static void SetTopKeepingBottom(this IRect rect, double top)
+        {
+            var bottom = rect.Bottom;
+            rect.Y = top;
+            rect.Height = bottom - top;
+        }
+
+        public static void SetRightKeepingLeft(this IRect rect, double right)
+        {                       
+            rect.Width = right - rect.Left;
+        }
+
+        public static void SetBottomKeepingTop(this IRect rect, double bottom)
+        {
+            rect.Height = bottom - rect.Top;
         }
     }
 }

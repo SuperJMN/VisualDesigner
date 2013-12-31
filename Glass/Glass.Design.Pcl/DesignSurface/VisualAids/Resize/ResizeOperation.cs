@@ -10,8 +10,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
     public class ResizeOperation
     {
         private ICanvasItem child;
-        private ProportionalResizer Resizer { get; set; }
-
 
         private ICanvasItem Child
         {
@@ -19,70 +17,88 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             set
             {
                 child = value;
-                SnappingEngine.Snappable = child;
             }
         }
 
-        private IPoint InitialRelativeHandlePosition { get; set; }
+        public ResizeHandle ResizeHandle { get; set; }
+
+
 
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
 
-        public ResizeOperation(ICanvasItem child, IPoint handlePosition, ISnappingEngine snappingEngine)
+        public ResizeOperation(ICanvasItem child, ResizeHandle resizeResizeHandle, ISnappingEngine snappingEngine)
         {
+            Child = child;
+            ResizeHandle = resizeResizeHandle;
             SnappingEngine = snappingEngine;
 
-            Child = child;
-
-            InitialRelativeHandlePosition = GetInitialPosition(handlePosition);
-            Anchor = GetAnchor(handlePosition);
-            InitialChildSize = Child.GetSize();
-
-
-            Resizer = new ProportionalResizer(Child) { Anchor = Anchor };
+            OriginalRect = child.ToRect();
         }
 
-        private ISize InitialChildSize { get; set; }
+        public IRect OriginalRect { get; set; }
 
-        private static IPoint GetAnchor(IPoint handlePosition)
+
+        public void UpdateHandlePosition(IPoint newPoint)
         {
-            var middlePoint = ServiceLocator.CoreTypesFactory.CreatePoint(0.5, 0.5);
-            return handlePosition.GetOpposite(middlePoint);
-        }
+            var rect = OriginalRect;
 
-        private IPoint GetInitialPosition(IPoint handlePosition)
-        {
-            var xAbsoluteToChild = Child.Width * handlePosition.X;
-            var yAbsoluteToChild = Child.Height * handlePosition.Y;
-
-            var pointAbsoluteToChild = ServiceLocator.CoreTypesFactory.CreatePoint(xAbsoluteToChild, yAbsoluteToChild);
-            var fromLocalToParent = pointAbsoluteToChild.FromLocalToParent(Child.GetLocation());
-            return fromLocalToParent;
-        }
-
-        private IPoint Anchor { get; set; }
-
-
-        public void UpdateHandlePosition(IPoint newHandlePosition)
-        {
-            var delta = newHandlePosition.Subtract(InitialRelativeHandlePosition).ToVector();            
-
-            if (Anchor.X > 0.5)
+            switch (ResizeHandle.HorizontalAlignment)
             {
-                delta.X = -delta.X;
-            }
-            if (Anchor.Y > 0.5)
-            {
-                delta.Y = -delta.Y;
+                case HorizontalAlignment.Left:
+                    if (newPoint.X < rect.Right)
+                    {
+                        rect.SetLeftKeepingRight(newPoint.X);
+                    }
+                    break;
+
+                case HorizontalAlignment.Right:
+                    if (newPoint.X > rect.Left)
+                    {
+                        rect.SetRightKeepingLeft(newPoint.X);
+                    }
+                    break;
             }
 
-            var childWidth = InitialChildSize.ToVector().Add(delta);
-            Resizer.Resize(childWidth.ToSize());
+            switch (ResizeHandle.VerticalAlignment)
+            {
+                case VerticalAlignment.Top:
+                    if (newPoint.Y < rect.Bottom)
+                    {
+                        rect.SetTopKeepingBottom(newPoint.Y);
+                    }
+                    break;
+
+                case VerticalAlignment.Bottom:
+                    if (newPoint.Y > rect.Top)
+                    {
+                        rect.SetBottomKeepingTop(newPoint.Y);
+                    }
+                    break;
+            }
 
 
-            //var originalRect = ServiceLocator.CoreTypesFactory.CreateRect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);
-
-            //SnappingEngine.SetSourceRect(originalRect);
+            Extensions.SetBounds(Child, rect);
         }
+    }
+
+    public struct ResizeHandle
+    {
+        public VerticalAlignment VerticalAlignment { get; set; }
+        public HorizontalAlignment HorizontalAlignment { get; set; }
+    }
+
+    public enum VerticalAlignment
+    {
+        Top,
+        Middle,
+        Bottom,
+    }
+
+    public enum HorizontalAlignment
+    {
+        Left,
+        Center,
+        Right,
     }
 }

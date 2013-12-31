@@ -15,7 +15,7 @@ namespace Glass.Design.Wpf
 
         public Cursor GetCursor(IRect handleRect, IRect parentRect)
         {
-            var discretizedHandle = handleRect.DiscretizeUsingAverage();
+            var discretizedHandle = handleRect.MiddlePoint();
             var edgeSizeOfEquivalentSquare = parentRect.Size.EdgeOfEquivaletSquare();
 
             var x = Geometrics.LinearProportion(discretizedHandle.X, parentRect.Width, edgeSizeOfEquivalentSquare);

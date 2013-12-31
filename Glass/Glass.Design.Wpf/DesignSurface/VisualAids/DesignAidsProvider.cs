@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Documents;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
@@ -116,11 +117,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
                     SetupDragOperationHost(movingControl);
 
                     MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, GroupedItems);
-                    var resizeControl = new ResizeControl
-                                        {
-                                            CanvasItem = GroupedItems, 
-                                            FrameOfReference = DesignSurface
-                                        };
+                    var gridSize = ServiceLocator.CoreTypesFactory.CreateSize(10, 10);
+                    var resizeControl = new ResizeControl(GroupedItems, DesignSurface, new GridSnappingEngine(gridSize, 3));
+                
                     ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, GroupedItems);
                     AdornerLayer.Add(ResizingAdorner);
                     AdornerLayer.Add(MovingAdorner);
