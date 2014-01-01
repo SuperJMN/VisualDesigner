@@ -46,7 +46,7 @@
                     <sampleModel:Color R="30" G="100" B="222"  />
                 </sampleModel:Ellipse.FillColor>
             </sampleModel:Ellipse>
-            <sampleModel:Mario Top="50" Left="50" Width="80" Height="80" />
+            <sampleModel:Mario Top="50" Left="0" Width="80" Height="80" />
             <sampleModel:Sonic Top="80" Left="140" Width="100" Height="120" />
             <sampleModel:Link Top="80" Left="250" Width="180" Height="180" />            
         </designSurface1:DesignSurface>

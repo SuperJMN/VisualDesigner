@@ -20,65 +20,81 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             }
         }
 
-        public ResizeHandle ResizeHandle { get; set; }
+        public IPoint HandlePoint { get; set; }
 
 
 
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
 
-        public ResizeOperation(ICanvasItem child, ResizeHandle resizeResizeHandle, ISnappingEngine snappingEngine)
+        public ResizeOperation(ICanvasItem child, IPoint handlePoint, ISnappingEngine snappingEngine)
         {
             Child = child;
-            ResizeHandle = resizeResizeHandle;
-            SnappingEngine = snappingEngine;
-
-            OriginalRect = child.ToRect();
+            HandlePoint = ConvertToAbsolute(handlePoint, Child);
+            Opposite = HandlePoint.GetOpposite(child.Rect().MiddlePoint());
+            SnappingEngine = snappingEngine;        
         }
 
-        public IRect OriginalRect { get; set; }
+        private IPoint ConvertToAbsolute(IPoint handlePoint, ICanvasItem child)
+        {
+            var x = 0D;
+            var y = 0D;
+            if (handlePoint.X == 0)
+            {
+                x = child.Left;
+            }
+            else
+            {
+                x = child.Rect().Right;
+            }
+          
+            if (handlePoint.Y == 0)
+            {
+                y = child.Top;
+            }
+            else
+            {
+                y = child.Rect().Bottom;
+            }
+
+            var finalPoint = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return finalPoint;
+        }
+
+        public IPoint Opposite { get; set; }
+
 
 
         public void UpdateHandlePosition(IPoint newPoint)
         {
-            var rect = OriginalRect;
+            var rect = Child.Rect();
 
-            switch (ResizeHandle.HorizontalAlignment)
+            if (InsideLimits(newPoint.X))
             {
-                case HorizontalAlignment.Left:
-                    if (newPoint.X < rect.Right)
-                    {
-                        rect.SetLeftKeepingRight(newPoint.X);
-                    }
-                    break;
-
-                case HorizontalAlignment.Right:
-                    if (newPoint.X > rect.Left)
-                    {
-                        rect.SetRightKeepingLeft(newPoint.X);
-                    }
-                    break;
+                var left = Math.Min(newPoint.X, Opposite.X);
+                var right = Math.Max(newPoint.X, Opposite.X);
+                rect.X = left;
+                rect.SetRightKeepingLeft(right);
             }
 
-            switch (ResizeHandle.VerticalAlignment)
+            if (rect.Width > 0 && rect.Height > 0)
             {
-                case VerticalAlignment.Top:
-                    if (newPoint.Y < rect.Bottom)
-                    {
-                        rect.SetTopKeepingBottom(newPoint.Y);
-                    }
-                    break;
-
-                case VerticalAlignment.Bottom:
-                    if (newPoint.Y > rect.Top)
-                    {
-                        rect.SetBottomKeepingTop(newPoint.Y);
-                    }
-                    break;
+                Child.SetBounds(rect);    
             }
+            
+        }
 
+        private bool InsideLimits(double newPoint)
+        {
+            var firstMember = HandlePoint.X - Opposite.X;
+            var secondMember = newPoint - Opposite.X;
 
-            Extensions.SetBounds(Child, rect);
+            var firstPositive = firstMember > 0;
+            var secondPositive = secondMember > 0;
+
+            
+
+            return firstPositive == secondPositive;
         }
     }
 

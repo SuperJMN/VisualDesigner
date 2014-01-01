@@ -34,11 +34,7 @@ namespace UnitTestProject1
             var hookPoint = new Point(40, 20).ActLike<IPoint>();
             var newPoint = new Point(50, 20).ActLike<IPoint>();
 
-            var resizeOperation = new ResizeOperation(canvasItem, new ResizeHandle
-                                                                  {
-                                                                      HorizontalAlignment = HorizontalAlignment.Right,
-                                                                      VerticalAlignment = VerticalAlignment.Top,
-                                                                  }, new NoEffectsCanvasItemSnappingEngine());
+            var resizeOperation = new ResizeOperation(canvasItem, newPoint , new NoEffectsCanvasItemSnappingEngine());
             resizeOperation.UpdateHandlePosition(newPoint);
             Assert.AreEqual(40D, canvasItem.Width);
         }

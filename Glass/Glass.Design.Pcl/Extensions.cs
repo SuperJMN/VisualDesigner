@@ -38,7 +38,7 @@ namespace Glass.Design.Pcl
             b = temp;
         }
 
-        public static IRect ToRect(this ICanvasItem item)
+        public static IRect Rect(this ICanvasItem item)
         {
             return ServiceLocator.CoreTypesFactory.CreateRect(item.Left, item.Top, item.Width, item.Height);
         }

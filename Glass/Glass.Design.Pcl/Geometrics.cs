@@ -11,7 +11,7 @@ namespace Glass.Design.Pcl
             p.Offset(-origin.X, -origin.Y);
 
             var finalDestination = p[0];
-            
+
             var x = finalDestination.X;
             var y = finalDestination.Y;
 
@@ -29,7 +29,7 @@ namespace Glass.Design.Pcl
 
         public static double EdgeOfEquivaletSquare(this ISize original)
         {
-            var edgeSize = Math.Sqrt(original.Width*original.Height);
+            var edgeSize = Math.Sqrt(original.Width * original.Height);
             return edgeSize;
         }
 
@@ -47,7 +47,7 @@ namespace Glass.Design.Pcl
 
             return opposite;
         }
-        
+
 
         public static double Slope(IPoint start, IPoint end)
         {
@@ -66,6 +66,37 @@ namespace Glass.Design.Pcl
         public static double LinearProportion(double oldValue, double oldTotal, double newTotal)
         {
             return oldValue / oldTotal * newTotal;
+        }
+
+        public static IPoint GetHandlePoint(IRect childRect, ISize parentSize)
+        {
+            double x, y;
+
+            var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, parentSize.Width, parentSize.Height);
+
+            var childMiddlePoint = childRect.MiddlePoint();
+            var parentMiddlePoint = parentRect.MiddlePoint();
+
+            if (childMiddlePoint.X < parentMiddlePoint.X)
+            {
+                x = parentRect.Left;
+            }
+            else
+            {
+                x = parentRect.Right;
+            }
+
+            if (childMiddlePoint.Y < parentMiddlePoint.Y)
+            {
+                y = parentRect.Top;
+            }
+            else
+            {
+                y = parentRect.Bottom;
+            }
+
+            var point = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return point;
         }
     }
 }

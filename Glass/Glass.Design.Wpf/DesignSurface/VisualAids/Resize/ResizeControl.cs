@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.CanvasItem;
@@ -83,9 +82,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             var logicalChildren = enumerable.OfType<FrameworkElement>();
             foreach (var logicalChild in logicalChildren)
             {
-                var parentSize = ServiceLocator.CoreTypesFactory.CreateSize(ActualWidth, ActualHeight);
-                var proportionalHandlePoint = GetProportionalHandlePoint(logicalChild, parentSize);
-                WpfUIResizeOperationHandleConnector.RegisterHandler(logicalChild, proportionalHandlePoint);
+                var childRect = logicalChild.GetRectRelativeToParent().ActLike<IRect>();
+
+                var parentRect = CanvasItem.Rect().ActLike<IRect>();
+
+                var handlePoint = Geometrics.GetHandlePoint(childRect, parentRect.Size);
+                
+                WpfUIResizeOperationHandleConnector.RegisterHandler(logicalChild, handlePoint);
                 SetCursorToHandle(logicalChild);
             }
         }
@@ -95,13 +98,6 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             var handleRect = handle.GetRectRelativeToParent().ActLike<IRect>();
             var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, ActualWidth, ActualHeight);
             handle.Cursor = WindowsSizeCursorsThumbCursorConverter.GetCursor(handleRect, parentRect);
-        }
-
-        private static IPoint GetProportionalHandlePoint(Visual logicalChild, ISize parentSize)
-        {
-            var rect = logicalChild.GetRectRelativeToParent().ActLike<IRect>();
-            var proportionalHandlePoint = rect.GetHandlePoint(parentSize);
-            return proportionalHandlePoint;
         }
 
         #endregion

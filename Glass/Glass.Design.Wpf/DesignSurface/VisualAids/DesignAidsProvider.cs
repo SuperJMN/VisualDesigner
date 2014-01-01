@@ -121,8 +121,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
                     var resizeControl = new ResizeControl(GroupedItems, DesignSurface, new GridSnappingEngine(gridSize, 3));
                 
                     ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, GroupedItems);
-                    AdornerLayer.Add(ResizingAdorner);
                     AdornerLayer.Add(MovingAdorner);
+                    AdornerLayer.Add(ResizingAdorner);                    
                 }
             }
         }

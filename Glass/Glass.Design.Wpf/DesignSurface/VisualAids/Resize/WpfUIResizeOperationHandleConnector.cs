@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Glass.Design.Pcl;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
@@ -39,15 +40,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         {
             mouseButtonEventArgs.Handled = true;
 
-            var point = Handles[(IInputElement)sender];
+            var inputElement = (IInputElement)sender;
 
-            var resizeHandle = new ResizeHandle
-                               {
-                                   VerticalAlignment = VerticalAlignment.Bottom,
-                                   HorizontalAlignment = HorizontalAlignment.Center
-                               };
+            var handlePoint = Handles[inputElement];
 
-            ResizeOperation = new ResizeOperation(CanvasItem, resizeHandle, SnappingEngine);
+            //handlePoint = ServiceLocator.CoreTypesFactory.CreatePoint(CanvasItem.Left + CanvasItem.Width, 0);
+            
+            ResizeOperation = new ResizeOperation(CanvasItem, handlePoint, SnappingEngine);
             Parent.CaptureMouse();
 
             Parent.MouseMove += ParentOnMouseMove;
