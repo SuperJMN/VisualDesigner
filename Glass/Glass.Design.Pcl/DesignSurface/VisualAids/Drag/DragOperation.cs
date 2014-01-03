@@ -42,7 +42,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
 
             var originalRect = ServiceLocator.CoreTypesFactory.CreateRect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);
 
-            SnappingEngine.SetSourceRect(originalRect);                                                
+            SnappingEngine.SetSourceRectForDrag(originalRect);                                                
         }
     }
 }

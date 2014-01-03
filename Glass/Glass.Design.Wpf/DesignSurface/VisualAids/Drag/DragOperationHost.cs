@@ -44,7 +44,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         {
             if (DragOperation != null)
             {
-                DragOperation.NotifyNewPosition(mouseButtonEventArgs.GetPosition(FrameOfReference).ActLike<IPoint>());
+                var position = mouseButtonEventArgs.GetPosition(FrameOfReference);
+                DragOperation.NotifyNewPosition(position.ActLike<IPoint>());
                 FrameOfReference.ReleaseMouseCapture();
                 FrameOfReference.MouseMove -= FrameOfReferenceOnMouseMove;
                 DragOperation = null;                

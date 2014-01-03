@@ -36,11 +36,11 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             DragOperationHost.DragEnd += DragOperationHostOnDragEnd;
 
 
-            var canvasItemSnappingEngine = new CanvasItemSnappingEngine(4);
-            var snappedEdges = canvasItemSnappingEngine.SnappedEdges;
+            SnappingEngine = new CanvasItemSnappingEngine(4);
+            var snappedEdges = SnappingEngine.SnappedEdges;
             ((INotifyCollectionChanged)snappedEdges).CollectionChanged += SnappedEdgesOnCollectionChanged;
 
-            DragOperationHost.SnappingEngine = canvasItemSnappingEngine;
+            DragOperationHost.SnappingEngine = SnappingEngine;
         }
 
         private void DragOperationHostOnDragEnd(object sender, EventArgs eventArgs)
@@ -96,6 +96,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
 
         private CanvasItemGroup groupedItems;
+        private CanvasItemSnappingEngine snappingEngine;
 
         private CanvasItemGroup GroupedItems
         {
@@ -118,7 +119,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
                     MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, GroupedItems);
                     var gridSize = ServiceLocator.CoreTypesFactory.CreateSize(10, 10);
-                    var resizeControl = new ResizeControl(GroupedItems, DesignSurface, new GridSnappingEngine(gridSize, 3));
+                    var resizeControl = new ResizeControl(GroupedItems, DesignSurface, SnappingEngine);
                 
                     ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, GroupedItems);
                     AdornerLayer.Add(MovingAdorner);
@@ -197,6 +198,12 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         }
 
         public DesignOperation DesignOperation { get; set; }
+
+        public CanvasItemSnappingEngine SnappingEngine
+        {
+            get { return snappingEngine; }
+            set { snappingEngine = value; }
+        }
     }
 
 

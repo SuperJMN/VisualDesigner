@@ -64,7 +64,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 
             if (rect.Width > 0 && rect.Height > 0)
             {
-                Child.SetBounds(rect);    
+                SnappingEngine.SetSourceRectForResize(rect);
+                
+                //Child.SetBounds(rect);    
             }
             
         }

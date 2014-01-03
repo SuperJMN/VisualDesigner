@@ -25,12 +25,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         private ObservableCollection<Edge> UnderlyingSnappedEdges { get; set; }
 
-        public override double SnapLeft(double original)
+        public override double SnapHorizontal(double original)
         {
             return Snap(original, Edges.Where(edge => edge.Orientation == Orientation.Vertical));
         }
 
-        public override double SnapTop(double original)
+        public override double SnapVertical(double original)
         {
             return Snap(original, Edges.Where(edge => edge.Orientation == Orientation.Horizontal));
         }

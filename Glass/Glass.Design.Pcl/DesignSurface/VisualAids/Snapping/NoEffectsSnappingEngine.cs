@@ -5,12 +5,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public class NoEffectsSnappingEngine : ISnappingEngine
     {
-        public double SnapLeft(double value)
+        public double SnapHorizontal(double value)
         {
             return value;
         }
 
-        public double SnapTop(double value)
+        public double SnapVertical(double value)
         {
             return value;
         }
@@ -22,7 +22,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         public double Threshold { get; set; }
         public ICanvasItem Snappable { get; set; }
-        public void SetSourceRect(IRect originalRect)
+        public void SetSourceRectForResize(IRect originalRect)
+        {
+            
+        }
+
+        public void SetSourceRectForDrag(IRect originalRect)
         {
             
         }
