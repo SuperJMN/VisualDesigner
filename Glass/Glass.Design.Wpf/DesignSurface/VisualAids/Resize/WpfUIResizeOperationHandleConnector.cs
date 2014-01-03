@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Pcl;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;
-using HorizontalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.HorizontalAlignment;
-using VerticalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.VerticalAlignment;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
@@ -30,7 +27,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         private ResizeOperation ResizeOperation { get; set; }
 
 
-        public void RegisterHandler(IInputElement handle, IPoint point)
+        public void RegisterHandle(IInputElement handle, IPoint point)
         {
             Handles.Add(handle, point);
             handle.PreviewMouseLeftButtonDown += HandleOnMouseLeftButtonDown;
@@ -44,13 +41,20 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
             var handlePoint = Handles[inputElement];
 
-            //handlePoint = ServiceLocator.CoreTypesFactory.CreatePoint(CanvasItem.Left + CanvasItem.Width, 0);
-            
-            ResizeOperation = new ResizeOperation(CanvasItem, handlePoint, SnappingEngine);
+            var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
+
+            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);
             Parent.CaptureMouse();
 
             Parent.MouseMove += ParentOnMouseMove;
             Parent.MouseLeftButtonUp += ParentOnMouseLeftButtonUp;
+        }
+
+        private IPoint ConvertProportionalToAbsolute(IPoint handlePoint)
+        {
+            var x = CanvasItem.Width * handlePoint.X + CanvasItem.Left;
+            var y = CanvasItem.Height * handlePoint.Y + CanvasItem.Top;
+            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
         }
 
         private void ParentOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)

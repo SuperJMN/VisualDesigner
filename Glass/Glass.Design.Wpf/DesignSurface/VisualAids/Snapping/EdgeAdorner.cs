@@ -75,7 +75,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
             else
             {
                 segmentStart = Math.Min(Edge.Range.SegmentStart, Item.Left);
-                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Left + Item.Width);
+                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Right);
             }
 
             var point1 = new Point(Edge.AxisDistance, segmentStart);

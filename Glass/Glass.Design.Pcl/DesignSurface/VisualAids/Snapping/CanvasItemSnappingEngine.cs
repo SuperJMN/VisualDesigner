@@ -37,7 +37,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         private void AddHorizontalEdges(ICanvasItem canvasItem)
         {
-            var range = new Range(canvasItem.Left, canvasItem.Left + canvasItem.Width);
+            var range = new Range(canvasItem.Left, canvasItem.Right);
 
             Edges.Add(new Edge(canvasItem.Top, range, Orientation.Horizontal));
             Edges.Add(new Edge(canvasItem.Top + canvasItem.Height, range, Orientation.Horizontal));
@@ -48,7 +48,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             var range = new Range(canvasItem.Top, canvasItem.Top + canvasItem.Height);
 
             Edges.Add(new Edge(canvasItem.Left, range, Orientation.Vertical));
-            Edges.Add(new Edge(canvasItem.Left + canvasItem.Width, range, Orientation.Vertical));
+            Edges.Add(new Edge(canvasItem.Right, range, Orientation.Vertical));
         }
     }
 }

@@ -8,6 +8,11 @@
         Title="Glass Design Demo" Width="700" Height="560">
     <Window.Resources>
         <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Glass.Design.Wpf;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
             <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
                 <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
             </DataTemplate>

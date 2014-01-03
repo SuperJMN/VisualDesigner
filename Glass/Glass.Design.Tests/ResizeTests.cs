@@ -6,8 +6,6 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Core;
 using ImpromptuInterface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HorizontalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.HorizontalAlignment;
-using VerticalAlignment = Glass.Design.Pcl.DesignSurface.VisualAids.Resize.VerticalAlignment;
 
 namespace UnitTestProject1
 {

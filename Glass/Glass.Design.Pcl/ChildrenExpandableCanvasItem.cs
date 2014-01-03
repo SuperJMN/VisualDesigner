@@ -97,7 +97,7 @@ namespace Glass.Design.Pcl
             {
                 return double.NaN;
             }
-            var right = items.Max(item => item.Left + item.Width);
+            var right = items.Max(item => item.Right);
             var width = right;
             return width;
         }      

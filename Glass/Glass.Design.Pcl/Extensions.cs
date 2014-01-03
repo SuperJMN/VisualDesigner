@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -7,7 +8,7 @@ using Glass.Design.Pcl.DesignSurface;
 namespace Glass.Design.Pcl
 {
     public static class Extensions
-    {       
+    {
         public static void SwapCoordinates(this IEnumerable<ICanvasItem> items)
         {
             foreach (var canvasItem in items)
@@ -132,13 +133,12 @@ namespace Glass.Design.Pcl
 
         public static IPoint GetHandlePoint(this IRect rect, ISize parentSize)
         {
-            var horzCenterOfThumb = rect.Left + (rect.Width / 2);
-            var vertCenterOfThumb = rect.Top + (rect.Height / 2);
+            var middleThumb = rect.MiddlePoint();
 
-            var horzRound = Math.Round(horzCenterOfThumb / parentSize.Width);
-            var vertRound = Math.Round(vertCenterOfThumb / parentSize.Height);
+            var propX = MathOperations.SquareRounding(middleThumb.X, parentSize.Width, 3) / 3D;
+            var propY = MathOperations.SquareRounding(middleThumb.Y, parentSize.Height, 3) / 3D;
 
-            return ServiceLocator.CoreTypesFactory.CreatePoint(horzRound, vertRound);
+            return ServiceLocator.CoreTypesFactory.CreatePoint(propX, propY);
         }
 
         public static IVector ToVector(this ISize size)
@@ -187,7 +187,7 @@ namespace Glass.Design.Pcl
         }
 
         public static void SetRightKeepingLeft(this IRect rect, double right)
-        {                       
+        {
             rect.Width = right - rect.Left;
         }
 

@@ -15,5 +15,13 @@ namespace Glass.Design.Pcl
             var distance = Math.Abs(input - attraction);
             return distance >= maxDistance ? input : attraction;
         }
+
+        public static int SquareRounding(double value, double total, int levels)
+        {
+            var hotSpot = value / total * levels;
+            var roundedHotSpot = Math.Round(hotSpot);
+
+            return (int)roundedHotSpot;
+        }
     }
 }

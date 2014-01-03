@@ -15,9 +15,11 @@ namespace Glass.Design.Wpf.DesignSurface
     [DefaultProperty("Content")]
     public sealed class DesignerItem : ContentControl, ICanvasItem
     {
-        public static readonly DependencyProperty TopProperty =
-            DependencyProperty.Register("Top", typeof(double), typeof(DesignerItem),
-                new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
+        static DesignerItem()
+        {
+
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
+        }
 
         public DesignerItem()
         {
@@ -34,6 +36,8 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
+        public double Right { get { return Left + Width; }  }
+        public double Bottom { get { return Top + Height; } }
         public ObservableCollection<ICanvasItem> Children { get; private set; }
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
 
@@ -59,6 +63,11 @@ namespace Glass.Design.Wpf.DesignSurface
             var handler = LeftChanged;
             if (handler != null) handler(this, e);
         }
+
+
+        public static readonly DependencyProperty TopProperty =
+           DependencyProperty.Register("Top", typeof(double), typeof(DesignerItem),
+               new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
 
         private void OnTopChanged(LocationChangedEventArgs e)
         {

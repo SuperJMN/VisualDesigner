@@ -9,20 +9,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 {
     public class ResizeOperation
     {
-        private ICanvasItem child;
+        private ICanvasItem Child { get; set; }
 
-        private ICanvasItem Child
-        {
-            get { return child; }
-            set
-            {
-                child = value;
-            }
-        }
-
-        public IPoint HandlePoint { get; set; }
-
-
+        private IPoint HandlePoint { get; set; }
 
         [NotNull]
         public ISnappingEngine SnappingEngine { get; set; }
@@ -30,35 +19,23 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
         public ResizeOperation(ICanvasItem child, IPoint handlePoint, ISnappingEngine snappingEngine)
         {
             Child = child;
-            HandlePoint = ConvertToAbsolute(handlePoint, Child);
+            HandlePoint = handlePoint;
+            SetCanResize(child, handlePoint);
             Opposite = HandlePoint.GetOpposite(child.Rect().MiddlePoint());
             SnappingEngine = snappingEngine;        
         }
 
-        private IPoint ConvertToAbsolute(IPoint handlePoint, ICanvasItem child)
+        private void SetCanResize(ICanvasItem child, IPoint handlePoint)
         {
-            var x = 0D;
-            var y = 0D;
-            if (handlePoint.X == 0)
-            {
-                x = child.Left;
-            }
-            else
-            {
-                x = child.Rect().Right;
-            }
-          
-            if (handlePoint.Y == 0)
-            {
-                y = child.Top;
-            }
-            else
-            {
-                y = child.Rect().Bottom;
-            }
+            var rect = child.Rect();
+            var middlePoint = rect.MiddlePoint();
 
-            var finalPoint = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
-            return finalPoint;
+            var distanceX = Math.Abs(middlePoint.X - handlePoint.X);
+            var distanceY = Math.Abs(middlePoint.Y - handlePoint.Y);
+
+            double delta = 0.3;
+            CanChangeHorizontalPosition = distanceX > delta*child.Width;
+            CanChangeVerticalPosition = distanceY > delta * child.Height;
         }
 
         public IPoint Opposite { get; set; }
@@ -69,12 +46,20 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
         {
             var rect = Child.Rect();
 
-            if (InsideLimits(newPoint.X))
+            if (InsideLimitsX(newPoint.X) && CanChangeHorizontalPosition)
             {
                 var left = Math.Min(newPoint.X, Opposite.X);
                 var right = Math.Max(newPoint.X, Opposite.X);
                 rect.X = left;
                 rect.SetRightKeepingLeft(right);
+            }
+
+            if (InsideLimitsY(newPoint.Y) && CanChangeVerticalPosition)
+            {
+                var top = Math.Min(newPoint.Y, Opposite.Y);
+                var bottom = Math.Max(newPoint.Y, Opposite.Y);
+                rect.Y = top;
+                rect.SetBottomKeepingTop(bottom);
             }
 
             if (rect.Width > 0 && rect.Height > 0)
@@ -84,7 +69,11 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             
         }
 
-        private bool InsideLimits(double newPoint)
+        public bool CanChangeVerticalPosition { get; set; }
+
+        private bool CanChangeHorizontalPosition { get; set; }
+
+        private bool InsideLimitsX(double newPoint)
         {
             var firstMember = HandlePoint.X - Opposite.X;
             var secondMember = newPoint - Opposite.X;
@@ -92,29 +81,22 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             var firstPositive = firstMember > 0;
             var secondPositive = secondMember > 0;
 
-            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 
             return firstPositive == secondPositive;
         }
-    }
 
-    public struct ResizeHandle
-    {
-        public VerticalAlignment VerticalAlignment { get; set; }
-        public HorizontalAlignment HorizontalAlignment { get; set; }
-    }
+        private bool InsideLimitsY(double newPoint)
+        {
+            var firstMember = HandlePoint.Y - Opposite.Y;
+            var secondMember = newPoint - Opposite.Y;
 
-    public enum VerticalAlignment
-    {
-        Top,
-        Middle,
-        Bottom,
-    }
+            var firstPositive = firstMember > 0;
+            var secondPositive = secondMember > 0;
 
-    public enum HorizontalAlignment
-    {
-        Left,
-        Center,
-        Right,
-    }
+
+
+            return firstPositive == secondPositive;
+        }
+    }   
 }

@@ -43,10 +43,7 @@ namespace Glass.Design.Wpf
         {
             const double totalDeg = 360D;
             const int numSegments = 8;
-            var hotSpot = deg / totalDeg * numSegments;
-            var roundedHotSpot = Math.Round(hotSpot);
-
-            return (int)roundedHotSpot;
+            return MathOperations.SquareRounding(deg, totalDeg, numSegments);
         }
 
         private static Cursor CursorFromSegment(int segment)

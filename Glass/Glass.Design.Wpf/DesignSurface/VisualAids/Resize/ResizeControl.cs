@@ -74,7 +74,6 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, FrameOfReference, SnappingEngine);
             WindowsSizeCursorsThumbCursorConverter = new WindowsSizeCursorsThumbCursorConverter();
 
-
             var thumbContainer = (UIElement)Template.FindName("PART_ThumbContainer", this);
 
 
@@ -86,9 +85,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
                 var parentRect = CanvasItem.Rect().ActLike<IRect>();
 
-                var handlePoint = Geometrics.GetHandlePoint(childRect, parentRect.Size);
+                var handlePoint = childRect.GetHandlePoint(parentRect.Size);
                 
-                WpfUIResizeOperationHandleConnector.RegisterHandler(logicalChild, handlePoint);
+                WpfUIResizeOperationHandleConnector.RegisterHandle(logicalChild, handlePoint);
                 SetCursorToHandle(logicalChild);
             }
         }

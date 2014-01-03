@@ -8,6 +8,9 @@
     xmlns:drag1="clr-namespace:Glass.Design.Wpf.DesignSurface.VisualAids.Drag"
     mc:Ignorable="d">
 
+    <Brush x:Key="DarkBrush">#6494EC</Brush>
+    <Brush x:Key="LightBrush">#8B38D6FF</Brush>
+    
     <Style TargetType="{x:Type designSurface:DesignSurface}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -33,8 +36,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type designSurface:DesignerItem}">
                     <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" d:DesignWidth="93" d:DesignHeight="84">
+                            BorderBrush="{StaticResource LightBrush}"
+                            BorderThickness="1" d:DesignWidth="93" d:DesignHeight="84">
                         <ContentPresenter Content="{TemplateBinding Content}" />
                     </Border>
                 </ControlTemplate>
@@ -45,8 +48,8 @@
     <Style x:Key="ResizeThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Width" Value="10" />
         <Setter Property="Height" Value="10" />
         <Setter Property="Template">
@@ -56,7 +59,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}">
                         <Grid>
-                            <Border BorderBrush="#6494EC" BorderThickness="1" Background="White" />
+                            <Border BorderBrush="{StaticResource DarkBrush}" BorderThickness="1" Background="White" />
                         </Grid>
                     </Border>
                 </ControlTemplate>

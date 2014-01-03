@@ -16,6 +16,8 @@ namespace Glass.Design.Pcl.CanvasItem
             Children = new ObservableCollection<ICanvasItem>();        
         }
 
+        public double Right { get { return Left + Width; } }
+        public double Bottom { get { return Top + Height; } }
         public ObservableCollection<ICanvasItem> Children { get; private set; }
 
         public double Left

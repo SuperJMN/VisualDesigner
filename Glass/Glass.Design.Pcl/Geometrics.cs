@@ -67,36 +67,5 @@ namespace Glass.Design.Pcl
         {
             return oldValue / oldTotal * newTotal;
         }
-
-        public static IPoint GetHandlePoint(IRect childRect, ISize parentSize)
-        {
-            double x, y;
-
-            var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, parentSize.Width, parentSize.Height);
-
-            var childMiddlePoint = childRect.MiddlePoint();
-            var parentMiddlePoint = parentRect.MiddlePoint();
-
-            if (childMiddlePoint.X < parentMiddlePoint.X)
-            {
-                x = parentRect.Left;
-            }
-            else
-            {
-                x = parentRect.Right;
-            }
-
-            if (childMiddlePoint.Y < parentMiddlePoint.Y)
-            {
-                y = parentRect.Top;
-            }
-            else
-            {
-                y = parentRect.Bottom;
-            }
-
-            var point = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
-            return point;
-        }
     }
 }
