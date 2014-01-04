@@ -78,6 +78,7 @@
     <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
     <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />
     <Compile Include="CanvasItem\CanvasItem.cs" />
+    <Compile Include="CanvasItem\CanvasItemCollection.cs" />
     <Compile Include="CanvasItem\CanvasItemGroup.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemGroupINPC.cs" />

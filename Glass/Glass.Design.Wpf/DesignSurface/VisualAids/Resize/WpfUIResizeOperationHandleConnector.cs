@@ -43,8 +43,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
-            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);
-            ResizeOperation.SnappingEngine.Snappable = CanvasItem;
+            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);            
             Parent.CaptureMouse();
 
             Parent.MouseMove += ParentOnMouseMove;

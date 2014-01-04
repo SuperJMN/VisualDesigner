@@ -53,7 +53,7 @@
     <Compile Include="Core\CoreTypesFactoryWpf.cs" />
     <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
-    <Compile Include="DesignSurface\DesignerItem.cs" />
+    <Compile Include="CanvasItemControl.cs" />
     <Compile Include="DesignSurface\VisualAids\DesignAidsProvider.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
@@ -63,6 +63,7 @@
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Viewing\ViewingSurface.cs" />
     <Compile Include="WindowsSizeCursorsThumbCursorConverter.cs" />
     <Compile Include="WrappingAdorner.cs" />
   </ItemGroup>

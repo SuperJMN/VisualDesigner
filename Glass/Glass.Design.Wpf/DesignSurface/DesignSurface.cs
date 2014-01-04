@@ -51,18 +51,18 @@ namespace Glass.Design.Wpf.DesignSurface
             }
         }
 
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-        {
-            var designerItem = (DesignerItem)element;
-            designerItem.PreviewMouseLeftButtonDown += ContainerOnLeftButtonDown;
-            base.PrepareContainerForItemOverride(element, item);
-        }
-
         private void ContainerOnLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
             OnItemSpecified(item);
             mouseButtonEventArgs.Handled = true;
+        }
+
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            var designerItem = (DesignerItem)element;
+            designerItem.PreviewMouseLeftButtonDown += ContainerOnLeftButtonDown;
+            base.PrepareContainerForItemOverride(element, item);
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)

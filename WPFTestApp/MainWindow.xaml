@@ -4,20 +4,49 @@
         xmlns:designSurface1="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
         xmlns:designSurface="clr-namespace:Glass.Design.Pcl.DesignSurface;assembly=Glass.Design.Pcl"
         xmlns:sampleModel="clr-namespace:SampleModel;assembly=SampleModel"
+        xmlns:canvasItem="clr-namespace:Glass.Design.Pcl.CanvasItem;assembly=Glass.Design.Pcl"
+        xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing;assembly=Glass.Design.Wpf"
+        xmlns:wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
         WindowStartupLocation="CenterScreen"
         Title="Glass Design Demo" Width="700" Height="560">
     <Window.Resources>
         <ResourceDictionary>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Glass.Design.Wpf;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
                 <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Ellipse}">
-                <Ellipse Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+                <Grid>
+                    <Ellipse Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+                    <viewing:ViewingSurface ItemsSource="{Binding Children}">
+                        <viewing:ViewingSurface.ItemContainerStyle>
+                            <Style TargetType="{x:Type wpf:DesignerItem}">
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
+                                <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Top)}" />
+                                <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Width)}" />
+                                <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Height)}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type wpf:DesignerItem}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>                                    
+                                </Setter>
+                            </Style>
+                        </viewing:ViewingSurface.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </viewing:ViewingSurface>
+                </Grid>
+
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Mario}">
                 <Image Stretch="Fill" Source="/Images/Mario.png"  />
@@ -31,10 +60,10 @@
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>        
-        <designSurface1:DesignSurface Background="Azure" x:Name="DesignSurface" >
+    <Grid>
+        <designSurface1:DesignSurface Background="Azure">
             <designSurface1:DesignSurface.ItemContainerStyle>
-                <Style TargetType="{x:Type designSurface1:DesignerItem}">
+                <Style TargetType="{x:Type wpf:DesignerItem}">
                     <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
                     <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Top)}" />
                     <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Width)}" />
@@ -47,10 +76,15 @@
                 </sampleModel:CanvasRectangle.FillColor>
             </sampleModel:CanvasRectangle>
             <sampleModel:Ellipse Top="400" Left="150" Width="100" Height="100">
+                <sampleModel:Ellipse.Children>
+                    <canvasItem:CanvasItemCollection>
+                        <sampleModel:Sonic Left="25" Width="50" Height="100" Top="0" />
+                    </canvasItem:CanvasItemCollection>
+                </sampleModel:Ellipse.Children>
                 <sampleModel:Ellipse.FillColor>
                     <sampleModel:Color R="30" G="100" B="222"  />
                 </sampleModel:Ellipse.FillColor>
-            </sampleModel:Ellipse>                
+            </sampleModel:Ellipse>
         </designSurface1:DesignSurface>
         <TextBlock Margin="10" FontSize="18" FontFamily="Verdana" Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
     </Grid>

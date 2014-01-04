@@ -8,6 +8,6 @@ namespace Glass.Design.Pcl.CanvasItem
         double Right { get; }
         double Bottom { get; }
 
-        ObservableCollection<ICanvasItem> Children { get; }
+        CanvasItemCollection Children { get; }
     }
 }

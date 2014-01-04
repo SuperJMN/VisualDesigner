@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem
@@ -10,15 +11,15 @@ namespace Glass.Design.Pcl.CanvasItem
         private double top;
         private double width;
         private double height;
-        
+
         public CanvasItem()
         {
-            Children = new ObservableCollection<ICanvasItem>();        
+            Children = new CanvasItemCollection();
         }
 
         public double Right { get { return Left + Width; } }
         public double Bottom { get { return Top + Height; } }
-        public ObservableCollection<ICanvasItem> Children { get; private set; }
+        public CanvasItemCollection Children { get; private set; }
 
         public double Left
         {
@@ -48,7 +49,7 @@ namespace Glass.Design.Pcl.CanvasItem
                 {
                     return;
                 }
-                
+
                 var oldValue = top;
                 var newValue = value;
                 top = newValue;

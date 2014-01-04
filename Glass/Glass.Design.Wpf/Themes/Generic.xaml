@@ -6,6 +6,8 @@
     xmlns:designSurface="clr-namespace:Glass.Design.Wpf.DesignSurface"
     xmlns:resize="clr-namespace:Glass.Design.Wpf.DesignSurface.VisualAids.Resize"
     xmlns:drag1="clr-namespace:Glass.Design.Wpf.DesignSurface.VisualAids.Drag"
+    xmlns:wpf="clr-namespace:Glass.Design.Wpf"
+    xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing"
     mc:Ignorable="d">
 
     <Brush x:Key="DarkBrush">#6494EC</Brush>
@@ -31,10 +33,29 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type designSurface:DesignerItem}">
+    <Style TargetType="{x:Type viewing:ViewingSurface}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type designSurface:DesignerItem}">
+                <ControlTemplate TargetType="{x:Type viewing:ViewingSurface}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type wpf:DesignerItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type wpf:DesignerItem}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{StaticResource LightBrush}"
                             BorderThickness="1" d:DesignWidth="93" d:DesignHeight="84">

@@ -8,12 +8,38 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 {
     public class ResizeOperation
     {
-        private ICanvasItem Child { get; set; }
+        private ICanvasItem child;
+        private ISnappingEngine snappingEngine;
+
+        private ICanvasItem Child
+        {
+            get { return child; }
+            set
+            {
+                child = value;
+
+                if (SnappingEngine != null)
+                {
+                    SnappingEngine.Snappable = value;
+                }
+            }
+        }
 
         private IPoint HandlePoint { get; set; }
 
         [NotNull]
-        public ISnappingEngine SnappingEngine { get; set; }
+        private ISnappingEngine SnappingEngine
+        {
+            get { return snappingEngine; }
+            set
+            {
+                snappingEngine = value;
+                if (Child != null)
+                {
+                    SnappingEngine.Snappable = Child;
+                }
+            }
+        }
 
         public ResizeOperation(ICanvasItem child, IPoint handlePoint, ISnappingEngine snappingEngine)
         {
@@ -24,22 +50,20 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             SnappingEngine = snappingEngine;        
         }
 
-        private void SetCanResize(ICanvasItem child, IPoint handlePoint)
+        private void SetCanResize(ICanvasItem canvasItem, IPoint handlePoint)
         {
-            var rect = child.Rect();
+            var rect = canvasItem.Rect();
             var middlePoint = rect.MiddlePoint();
 
             var distanceX = Math.Abs(middlePoint.X - handlePoint.X);
             var distanceY = Math.Abs(middlePoint.Y - handlePoint.Y);
 
             double delta = 0.3;
-            CanChangeHorizontalPosition = distanceX > delta*child.Width;
-            CanChangeVerticalPosition = distanceY > delta * child.Height;
+            CanChangeHorizontalPosition = distanceX > delta*canvasItem.Width;
+            CanChangeVerticalPosition = distanceY > delta * canvasItem.Height;
         }
 
-        public IPoint Opposite { get; set; }
-
-
+        private IPoint Opposite { get; set; }
 
         public void UpdateHandlePosition(IPoint newPoint)
         {
@@ -63,14 +87,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 
             if (rect.Width > 0 && rect.Height > 0)
             {
-                SnappingEngine.SetSourceRectForResize(rect);
-                
-                //Child.SetBounds(rect);    
+                SnappingEngine.SetSourceRectForResize(rect);                               
             }
             
         }
 
-        public bool CanChangeVerticalPosition { get; set; }
+        private bool CanChangeVerticalPosition { get; set; }
 
         private bool CanChangeHorizontalPosition { get; set; }
 
@@ -89,15 +111,10 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 
         private bool InsideLimitsY(double newPoint)
         {
-            var firstMember = HandlePoint.Y - Opposite.Y;
-            var secondMember = newPoint - Opposite.Y;
+            var signOfLimit = Math.Sign(HandlePoint.Y - Opposite.Y);
+            var signOfNewPoint = Math.Sign(newPoint - Opposite.Y);
 
-            var firstPositive = firstMember > 0;
-            var secondPositive = secondMember > 0;
-
-
-
-            return firstPositive == secondPositive;
+            return signOfLimit == signOfNewPoint;
         }
     }   
 }

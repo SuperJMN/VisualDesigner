@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +9,7 @@ using Glass.Design.Pcl.DesignSurface;
 
 #endregion
 
-namespace Glass.Design.Wpf.DesignSurface
+namespace Glass.Design.Wpf
 {
     [DefaultProperty("Content")]
     public sealed class DesignerItem : ContentControl, ICanvasItem
@@ -38,7 +37,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public double Right { get { return Left + Width; }  }
         public double Bottom { get { return Top + Height; } }
-        public ObservableCollection<ICanvasItem> Children { get; private set; }
+        public CanvasItemCollection Children { get; private set; }
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
 
         public event EventHandler<SizeChangeEventArgs> WidthChanged;
