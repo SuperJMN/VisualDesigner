@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.Primitives;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
@@ -13,13 +12,13 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             : base(threshold)
         {
             Edges = new List<Edge>();
-          
+
             UnderlyingSnappedEdges = new ObservableCollection<Edge>();
             SnappedEdges = new ReadOnlyObservableCollection<Edge>(UnderlyingSnappedEdges);
         }
 
         protected List<Edge> Edges { get; private set; }
-        
+
 
         public ReadOnlyObservableCollection<Edge> SnappedEdges { get; private set; }
 
@@ -27,12 +26,22 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         public override double SnapHorizontal(double original)
         {
-            return Snap(original, Edges.Where(edge => edge.Orientation == Orientation.Vertical));
+            return Snap(original, VerticalEdges);
+        }
+
+        private IEnumerable<Edge> VerticalEdges
+        {
+            get { return Edges.Where(edge => edge.Orientation == Orientation.Vertical); }
         }
 
         public override double SnapVertical(double original)
         {
-            return Snap(original, Edges.Where(edge => edge.Orientation == Orientation.Horizontal));
+            return Snap(original, HorizontalEdges);
+        }
+
+        private IEnumerable<Edge> HorizontalEdges
+        {
+            get { return Edges.Where(edge => edge.Orientation == Orientation.Horizontal); }
         }
 
         public double Snap(double original, IEnumerable<Edge> edges)
@@ -48,24 +57,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
                 snappedValue = MathOperations.Snap(original, currentEdge.AxisDistance, Threshold);
 
                 alreadySnapped = ValueIsSnapped(original, snappedValue);
-
-                var snapStatus = Math.Abs(currentEdge.AxisDistance - snappedValue) < 0.1;
-                SynchronizeSnappedEdgesFor(currentEdge, snapStatus);
             }
 
             return snappedValue;
-        }
-
-        private void SynchronizeSnappedEdgesFor(Edge currentEdge, bool snapped)
-        {
-            if (UnderlyingSnappedEdges.Contains(currentEdge) && !snapped)
-            {
-                UnderlyingSnappedEdges.Remove(currentEdge);
-            }
-            else if (!UnderlyingSnappedEdges.Contains(currentEdge) && snapped)
-            {
-                UnderlyingSnappedEdges.Add(currentEdge);
-            }
         }
 
         private static bool ValueIsSnapped(double original, double result)
@@ -76,6 +70,34 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         public void ClearSnappedEdges()
         {
             UnderlyingSnappedEdges.Clear();
+        }
+
+        protected override void SourceRectangleFiltered()
+        {
+            base.SourceRectangleFiltered();
+
+            var horizontalSnapped = HorizontalEdges.Where(EdgeIsSnappedToSnappableHorizontalEdges);
+            var verticalSnapped = VerticalEdges.Where(EdgeIsSnappedToSnappableVerticalEdges);
+
+            var snappedEdges = horizontalSnapped.Concat(verticalSnapped);
+
+            UnderlyingSnappedEdges.SynchronizeListTo(snappedEdges.ToList());
+        }       
+
+        private bool EdgeIsSnappedToSnappableHorizontalEdges(Edge edge)
+        {
+            const double tolerance = 0.1;
+            var snappedToTop = Math.Abs(edge.AxisDistance - Snappable.Top) < tolerance;
+            var snappedToBottom = Math.Abs(edge.AxisDistance - Snappable.Bottom) < tolerance;
+            return snappedToTop || snappedToBottom;
+        }
+
+        private bool EdgeIsSnappedToSnappableVerticalEdges(Edge edge)
+        {
+            const double tolerance = 0.1;
+            var snappedToLeft = Math.Abs(edge.AxisDistance - Snappable.Left) < tolerance;
+            var snappedToRight = Math.Abs(edge.AxisDistance - Snappable.Right) < tolerance;
+            return snappedToLeft || snappedToRight;
         }
     }
 

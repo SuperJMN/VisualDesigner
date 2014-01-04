@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Glass.Basics.Extensions;
@@ -14,14 +12,14 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
     public sealed class ResizeControl : Control
     {
-        public ISnappingEngine SnappingEngine { get; set; }
+        public IEdgeSnappingEngine SnappingEngine { get; set; }
 
         static ResizeControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizeControl), new FrameworkPropertyMetadata(typeof(ResizeControl)));
         }
 
-        public ResizeControl(CanvasItem itemToResize, IInputElement parent, ISnappingEngine snappingEngine)
+        public ResizeControl(CanvasItem itemToResize, IInputElement parent, IEdgeSnappingEngine snappingEngine)
         {
             SnappingEngine = snappingEngine;
             FrameOfReference = parent;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
+﻿using System.Collections.Generic;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;

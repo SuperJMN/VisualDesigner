@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Glass.Design.Pcl.Annotations;
+﻿using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 
@@ -26,22 +22,32 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
         public void SetSourceRectForResize(IRect originalRect)
         {
             SnapHorizontalsForResize(originalRect);
-            SnapVerticalsForResize(originalRect);            
+            SnapVerticalsForResize(originalRect);
+
+            SourceRectangleFiltered();            
         }
 
         public void SetSourceRectForDrag(IRect originalRect)
         {
             SnapHorizontalsForDrag(originalRect);
             SnapVerticalsForDrag(originalRect);
+
+            SourceRectangleFiltered();
         }
 
+        protected virtual void SourceRectangleFiltered()
+        {
+            
+        }
+       
         private void SnapVerticalsForDrag(IRect originalRect)
         {
             var topSnapped = false;
             var bottomSnapped = false;
 
-            var snappedTop = SnapVertical(originalRect.Top);
+            
             var snappedBottom = SnapVertical(originalRect.Bottom);
+            var snappedTop = SnapVertical(originalRect.Top);
 
             if (originalRect.Top != snappedTop)
             {

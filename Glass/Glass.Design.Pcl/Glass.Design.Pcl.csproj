@@ -119,6 +119,7 @@
     <Compile Include="Geometrics.cs" />
     <Compile Include="MathOperations.cs" />
     <Compile Include="PointCollection.cs" />
+    <Compile Include="Primitives\EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProportionalResizer.cs" />
   </ItemGroup>

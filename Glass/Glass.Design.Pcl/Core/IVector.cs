@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Glass.Design.Pcl.Core
+﻿namespace Glass.Design.Pcl.Core
 {
     public interface IVector
     {

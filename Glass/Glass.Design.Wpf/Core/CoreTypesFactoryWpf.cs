@@ -1,5 +1,4 @@
-﻿using System.Runtime.Remoting.Channels;
-using System.Windows;
+﻿using System.Windows;
 using Glass.Design.Pcl.Core;
 using ImpromptuInterface;
 

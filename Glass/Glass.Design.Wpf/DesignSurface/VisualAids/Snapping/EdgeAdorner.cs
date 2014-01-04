@@ -3,12 +3,10 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.Core;
-using ImpromptuInterface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
 {
@@ -34,6 +32,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
                 {
                     item.LeftChanged -= LocationChanged;
                     item.TopChanged -= LocationChanged;
+                    item.WidthChanged -= ItemOnWidthChanged;
+                    item.HeightChanged -= ItemOnWidthChanged;
                 }
 
                 item = value;
@@ -42,8 +42,15 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
                 {
                     item.LeftChanged += LocationChanged;
                     item.TopChanged += LocationChanged;
+                    item.WidthChanged += ItemOnWidthChanged;
+                    item.HeightChanged += ItemOnWidthChanged;
                 }
             }
+        }
+
+        private void ItemOnWidthChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
+        {
+            InvalidateVisual();
         }
 
         private void LocationChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)
@@ -70,7 +77,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
             if (Edge.Orientation == Orientation.Vertical)
             {
                 segmentStart = Math.Min(Edge.Range.SegmentStart, Item.Top);
-                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Top + Item.Height);
+                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Bottom);
             }
             else
             {

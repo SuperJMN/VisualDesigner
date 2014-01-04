@@ -41,19 +41,16 @@
                     <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Height)}" />
                 </Style>
             </designSurface1:DesignSurface.ItemContainerStyle>
-            <sampleModel:CanvasRectangle Top="200" Left="500" Width="100" Height="100">
+            <sampleModel:CanvasRectangle Top="0" Left="0" Width="100" Height="100">
                 <sampleModel:CanvasRectangle.FillColor>
                     <sampleModel:Color R="255" G="230" B="10"  />
                 </sampleModel:CanvasRectangle.FillColor>
             </sampleModel:CanvasRectangle>
-            <sampleModel:Ellipse Top="400" Left="120" Width="100" Height="100">
+            <sampleModel:Ellipse Top="400" Left="150" Width="100" Height="100">
                 <sampleModel:Ellipse.FillColor>
                     <sampleModel:Color R="30" G="100" B="222"  />
                 </sampleModel:Ellipse.FillColor>
-            </sampleModel:Ellipse>
-            <sampleModel:Mario Top="50" Left="0" Width="80" Height="80" />
-            <sampleModel:Sonic Top="80" Left="140" Width="100" Height="120" />
-            <sampleModel:Link Top="80" Left="250" Width="180" Height="180" />            
+            </sampleModel:Ellipse>                
         </designSurface1:DesignSurface>
         <TextBlock Margin="10" FontSize="18" FontFamily="Verdana" Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
     </Grid>

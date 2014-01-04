@@ -13,9 +13,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
     {
         private ICanvasItem CanvasItem { get; set; }
         private IInputElement Parent { get; set; }
-        private ISnappingEngine SnappingEngine { get; set; }
+        private IEdgeSnappingEngine SnappingEngine { get; set; }
 
-        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IInputElement parent, ISnappingEngine snappingEngine)
+        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IInputElement parent, IEdgeSnappingEngine snappingEngine)
         {
             CanvasItem = canvasItem;
             Parent = parent;
@@ -66,7 +66,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 Parent.ReleaseMouseCapture();
                 Parent.MouseMove -= ParentOnMouseMove;
                 ResizeOperation = null;
-
+                SnappingEngine.ClearSnappedEdges();
 
                 IsDragging = false;
                 //OnDragEnd();

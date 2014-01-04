@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Dynamic;
 using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;

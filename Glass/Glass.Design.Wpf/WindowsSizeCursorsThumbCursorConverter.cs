@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Wpf.Converters;
