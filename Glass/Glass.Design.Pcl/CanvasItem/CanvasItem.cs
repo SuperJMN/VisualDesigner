@@ -34,7 +34,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
                 var oldValue = !double.IsNaN(left) ? left : value;
 
-                
+
 
                 var newValue = value;
                 left = newValue;
@@ -71,7 +71,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         protected virtual void OnTopChanged(LocationChangedEventArgs locationChangedEventArgs)
         {
-            
+
         }
 
         protected virtual void OnLeftChanged(LocationChangedEventArgs locationChangedEventArgs)
@@ -99,7 +99,7 @@ namespace Glass.Design.Pcl.CanvasItem
             get { return width; }
             set
             {
-                var oldValue = !double.IsNaN(width) ? width: value;
+                var oldValue = !double.IsNaN(width) ? width : value;
                 var newValue = Math.Max(value, 0);
 
                 width = value;
@@ -112,7 +112,19 @@ namespace Glass.Design.Pcl.CanvasItem
 
         protected virtual void OnWidthChanged(SizeChangeEventArgs sizeChangeEventArgs)
         {
-            
+            foreach (var child in Children)
+            {
+                ResizeChildWidthProportionally(child, sizeChangeEventArgs);
+            }
+        }
+
+        private void ResizeChildWidthProportionally(ICanvasItem child, SizeChangeEventArgs sizeChangeEventArgs)
+        {
+            var widthProp = child.Width / sizeChangeEventArgs.OldValue;
+            child.Width = child.Width = widthProp * sizeChangeEventArgs.NewValue;
+
+            var leftProp = child.Left / sizeChangeEventArgs.OldValue;
+            child.Left = leftProp * sizeChangeEventArgs.NewValue;
         }
 
         public double Height
@@ -127,14 +139,19 @@ namespace Glass.Design.Pcl.CanvasItem
 
                 var sizeChangeEventArgs = new SizeChangeEventArgs(oldValue, newValue);
 
-                OnHeightChanged(sizeChangeEventArgs);                
+                OnHeightChanged(sizeChangeEventArgs);
                 RaiseHeightChanged(sizeChangeEventArgs);
             }
         }
 
         protected virtual void OnHeightChanged(SizeChangeEventArgs sizeChangeEventArgs)
         {
-            
+            foreach (var child in Children)
+            {
+                child.SwapCoordinates();
+                ResizeChildWidthProportionally(child, sizeChangeEventArgs);
+                child.SwapCoordinates();
+            }
         }
 
 
