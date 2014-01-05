@@ -22,46 +22,46 @@ namespace Glass.Design.Pcl
             Left = GetLeftFromChildren(Children);
             Top = GetTopFromChildren(Children);
             Width = GetWidthFromChildren(Children);
-            Height = GetHeightFromChildren(Children);
-
-            LeftChanged += OnLeftChanged;
-            TopChanged += OnTopChanged;
-            WidthChanged += OnWidthChanged;            
-            HeightChanged += OnHeightChanged;
+            Height = GetHeightFromChildren(Children);            
         }
 
-        private void OnWidthChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
+        protected override void OnLeftChanged(LocationChangedEventArgs e)
         {
-            SetWidth(sizeChangeEventArgs, Left);
+            SetLeft(e.OldValue, e.NewValue);  
         }
 
-        private void OnHeightChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
+        protected override void OnTopChanged(LocationChangedEventArgs e)
         {
             Children.SwapCoordinates();
-            SetWidth(sizeChangeEventArgs, Top);
+            SetLeft(e.OldValue, e.NewValue);
             Children.SwapCoordinates();
         }
 
-        private void OnTopChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)
+        protected override void OnWidthChanged(SizeChangeEventArgs e)
+        {
+            SetWidth(e, Left);
+        }
+
+        protected override void OnHeightChanged(SizeChangeEventArgs e)
         {
             Children.SwapCoordinates();
-            SetLeft(locationChangedEventArgs.OldValue, locationChangedEventArgs.NewValue);            
+            SetWidth(e, Top);
             Children.SwapCoordinates();
         }
+
+     
 
         private double GetWidthFromChildren(ObservableCollection<ICanvasItem> children)
         {
-            return GetMaxRightFromChildren(children) - Left;
+            var right = GetMaxRightFromChildren(children);
+            var left = Left;
+            return right - left;
         }
 
         public ChildrenExpandableCanvasItem() : this(new List<ICanvasItem>())
         {
         }
 
-        private void OnLeftChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)
-        {
-            SetLeft(locationChangedEventArgs.OldValue, locationChangedEventArgs.NewValue);            
-        }
 
         private double GetTopFromChildren(ObservableCollection<ICanvasItem> children)
         {
@@ -98,20 +98,20 @@ namespace Glass.Design.Pcl
                 return double.NaN;
             }
             var right = items.Max(item => item.Right);
-            var width = right;
-            return width;
+            return right;
         }      
 
         
 
         private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void SetLeft(double oldLeft, double newLeft)
         {            
             var delta = newLeft - oldLeft;
+
             foreach (var canvasItem in Children)
             {
                 canvasItem.Left += delta;
@@ -120,6 +120,11 @@ namespace Glass.Design.Pcl
 
         private void SetWidth(SizeChangeEventArgs sizeChangeEventArgs, double currentParentLeft)
         {
+            if (sizeChangeEventArgs.OldValue <= 0)
+            {
+                return;
+            }
+
             foreach (var canvasItem in Children)
             {
                 Resize(canvasItem, sizeChangeEventArgs, currentParentLeft);

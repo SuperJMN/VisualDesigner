@@ -7,10 +7,10 @@ namespace Glass.Design.Pcl.CanvasItem
 {
     public class CanvasItem : ICanvasItem
     {
-        private double left;
-        private double top;
-        private double width;
-        private double height;
+        private double left = double.NaN;
+        private double top = double.NaN;
+        private double width = double.NaN;
+        private double height = double.NaN;
 
         public CanvasItem()
         {
@@ -32,10 +32,17 @@ namespace Glass.Design.Pcl.CanvasItem
                     return;
                 }
 
-                var oldValue = left;
+                var oldValue = !double.IsNaN(left) ? left : value;
+
+                
+
                 var newValue = value;
                 left = newValue;
-                OnLeftChanged(new LocationChangedEventArgs(oldValue, newValue));
+
+
+                var locationChangedEventArgs = new LocationChangedEventArgs(oldValue, newValue);
+                OnLeftChanged(locationChangedEventArgs);
+                RaiseLeftChanged(locationChangedEventArgs);
             }
         }
 
@@ -50,23 +57,38 @@ namespace Glass.Design.Pcl.CanvasItem
                     return;
                 }
 
-                var oldValue = top;
+                var oldValue = !double.IsNaN(top) ? top : value;
+
                 var newValue = value;
                 top = newValue;
-                OnTopChanged(new LocationChangedEventArgs(oldValue, newValue));
+
+                var locationChangedEventArgs = new LocationChangedEventArgs(oldValue, newValue);
+                OnTopChanged(locationChangedEventArgs);
+
+                RaiseTopChanged(locationChangedEventArgs);
             }
+        }
+
+        protected virtual void OnTopChanged(LocationChangedEventArgs locationChangedEventArgs)
+        {
+            
+        }
+
+        protected virtual void OnLeftChanged(LocationChangedEventArgs locationChangedEventArgs)
+        {
+
         }
 
         public event EventHandler<LocationChangedEventArgs> LeftChanged;
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        protected virtual void OnTopChanged(LocationChangedEventArgs e)
+        protected virtual void RaiseTopChanged(LocationChangedEventArgs e)
         {
             var handler = TopChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected virtual void OnLeftChanged(LocationChangedEventArgs e)
+        protected virtual void RaiseLeftChanged(LocationChangedEventArgs e)
         {
             var handler = LeftChanged;
             if (handler != null) handler(this, e);
@@ -77,13 +99,20 @@ namespace Glass.Design.Pcl.CanvasItem
             get { return width; }
             set
             {
-                var oldValue = width;
+                var oldValue = !double.IsNaN(width) ? width: value;
                 var newValue = Math.Max(value, 0);
 
                 width = value;
 
-                OnWidthChanged(new SizeChangeEventArgs(oldValue, newValue));
+                var sizeChangeEventArgs = new SizeChangeEventArgs(oldValue, newValue);
+                OnWidthChanged(sizeChangeEventArgs);
+                RaiseWidthChanged(sizeChangeEventArgs);
             }
+        }
+
+        protected virtual void OnWidthChanged(SizeChangeEventArgs sizeChangeEventArgs)
+        {
+            
         }
 
         public double Height
@@ -91,19 +120,27 @@ namespace Glass.Design.Pcl.CanvasItem
             get { return height; }
             set
             {
-                var oldValue = height;
+                var oldValue = !double.IsNaN(height) ? height : value;
                 var newValue = Math.Max(value, 0);
 
                 height = value;
 
-                OnHeightChanged(new SizeChangeEventArgs(oldValue, newValue));
+                var sizeChangeEventArgs = new SizeChangeEventArgs(oldValue, newValue);
+
+                OnHeightChanged(sizeChangeEventArgs);                
+                RaiseHeightChanged(sizeChangeEventArgs);
             }
+        }
+
+        protected virtual void OnHeightChanged(SizeChangeEventArgs sizeChangeEventArgs)
+        {
+            
         }
 
 
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
 
-        protected virtual void OnHeightChanged(SizeChangeEventArgs e)
+        private void RaiseHeightChanged(SizeChangeEventArgs e)
         {
             var handler = HeightChanged;
             if (handler != null) handler(this, e);
@@ -111,7 +148,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public event EventHandler<SizeChangeEventArgs> WidthChanged;
 
-        protected virtual void OnWidthChanged(SizeChangeEventArgs e)
+        private void RaiseWidthChanged(SizeChangeEventArgs e)
         {
             var handler = WidthChanged;
             if (handler != null) handler(this, e);
