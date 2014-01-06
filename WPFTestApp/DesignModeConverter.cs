@@ -9,8 +9,8 @@ namespace Glass.Design.WpfTester
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var v = (DesignOperation)value;
-            return v == DesignOperation.Move;
+            var v = (PlaneOperation)value;
+            return v == PlaneOperation.Move;
 
         }
 
@@ -21,9 +21,9 @@ namespace Glass.Design.WpfTester
             var boolean = (bool)value;
             if (boolean)
             {
-                return DesignOperation.Move;
+                return PlaneOperation.Move;
             }
-            return DesignOperation.Resize;
+            return PlaneOperation.Resize;
         }
     }
 }

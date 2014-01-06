@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CanvasRectangle.cs" />
     <Compile Include="Ellipse.cs" />
+    <Compile Include="Group.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Sonic.cs" />
     <Compile Include="Shape.cs" />

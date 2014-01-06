@@ -55,7 +55,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void GetLeftTest()
         {
-            var group = new CanvasItemGroup(Items);
+            var group = new CanvasItemSelection(Items);
 
             Assert.AreEqual(10, group.Left);
         }
@@ -63,7 +63,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void GetTopTest()
         {
-            var group = new CanvasItemGroup(Items);
+            var group = new CanvasItemSelection(Items);
 
             Assert.AreEqual(20, group.Top);
         }
@@ -77,7 +77,7 @@ namespace UnitTestProject1
                             Item2,
                         };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
 
             Assert.AreEqual(60, group.Height);
         }
@@ -91,7 +91,7 @@ namespace UnitTestProject1
                             Item2,
                         };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
 
             Assert.AreEqual(140, group.Width);
         }
@@ -105,7 +105,7 @@ namespace UnitTestProject1
                             Item2,
                         };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
 
             group.Width = 280;
 
@@ -127,7 +127,7 @@ namespace UnitTestProject1
                             Item2,
                         };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
 
             group.Height = 120;
 
@@ -145,7 +145,7 @@ namespace UnitTestProject1
         {
             var items = Items;
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             group.Left = 20;
 
             var item1 = group.Children[0];
@@ -161,7 +161,7 @@ namespace UnitTestProject1
         {
             var items = Items;
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             group.Top = 30;
 
             var item1 = group.Children[0];
@@ -177,7 +177,7 @@ namespace UnitTestProject1
         {
             var items = new List<ICanvasItem>();
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             Assert.AreEqual(double.NaN, group.Width);
         }
 
@@ -186,7 +186,7 @@ namespace UnitTestProject1
         {
             var items = new List<ICanvasItem>();
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             Assert.AreEqual(double.NaN, group.Height);
         }
 
@@ -197,7 +197,7 @@ namespace UnitTestProject1
 
             var items = new List<ICanvasItem>() { item };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             Assert.AreEqual(0, group.Width);
         }
 
@@ -208,7 +208,7 @@ namespace UnitTestProject1
 
             var items = new List<ICanvasItem>() { item };
 
-            var group = new CanvasItemGroup(items);
+            var group = new CanvasItemSelection(items);
             Assert.AreEqual(0, group.Height);
         }
 

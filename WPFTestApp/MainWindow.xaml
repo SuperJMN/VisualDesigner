@@ -8,6 +8,7 @@
         xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing;assembly=Glass.Design.Wpf"
         xmlns:wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
         WindowStartupLocation="CenterScreen"
+        x:Name="Window"
         Title="Glass Design Demo" Width="700" Height="560">
     <Window.Resources>
         <ResourceDictionary>
@@ -19,9 +20,9 @@
             <DataTemplate DataType="{x:Type sampleModel:CanvasRectangle}">
                 <Rectangle Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type sampleModel:Ellipse}">
-                <Grid>
-                    <Ellipse Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+            <DataTemplate DataType="{x:Type sampleModel:Group}">
+                <Grid>                    
+                    <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent" />
                     <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:DesignerItem}">
@@ -61,7 +62,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <designSurface1:DesignSurface Background="Azure">
+        <designSurface1:DesignSurface Background="Azure" x:Name="DesignSurface">
             <designSurface1:DesignSurface.ItemContainerStyle>
                 <Style TargetType="{x:Type wpf:DesignerItem}">
                     <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
@@ -75,17 +76,16 @@
                     <sampleModel:Color R="255" G="230" B="10"  />
                 </sampleModel:CanvasRectangle.FillColor>
             </sampleModel:CanvasRectangle>
-            <sampleModel:Ellipse Top="400" Left="150" Width="100" Height="100">
-                <sampleModel:Ellipse.Children>
+            <sampleModel:Group Top="400" Left="150" Width="100" Height="100">
+                <sampleModel:Group.Children>
                     <canvasItem:CanvasItemCollection>
-                        <sampleModel:Sonic Left="25" Width="50" Height="100" Top="0" />
+                        <sampleModel:Sonic Left="25" Width="50" Height="70" Top="0" />
+                        <sampleModel:Mario Left="20" Width="50" Height="30" Top="60" />
                     </canvasItem:CanvasItemCollection>
-                </sampleModel:Ellipse.Children>
-                <sampleModel:Ellipse.FillColor>
-                    <sampleModel:Color R="30" G="100" B="222"  />
-                </sampleModel:Ellipse.FillColor>
-            </sampleModel:Ellipse>
+                </sampleModel:Group.Children>               
+            </sampleModel:Group>
         </designSurface1:DesignSurface>
+        <Button Command="{x:Static wpf:DesignSurfaceCommands.GroupCommand}" CommandTarget="{Binding ElementName=DesignSurface}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Group" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
         <TextBlock Margin="10" FontSize="18" FontFamily="Verdana" Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
     </Grid>
 </Window>

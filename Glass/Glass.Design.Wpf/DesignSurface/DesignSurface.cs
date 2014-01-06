@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -26,13 +27,30 @@ namespace Glass.Design.Wpf.DesignSurface
             SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
+
+            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, Executed));
+        }
+
+        private void CanExecute(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
+        {
+            canExecuteRoutedEventArgs.CanExecute = false;
+        }
+
+        private void Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+        {
+            var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
+            var group = groupCommandArgs.CreateCanvasItem();
+
+            Mover.Move(CanvasItems, group);            
+            
+            Items.Add(group);
         }
 
         private SelectionHandler SelectionHandler { get; set; }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            OnNoneSpecified();
+            RaiseNoneSpecified();
         }
 
         private DesignAidsProvider DesignAidsProvider { get; set; }
@@ -84,27 +102,27 @@ namespace Glass.Design.Wpf.DesignSurface
         #region OperationMode
 
         public static readonly DependencyProperty OperationModeProperty =
-            DependencyProperty.Register("OperationMode", typeof(DesignOperation), typeof(DesignSurface),
-                new FrameworkPropertyMetadata(DesignOperation.Resize,
+            DependencyProperty.Register("OperationMode", typeof(PlaneOperation), typeof(DesignSurface),
+                new FrameworkPropertyMetadata(PlaneOperation.Resize,
                     OnOperationModeChanged));
 
-        public DesignOperation OperationMode
+        public PlaneOperation OperationMode
         {
-            get { return (DesignOperation)GetValue(OperationModeProperty); }
+            get { return (PlaneOperation)GetValue(OperationModeProperty); }
             set { SetValue(OperationModeProperty, value); }
         }
 
         private static void OnOperationModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var target = (DesignSurface)d;
-            var oldOperationMode = (DesignOperation)e.OldValue;
+            var oldOperationMode = (PlaneOperation)e.OldValue;
             var newOperationMode = target.OperationMode;
             target.OnOperationModeChanged(oldOperationMode, newOperationMode);
         }
 
-        private void OnOperationModeChanged(DesignOperation oldOperationMode, DesignOperation newOperationMode)
+        private void OnOperationModeChanged(PlaneOperation oldOperationMode, PlaneOperation newOperationMode)
         {
-            DesignAidsProvider.DesignOperation = newOperationMode;
+            DesignAidsProvider.PlaneOperation = newOperationMode;
         }
 
         #endregion
@@ -119,7 +137,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public event EventHandler NoneSpecified;
 
-        private void OnNoneSpecified()
+        private void RaiseNoneSpecified()
         {
             var handler = NoneSpecified;
             if (handler != null) handler(this, EventArgs.Empty);
@@ -133,7 +151,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            base.OnKeyDown(e);
+            OnKeyDown(e);
             if (e.Key == Key.LeftCtrl)
             {
                 SelectionHandler.SelectionMode = SelectionMode.Add;
@@ -156,5 +174,7 @@ namespace Glass.Design.Wpf.DesignSurface
                 return Items.Cast<ICanvasItem>();                 
             }
         }
+
+        public ICommand GroupCommand { get; private set; }
     }
 }

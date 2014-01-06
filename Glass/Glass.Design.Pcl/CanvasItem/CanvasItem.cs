@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem
@@ -33,8 +31,6 @@ namespace Glass.Design.Pcl.CanvasItem
                 }
 
                 var oldValue = !double.IsNaN(left) ? left : value;
-
-
 
                 var newValue = value;
                 left = newValue;
@@ -118,7 +114,7 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        private void ResizeChildWidthProportionally(ICanvasItem child, SizeChangeEventArgs sizeChangeEventArgs)
+        private static void ResizeChildWidthProportionally(ICanvasItem child, SizeChangeEventArgs sizeChangeEventArgs)
         {
             var widthProp = child.Width / sizeChangeEventArgs.OldValue;
             child.Width = child.Width = widthProp * sizeChangeEventArgs.NewValue;

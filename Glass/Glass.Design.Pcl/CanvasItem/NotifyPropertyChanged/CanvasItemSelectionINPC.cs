@@ -6,9 +6,9 @@ using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
 {
-    public class CanvasItemGroupINPC : CanvasItemGroup, INotifyPropertyChanged
+    public sealed class CanvasItemSelectionINPC : CanvasItemSelection, INotifyPropertyChanged
     {
-        public CanvasItemGroupINPC(IEnumerable<ICanvasItem> items)
+        public CanvasItemSelectionINPC(IEnumerable<ICanvasItem> items)
             : base(items)
         {
             
@@ -42,7 +42,7 @@ namespace Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));

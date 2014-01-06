@@ -100,9 +100,4 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             return snappedToLeft || snappedToRight;
         }
     }
-
-    public interface IEdgeSnappingEngine : ISnappingEngine
-    {
-        void ClearSnappedEdges();
-    }
 }

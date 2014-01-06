@@ -1,6 +1,6 @@
 namespace Glass.Design.Pcl.DesignSurface
 {
-    public enum DesignOperation
+    public enum PlaneOperation
     {
         Move,
         Resize,

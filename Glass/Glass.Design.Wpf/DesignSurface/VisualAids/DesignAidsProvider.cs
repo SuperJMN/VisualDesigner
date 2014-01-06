@@ -29,7 +29,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
             EdgeAdorners = new Dictionary<Edge, EdgeAdorner>();
 
-            DesignOperation = DesignOperation.Resize;
+            PlaneOperation = PlaneOperation.Resize;
             DragOperationHost = new DragOperationHost(DesignSurface);
             DragOperationHost.DragStarted += DragOperationHostOnDragStarted;
             DragOperationHost.DragEnd += DragOperationHostOnDragEnd;
@@ -94,10 +94,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         public DragOperationHost DragOperationHost { get; set; }
 
 
-        private CanvasItemGroup groupedItems;
+        private CanvasItemSelection groupedItems;
         private CanvasItemSnappingEngine snappingEngine;
 
-        private CanvasItemGroup GroupedItems
+        private CanvasItemSelection GroupedItems
         {
             get { return groupedItems; }
             set
@@ -181,7 +181,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             var items = SelectionAdorners.Keys.ToList();
             if (items.Any())
             {
-                GroupedItems = new CanvasItemGroupINPC(items);
+                GroupedItems = new CanvasItemSelectionINPC(items);
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             AdornerLayer.Remove(adorner);
         }
 
-        public DesignOperation DesignOperation { get; set; }
+        public PlaneOperation PlaneOperation { get; set; }
 
         public CanvasItemSnappingEngine SnappingEngine
         {
