@@ -15,7 +15,7 @@ namespace Glass.Design.WpfTester
 
             GroupCommandArgs = new GroupCommandArgs
                         {
-                            CreateCanvasItem = () => new Group()
+                            CreateHostingItem = () => new Group()
                         };
         }
 

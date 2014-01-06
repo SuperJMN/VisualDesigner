@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -27,21 +26,21 @@ namespace Glass.Design.Wpf.DesignSurface
             SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
-
-            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, Executed));
+          
+            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, GroupSelectedItems, CanGroupSelectedItems));            
         }
 
-        private void CanExecute(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
+        private void CanGroupSelectedItems(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
         {
-            canExecuteRoutedEventArgs.CanExecute = false;
+            canExecuteRoutedEventArgs.CanExecute = SelectedItems.Count > 1;
         }
 
-        private void Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+        private void GroupSelectedItems(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
             var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
-            var group = groupCommandArgs.CreateCanvasItem();
+            var group = groupCommandArgs.CreateHostingItem();
 
-            Mover.Move(CanvasItems, group);            
+            Children.Move(group);            
             
             Items.Add(group);
         }
@@ -78,45 +77,45 @@ namespace Glass.Design.Wpf.DesignSurface
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            var designerItem = (DesignerItem)element;
+            var designerItem = (CanvasItemControl)element;
             designerItem.PreviewMouseLeftButtonDown += ContainerOnLeftButtonDown;
             base.PrepareContainerForItemOverride(element, item);
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            var designerItem = (DesignerItem)element;
+            var designerItem = (CanvasItemControl)element;
             designerItem.PreviewMouseLeftButtonDown -= ContainerOnLeftButtonDown;
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            return item is DesignerItem;
+            return item is CanvasItemControl;
         }
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new DesignerItem();
+            return new CanvasItemControl();
         }
 
-        #region OperationMode
+        #region PlaneOperationMode
 
-        public static readonly DependencyProperty OperationModeProperty =
-            DependencyProperty.Register("OperationMode", typeof(PlaneOperation), typeof(DesignSurface),
+        public static readonly DependencyProperty PlaneOperationModeProperty =
+            DependencyProperty.Register("PlanePlaneOperationMode", typeof(PlaneOperation), typeof(DesignSurface),
                 new FrameworkPropertyMetadata(PlaneOperation.Resize,
                     OnOperationModeChanged));
 
-        public PlaneOperation OperationMode
+        public PlaneOperation PlaneOperationMode
         {
-            get { return (PlaneOperation)GetValue(OperationModeProperty); }
-            set { SetValue(OperationModeProperty, value); }
+            get { return (PlaneOperation)GetValue(PlaneOperationModeProperty); }
+            set { SetValue(PlaneOperationModeProperty, value); }
         }
 
         private static void OnOperationModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var target = (DesignSurface)d;
             var oldOperationMode = (PlaneOperation)e.OldValue;
-            var newOperationMode = target.OperationMode;
+            var newOperationMode = target.PlaneOperationMode;
             target.OnOperationModeChanged(oldOperationMode, newOperationMode);
         }
 
@@ -167,14 +166,54 @@ namespace Glass.Design.Wpf.DesignSurface
             }
         }
 
-        public new IEnumerable<ICanvasItem> CanvasItems
+        public CanvasItemCollection Children { get; private set; }
+
+        public ICommand GroupCommand { get; private set; }
+
+
+        protected override void OnInitialized(EventArgs e)
         {
-            get
+            base.OnInitialized(e);
+
+            Children = new CanvasItemCollection(Items.Cast<ICanvasItem>());
+            Children.CollectionChanged += ChildrenOnCollectionChanged;
+
+            foreach (ICanvasItem child in Items)
             {
-                return Items.Cast<ICanvasItem>();                 
+                child.Parent = this;
+            }   
+        }
+
+        private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (ICanvasItem newItem in notifyCollectionChangedEventArgs.NewItems)
+                {
+                    newItem.Parent = this;
+                    Items.Add(newItem);
+                }
+            } else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ICanvasItem oldItem in notifyCollectionChangedEventArgs.OldItems)
+                {                    
+                    Items.Remove(oldItem);
+                }
             }
         }
 
-        public ICommand GroupCommand { get; private set; }
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (ICanvasItem child in e.NewItems)
+                {
+                    child.Parent = this;
+                }             
+            }
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -192,6 +193,27 @@ namespace Glass.Design.Pcl
         public static void SetBottomKeepingTop(this IRect rect, double bottom)
         {
             rect.Height = bottom - rect.Top;
+        }
+
+        public static IRect GetBoundsFromChildren(IList<ICanvasItem> items)
+        {
+            var left = items.Min(item => item.Left);
+            var top = items.Min(item => item.Top);
+            var right = items.Max(item => item.Right);
+            var bottom = items.Max(item => item.Bottom);
+
+            return ServiceLocator.CoreTypesFactory.CreateRect(left, top, right - left, bottom - top);
+        }
+
+        public static void Offset(this ICanvasItem canvasItem, IPoint point)
+        {
+            canvasItem.Left += point.X;
+            canvasItem.Top += point.Y;
+        }
+
+        public static IPoint Negative(this IPoint point)
+        {
+            return ServiceLocator.CoreTypesFactory.CreatePoint(-point.X, -point.Y);
         }
     }
 }

@@ -12,22 +12,26 @@ using Glass.Design.Pcl.DesignSurface;
 namespace Glass.Design.Wpf
 {
     [DefaultProperty("Content")]
-    public sealed class DesignerItem : ContentControl, ICanvasItem
+    public sealed class CanvasItemControl : ContentControl, ICanvasItem
     {
-        static DesignerItem()
-        {
+        public static readonly DependencyProperty TopProperty =
+            DependencyProperty.Register("Top", typeof (double), typeof (CanvasItemControl),
+                new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
 
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
+        static CanvasItemControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof (CanvasItemControl),
+                new FrameworkPropertyMetadata(typeof (CanvasItemControl)));
         }
 
-        public DesignerItem()
+        public CanvasItemControl()
         {
             SizeChanged += OnSizeChanged;
         }
 
         public double Top
         {
-            get { return (double)GetValue(TopProperty); }
+            get { return (double) GetValue(TopProperty); }
             set { SetValue(TopProperty, value); }
         }
 
@@ -35,8 +39,17 @@ namespace Glass.Design.Wpf
 
         public event EventHandler<LocationChangedEventArgs> TopChanged;
 
-        public double Right { get { return Left + Width; }  }
-        public double Bottom { get { return Top + Height; } }
+        public double Right
+        {
+            get { return Left + Width; }
+        }
+
+        public double Bottom
+        {
+            get { return Top + Height; }
+        }
+
+        ICanvasItemParent ICanvasItem.Parent { get; set; }
         public CanvasItemCollection Children { get; private set; }
         public event EventHandler<SizeChangeEventArgs> HeightChanged;
 
@@ -44,7 +57,7 @@ namespace Glass.Design.Wpf
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Height, 
+            var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Height,
                 sizeChangedEventArgs.NewSize.Height);
 
             if (sizeChangedEventArgs.HeightChanged)
@@ -64,10 +77,6 @@ namespace Glass.Design.Wpf
         }
 
 
-        public static readonly DependencyProperty TopProperty =
-           DependencyProperty.Register("Top", typeof(double), typeof(DesignerItem),
-               new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
-
         private void OnTopChanged(LocationChangedEventArgs e)
         {
             var handler = TopChanged;
@@ -76,8 +85,8 @@ namespace Glass.Design.Wpf
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (DesignerItem)d;
-            var oldTop = (double)e.OldValue;
+            var target = (CanvasItemControl) d;
+            var oldTop = (double) e.OldValue;
             var newTop = target.Top;
             target.OnTopChanged(oldTop, newTop);
         }
@@ -103,19 +112,19 @@ namespace Glass.Design.Wpf
         #region Left
 
         public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof(double), typeof(DesignerItem),
+            DependencyProperty.Register("Left", typeof (double), typeof (CanvasItemControl),
                 new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
 
         public double Left
         {
-            get { return (double)GetValue(LeftProperty); }
+            get { return (double) GetValue(LeftProperty); }
             set { SetValue(LeftProperty, value); }
         }
 
         private static void OnLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (DesignerItem)d;
-            var oldLeft = (double)e.OldValue;
+            var target = (CanvasItemControl) d;
+            var oldLeft = (double) e.OldValue;
             var newLeft = target.Left;
             target.OnLeftChanged(oldLeft, newLeft);
         }

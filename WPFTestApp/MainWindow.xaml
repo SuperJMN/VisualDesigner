@@ -25,7 +25,7 @@
                     <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent" />
                     <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
-                            <Style TargetType="{x:Type wpf:DesignerItem}">
+                            <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                 <Setter Property="BorderThickness" Value="0" />
                                 <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
                                 <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Top)}" />
@@ -33,7 +33,7 @@
                                 <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Height)}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type wpf:DesignerItem}">
+                                        <ControlTemplate TargetType="{x:Type wpf:CanvasItemControl}">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </ControlTemplate>
                                     </Setter.Value>                                    
@@ -64,7 +64,7 @@
     <Grid>
         <designSurface1:DesignSurface Background="Azure" x:Name="DesignSurface">
             <designSurface1:DesignSurface.ItemContainerStyle>
-                <Style TargetType="{x:Type wpf:DesignerItem}">
+                <Style TargetType="{x:Type wpf:CanvasItemControl}">
                     <Setter Property="Left" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Left)}" />
                     <Setter Property="Top" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:IPositionable.Top)}" />
                     <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(designSurface:ISizable.Width)}" />

@@ -81,7 +81,7 @@
     <Compile Include="CanvasItem\CanvasItemCollection.cs" />
     <Compile Include="CanvasItem\CanvasItemSelection.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
-    <Compile Include="CanvasItem\Move.cs" />
+    <Compile Include="CanvasItem\CanvasItemRelocator.cs" />
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemSelectionINPC.cs" />
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemINPC.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />

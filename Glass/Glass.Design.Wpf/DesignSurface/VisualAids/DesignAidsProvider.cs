@@ -131,7 +131,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             DragOperationHost.SetDragTarget(movingControl, GroupedItems);
 
-            var items = DesignSurface.CanvasItems;
+            var items = DesignSurface.Children;
 
             var allExceptTarget = items.Except(GroupedItems.Children);
 

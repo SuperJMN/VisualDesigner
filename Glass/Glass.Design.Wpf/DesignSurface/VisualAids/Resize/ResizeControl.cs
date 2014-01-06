@@ -29,10 +29,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         private WindowsSizeCursorsThumbCursorConverter WindowsSizeCursorsThumbCursorConverter { get; set; }
         private WpfUIResizeOperationHandleConnector WpfUIResizeOperationHandleConnector { get; set; }
 
-        #region CreateCanvasItem
+        #region CreateHostingItem
 
         public static readonly DependencyProperty CanvasItemProperty =
-            DependencyProperty.Register("CreateCanvasItem", typeof(ICanvasItem), typeof(ResizeControl),
+            DependencyProperty.Register("CreateHostingItem", typeof(ICanvasItem), typeof(ResizeControl),
                 new FrameworkPropertyMetadata(null, OnCanvasItemChanged));
 
         public ICanvasItem CanvasItem

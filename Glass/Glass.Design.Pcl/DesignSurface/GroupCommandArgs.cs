@@ -5,6 +5,6 @@ namespace Glass.Design.Pcl.DesignSurface
 {
     public class GroupCommandArgs
     {
-        public Func<ICanvasItem> CreateCanvasItem { get; set; }
+        public Func<ICanvasItem> CreateHostingItem { get; set; }
     }
 }

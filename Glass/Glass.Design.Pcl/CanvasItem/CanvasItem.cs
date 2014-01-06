@@ -17,6 +17,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public double Right { get { return Left + Width; } }
         public double Bottom { get { return Top + Height; } }
+        public ICanvasItemParent Parent { get; set; }
         public CanvasItemCollection Children { get; private set; }
 
         public double Left
