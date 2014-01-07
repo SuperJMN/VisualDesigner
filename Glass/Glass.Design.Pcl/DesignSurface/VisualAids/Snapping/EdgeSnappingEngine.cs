@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Glass.Design.Pcl.Primitives;
 
+#endregion
+
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 {
     public abstract class EdgeSnappingEngine : SnappingEngine, IEdgeSnappingEngine
     {
-        public EdgeSnappingEngine(double threshold)
+        protected EdgeSnappingEngine(double threshold)
             : base(threshold)
         {
             Edges = new List<Edge>();
@@ -24,19 +28,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
 
         private ObservableCollection<Edge> UnderlyingSnappedEdges { get; set; }
 
-        public override double SnapHorizontal(double original)
-        {
-            return Snap(original, VerticalEdges);
-        }
-
         private IEnumerable<Edge> VerticalEdges
         {
             get { return Edges.Where(edge => edge.Orientation == Orientation.Vertical); }
-        }
-
-        public override double SnapVertical(double original)
-        {
-            return Snap(original, HorizontalEdges);
         }
 
         private IEnumerable<Edge> HorizontalEdges
@@ -44,10 +38,25 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             get { return Edges.Where(edge => edge.Orientation == Orientation.Horizontal); }
         }
 
-        public double Snap(double original, IEnumerable<Edge> edges)
+        public override double SnapHorizontal(double original)
         {
-            double snappedValue = original;
-            bool alreadySnapped = false;
+            return Snap(original, VerticalEdges);
+        }
+
+        public override double SnapVertical(double original)
+        {
+            return Snap(original, HorizontalEdges);
+        }
+
+        public void ClearSnappedEdges()
+        {
+            UnderlyingSnappedEdges.Clear();
+        }
+
+        private double Snap(double original, IEnumerable<Edge> edges)
+        {
+            var snappedValue = original;
+            var alreadySnapped = false;
 
             var enumerator = edges.GetEnumerator();
             while (enumerator.MoveNext() && !alreadySnapped)
@@ -67,11 +76,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             return Math.Abs(result - original) > 0.1;
         }
 
-        public void ClearSnappedEdges()
-        {
-            UnderlyingSnappedEdges.Clear();
-        }
-
         protected override void SourceRectangleFiltered()
         {
             base.SourceRectangleFiltered();
@@ -82,7 +86,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping
             var snappedEdges = horizontalSnapped.Concat(verticalSnapped);
 
             UnderlyingSnappedEdges.SynchronizeListTo(snappedEdges.ToList());
-        }       
+        }
 
         private bool EdgeIsSnappedToSnappableHorizontalEdges(Edge edge)
         {

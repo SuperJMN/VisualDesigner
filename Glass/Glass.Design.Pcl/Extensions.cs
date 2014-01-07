@@ -195,7 +195,7 @@ namespace Glass.Design.Pcl
             rect.Height = bottom - rect.Top;
         }
 
-        public static IRect GetBoundsFromChildren(IList<ICanvasItem> items)
+        public static IRect GetBoundsFromChildren(IEnumerable<ICanvasItem> items)
         {
             var left = items.Min(item => item.Left);
             var top = items.Min(item => item.Top);

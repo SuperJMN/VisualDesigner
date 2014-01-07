@@ -85,7 +85,11 @@
                 </sampleModel:Group.Children>               
             </sampleModel:Group>
         </designSurface1:DesignSurface>
-        <Button Command="{x:Static wpf:DesignSurfaceCommands.GroupCommand}" CommandTarget="{Binding ElementName=DesignSurface}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Group" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
+        <StackPanel>
+            <Button Command="{x:Static designSurface1:DesignSurfaceCommands.GroupCommand}" CommandTarget="{Binding ElementName=DesignSurface}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Group" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
+            <Button Command="{x:Static designSurface1:DesignSurfaceCommands.RemoveAndPromoteChildrenCommand}" CommandTarget="{Binding ElementName=DesignSurface}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Group"  />
+        </StackPanel>
+        
         <TextBlock Margin="10" FontSize="18" FontFamily="Verdana" Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
     </Grid>
 </Window>

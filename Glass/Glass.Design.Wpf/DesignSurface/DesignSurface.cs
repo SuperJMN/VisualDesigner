@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -27,7 +29,28 @@ namespace Glass.Design.Wpf.DesignSurface
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
           
-            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, GroupSelectedItems, CanGroupSelectedItems));            
+            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, GroupSelectedItems, CanGroupSelectedItems));
+            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.RemoveAndPromoteChildrenCommand, UngroupSelectedItems, CanUngroupSelectedItems));
+        }
+
+        private void CanUngroupSelectedItems(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = SelectedCanvasItems.All(item => item.Children.Any());
+        }
+
+        private void UngroupSelectedItems(object sender, ExecutedRoutedEventArgs e)
+        {
+            var selectedCanvasItems = SelectedCanvasItems.ToList();
+            foreach (var selectedItem in selectedCanvasItems)
+            {
+                selectedItem.RemoveAndPromoteChildren();    
+                Items.Remove(selectedItem);
+            }
+        }
+
+        public IEnumerable<ICanvasItem> SelectedCanvasItems
+        {
+            get { return SelectedItems.Cast<ICanvasItem>(); }
         }
 
         private void CanGroupSelectedItems(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
@@ -40,7 +63,7 @@ namespace Glass.Design.Wpf.DesignSurface
             var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
             var group = groupCommandArgs.CreateHostingItem();
 
-            Children.Move(group);            
+            SelectedCanvasItems.Move(group);            
             
             Items.Add(group);
         }
