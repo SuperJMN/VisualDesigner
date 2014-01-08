@@ -28,44 +28,14 @@ namespace Glass.Design.Wpf.DesignSurface
             SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
-          
-            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, GroupSelectedItems, CanGroupSelectedItems));
-            this.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.RemoveAndPromoteChildrenCommand, UngroupSelectedItems, CanUngroupSelectedItems));
+            CommandHandler = new DesignSurfaceCommandHandler(this, this);
         }
 
-        private void CanUngroupSelectedItems(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = SelectedCanvasItems.All(item => item.Children.Any());
-        }
+        private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
-        private void UngroupSelectedItems(object sender, ExecutedRoutedEventArgs e)
+        public IList<ICanvasItem> SelectedCanvasItems
         {
-            var selectedCanvasItems = SelectedCanvasItems.ToList();
-            foreach (var selectedItem in selectedCanvasItems)
-            {
-                selectedItem.RemoveAndPromoteChildren();    
-                Items.Remove(selectedItem);
-            }
-        }
-
-        public IEnumerable<ICanvasItem> SelectedCanvasItems
-        {
-            get { return SelectedItems.Cast<ICanvasItem>(); }
-        }
-
-        private void CanGroupSelectedItems(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
-        {
-            canExecuteRoutedEventArgs.CanExecute = SelectedItems.Count > 1;
-        }
-
-        private void GroupSelectedItems(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
-        {
-            var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
-            var group = groupCommandArgs.CreateHostingItem();
-
-            SelectedCanvasItems.Move(group);            
-            
-            Items.Add(group);
+            get { return SelectedItems.Cast<ICanvasItem>().ToList(); }
         }
 
         private SelectionHandler SelectionHandler { get; set; }
@@ -127,6 +97,8 @@ namespace Glass.Design.Wpf.DesignSurface
             DependencyProperty.Register("PlanePlaneOperationMode", typeof(PlaneOperation), typeof(DesignSurface),
                 new FrameworkPropertyMetadata(PlaneOperation.Resize,
                     OnOperationModeChanged));
+
+        private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
 
         public PlaneOperation PlaneOperationMode
         {
@@ -192,6 +164,11 @@ namespace Glass.Design.Wpf.DesignSurface
         public CanvasItemCollection Children { get; private set; }
 
         public ICommand GroupCommand { get; private set; }
+
+        public DesignSurfaceCommandHandler DesignSurfaceCommandHandler
+        {
+            get { return designSurfaceCommandHandler; }
+        }
 
 
         protected override void OnInitialized(EventArgs e)

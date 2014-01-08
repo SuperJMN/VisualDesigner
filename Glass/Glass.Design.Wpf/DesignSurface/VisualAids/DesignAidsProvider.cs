@@ -75,7 +75,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             {
                 foreach (Edge addedEdge in notifyCollectionChangedEventArgs.NewItems)
                 {
-                    var edgeAdorner = new EdgeAdorner(DesignSurface, GroupedItems, addedEdge);
+                    var edgeAdorner = new EdgeAdorner(DesignSurface, WrappedSelectedItems, addedEdge);
                     EdgeAdorners.Add(addedEdge, edgeAdorner);
                     AdornerLayer.Add(edgeAdorner);
                 }
@@ -94,33 +94,32 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         public DragOperationHost DragOperationHost { get; set; }
 
 
-        private CanvasItemSelection groupedItems;
-        private CanvasItemSnappingEngine snappingEngine;
+        private CanvasItemSelection wrappedSelectedItems;
 
-        private CanvasItemSelection GroupedItems
+        private CanvasItemSelection WrappedSelectedItems
         {
-            get { return groupedItems; }
+            get { return wrappedSelectedItems; }
             set
             {
-                if (groupedItems != null)
+                if (wrappedSelectedItems != null)
                 {
                     AdornerLayer.Remove(ResizingAdorner);
                     AdornerLayer.Remove(MovingAdorner);
                 }
 
-                groupedItems = value;
+                wrappedSelectedItems = value;
 
-                if (groupedItems != null)
+                if (wrappedSelectedItems != null)
                 {
                     var movingControl = new MovingControl();
 
                     SetupDragOperationHost(movingControl);
 
-                    MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, GroupedItems);
-                    var gridSize = ServiceLocator.CoreTypesFactory.CreateSize(10, 10);
-                    var resizeControl = new ResizeControl(GroupedItems, DesignSurface, SnappingEngine);
+                    MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, WrappedSelectedItems);
+                    
+                    var resizeControl = new ResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine);
                 
-                    ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, GroupedItems);
+                    ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, WrappedSelectedItems);
                     AdornerLayer.Add(MovingAdorner);
                     AdornerLayer.Add(ResizingAdorner);                    
                 }
@@ -129,11 +128,11 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
         private void SetupDragOperationHost(IInputElement movingControl)
         {
-            DragOperationHost.SetDragTarget(movingControl, GroupedItems);
+            DragOperationHost.SetDragTarget(movingControl, WrappedSelectedItems);
 
             var items = DesignSurface.Children;
 
-            var allExceptTarget = items.Except(GroupedItems.Children);
+            var allExceptTarget = items.Except(WrappedSelectedItems.Children);
 
             DragOperationHost.SnappingEngine.Magnets = allExceptTarget.ToList();
         }
@@ -160,13 +159,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         public void AddItemToSelection(ICanvasItem item)
         {
             AddSelectionAdorner(item);
-            UpdateGroup();
+            WrapSelectedItems();
         }
 
         public void RemoveItemFromSelection(ICanvasItem item)
         {
             RemoveSelectionAdorner(item);
-            UpdateGroup();
+            WrapSelectedItems();
         }
 
         private void AddSelectionAdorner(ICanvasItem canvasItem)
@@ -176,16 +175,16 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             SelectionAdorners.Add(canvasItem, selectionAdorner);
         }
 
-        private void UpdateGroup()
+        private void WrapSelectedItems()
         {
             var items = SelectionAdorners.Keys.ToList();
             if (items.Any())
             {
-                GroupedItems = new CanvasItemSelectionINPC(items);
+                WrappedSelectedItems = new CanvasItemSelectionINPC(items);
             }
             else
             {
-                GroupedItems = null;
+                WrappedSelectedItems = null;
             }
         }
 
@@ -198,11 +197,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
         public PlaneOperation PlaneOperation { get; set; }
 
-        public CanvasItemSnappingEngine SnappingEngine
-        {
-            get { return snappingEngine; }
-            set { snappingEngine = value; }
-        }
+        private CanvasItemSnappingEngine SnappingEngine { get; set; }
     }
 
 
