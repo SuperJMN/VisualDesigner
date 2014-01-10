@@ -124,32 +124,30 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MoveThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="Cursor" Value="SizeAll" />
-        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border BorderThickness="{TemplateBinding BorderThickness}">
-                        <Border.Background>
-                            <RadialGradientBrush SpreadMethod="Reflect">
-                                <GradientStop Color="#16000000" Offset="0" />
-                                <GradientStop Color="#19FFFFFF" Offset="1" />
-                            </RadialGradientBrush>
-                        </Border.Background>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type drag1:MovingControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type drag1:MovingControl}">
-                    <Thumb x:Name="PART_Thumb" Style="{StaticResource MoveThumbStyle}" />
+                    <Grid>
+                    	<Border BorderThickness="1" CornerRadius="1" BorderBrush="#FF14A8FD" >
+                    		<Border.Background>
+                    			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    				<LinearGradientBrush.RelativeTransform>
+                    					<TransformGroup>
+                    						<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    						<SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    						<RotateTransform Angle="-4" CenterY="0.5" CenterX="0.5"/>
+                    						<TranslateTransform/>
+                    					</TransformGroup>
+                    				</LinearGradientBrush.RelativeTransform>
+                    				<GradientStop Color="#1A0086C5" Offset="1"/>
+                    				<GradientStop Color="#1AFFFFFF" Offset="0.006"/>
+                    				<GradientStop Color="#1A008ACB" Offset="0.254"/>
+                    				<GradientStop Color="#1A0097DE" Offset="0.489"/>
+                    			</LinearGradientBrush>
+                    		</Border.Background>
+                    	</Border>
+                	</Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

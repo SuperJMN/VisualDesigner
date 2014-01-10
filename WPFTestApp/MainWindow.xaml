@@ -24,6 +24,9 @@
             <DataTemplate DataType="{x:Type sampleModel:Ellipse}">
                 <Ellipse Fill="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type sampleModel:Label}">
+                <TextBox Text="{Binding Text}" />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
                 <Grid>                    
                     
@@ -131,6 +134,7 @@
                         <sampleModel:Color R="44" G="66" B="200" />
                     </sampleModel:Ellipse.FillColor>
                 </sampleModel:Ellipse>
+                <sampleModel:Label Top="300" Left="400" Width="120" Height="30"></sampleModel:Label>
                 <sampleModel:Group Top="200" Left="200" Width="100" Height="100">
                     <sampleModel:Group.Children>
                         <canvasItem:CanvasItemCollection>
