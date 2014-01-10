@@ -7,5 +7,7 @@ namespace Glass.Design.Pcl.CanvasItem
         public CanvasItemSelection(IEnumerable<ICanvasItem> children) : base(children)
         {            
         }
+
+      
     }
 }

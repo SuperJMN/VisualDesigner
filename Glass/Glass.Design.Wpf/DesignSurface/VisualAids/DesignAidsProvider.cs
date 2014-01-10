@@ -178,12 +178,19 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         private void WrapSelectedItems()
         {
             var items = SelectionAdorners.Keys.ToList();
+
+            if (WrappedSelectedItems !=null)
+            {
+                WrappedSelectedItems.Dispose();
+            }
+
             if (items.Any())
             {
                 WrappedSelectedItems = new CanvasItemSelectionINPC(items);
             }
             else
             {
+                
                 WrappedSelectedItems = null;
             }
         }

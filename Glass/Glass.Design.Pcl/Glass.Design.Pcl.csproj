@@ -87,6 +87,7 @@
     <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemINPC.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
+    <Compile Include="Core\HorizontalAlignment.cs" />
     <Compile Include="Core\ServiceLocator.cs" />
     <Compile Include="Core\ICoreTypesFactory.cs" />
     <Compile Include="Core\ICursor.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Core\IRect.cs" />
     <Compile Include="Core\ISize.cs" />
     <Compile Include="Core\IVector.cs" />
+    <Compile Include="Core\VerticalAlignment.cs" />
     <Compile Include="DesignSurface\GroupCommandArgs.cs" />
     <Compile Include="DesignSurface\PlaneOperation.cs" />
     <Compile Include="DesignSurface\IDesignerItem.cs" />

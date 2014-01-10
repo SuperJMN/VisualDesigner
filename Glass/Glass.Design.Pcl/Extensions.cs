@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
@@ -8,12 +9,35 @@ namespace Glass.Design.Pcl
 {
     public static class Extensions
     {
+        public static void SwapCoordinates(this IEnumerable<IRect> items)
+        {
+            foreach (var canvasItem in items)
+            {
+                canvasItem.SwapCoordinates();
+            }
+        }
+
         public static void SwapCoordinates(this IEnumerable<ICanvasItem> items)
         {
             foreach (var canvasItem in items)
             {
                 canvasItem.SwapCoordinates();
             }
+        }
+
+        public static void SwapCoordinates(this IRect item)
+        {
+            var left = item.Left;
+            var top = item.Top;
+            Swap(ref left, ref top);
+            var width = item.Width;
+            var height = item.Height;
+            Swap(ref width, ref height);
+
+            item.X = left;
+            item.Y = top;
+            item.Width = width;
+            item.Height = height;
         }
 
         public static void SwapCoordinates(this ICanvasItem item)
@@ -211,9 +235,73 @@ namespace Glass.Design.Pcl
             canvasItem.Top += point.Y;
         }
 
+        public static void Offset(this IRect canvasItem, IPoint point)
+        {
+            canvasItem.X += point.X;
+            canvasItem.Y += point.Y;
+        }
+
         public static IPoint Negative(this IPoint point)
         {
             return ServiceLocator.CoreTypesFactory.CreatePoint(-point.X, -point.Y);
+        }
+
+        public static IRect GetBoundingRect(IList<IRect> children)
+        {
+
+            var left = GetLeftFromChildren(children);
+            var top = GetTopFromChildren(children);
+            var width = GetWidthFromChildren(children, left);
+            var height = GetHeightFromChildren(children, top);
+
+            return ServiceLocator.CoreTypesFactory.CreateRect(left, top, width, height);
+        }
+
+        public static double GetWidthFromChildren(IList<IRect> children, double leftOfContainingParent)
+        {
+            var right = GetMaxRightFromChildren(children);            
+            return right - leftOfContainingParent;
+        }
+
+        public static double GetTopFromChildren(IList<IRect> children)
+        {
+            if (!children.Any())
+            {
+                return Double.NaN;
+            }
+            var min = children.Min(item => item.Top);
+            return min;
+        }
+
+        public static double GetLeftFromChildren(IList<IRect> children)
+        {
+            if (!children.Any())
+            {
+                return Double.NaN;
+            }
+            var min = children.Min(item => item.Left);
+            return min;
+        }
+
+        public static double GetHeightFromChildren(IList<IRect> children, double top)
+        {
+
+
+            children.SwapCoordinates();
+            var maxBottom = GetMaxRightFromChildren(children);
+            children.SwapCoordinates();
+
+            return maxBottom - top;
+        }
+
+        public static double GetMaxRightFromChildren(IList<IRect> items)
+        {
+            if (!items.Any())
+            {
+                return Double.NaN;
+            }
+            var right = items.Max(item => item.Right);
+            return right;
         }
     }
 }

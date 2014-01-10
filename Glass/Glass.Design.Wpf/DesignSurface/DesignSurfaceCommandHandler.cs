@@ -1,9 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.DesignSurface;
+using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;
+using VerticalAlignment = Glass.Design.Pcl.Core.VerticalAlignment;
+
 
 namespace Glass.Design.Wpf.DesignSurface
 {
@@ -18,29 +20,38 @@ namespace Glass.Design.Wpf.DesignSurface
             DesignSurface = designSurface;
             UIElement = uiElement;
 
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, GroupSelection, CanGroupSelection));
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.PromoteChildrenCommand, UngroupSelection, CanUngroupSelection));
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyCommand, AlignSelection, CanAlignSelection));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, Group, CanGroupSelection));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.PromoteChildrenCommand, Ungroup, CanUngroup));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignHorizontallyCommand, AlignHorizontally, CanAlign));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyCommand, AlignVertically, CanAlign));
         }
 
-        private void CanAlignSelection(object sender, CanExecuteRoutedEventArgs e)
+        private void AlignVertically(object sender, ExecutedRoutedEventArgs e)
+        {
+            var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
+            var alignment = (VerticalAlignment) e.Parameter;
+            aligner.AlignVertically(alignment);
+        }
+
+        private void CanAlign(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = DesignSurface.SelectedCanvasItems.Count > 1;
         }
 
-        private void AlignSelection(object sender, ExecutedRoutedEventArgs e)
+        private void AlignHorizontally(object sender, ExecutedRoutedEventArgs e)
         {
             var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
-            aligner.AlignLeft();
+            var alignment = (HorizontalAlignment)e.Parameter;
+            aligner.AlignHorizontally(alignment);
         }
 
 
-        private void CanUngroupSelection(object sender, CanExecuteRoutedEventArgs e)
+        private void CanUngroup(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.SelectedCanvasItems.All(item => Enumerable.Any<ICanvasItem>(item.Children));
+            e.CanExecute = DesignSurface.SelectedCanvasItems.All(item => item.Children.Any());
         }
 
-        private void UngroupSelection(object sender, ExecutedRoutedEventArgs e)
+        private void Ungroup(object sender, ExecutedRoutedEventArgs e)
         {
             var selectedCanvasItems = DesignSurface.SelectedCanvasItems.ToList();
             foreach (var selectedItem in selectedCanvasItems)
@@ -55,7 +66,7 @@ namespace Glass.Design.Wpf.DesignSurface
             canExecuteRoutedEventArgs.CanExecute = DesignSurface.SelectedCanvasItems.Count > 1;
         }
 
-        private void GroupSelection(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+        private void Group(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
             var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
             var group = groupCommandArgs.CreateHostingItem();

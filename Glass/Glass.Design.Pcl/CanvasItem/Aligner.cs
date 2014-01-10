@@ -18,7 +18,41 @@ namespace Glass.Design.Pcl.CanvasItem
             get { return canvasItems; }
         }
 
-        public void AlignLeft()
+        public void AlignVertically(VerticalAlignment verticalAlignment)
+        {
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Top:
+                    AlignToTop();
+                    break;
+                case VerticalAlignment.Middle:
+                    AlignToMiddleVertical();
+                    break;
+                case VerticalAlignment.Bottom:
+                    AlignToBottom();
+                    break;
+            }
+        }
+
+        public void AlignHorizontally(HorizontalAlignment horizontalAlignment)
+        {
+            switch (horizontalAlignment)
+            {
+                case HorizontalAlignment.Left:
+                    AlignLeft();
+                    break;
+                case HorizontalAlignment.Center:
+                    AlignToCenterHorizontal();
+                    break;
+                case HorizontalAlignment.Right:
+                    AlignToRight();
+                    break;
+            }
+        }
+
+
+
+        private void AlignLeft()
         {
             var minLeft = CanvasItems.Min(canvasItem => canvasItem.Left);
             foreach (var canvasItem in CanvasItems)
@@ -27,7 +61,7 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        public void AlignToRight()
+        private void AlignToRight()
         {
             var maxRight = CanvasItems.Max(item => item.Right);
             foreach (var canvasItem in CanvasItems)
@@ -54,12 +88,12 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        public void AlignToMiddleHorizontal()
+        public void AlignToCenterHorizontal()
         {
             var minLeft = CanvasItems.Min(item => item.Left);
             var maxRight = CanvasItems.Max(item => item.Right);
 
-            var middle = maxRight - minLeft;
+            var middle = (maxRight - minLeft) /2 + minLeft;
             AdjustLeftsAround(middle);
         }
 
@@ -142,8 +176,6 @@ namespace Glass.Design.Pcl.CanvasItem
             var offset = ServiceLocator.CoreTypesFactory.CreatePoint(deltaSeparation, 0);
             item2.Offset(offset);
         }
-
-        
     }
 
 }

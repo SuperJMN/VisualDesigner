@@ -1,5 +1,6 @@
 ﻿using Glass.Design.Pcl;
 using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
@@ -10,15 +11,8 @@ namespace UnitTestProject1
         [TestMethod]
         public void SwapSingleTest()
         {
-            var canvasItem = new CanvasItem
-                             {
-                                 Left = 1,
-                                 Top = 2,
-                                 Width = 3,
-                                 Height = 4,
-                             };
-
-
+            var canvasItem = ServiceLocator.CoreTypesFactory.CreateRect(1, 2, 3, 4);
+                             
             canvasItem.SwapCoordinates();
 
             Assert.AreEqual(2, canvasItem.Left);

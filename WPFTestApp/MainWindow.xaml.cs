@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using Glass.Design.Pcl.DesignSurface;
 using SampleModel;
 
@@ -32,7 +33,13 @@ namespace Glass.Design.WpfTester
 
         #endregion
 
-        
-
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (DesignSurface.SelectedCanvasItems.Any())
+            {
+                var first = DesignSurface.SelectedCanvasItems.First();
+                first.Top += 10;
+            }
+        }
     }
 }
