@@ -22,26 +22,41 @@ namespace Glass.Design.Wpf.DesignSurface
 
             UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.GroupCommand, Group, CanGroupSelection));
             UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.PromoteChildrenCommand, Ungroup, CanUngroup));
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignHorizontallyCommand, AlignHorizontally, CanAlign));
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyCommand, AlignVertically, CanAlign));
+
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignHorizontallyLeftCommand,
+                (sender, args) => AlignHorizontally(HorizontalAlignment.Left), CanExecuteAlignCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignHorizontallyCenterCommand,
+                (sender, args) => AlignHorizontally(HorizontalAlignment.Center), CanExecuteAlignCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignHorizontallyRightCommand,
+                (sender, args) => AlignHorizontally(HorizontalAlignment.Right), CanExecuteAlignCommandHandler));
+
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyTopCommand,
+                (sender, args) => AlignVertically(VerticalAlignment.Top), CanExecuteAlignCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyMiddleCommand,
+                (sender, args) => AlignVertically(VerticalAlignment.Middle), CanExecuteAlignCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyBottomCommand,
+                (sender, args) => AlignVertically(VerticalAlignment.Bottom), CanExecuteAlignCommandHandler));
         }
 
-        private void AlignVertically(object sender, ExecutedRoutedEventArgs e)
+        private void AlignVertically(VerticalAlignment alignment)
         {
             var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
-            var alignment = (VerticalAlignment) e.Parameter;
             aligner.AlignVertically(alignment);
         }
 
-        private void CanAlign(object sender, CanExecuteRoutedEventArgs e)
+        private void CanExecuteAlignCommandHandler(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.SelectedCanvasItems.Count > 1;
+            e.CanExecute = CanAlign();
         }
 
-        private void AlignHorizontally(object sender, ExecutedRoutedEventArgs e)
+        private bool CanAlign()
+        {
+            return DesignSurface.SelectedCanvasItems.Count > 1;
+        }
+
+        private void AlignHorizontally(HorizontalAlignment alignment)
         {
             var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
-            var alignment = (HorizontalAlignment)e.Parameter;
             aligner.AlignHorizontally(alignment);
         }
 
@@ -68,7 +83,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void Group(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
-            var groupCommandArgs = (GroupCommandArgs) executedRoutedEventArgs.Parameter;
+            var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
             var group = groupCommandArgs.CreateHostingItem();
 
             DesignSurface.SelectedCanvasItems.Move(group);

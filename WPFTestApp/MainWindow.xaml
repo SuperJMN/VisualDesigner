@@ -8,6 +8,7 @@
         xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing;assembly=Glass.Design.Wpf"
         xmlns:wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
         xmlns:canvasItem="clr-namespace:Glass.Design.Pcl.CanvasItem;assembly=Glass.Design.Pcl"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
         Title="Glass Design Demo" Width="700" Height="560">
@@ -28,8 +29,8 @@
                 <TextBox Text="{Binding Text}" />
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
-                <Grid>                    
-                    
+                <Grid>
+
                     <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
@@ -43,7 +44,7 @@
                                         <ControlTemplate TargetType="{x:Type wpf:CanvasItemControl}">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </ControlTemplate>
-                                    </Setter.Value>                                    
+                                    </Setter.Value>
                                 </Setter>
                             </Style>
                         </viewing:ViewingSurface.ItemContainerStyle>
@@ -69,46 +70,80 @@
             <DataTemplate DataType="{x:Type sampleModel:Sonic}">
                 <Image Stretch="Fill" Source="/Images/Sonic.png"  />
             </DataTemplate>
+            <Style x:Key="MenuItemStyle" TargetType="MenuItem">
+                <Setter Property="CommandTarget" Value="{Binding ElementName=DesignSurface}" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Grouping">
+                <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}"
+                          CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" Style="{StaticResource MenuItemStyle}"  />
+                <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}"
+                          Style="{StaticResource MenuItemStyle}" />
+            </MenuItem>
+            <MenuItem Header="Align">
+                <MenuItem Header="Horizontal">
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyLeftCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+                    </MenuItem>
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCenterCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+
+                    </MenuItem>
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyRightCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Vertical">
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyTopCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+
+                    </MenuItem>
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyMiddleCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+
+                    </MenuItem>
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyBottomCommand}"
+                              Style="{StaticResource MenuItemStyle}">
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+
+        </Menu>
         <ToolBarTray DockPanel.Dock="Top">
+            <ToolBarTray.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="CommandTarget" Value="{Binding ElementName=DesignSurface}" />
+                </Style>
+            </ToolBarTray.Resources>
             <ToolBar>
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}" CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Group" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}" CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Ungroup"  />
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCommand}"
-                        CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Align to Left">
-                    <Button.CommandParameter>
-                        <dsCore:HorizontalAlignment>Left</dsCore:HorizontalAlignment>
-                    </Button.CommandParameter>
-                </Button>
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCommand}"
-                        CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Align to Center">
-                    <Button.CommandParameter>
-                        <dsCore:HorizontalAlignment>Center</dsCore:HorizontalAlignment>
-                    </Button.CommandParameter>
-                </Button>
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCommand}"
-                        CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Align to Right">
-                    <Button.CommandParameter>
-                        <dsCore:HorizontalAlignment>Right</dsCore:HorizontalAlignment>
-                    </Button.CommandParameter>
-                </Button>
-                <Button Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyCommand}"
-                        CommandTarget="{Binding ElementName=DesignSurface}"
-                        Content="Align to Top">
-                    <Button.CommandParameter>
-                        <dsCore:VerticalAlignment>Top</dsCore:VerticalAlignment>
-                    </Button.CommandParameter>
-                </Button>
-                <Button Click="ButtonBase_OnClick" Content="Mover>"></Button>
+                <Button Content="Group" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
+                <Button Content="Ungroup" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}"  />
             </ToolBar>
+            <!--<ToolBar>
+                <xctk:DropDownButton Content="Horizontal">
+                    <xctk:DropDownButton.DropDownContent>
+                        <ItemsControl>
+                            <Button Content="Left" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyLeftCommand}" />
+                            <Button Content="Center" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCenterCommand}" />
+                            <Button Content="Right" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyRightCommand}" />
+                        </ItemsControl>
+                    </xctk:DropDownButton.DropDownContent>
+                </xctk:DropDownButton>
+                <xctk:DropDownButton Content="Vertical">
+                    <xctk:DropDownButton.DropDownContent>
+                        <UniformGrid>
+                            <Button Content="Top"  Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyTopCommand}" />
+                            <Button Content="Middle" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyMiddleCommand}" />
+                            <Button Content="Bottom"  Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyBottomCommand}" />
+                        </UniformGrid>
+                    </xctk:DropDownButton.DropDownContent>
+                </xctk:DropDownButton>
+            </ToolBar>-->
         </ToolBarTray>
         <Grid>
             <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface">
@@ -139,7 +174,7 @@
                     <sampleModel:Group.Children>
                         <canvasItem:CanvasItemCollection>
                             <sampleModel:Sonic Left="25" Width="50" Height="70" Top="0" />
-                            <sampleModel:Mario Left="20" Width="50" Height="30" Top="60" />                            
+                            <sampleModel:Mario Left="20" Width="50" Height="30" Top="60" />
                         </canvasItem:CanvasItemCollection>
                     </sampleModel:Group.Children>
                 </sampleModel:Group>
@@ -148,5 +183,6 @@
 
             <TextBlock Margin="10" FontSize="18" FontFamily="Verdana"
                        Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
-        </Grid></DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>
