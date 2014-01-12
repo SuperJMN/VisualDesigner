@@ -25,7 +25,7 @@ namespace Glass.Design.Pcl.CanvasItem
                 case VerticalAlignment.Top:
                     AlignToTop();
                     break;
-                case VerticalAlignment.Middle:
+                case VerticalAlignment.Center:
                     AlignToMiddleVertical();
                     break;
                 case VerticalAlignment.Bottom:

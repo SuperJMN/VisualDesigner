@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Glass.Design.Pcl.DesignSurface;
-using System.Collections.Generic;
+﻿using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl.CanvasItem
 {

@@ -30,7 +30,6 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
                 <Grid>
-
                     <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
@@ -54,9 +53,16 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </viewing:ViewingSurface>
+                    
                     <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent">
-                        <TextBlock Text="Group" FontSize="7"></TextBlock>
+                        <BulletDecorator HorizontalAlignment="Right" Margin="2">
+                            <BulletDecorator.Bullet>
+                                <Image RenderOptions.BitmapScalingMode="Fant" Source="Images/Group.png" Height="16" Stretch="Uniform" />
+                            </BulletDecorator.Bullet>
+                            <TextBlock VerticalAlignment="Top" Text="Group" FontSize="10" />
+                        </BulletDecorator>                       
                     </Border>
+
                 </Grid>
 
             </DataTemplate>
@@ -95,7 +101,6 @@
                     </MenuItem>
                     <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyRightCommand}"
                               Style="{StaticResource MenuItemStyle}">
-
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Vertical">
@@ -103,7 +108,7 @@
                               Style="{StaticResource MenuItemStyle}">
 
                     </MenuItem>
-                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyMiddleCommand}"
+                    <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyCenterCommand}"
                               Style="{StaticResource MenuItemStyle}">
 
                     </MenuItem>
@@ -124,26 +129,11 @@
                 <Button Content="Group" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
                 <Button Content="Ungroup" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}"  />
             </ToolBar>
-            <!--<ToolBar>
-                <xctk:DropDownButton Content="Horizontal">
-                    <xctk:DropDownButton.DropDownContent>
-                        <ItemsControl>
-                            <Button Content="Left" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyLeftCommand}" />
-                            <Button Content="Center" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyCenterCommand}" />
-                            <Button Content="Right" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignHorizontallyRightCommand}" />
-                        </ItemsControl>
-                    </xctk:DropDownButton.DropDownContent>
-                </xctk:DropDownButton>
-                <xctk:DropDownButton Content="Vertical">
-                    <xctk:DropDownButton.DropDownContent>
-                        <UniformGrid>
-                            <Button Content="Top"  Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyTopCommand}" />
-                            <Button Content="Middle" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyMiddleCommand}" />
-                            <Button Content="Bottom"  Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.AlignVerticallyBottomCommand}" />
-                        </UniformGrid>
-                    </xctk:DropDownButton.DropDownContent>
-                </xctk:DropDownButton>
-            </ToolBar>-->
+            <ToolBar>
+                <Button Content="Bring to Front" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.BringToFrontCommand}" />
+                <Button Content="Send to back" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.SendToBackCommand}" />
+            </ToolBar>
+           
         </ToolBarTray>
         <Grid>
             <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface">
@@ -159,11 +149,7 @@
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
                     </Style>
                 </designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                <sampleModel:CanvasRectangle Top="0" Left="0" Width="200" Height="200">
-                    <sampleModel:CanvasRectangle.FillColor>
-                        <sampleModel:Color R="255" G="230" B="10" />
-                    </sampleModel:CanvasRectangle.FillColor>
-                </sampleModel:CanvasRectangle>
+                <sampleModel:Link Top="0" Left="0" Width="200" Height="200" />
                 <sampleModel:Ellipse Top="300" Left="300" Width="150" Height="150">
                     <sampleModel:Ellipse.FillColor>
                         <sampleModel:Color R="44" G="66" B="200" />

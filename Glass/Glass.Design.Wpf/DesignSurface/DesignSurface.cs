@@ -33,9 +33,9 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
-        public IList<ICanvasItem> SelectedCanvasItems
+        public CanvasItemCollection SelectedCanvasItems
         {
-            get { return SelectedItems.Cast<ICanvasItem>().ToList(); }
+            get { return new CanvasItemCollection(SelectedItems.Cast<ICanvasItem>()); }
         }
 
         private SelectionHandler SelectionHandler { get; set; }
@@ -181,7 +181,7 @@ namespace Glass.Design.Wpf.DesignSurface
             foreach (ICanvasItem child in Items)
             {
                 child.Parent = this;
-            }   
+            }
         }
 
         private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -193,12 +193,24 @@ namespace Glass.Design.Wpf.DesignSurface
                     newItem.Parent = this;
                     Items.Add(newItem);
                 }
-            } else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (ICanvasItem oldItem in notifyCollectionChangedEventArgs.OldItems)
-                {                    
+                {
                     Items.Remove(oldItem);
                 }
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Move)
+            {
+
+                var oldIndex = notifyCollectionChangedEventArgs.OldStartingIndex;
+                var newIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
+
+                var item = Items[oldIndex];
+                Items.RemoveAt(oldIndex);
+                Items.Insert(newIndex, item);
+
             }
         }
 
@@ -211,7 +223,7 @@ namespace Glass.Design.Wpf.DesignSurface
                 foreach (ICanvasItem child in e.NewItems)
                 {
                     child.Parent = this;
-                }             
+                }
             }
         }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -32,10 +33,53 @@ namespace Glass.Design.Wpf.DesignSurface
 
             UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyTopCommand,
                 (sender, args) => AlignVertically(VerticalAlignment.Top), CanExecuteAlignCommandHandler));
-            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyMiddleCommand,
-                (sender, args) => AlignVertically(VerticalAlignment.Middle), CanExecuteAlignCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyCenterCommand,
+                (sender, args) => AlignVertically(VerticalAlignment.Center), CanExecuteAlignCommandHandler));
             UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.AlignVerticallyBottomCommand,
                 (sender, args) => AlignVertically(VerticalAlignment.Bottom), CanExecuteAlignCommandHandler));
+
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.BringToFrontCommand,
+                (sender, args) => BringToFront(), IsSomethingSelectedCommandHandler));
+            UIElement.CommandBindings.Add(new CommandBinding(DesignSurfaceCommands.SendToBackCommand,
+               (sender, args) => SendToBack(), IsSomethingSelectedCommandHandler));
+        }
+
+        private void IsSomethingSelectedCommandHandler(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = IsSomethingSelected();
+        }
+
+        private bool IsSomethingSelected()
+        {
+            return DesignSurface.SelectedCanvasItems.Any();
+        }
+
+        private void BringToFront()
+        {
+            MoveSelectionTo(DesignSurface.Children.Count - 1);
+        }
+
+        private void SendToBack()
+        {
+            MoveSelectionTo(0);
+        }
+
+        private void MoveSelectionTo(int position)
+        {
+            var idsToMove = new List<int>();
+
+            foreach (var child in DesignSurface.SelectedCanvasItems)
+            {
+                var childId = DesignSurface.Children.IndexOf(child);
+                idsToMove.Add(childId);
+            }
+
+
+            var newIndex = position;
+            foreach (var id in idsToMove)
+            {
+                DesignSurface.Children.Move(id, newIndex);
+            }
         }
 
         private void AlignVertically(VerticalAlignment alignment)
@@ -86,7 +130,7 @@ namespace Glass.Design.Wpf.DesignSurface
             var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
             var group = groupCommandArgs.CreateHostingItem();
 
-            DesignSurface.SelectedCanvasItems.Move(group);
+            DesignSurface.SelectedCanvasItems.Reparent(group);
 
             DesignSurface.Children.Add(group);
         }
