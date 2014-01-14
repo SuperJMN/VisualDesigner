@@ -15,6 +15,6 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public CanvasItemCollection(IEnumerable<ICanvasItem> collection) : base(collection)
         {
-        }
+        }      
     }
 }

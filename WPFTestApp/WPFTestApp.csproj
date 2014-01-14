@@ -51,11 +51,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="Cinch.WPF">
+      <HintPath>..\packages\Cinch.2.0.70832\lib\net40\Cinch.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="ImpromptuInterface, Version=6.2.2.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
+    <Reference Include="MEFedMVVM.WPF">
+      <HintPath>..\packages\Cinch.2.0.70832\lib\net40\MEFedMVVM.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,14 +85,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DesignModeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ModelColorToSolidColorBrush.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="ModelColorToSolidColorBrushConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -121,6 +128,10 @@
     <ProjectReference Include="..\glass\Glass.Design.Wpf\Glass.Design.Wpf.csproj">
       <Project>{b9d1218f-5566-469d-b66c-ac5ffde1be2d}</Project>
       <Name>Glass.Design.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleModel.Serialization\SampleModel.Serialization.csproj">
+      <Project>{4CDD7D3E-B5FE-40D6-81DD-5E2C44D5A948}</Project>
+      <Name>SampleModel.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleModel\SampleModel.csproj">
       <Project>{d0d18b5a-f5fb-4cf2-bcac-08603a1fefdc}</Project>

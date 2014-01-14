@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using Glass.Design.Pcl.DesignSurface;
 using SampleModel;
 
@@ -14,32 +13,7 @@ namespace Glass.Design.WpfTester
         {
             InitializeComponent();
 
-            GroupCommandArgs = new GroupCommandArgs
-                        {
-                            CreateHostingItem = () => new Group()
-                        };
-        }
-
-        #region GroupCommandArgs
-        public static readonly DependencyProperty GroupCommandArgsProperty =
-          DependencyProperty.Register("GroupCommandArgs", typeof(GroupCommandArgs), typeof(MainWindow),
-            new FrameworkPropertyMetadata(null));
-
-        public GroupCommandArgs GroupCommandArgs
-        {
-            get { return (GroupCommandArgs)GetValue(GroupCommandArgsProperty); }
-            set { SetValue(GroupCommandArgsProperty, value); }
-        }
-
-        #endregion
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (DesignSurface.SelectedCanvasItems.Any())
-            {
-                var first = DesignSurface.SelectedCanvasItems.First();
-                first.Top += 10;
-            }
-        }
+           
+        }     
     }
 }

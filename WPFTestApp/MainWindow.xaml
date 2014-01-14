@@ -3,15 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
         xmlns:designSurfaceWpf="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
         xmlns:ds="clr-namespace:Glass.Design.Pcl.DesignSurface;assembly=Glass.Design.Pcl"
-        xmlns:dsCore="clr-namespace:Glass.Design.Pcl.Core;assembly=Glass.Design.Pcl"
         xmlns:sampleModel="clr-namespace:SampleModel;assembly=SampleModel"
         xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing;assembly=Glass.Design.Wpf"
         xmlns:wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
         xmlns:canvasItem="clr-namespace:Glass.Design.Pcl.CanvasItem;assembly=Glass.Design.Pcl"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewModelLocator="http:\\www.codeplex.com\MEFedMVVM"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpfTester="clr-namespace:Glass.Design.WpfTester"
+        mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
-        Title="Glass Design Demo" Width="700" Height="560">
+        viewModelLocator:ViewModelLocator.ViewModel="MainViewModel"
+        Title="Glass Design Demo" Width="700" Height="560" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
     <Window.Resources>
         <ResourceDictionary>
 
@@ -84,9 +88,13 @@
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Load…" Command="{Binding LoadCommand}" />
+                <MenuItem Header="Save…" Command="{Binding SaveCommand}" />                
+            </MenuItem>
             <MenuItem Header="Grouping">
                 <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}"
-                          CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" Style="{StaticResource MenuItemStyle}"  />
+                          CommandParameter="{Binding GroupCommandArgs}" Style="{StaticResource MenuItemStyle}"  />
                 <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}"
                           Style="{StaticResource MenuItemStyle}" />
             </MenuItem>
@@ -126,7 +134,7 @@
                 </Style>
             </ToolBarTray.Resources>
             <ToolBar>
-                <Button Content="Group" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}" CommandParameter="{Binding ElementName=Window, Path=GroupCommandArgs}" />
+                <Button Content="Group" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}" CommandParameter="{Binding GroupCommandArgs}" />
                 <Button Content="Ungroup" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.PromoteChildrenCommand}"  />
             </ToolBar>
             <ToolBar>
@@ -136,7 +144,7 @@
            
         </ToolBarTray>
         <Grid>
-            <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface">
+            <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface" ItemsSource="{Binding Items}">
                 <designSurfaceWpf:DesignSurface.ItemContainerStyle>
                     <Style TargetType="{x:Type wpf:CanvasItemControl}">
                         <Setter Property="Left"
@@ -149,7 +157,7 @@
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
                     </Style>
                 </designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                <sampleModel:Link Top="0" Left="0" Width="200" Height="200" />
+                <!--<sampleModel:Link Top="0" Left="0" Width="200" Height="200" />
                 <sampleModel:Ellipse Top="300" Left="300" Width="150" Height="150">
                     <sampleModel:Ellipse.FillColor>
                         <sampleModel:Color R="44" G="66" B="200" />
@@ -163,7 +171,7 @@
                             <sampleModel:Mario Left="20" Width="50" Height="30" Top="60" />
                         </canvasItem:CanvasItemCollection>
                     </sampleModel:Group.Children>
-                </sampleModel:Group>
+                </sampleModel:Group>-->
             </designSurfaceWpf:DesignSurface>
 
 
@@ -172,3 +180,5 @@
         </Grid>
     </DockPanel>
 </Window>
+
+    

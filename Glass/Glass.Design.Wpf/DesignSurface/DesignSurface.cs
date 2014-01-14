@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -10,6 +9,7 @@ using System.Windows.Input;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
+using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.DesignSurface.VisualAids;
 using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
@@ -165,6 +165,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public ICommand GroupCommand { get; private set; }
 
+        [UsedImplicitly]
         public DesignSurfaceCommandHandler DesignSurfaceCommandHandler
         {
             get { return designSurfaceCommandHandler; }
@@ -186,6 +187,51 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            // TODO: I hate this part!
+            if (ItemsSource == null)
+            {
+                SyncItemCollectionWhenUsingExplictItems(notifyCollectionChangedEventArgs);
+            }
+            else
+            {
+                SyncItemCollectionWhenUsingItemSource(notifyCollectionChangedEventArgs);
+            }
+        }
+
+        // TODO: I hate this method. I'm sure it can be rendered useless!
+        private void SyncItemCollectionWhenUsingItemSource(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            var list = ((IList) ItemsSource);
+
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (ICanvasItem newItem in notifyCollectionChangedEventArgs.NewItems)
+                {
+                    newItem.Parent = this;
+                    list.Add(newItem);
+                }
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ICanvasItem oldItem in notifyCollectionChangedEventArgs.OldItems)
+                {
+                    list.Remove(oldItem);
+                }
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Move)
+            {
+                var oldIndex = notifyCollectionChangedEventArgs.OldStartingIndex;
+                var newIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
+
+                var item = Items[oldIndex];
+                list.RemoveAt(oldIndex);
+                list.Insert(newIndex, item);
+            }
+        }
+
+        // TODO: I hate this method. I'm sure it can be rendered useless!
+        private void SyncItemCollectionWhenUsingExplictItems(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
             {
                 foreach (ICanvasItem newItem in notifyCollectionChangedEventArgs.NewItems)
@@ -203,14 +249,12 @@ namespace Glass.Design.Wpf.DesignSurface
             }
             else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Move)
             {
-
                 var oldIndex = notifyCollectionChangedEventArgs.OldStartingIndex;
                 var newIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
 
                 var item = Items[oldIndex];
                 Items.RemoveAt(oldIndex);
                 Items.Insert(newIndex, item);
-
             }
         }
 

@@ -48,6 +48,7 @@
     <Compile Include="Ellipse.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Sonic.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Color.cs" />

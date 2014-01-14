@@ -7,9 +7,9 @@ using Color = SampleModel.Color;
 
 namespace Glass.Design.WpfTester
 {
-    public class ModelColorToSolidColorBrush : IValueConverter 
+    public class ModelColorToSolidColorBrushConverter : IValueConverter 
     {
-        static ModelColorToSolidColorBrush()
+        static ModelColorToSolidColorBrushConverter()
         {
             Mapper.CreateMap<Color, System.Windows.Media.Color>().ForMember(color => color.A, expression => expression.UseValue(255));
             Mapper.CreateMap<System.Windows.Media.Color, Color>().ForMember(color => color.A, expression => expression.UseValue(255));
