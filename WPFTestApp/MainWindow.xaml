@@ -6,7 +6,6 @@
         xmlns:sampleModel="clr-namespace:SampleModel;assembly=SampleModel"
         xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing;assembly=Glass.Design.Wpf"
         xmlns:wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
-        xmlns:canvasItem="clr-namespace:Glass.Design.Pcl.CanvasItem;assembly=Glass.Design.Pcl"
         xmlns:viewModelLocator="http:\\www.codeplex.com\MEFedMVVM"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -80,6 +79,7 @@
             <DataTemplate DataType="{x:Type sampleModel:Sonic}">
                 <Image Stretch="Fill" Source="/Images/Sonic.png"  />
             </DataTemplate>
+            
             <Style x:Key="MenuItemStyle" TargetType="MenuItem">
                 <Setter Property="CommandTarget" Value="{Binding ElementName=DesignSurface}" />
             </Style>
@@ -156,25 +156,8 @@
                         <Setter Property="Height"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
                     </Style>
-                </designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                <!--<sampleModel:Link Top="0" Left="0" Width="200" Height="200" />
-                <sampleModel:Ellipse Top="300" Left="300" Width="150" Height="150">
-                    <sampleModel:Ellipse.FillColor>
-                        <sampleModel:Color R="44" G="66" B="200" />
-                    </sampleModel:Ellipse.FillColor>
-                </sampleModel:Ellipse>
-                <sampleModel:Label Top="300" Left="400" Width="120" Height="30"></sampleModel:Label>
-                <sampleModel:Group Top="200" Left="200" Width="100" Height="100">
-                    <sampleModel:Group.Children>
-                        <canvasItem:CanvasItemCollection>
-                            <sampleModel:Sonic Left="25" Width="50" Height="70" Top="0" />
-                            <sampleModel:Mario Left="20" Width="50" Height="30" Top="60" />
-                        </canvasItem:CanvasItemCollection>
-                    </sampleModel:Group.Children>
-                </sampleModel:Group>-->
+                </designSurfaceWpf:DesignSurface.ItemContainerStyle>             
             </designSurfaceWpf:DesignSurface>
-
-
             <TextBlock Margin="10" FontSize="18" FontFamily="Verdana"
                        Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
         </Grid>

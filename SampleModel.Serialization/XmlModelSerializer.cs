@@ -15,12 +15,24 @@ namespace SampleModel.Serialization
 
         static XmlModelSerializer()
         {
+            //Mapper.CreateMap<Color, Color>();
+
+            //Mapper.CreateMap<Shape, ShapeDto>() 
+            //    .ForMember(dto => dto.FillColor, expression => expression.MapFrom(shape => shape.FillColor))
+            //    .Include<CanvasRectangle, RectangleDto>()
+            //    .Include<Ellipse, EllipseDto>();
+
             Mapper.CreateMap<ICanvasItem, ObjectDto>()
                 .ForMember(dto => dto.Objects, expression => expression.ResolveUsing(item => item.Children.Count == 0 ? null : item.Children))
                 .Include<Mario, MarioDto>()
                 .Include<Sonic, SonicDto>()
                 .Include<Link, LinkDto>()
+                .Include<Label, LabelDto>()
+                //.Include<Shape, ShapeDto>()
+                //.Include<Ellipse, EllipseDto>()
+                //.Include<CanvasRectangle, RectangleDto>()                
                 .Include<Group, GroupDto>();
+            
 
 
             Mapper.CreateMap<ObjectDto, CanvasItemINPC>()
@@ -37,11 +49,18 @@ namespace SampleModel.Serialization
                 .Include<MarioDto, Mario>()
                 .Include<SonicDto, Sonic>()
                 .Include<LinkDto, Link>()
+                .Include<LabelDto, Label>()
+                //.Include<RectangleDto, CanvasRectangle>()
+                //.Include<EllipseDto, Ellipse>()
                 .Include<GroupDto, Group>();
+                
 
             Mapper.CreateMap<MarioDto, Mario>();
             Mapper.CreateMap<SonicDto, Sonic>();
             Mapper.CreateMap<LinkDto, Link>();
+            //Mapper.CreateMap<RectangleDto, CanvasRectangle>();
+            //Mapper.CreateMap<EllipseDto, Ellipse>();
+            Mapper.CreateMap<LabelDto, Label>();
             Mapper.CreateMap<GroupDto, Group>();
 
 

@@ -6,8 +6,9 @@ namespace SampleModel.Serialization
     [XmlInclude(typeof(MarioDto))]
     [XmlInclude(typeof(LinkDto))]
     [XmlInclude(typeof(SonicDto))]
-    [XmlInclude(typeof(GroupDto))]
-    [XmlInclude(typeof(ShapeDto))]
+    [XmlInclude(typeof(GroupDto))]   
+    [XmlInclude(typeof(LabelDto))]
+    //[XmlInclude(typeof(ShapeDto))]
     public class ObjectDto
     {
         public ObjectDto()

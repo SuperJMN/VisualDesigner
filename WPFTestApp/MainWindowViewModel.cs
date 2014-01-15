@@ -41,7 +41,7 @@ namespace Glass.Design.WpfTester
         private static CanvasItemCollection CreateSampleItems()
         {
             var items = new CanvasItemCollection();
-            items.Add(new Mario
+            items.Add(new Link
                       {
                           Left = 0,
                           Top = 40,
@@ -49,9 +49,38 @@ namespace Glass.Design.WpfTester
                           Height = 100,
                       });
 
-            var group = new Group { Top = 100, Left = 200, Width = 400, Height = 300 };
-            group.Children.Add(new Mario { Left = 0, Top = 0, Width = 100, Height = 200 });
-            group.Children.Add(new Sonic { Left = 0, Top = 200, Width = 100, Height = 200 });
+          
+
+            items.Add(new Label
+                      {
+                          Left = 400,
+                          Top = 40,
+                          Width = 250,
+                          Height = 50,
+                          Text = "Hello boys!\nThis is far from perfect, but it works :D"
+                      });
+
+            //items.Add(new CanvasRectangle
+            //{
+            //    Left = 200,
+            //    Top = 40,
+            //    Width = 100,
+            //    Height = 100,
+            //    FillColor = new Color(0, 0, 255)
+            //});
+
+            //items.Add(new Ellipse
+            //{
+            //    Left = 200,
+            //    Top = 200,
+            //    Width = 200,
+            //    Height = 100,
+            //    FillColor = new Color(0, 220, 255)
+            //});
+
+            var group = new Group { Top = 100, Left = 200, Width = 110, Height = 200 };
+            group.Children.Add(new Mario { Left = 15, Top = 0, Width = 80, Height = 100 });
+            group.Children.Add(new Sonic { Left = 15, Top = 100, Width = 80, Height = 100 });
 
             items.Add(group);
 

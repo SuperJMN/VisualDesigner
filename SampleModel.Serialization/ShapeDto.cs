@@ -4,9 +4,9 @@ namespace SampleModel.Serialization
 {
     [XmlInclude(typeof(RectangleDto))]
     [XmlInclude(typeof(EllipseDto))]
-    public class ShapeDto
+    public class ShapeDto: ObjectDto
     {
         [XmlAttribute]
-        private Color FillColor { get; set; }
+        public Color FillColor { get; set; }
     }
 }
