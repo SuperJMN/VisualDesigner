@@ -8,9 +8,9 @@ using Glass.Basics.Collections;
 
 namespace Glass.Basics.Controls.BindableGrid
 {
-    public class BoundGrid : Grid
+    public class BindableGrid : Grid
     {
-        public BoundGrid()
+        public BindableGrid()
         {
             ColumnSyncronizer = new ObservableCollectionSynchronizer<ColumnDefinition> {Destination = ColumnDefinitions};
             RowSyncronizer = new ObservableCollectionSynchronizer<RowDefinition> {Destination = RowDefinitions};
@@ -23,7 +23,7 @@ namespace Glass.Basics.Controls.BindableGrid
 
         public static readonly DependencyProperty ColumnDefinitionsSourceProperty =
             DependencyProperty.Register("ColumnDefinitionsSource", typeof (BoundGridColumnDefinitionCollection),
-                typeof (BoundGrid),
+                typeof (BindableGrid),
                 new FrameworkPropertyMetadata(null,
                     OnColumnDefinitionsSourceChanged));
 
@@ -35,7 +35,7 @@ namespace Glass.Basics.Controls.BindableGrid
 
         private static void OnColumnDefinitionsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BoundGrid) d;
+            var target = (BindableGrid) d;
             var oldColumnDefinitionsSource = (BoundGridColumnDefinitionCollection) e.OldValue;
             var newColumnDefinitionsSource = target.ColumnDefinitionsSource;
             target.OnColumnDefinitionsSourceChanged(oldColumnDefinitionsSource, newColumnDefinitionsSource);
@@ -54,7 +54,7 @@ namespace Glass.Basics.Controls.BindableGrid
 
         public static readonly DependencyProperty RowDefinitionsSourceProperty =
             DependencyProperty.Register("RowDefinitionsSource", typeof (BoundGridRowDefinitionCollection),
-                typeof (BoundGrid),
+                typeof (BindableGrid),
                 new FrameworkPropertyMetadata(null,
                     OnRowDefinitionsSourceChanged));
 
@@ -66,7 +66,7 @@ namespace Glass.Basics.Controls.BindableGrid
 
         private static void OnRowDefinitionsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BoundGrid) d;
+            var target = (BindableGrid) d;
             var oldRowDefinitionsSource = (BoundGridRowDefinitionCollection) e.OldValue;
             var newRowDefinitionsSource = target.RowDefinitionsSource;
             target.OnRowDefinitionsSourceChanged(oldRowDefinitionsSource, newRowDefinitionsSource);
