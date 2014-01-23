@@ -79,6 +79,10 @@
     <Compile Include="Behaviors\DragDrop\ChildrenRetriever.cs" />
     <Compile Include="Behaviors\DragDrop\DragDropBehavior.cs" />
     <Compile Include="Behaviors\DragDrop\DropModes.cs" />
+    <Compile Include="Collections\ObservableCollectionSynchronizer.cs" />
+    <Compile Include="Controls\BindableGrid\BoundGridColumnDefinitionCollection.cs" />
+    <Compile Include="Controls\BindableGrid\BoundGridRowDefinitionCollection.cs" />
+    <Compile Include="Controls\BindableGrid\BoundGrid.cs" />
     <Compile Include="Converters\ObjectTypeConverter.cs" />
     <Compile Include="Core\EventArgs.cs" />
     <Compile Include="Extensions\BitmapSourceExtensions.cs" />
