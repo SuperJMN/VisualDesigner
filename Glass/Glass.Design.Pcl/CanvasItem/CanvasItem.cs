@@ -1,171 +1,210 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Contracts;
+using PostSharp.Patterns.Model;
+using PostSharp.Patterns.Undo;
 
 namespace Glass.Design.Pcl.CanvasItem
 {
+    [NotifyPropertyChanged]
+    [Recordable]
     public class CanvasItem : ICanvasItem
     {
-        private double left = double.NaN;
-        private double top = double.NaN;
-        private double width = double.NaN;
-        private double height = double.NaN;
+        [NotRecorded]
+        private double previousWidth, previousHeight, previousTop, previousLeft;
+
+        private bool isUpdating;
+        private double _left;
 
         public CanvasItem()
         {
             Children = new CanvasItemCollection();
+            this.Width = this.previousWidth = 1;
+            this.Height = this.previousHeight = 1;
         }
 
         public double Right { get { return Left + Width; } }
         public double Bottom { get { return Top + Height; } }
         public ICanvasItemParent Parent { get; set; }
+
+        [Surrogate]
         public CanvasItemCollection Children { get; private set; }
 
         public double Left
         {
-            get { return left; }
-            set
+            get { return _left; }
+            set { _left = value; }
+        }
+
+        public double Top { get; set; }
+
+        [StrictlyGreaterThan(0)]
+        public double Width { get; set; }
+        [StrictlyGreaterThan(0)]
+        public double Height { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void BeginUpdate()
+        {
+            this.isUpdating = true;
+        }
+
+        protected void EndUpdate(bool applyToChildren)
+        {
+            this.isUpdating = false;
+
+            if (applyToChildren)
             {
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (value == left)
+                this.OnMoved(this.Left - this.previousLeft, this.Top - this.previousTop);
+                this.OnResized(this.Width - this.previousWidth, this.Height - this.previousHeight);
+            }
+
+            this.previousLeft = this.Left;
+            this.previousTop = this.Top;
+            this.previousHeight = this.Height;
+            this.previousWidth = this.Width;
+
+        }
+
+        protected virtual void OnResized(double widthFactor, double heightFactor)
+        {
+            foreach (ICanvasItem child in this.Children)
+            {
+                if (!double.IsNaN(widthFactor) && widthFactor != 1)
                 {
-                    return;
+                    child.Width = child.Width*widthFactor;
+                    child.Left = this.Left + (child.Left - this.Left)*widthFactor;
                 }
 
-                var oldValue = !double.IsNaN(left) ? left : value;
-
-                var newValue = value;
-                left = newValue;
-
-
-                var locationChangedEventArgs = new LocationChangedEventArgs(oldValue, newValue);
-                OnLeftChanged(locationChangedEventArgs);
-                RaiseLeftChanged(locationChangedEventArgs);
+                if (!double.IsNaN(heightFactor) && heightFactor != 1)
+                {
+                    child.Height = child.Height*heightFactor;
+                    child.Top = this.Top + (child.Top - this.Top)*heightFactor;
+                }
             }
         }
 
-        public double Top
+        protected virtual void OnMoved(double leftIncrement, double topIncrement)
         {
-            get { return top; }
-            set
+            foreach (ICanvasItem child in this.Children)
             {
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (value == top)
+                if (!double.IsNaN(leftIncrement) && leftIncrement != 0)
                 {
-                    return;
+                    child.Left += leftIncrement;
                 }
 
-                var oldValue = !double.IsNaN(top) ? top : value;
-
-                var newValue = value;
-                top = newValue;
-
-                var locationChangedEventArgs = new LocationChangedEventArgs(oldValue, newValue);
-                OnTopChanged(locationChangedEventArgs);
-
-                RaiseTopChanged(locationChangedEventArgs);
+                if (!double.IsNaN(topIncrement) && topIncrement != 0)
+                {
+                    child.Top += topIncrement;
+                }
             }
         }
 
-        protected virtual void OnTopChanged(LocationChangedEventArgs locationChangedEventArgs)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-
-        }
-
-        protected virtual void OnLeftChanged(LocationChangedEventArgs locationChangedEventArgs)
-        {
-
-        }
-
-        public event EventHandler<LocationChangedEventArgs> LeftChanged;
-        public event EventHandler<LocationChangedEventArgs> TopChanged;
-
-        protected virtual void RaiseTopChanged(LocationChangedEventArgs e)
-        {
-            var handler = TopChanged;
-            if (handler != null) handler(this, e);
-        }
-
-        protected virtual void RaiseLeftChanged(LocationChangedEventArgs e)
-        {
-            var handler = LeftChanged;
-            if (handler != null) handler(this, e);
-        }
-
-        public double Width
-        {
-            get { return width; }
-            set
+            if (!this.isUpdating)
             {
-                var oldValue = !double.IsNaN(width) ? width : value;
-                var newValue = Math.Max(value, 0);
+                switch (propertyName)
+                {
+                    case "Top":
+                    {
+                        this.OnMoved(0, this.Top - this.previousTop);
+                        this.previousTop = this.Top;
+                        break;
+                    }
 
-                width = value;
+                    case "Left":
+                    {
+                        this.OnMoved(this.Left - this.previousLeft, 0);
+                        this.previousLeft = this.Left;
+                        break;
+                    }
 
-                var sizeChangeEventArgs = new SizeChangeEventArgs(oldValue, newValue);
-                OnWidthChanged(sizeChangeEventArgs);
-                RaiseWidthChanged(sizeChangeEventArgs);
+                    case "Width":
+                    {
+                        double factor = this.Width/this.previousWidth;
+                        this.OnResized(factor, 1);
+                        this.previousWidth = this.Width;
+                        break;
+                    }
+
+                    case "Height":
+                    {
+                        double factor = this.Height/this.previousHeight;
+                        this.OnResized(1, factor);
+                        this.previousHeight = this.Height;
+
+                        break;
+                    }
+
+                }
             }
+
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected virtual void OnWidthChanged(SizeChangeEventArgs sizeChangeEventArgs)
+        public double GetCoordinate(CoordinatePart part)
         {
-            foreach (var child in Children)
+            switch (part)
             {
-                ResizeChildWidthProportionally(child, sizeChangeEventArgs);
+                case CoordinatePart.None:
+                    return double.NaN;
+                case CoordinatePart.Left:
+                    return this.Left;
+                case CoordinatePart.Right:
+                    return this.Right;
+                case CoordinatePart.Top:
+                    return this.Top;
+                case CoordinatePart.Bottom:
+                    return this.Bottom;
+                case CoordinatePart.Width:
+                    return this.Width;
+                case CoordinatePart.Height:
+                    return this.Height;
+                default:
+                    throw new ArgumentOutOfRangeException("part");
             }
         }
 
-        private static void ResizeChildWidthProportionally(ICanvasItem child, SizeChangeEventArgs sizeChangeEventArgs)
+        public void SetCoordinate(CoordinatePart part, double value)
         {
-            var widthProp = child.Width / sizeChangeEventArgs.OldValue;
-            child.Width = child.Width = widthProp * sizeChangeEventArgs.NewValue;
 
-            var leftProp = child.Left / sizeChangeEventArgs.OldValue;
-            child.Left = leftProp * sizeChangeEventArgs.NewValue;
-        }
-
-        public double Height
-        {
-            get { return height; }
-            set
+            switch (part)
             {
-                var oldValue = !double.IsNaN(height) ? height : value;
-                var newValue = Math.Max(value, 0);
-
-                height = value;
-
-                var sizeChangeEventArgs = new SizeChangeEventArgs(oldValue, newValue);
-
-                OnHeightChanged(sizeChangeEventArgs);
-                RaiseHeightChanged(sizeChangeEventArgs);
+                case CoordinatePart.None:
+                    break;
+                case CoordinatePart.Left:
+                    this.Left = value;
+                    break;
+                case CoordinatePart.Top:
+                    this.Top = value;
+                    break;
+                case CoordinatePart.Width:
+                    this.Width = value;
+                    break;
+                case CoordinatePart.Height:
+                    this.Height = value;
+                    break;
+                case CoordinatePart.Bottom:
+                case CoordinatePart.Right:
+                    throw new NotSupportedException();
+                default:
+                    throw new ArgumentOutOfRangeException("part");
             }
         }
 
-        protected virtual void OnHeightChanged(SizeChangeEventArgs sizeChangeEventArgs)
+        public override string ToString()
         {
-            foreach (var child in Children)
-            {
-                child.SwapCoordinates();
-                ResizeChildWidthProportionally(child, sizeChangeEventArgs);
-                child.SwapCoordinates();
-            }
-        }
-
-
-        public event EventHandler<SizeChangeEventArgs> HeightChanged;
-
-        private void RaiseHeightChanged(SizeChangeEventArgs e)
-        {
-            var handler = HeightChanged;
-            if (handler != null) handler(this, e);
-        }
-
-        public event EventHandler<SizeChangeEventArgs> WidthChanged;
-
-        private void RaiseWidthChanged(SizeChangeEventArgs e)
-        {
-            var handler = WidthChanged;
-            if (handler != null) handler(this, e);
+            return string.Format("{0} Left={1}, Top={2}, Width={3}, Height={4}", this.GetType().Name, this.Left,
+                this.Top,
+                this.Width, this.Height);
         }
     }
+
+
 }

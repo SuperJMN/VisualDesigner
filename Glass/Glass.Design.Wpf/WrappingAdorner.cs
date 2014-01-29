@@ -4,20 +4,19 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
 
 namespace Glass.Design.Wpf
 {
-    public class WrappingAdorner : Adorner
+    public class WrappingAdorner : CanvasItemAdorner
     {
 
         private UIElement chrome;
-        private ICanvasItem canvasItem;
 
         public WrappingAdorner(UIElement adornedElement, UIElement chrome, ICanvasItem canvasItem)
-            : base(adornedElement)
+            : base(adornedElement, canvasItem)
         {
             Chrome = chrome;
-            CanvasItem = canvasItem;
         }
 
         protected override int VisualChildrenCount
@@ -55,39 +54,7 @@ namespace Glass.Design.Wpf
             }
         }
 
-        public ICanvasItem CanvasItem
-        {
-            get { return canvasItem; }
-            set
-            {
-                if (canvasItem != null)
-                {
-                    canvasItem.LeftChanged -= CanvasItemOnPositionChanged;
-                    canvasItem.TopChanged -= CanvasItemOnPositionChanged;
-                    canvasItem.WidthChanged -= CanvasItemOnSizeChanged;
-                    canvasItem.HeightChanged -= CanvasItemOnSizeChanged;
-                }
-                canvasItem = value;
-
-                if (canvasItem != null)
-                {
-                    canvasItem.LeftChanged += CanvasItemOnPositionChanged;
-                    canvasItem.TopChanged += CanvasItemOnPositionChanged;
-                    canvasItem.WidthChanged += CanvasItemOnSizeChanged;
-                    canvasItem.HeightChanged += CanvasItemOnSizeChanged;
-                }
-            }
-        }
-
-        private void CanvasItemOnSizeChanged(object sender, SizeChangeEventArgs eventArgs)
-        {
-            InvalidateVisual();
-        }
-
-        private void CanvasItemOnPositionChanged(object sender, LocationChangedEventArgs eventArgs)
-        {
-            InvalidateVisual();
-        }
+     
 
         protected override Size MeasureOverride(Size constraint)
         {

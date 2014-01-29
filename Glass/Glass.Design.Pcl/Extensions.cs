@@ -9,52 +9,7 @@ namespace Glass.Design.Pcl
 {
     public static class Extensions
     {
-        public static void SwapCoordinates(this IEnumerable<IRect> items)
-        {
-            foreach (var canvasItem in items)
-            {
-                canvasItem.SwapCoordinates();
-            }
-        }
-
-        public static void SwapCoordinates(this IEnumerable<ICanvasItem> items)
-        {
-            foreach (var canvasItem in items)
-            {
-                canvasItem.SwapCoordinates();
-            }
-        }
-
-        public static void SwapCoordinates(this IRect item)
-        {
-            var left = item.Left;
-            var top = item.Top;
-            Swap(ref left, ref top);
-            var width = item.Width;
-            var height = item.Height;
-            Swap(ref width, ref height);
-
-            item.X = left;
-            item.Y = top;
-            item.Width = width;
-            item.Height = height;
-        }
-
-        public static void SwapCoordinates(this ICanvasItem item)
-        {
-            var left = item.Left;
-            var top = item.Top;
-            Swap(ref left, ref top);
-            var width = item.Width;
-            var height = item.Height;
-            Swap(ref width, ref height);
-
-            item.Left = left;
-            item.Top = top;
-            item.Width = width;
-            item.Height = height;
-        }
-
+       
         private static void Swap<T>(ref T a, ref T b)
         {
             var temp = a;
@@ -249,58 +204,52 @@ namespace Glass.Design.Pcl
         public static IRect GetBoundingRect(IList<IRect> children)
         {
 
-            var left = GetLeftFromChildren(children);
-            var top = GetTopFromChildren(children);
-            var width = GetWidthFromChildren(children, left);
-            var height = GetHeightFromChildren(children, top);
+            var left = GetLeft(children);
+            var top = GetTop(children);
+            var width = GetWidth(children);
+            var height = GetHeight(children);
 
             return ServiceLocator.CoreTypesFactory.CreateRect(left, top, width, height);
         }
 
-        public static double GetWidthFromChildren(IList<IRect> children, double leftOfContainingParent)
+        public static double GetWidth(this IEnumerable<ICoordinate> children)
         {
-            var right = GetMaxRightFromChildren(children);            
-            return right - leftOfContainingParent;
+            return children.GetMaxCoordinate(CoordinatePart.Right) - children.GetLeft();
         }
 
-        public static double GetTopFromChildren(IList<IRect> children)
+        public static double GetTop(this IEnumerable<ICoordinate> children)
         {
-            if (!children.Any())
-            {
-                return Double.NaN;
-            }
-            var min = children.Min(item => item.Top);
-            return min;
+            return children.GetMinCoordinate(CoordinatePart.Top);
         }
 
-        public static double GetLeftFromChildren(IList<IRect> children)
+        public static double GetLeft(this IEnumerable<ICoordinate> children)
         {
-            if (!children.Any())
-            {
-                return Double.NaN;
-            }
-            var min = children.Min(item => item.Left);
-            return min;
+            return children.GetMinCoordinate(CoordinatePart.Left);
         }
 
-        public static double GetHeightFromChildren(IList<IRect> children, double top)
+        public static double GetHeight(this IEnumerable<ICoordinate> children)
         {
 
-
-            children.SwapCoordinates();
-            var maxBottom = GetMaxRightFromChildren(children);
-            children.SwapCoordinates();
-
-            return maxBottom - top;
+            return children.GetMaxCoordinate(CoordinatePart.Bottom) - children.GetTop();
         }
 
-        public static double GetMaxRightFromChildren(IList<IRect> items)
+        public static double GetMaxCoordinate(this IEnumerable<ICoordinate> items, CoordinatePart part)
         {
             if (!items.Any())
             {
                 return Double.NaN;
             }
-            var right = items.Max(item => item.Right);
+            var right = items.Max(item => item.GetCoordinate(part));
+            return right;
+        }
+
+        public static double GetMinCoordinate(this IEnumerable<ICoordinate> items, CoordinatePart part)
+        {
+            if (!items.Any())
+            {
+                return Double.NaN;
+            }
+            var right = items.Min(item => item.GetCoordinate(part));
             return right;
         }
     }

@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using Cinch;
 using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Wpf;
 using MEFedMVVM.ViewModelLocator;

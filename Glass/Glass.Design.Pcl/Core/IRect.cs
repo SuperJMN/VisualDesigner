@@ -1,6 +1,26 @@
+using Glass.Design.Pcl.DesignSurface;
+
 namespace Glass.Design.Pcl.Core
 {
-    public interface IRect
+
+    public interface ICoordinate
+    {
+        double GetCoordinate(CoordinatePart part);
+        void SetCoordinate(CoordinatePart part, double value);
+    }
+
+    public enum CoordinatePart
+    {
+        None,
+        Left,
+        Right,
+        Top,
+        Bottom,
+        Width,
+        Height
+
+    }
+    public interface IRect : ICoordinate
     {
         double Left { get; }
         double Top { get; }

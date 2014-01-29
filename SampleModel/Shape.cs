@@ -1,8 +1,9 @@
-﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+﻿using System.ComponentModel;
+using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Shape : CanvasItemINPC
+    public class Shape : CanvasItem, INotifyPropertyChanged
     {
         public Color FillColor { get; set; }
     }

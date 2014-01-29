@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml.Serialization;
 using AutoMapper;
 using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
 
 namespace SampleModel.Serialization
 {
@@ -35,10 +34,10 @@ namespace SampleModel.Serialization
             
 
 
-            Mapper.CreateMap<ObjectDto, CanvasItemINPC>()
+            Mapper.CreateMap<ObjectDto, CanvasItem>()
                 .AfterMap((dto, inpc) =>
                           {
-                              var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItemINPC>);
+                              var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItem>);
                               foreach (var canvasItem in mappedChildren)
                               {
                                   inpc.Children.Add(canvasItem);
@@ -94,7 +93,7 @@ namespace SampleModel.Serialization
         {
             var compositionDto = (CompositionDto)serializer.Deserialize(stream);
             var objectDtos = compositionDto.Objects;
-            var items = Mapper.Map<List<CanvasItemINPC>>(objectDtos);
+            var items = Mapper.Map<List<CanvasItem>>(objectDtos);
             return items.Cast<ICanvasItem>().ToList();
         }
     }

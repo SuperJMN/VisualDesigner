@@ -1,4 +1,4 @@
-﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+﻿
 
 namespace SampleModel
 {

@@ -20,6 +20,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,8 +84,6 @@
     <Compile Include="CanvasItem\CanvasItemSelection.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="CanvasItem\CanvasItemRelocator.cs" />
-    <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemSelectionINPC.cs" />
-    <Compile Include="CanvasItem\NotifyPropertyChanged\CanvasItemINPC.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
     <Compile Include="Core\HorizontalAlignment.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="DesignSurface\IPositionable.cs" />
     <Compile Include="DesignSurface\IResizeThumb.cs" />
     <Compile Include="DesignSurface\ISizable.cs" />
-    <Compile Include="DesignSurface\LocationChangedEventArgs.cs" />
     <Compile Include="DesignSurface\SizeChangeEventArgs.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeOperation.cs" />
@@ -131,8 +129,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProportionalResizer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CanvasItem\NotifyPropertyChanged\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PostSharp">
+      <HintPath>..\..\packages\PostSharp.3.2.1\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Patterns.Common">
+      <HintPath>..\..\packages\PostSharp.Patterns.Common.3.2.1\lib\portable-windows8+sl40+net40+wp8\PostSharp.Patterns.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Patterns.Model">
+      <HintPath>..\..\packages\PostSharp.Patterns.Model.3.2.1\lib\portable-windows8+sl40+net40+wp8\PostSharp.Patterns.Model.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\packages\PostSharp.3.2.1\tools\PostSharp.targets" Condition="Exists('..\..\packages\PostSharp.3.2.1\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\..\packages\PostSharp.3.2.1\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\..\packages\PostSharp.3.2.1\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
