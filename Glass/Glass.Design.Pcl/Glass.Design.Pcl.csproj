@@ -84,6 +84,7 @@
     <Compile Include="CanvasItem\CanvasItemSelection.cs" />
     <Compile Include="CanvasItem\CanvasItemResizeInfo.cs" />
     <Compile Include="CanvasItem\CanvasItemRelocator.cs" />
+    <Compile Include="CanvasItem\CompositeCanvasItem.cs" />
     <Compile Include="CanvasItem\ICanvasItem.cs" />
     <Compile Include="ChildrenExpandableCanvasItem.cs" />
     <Compile Include="Core\HorizontalAlignment.cs" />

@@ -3,7 +3,7 @@ using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Mario : CanvasItem, INotifyPropertyChanged
+    public class Mario : CompositeCanvasItem
     {
          
     }

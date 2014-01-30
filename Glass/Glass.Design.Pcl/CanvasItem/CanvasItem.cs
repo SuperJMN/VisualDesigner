@@ -16,12 +16,12 @@ namespace Glass.Design.Pcl.CanvasItem
         [NotRecorded]
         private double previousWidth, previousHeight, previousTop, previousLeft;
 
-        private bool isUpdating;
+        protected bool IsUpdating { get; private set; }
         private double _left;
+        private CanvasItemCollection children;
 
         public CanvasItem()
         {
-            Children = new CanvasItemCollection();
             this.Width = this.previousWidth = 1;
             this.Height = this.previousHeight = 1;
         }
@@ -30,8 +30,16 @@ namespace Glass.Design.Pcl.CanvasItem
         public double Bottom { get { return Top + Height; } }
         public ICanvasItemParent Parent { get; set; }
 
-        [Surrogate]
-        public CanvasItemCollection Children { get; private set; }
+        public virtual CanvasItemCollection Children
+        {
+            get
+            {
+                // Lazy initialization ensures the collection is not created if the property is overridden.
+                if ( this.children == null )
+                    this.children = new CanvasItemCollection();
+                return children;
+            }
+        }
 
         public double Left
         {
@@ -50,12 +58,12 @@ namespace Glass.Design.Pcl.CanvasItem
 
         protected void BeginUpdate()
         {
-            this.isUpdating = true;
+            this.IsUpdating = true;
         }
 
         protected void EndUpdate(bool applyToChildren)
         {
-            this.isUpdating = false;
+            this.IsUpdating = false;
 
             if (applyToChildren)
             {
@@ -106,7 +114,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (!this.isUpdating)
+            if (!this.IsUpdating)
             {
                 switch (propertyName)
                 {

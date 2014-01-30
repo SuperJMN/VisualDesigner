@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Glass.Design.Pcl.Core;
 using PostSharp.Patterns.Collections;
 
 namespace Glass.Design.Pcl.CanvasItem
@@ -14,12 +15,10 @@ namespace Glass.Design.Pcl.CanvasItem
         {
         }
 
-        public CanvasItemCollection(IEnumerable<ICanvasItem> collection) 
+        public CanvasItemCollection(IEnumerable<ICanvasItem> collection) : base(collection)
         {
-            foreach (ICanvasItem canvasItem in collection)
-            {
-                this.Add(canvasItem);
-            }
-        }      
+        }
+
+      
     }
 }

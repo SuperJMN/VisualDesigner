@@ -201,7 +201,7 @@ namespace Glass.Design.Pcl
             return ServiceLocator.CoreTypesFactory.CreatePoint(-point.X, -point.Y);
         }
 
-        public static IRect GetBoundingRect(IList<IRect> children)
+        public static IRect GetBoundingRect(IList<ICoordinate> children)
         {
 
             var left = GetLeft(children);

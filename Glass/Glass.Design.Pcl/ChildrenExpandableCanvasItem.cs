@@ -28,6 +28,12 @@ namespace Glass.Design.Pcl
             AttachToChildrenLayoutEvents();
         }
 
+        protected ChildrenExpandableCanvasItem()
+            : this(new List<ICanvasItem>())
+        {
+        }
+
+
         private void ComputeBounds()
         {
             this.BeginUpdate();
@@ -40,21 +46,9 @@ namespace Glass.Design.Pcl
             this.EndUpdate(false);
         }
 
-        private IList<IRect> ChildrenRects
-        {
-            get { return Children.Select(item => item.Rect()).ToList(); }
-        }
-
-        private bool AreChildrenUpdatedByMyself
-        {
-            get { return ChildrenUpdateLevel > 0; }
-        }
-
-        private int ChildrenUpdateLevel { get; set; }
-
+    
         private void AttachToChildrenLayoutEvents()
         {
-
             foreach (var child in Children)
             {
                 child.PropertyChanged += ChildOnPropertyChanged;
@@ -63,10 +57,15 @@ namespace Glass.Design.Pcl
 
         private void ChildOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
+            if (this.IsUpdating)
+                return;
+
             switch (propertyChangedEventArgs.PropertyName)
             {
                 case "Left":
                 case "Top":
+                case "Width":
+                case "Height":
                     this.ComputeBounds();
                     break;
 
@@ -81,29 +80,7 @@ namespace Glass.Design.Pcl
             }
         }
 
-        
-
-
-        private IEnumerable<ICanvasItem> ChildrenExcept(ICanvasItem changed)
-        {
-
-            return Children.Except(new List<ICanvasItem> { changed });
-        }
-
-      
-        private IEnumerable<IRect> ChildrenRectExcept(IRect changed)
-        {
-            return ChildrenRects.Except(new List<IRect> { changed });
-        }
-
      
-
-
-
-        public ChildrenExpandableCanvasItem()
-            : this(new List<ICanvasItem>())
-        {
-        }
 
 
 
