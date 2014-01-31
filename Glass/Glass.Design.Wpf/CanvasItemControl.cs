@@ -33,12 +33,6 @@ namespace Glass.Design.Wpf
             SizeChanged += OnSizeChanged;
         }
 
-        protected override void AddChild(object value)
-        {
-            base.AddChild(value);
-        }
-
-        
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {

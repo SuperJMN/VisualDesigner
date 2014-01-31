@@ -7,7 +7,7 @@ namespace Glass.Design.Pcl.DesignSurface
     {
         IList SelectedItems { get; }
         event EventHandler<object> ItemSpecified;
-        event EventHandler NoneSpecified;
+        event EventHandler SelectionCleared;
         void UnselectAll();
     }
 }

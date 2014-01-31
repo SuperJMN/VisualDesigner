@@ -10,11 +10,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpfTester="clr-namespace:Glass.Design.WpfTester"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
         viewModelLocator:ViewModelLocator.ViewModel="MainViewModel"
-        Title="Glass Design Demo" Width="700" Height="560" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
+        Title="Glass Design Demo" Width="952.051" Height="597.604" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
     <Window.Resources>
         <ResourceDictionary>
 
@@ -56,14 +57,14 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </viewing:ViewingSurface>
-                    
+
                     <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent">
                         <BulletDecorator HorizontalAlignment="Right" Margin="2">
                             <BulletDecorator.Bullet>
                                 <Image RenderOptions.BitmapScalingMode="Fant" Source="Images/Group.png" Height="16" Stretch="Uniform" />
                             </BulletDecorator.Bullet>
                             <TextBlock VerticalAlignment="Top" Text="Group" FontSize="10" />
-                        </BulletDecorator>                       
+                        </BulletDecorator>
                     </Border>
 
                 </Grid>
@@ -79,7 +80,7 @@
             <DataTemplate DataType="{x:Type sampleModel:Sonic}">
                 <Image Stretch="Fill" Source="/Images/Sonic.png"  />
             </DataTemplate>
-            
+
             <Style x:Key="MenuItemStyle" TargetType="MenuItem">
                 <Setter Property="CommandTarget" Value="{Binding ElementName=DesignSurface}" />
             </Style>
@@ -90,7 +91,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Load…" Command="{Binding LoadCommand}" />
-                <MenuItem Header="Save…" Command="{Binding SaveCommand}" />                
+                <MenuItem Header="Save…" Command="{Binding SaveCommand}" />
             </MenuItem>
             <MenuItem Header="Grouping">
                 <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}"
@@ -141,10 +142,13 @@
                 <Button Content="Bring to Front" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.BringToFrontCommand}" />
                 <Button Content="Send to back" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.SendToBackCommand}" />
             </ToolBar>
-           
+
         </ToolBarTray>
+        <xctk:PropertyGrid DockPanel.Dock="Right" SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" Width="321">
+
+        </xctk:PropertyGrid>
         <Grid>
-            <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface" ItemsSource="{Binding Items}">
+            <designSurfaceWpf:DesignSurface Background="White" x:Name="DesignSurface" ItemsSource="{Binding Items}">
                 <designSurfaceWpf:DesignSurface.ItemContainerStyle>
                     <Style TargetType="{x:Type wpf:CanvasItemControl}">
                         <Setter Property="Left"
@@ -156,10 +160,9 @@
                         <Setter Property="Height"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
                     </Style>
-                </designSurfaceWpf:DesignSurface.ItemContainerStyle>             
+                </designSurfaceWpf:DesignSurface.ItemContainerStyle>
             </designSurfaceWpf:DesignSurface>
-            <TextBlock Margin="10" FontSize="18" FontFamily="Verdana"
-                       Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
+            
         </Grid>
     </DockPanel>
 </Window>

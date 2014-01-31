@@ -5,7 +5,7 @@ namespace Glass.Design.Pcl.CanvasItem
 {
     public static class CanvasItemRelocator
     {
-        public static void Reparent(this IList<ICanvasItem> items, ICanvasItem destination)
+        public static void Reparent(this IEnumerable<ICanvasItem> items, ICanvasItem destination)
         {
 
             var rect = Extensions.GetBoundsFromChildren(items);

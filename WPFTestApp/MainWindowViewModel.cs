@@ -10,13 +10,15 @@ using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Wpf;
 using MEFedMVVM.ViewModelLocator;
+using PostSharp.Patterns.Model;
 using SampleModel;
 using SampleModel.Serialization;
 
 namespace Glass.Design.WpfTester
 {
     [ExportViewModel("MainViewModel")]
-    public class MainWindowViewModel : ViewModelBase
+    [NotifyPropertyChanged]
+    public class MainWindowViewModel 
     {
         private ISaveFileService SaveFileService { get; set; }
         private IOpenFileService OpenFileService { get; set; }
@@ -34,7 +36,7 @@ namespace Glass.Design.WpfTester
             LoadCommand = new SimpleCommand<object, object>(o => Load());
             SaveCommand = new SimpleCommand<object, object>(o => Save());
 
-            Items = CreateSampleItems();
+            this.items = CreateSampleItems();
         }
 
         private static CanvasItemCollection CreateSampleItems()
@@ -95,7 +97,7 @@ namespace Glass.Design.WpfTester
                 {
                     var modelSaver = new XmlModelSerializer(fileStream);
                     var composition = modelSaver.Deserialize();
-                    this.Items = new CanvasItemCollection(composition);
+                    this.items = new CanvasItemCollection(composition);
                 }
             }
         }
@@ -119,13 +121,7 @@ namespace Glass.Design.WpfTester
         public CanvasItemCollection Items
         {
             get { return items; }
-            set
-            {
-
-                if (object.ReferenceEquals(items, value)) return;
-                items = value;
-                NotifyPropertyChanged(itemsEventArgs);
-            }
+            
         }
         #endregion
 

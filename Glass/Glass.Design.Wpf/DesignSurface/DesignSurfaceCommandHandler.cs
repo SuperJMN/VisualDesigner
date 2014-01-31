@@ -51,7 +51,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private bool IsSomethingSelected()
         {
-            return DesignSurface.SelectedCanvasItems.Any();
+            return DesignSurface.SelectedItems.Count > 0;
         }
 
         private void BringToFront()
@@ -68,7 +68,7 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             var idsToMove = new List<int>();
 
-            foreach (var child in DesignSurface.SelectedCanvasItems)
+            foreach (ICanvasItem child in DesignSurface.SelectedItems)
             {
                 var childId = DesignSurface.Children.IndexOf(child);
                 idsToMove.Add(childId);
@@ -84,7 +84,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void AlignVertically(VerticalAlignment alignment)
         {
-            var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
+            var aligner = new Aligner(DesignSurface.SelectedItems.Cast<ICanvasItem>().ToList());
             aligner.AlignVertically(alignment);
         }
 
@@ -95,24 +95,24 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private bool CanAlign()
         {
-            return DesignSurface.SelectedCanvasItems.Count > 1;
+            return DesignSurface.SelectedItems.Count > 1;
         }
 
         private void AlignHorizontally(HorizontalAlignment alignment)
         {
-            var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
+            var aligner = new Aligner(DesignSurface.GetSelectedCanvasItems());
             aligner.AlignHorizontally(alignment);
         }
 
 
         private void CanUngroup(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.SelectedCanvasItems.All(item => item.Children.Any());
+            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Children.Any());
         }
 
         private void Ungroup(object sender, ExecutedRoutedEventArgs e)
         {
-            var selectedCanvasItems = DesignSurface.SelectedCanvasItems.ToList();
+            var selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
             foreach (var selectedItem in selectedCanvasItems)
             {
                 selectedItem.RemoveAndPromoteChildren();
@@ -122,7 +122,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void CanGroupSelection(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
         {
-            canExecuteRoutedEventArgs.CanExecute = DesignSurface.SelectedCanvasItems.Count > 1;
+            canExecuteRoutedEventArgs.CanExecute = DesignSurface.SelectedItems.Count > 1;
         }
 
         private void Group(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
@@ -130,7 +130,7 @@ namespace Glass.Design.Wpf.DesignSurface
             var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
             var group = groupCommandArgs.CreateHostingItem();
 
-            DesignSurface.SelectedCanvasItems.Reparent(group);
+            DesignSurface.GetSelectedCanvasItems().Reparent(group);
 
             DesignSurface.Children.Add(group);
         }

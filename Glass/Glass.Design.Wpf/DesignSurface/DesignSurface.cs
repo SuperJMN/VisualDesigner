@@ -11,10 +11,12 @@ using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.DesignSurface.VisualAids;
+using PostSharp.Patterns.Model;
 using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
 namespace Glass.Design.Wpf.DesignSurface
 {
+    [NotifyPropertyChanged]
     public sealed class DesignSurface : MultiSelector, IDesignSurface, IMultiSelector
     {
         static DesignSurface()
@@ -33,11 +35,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
-        public CanvasItemCollection SelectedCanvasItems
-        {
-            get { return new CanvasItemCollection(SelectedItems.Cast<ICanvasItem>()); }
-        }
-
+        
         private SelectionHandler SelectionHandler { get; set; }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -64,7 +62,7 @@ namespace Glass.Design.Wpf.DesignSurface
         private void ContainerOnLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            OnItemSpecified(item);
+             OnItemSelected(item);
             mouseButtonEventArgs.Handled = true;
         }
 
@@ -100,6 +98,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
 
+        [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode
         {
             get { return (PlaneOperation)GetValue(PlaneOperationModeProperty); }
@@ -123,17 +122,23 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public event EventHandler<object> ItemSpecified;
 
-        private void OnItemSpecified(object e)
+        private void OnItemSelected(object e)
         {
+            this.LastSelectedItem = e;
+         
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);
         }
 
-        public event EventHandler NoneSpecified;
+        public object LastSelectedItem { get; private set; }
+
+        public event EventHandler SelectionCleared;
 
         private void RaiseNoneSpecified()
         {
-            var handler = NoneSpecified;
+            this.LastSelectedItem = null;
+
+            var handler = SelectionCleared;
             if (handler != null) handler(this, EventArgs.Empty);
         }
 

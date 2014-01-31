@@ -8,6 +8,10 @@ namespace Glass.Design.Pcl.CanvasItem
     {
         private readonly IList<ICanvasItem> canvasItems;
 
+        public Aligner(IEnumerable<ICanvasItem> canvasItems) : this(canvasItems.ToList())
+        {
+            
+        }
         public Aligner(IList<ICanvasItem> canvasItems)
         {
             this.canvasItems = canvasItems;
