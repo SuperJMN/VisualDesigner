@@ -3,7 +3,7 @@ using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Link : CompositeCanvasItem
+    public class Link : CanvasItemModel
     {
          
     }

@@ -11,6 +11,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpfTester="clr-namespace:Glass.Design.WpfTester"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
@@ -144,26 +145,48 @@
             </ToolBar>
 
         </ToolBarTray>
-        <xctk:PropertyGrid DockPanel.Dock="Right" SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" Width="321">
+        
+        <xcad:DockingManager>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False">
+                            <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False">
 
-        </xctk:PropertyGrid>
-        <Grid>
-            <designSurfaceWpf:DesignSurface Background="White" x:Name="DesignSurface" ItemsSource="{Binding Items}">
-                <designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                    <Style TargetType="{x:Type wpf:CanvasItemControl}">
-                        <Setter Property="Left"
+                            </xctk:PropertyGrid>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane>
+                            <xcad:LayoutDocument Title="Design Surface" >
+
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" ItemsSource="{Binding Items}">
+                                        <designSurfaceWpf:DesignSurface.ItemContainerStyle>
+                                            <Style TargetType="{x:Type wpf:CanvasItemControl}">
+                                                <Setter Property="Left"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:IPositionable.Left)}" />
-                        <Setter Property="Top"
+                                                <Setter Property="Top"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:IPositionable.Top)}" />
-                        <Setter Property="Width"
+                                                <Setter Property="Width"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Width)}" />
-                        <Setter Property="Height"
+                                                <Setter Property="Height"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
-                    </Style>
-                </designSurfaceWpf:DesignSurface.ItemContainerStyle>
-            </designSurfaceWpf:DesignSurface>
-            
-        </Grid>
+                                            </Style>
+                                        </designSurfaceWpf:DesignSurface.ItemContainerStyle>
+                                    </designSurfaceWpf:DesignSurface>
+
+                                </Grid>
+
+                            </xcad:LayoutDocument>
+                        </xcad:LayoutDocumentPane>
+                    </xcad:LayoutDocumentPaneGroup>
+                </xcad:LayoutPanel>
+
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    
     </DockPanel>
 </Window>
 

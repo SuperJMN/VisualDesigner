@@ -14,9 +14,7 @@ namespace Glass.Design.Pcl.CanvasItem
     [Recordable]
     public class CanvasItem : ICanvasItem
     {
-        private static int nextId;
-        private readonly int id = Interlocked.Increment(ref nextId);
-        [NotRecorded]
+         [NotRecorded]
         private double previousWidth, previousHeight, previousTop, previousLeft;
 
         protected bool IsUpdating { get; private set; }
@@ -26,12 +24,11 @@ namespace Glass.Design.Pcl.CanvasItem
         {
             this.Width = this.previousWidth = 1;
             this.Height = this.previousHeight = 1;
+          
         }
 
         public ChildrenPositioning ChildrenPositioning { get; protected set; }
 
-        
-      
 
         //[Browsable(false)]
         public ICanvasItemParent Parent { get; set; }
@@ -232,11 +229,6 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        public override string ToString()
-        {
-            return string.Format("{0} #{5}, Left={1}, Top={2}, Width={3}, Height={4}", this.GetType().Name, this.Left,
-                this.Top, this.Width, this.Height, this.id);
-        }
     }
 
     public enum ChildrenPositioning

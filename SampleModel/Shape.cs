@@ -3,7 +3,7 @@ using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Shape : CompositeCanvasItem
+    public class Shape : CanvasItemModel
     {
         public Color FillColor { get; set; }
     }

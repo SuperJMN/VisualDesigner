@@ -47,6 +47,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasItemModel.cs" />
     <Compile Include="CanvasRectangle.cs" />
     <Compile Include="Ellipse.cs" />
     <Compile Include="Group.cs" />

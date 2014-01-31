@@ -3,7 +3,7 @@ using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Group : CompositeCanvasItem
+    public class Group : CanvasItemModel
     {
         
     }
