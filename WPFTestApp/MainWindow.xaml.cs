@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Windows;
+using System.Windows.Input;
 using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Undo;
 using SampleModel;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 
@@ -42,6 +44,14 @@ namespace Glass.Design.WpfTester
                         break;
                 }
             }
+        }
+
+        
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Operation operation = (Operation) ((FrameworkElement) e.Source).DataContext;
+            // TODO: There should be a better way to get the recorder.
+            ((MainWindowViewModel) this.DataContext).Recorder.UndoTo(operation);
         }
     }
 }

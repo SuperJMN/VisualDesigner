@@ -150,7 +150,7 @@
             <xcad:LayoutRoot>
                 <xcad:LayoutPanel Orientation="Horizontal">
                     <xcad:LayoutAnchorablePane DockWidth="200">
-                        <xcad:LayoutAnchorable CanClose="False">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Properties">
                             <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False">
 
                             </xctk:PropertyGrid>
@@ -162,7 +162,7 @@
                             <xcad:LayoutDocument Title="Design Surface" >
 
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" ItemsSource="{Binding Items}">
+                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" ItemsSource="{Binding Model.Items}">
                                         <designSurfaceWpf:DesignSurface.ItemContainerStyle>
                                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                                 <Setter Property="Left"
@@ -182,6 +182,26 @@
                             </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
                     </xcad:LayoutDocumentPaneGroup>
+
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Undo">
+                            <ListBox ItemsSource="{Binding Path=Recorder.UndoOperations}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick">
+                                            <Control.Template>
+                                                <ControlTemplate>
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                </ControlTemplate>
+                                                </Control.Template>
+                                        </Control>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                
+                                
+                            </ListBox>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
                 </xcad:LayoutPanel>
 
             </xcad:LayoutRoot>

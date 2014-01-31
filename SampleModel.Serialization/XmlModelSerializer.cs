@@ -72,16 +72,16 @@ namespace SampleModel.Serialization
 
             this.stream = stream;
 
-            serializer = new XmlSerializer(typeof(CompositionDto));
+            serializer = new XmlSerializer(typeof(ModelDto));
 
 
         }
 
-        public void Serialize(IList<ICanvasItem> items)
+        public void Serialize(CanvasModel model)
         {
-            var objects = Mapper.Map<List<ObjectDto>>(items);
+            var objects = Mapper.Map<List<ObjectDto>>(model.Items);
 
-            var compositionDto = new CompositionDto
+            var compositionDto = new ModelDto
                                  {
                                      Objects = objects
                                  };
@@ -89,12 +89,14 @@ namespace SampleModel.Serialization
             serializer.Serialize(stream, compositionDto);
         }
 
-        public IEnumerable<ICanvasItem> Deserialize()
+        public CanvasModel Deserialize()
         {
-            var compositionDto = (CompositionDto)serializer.Deserialize(stream);
+            var compositionDto = (ModelDto)serializer.Deserialize(stream);
             var objectDtos = compositionDto.Objects;
             var items = Mapper.Map<List<CanvasItem>>(objectDtos);
-            return items.Cast<ICanvasItem>().ToList();
+            CanvasModel model = new CanvasModel(items);
+            
+            return  model;
         }
     }
 }
