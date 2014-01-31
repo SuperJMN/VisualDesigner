@@ -64,6 +64,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 ResizeOperation.UpdateHandlePosition(mouseButtonEventArgs.GetPosition(Parent).ActLike<IPoint>());
                 Parent.ReleaseMouseCapture();
                 Parent.MouseMove -= ParentOnMouseMove;
+                ResizeOperation.Dispose();
                 ResizeOperation = null;
                 SnappingEngine.ClearSnappedEdges();
 

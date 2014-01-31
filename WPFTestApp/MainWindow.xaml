@@ -16,7 +16,7 @@
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
         viewModelLocator:ViewModelLocator.ViewModel="MainViewModel"
-        Title="Glass Design Demo" Width="952.051" Height="597.604" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
+        Title="Glass Design Demo" Width="1200" Height="800" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
     <Window.Resources>
         <ResourceDictionary>
 
@@ -188,7 +188,7 @@
                             <ListBox ItemsSource="{Binding Path=Recorder.UndoOperations}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick">
+                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick" ToolTip="Double-click to undo to this operation.">
                                             <Control.Template>
                                                 <ControlTemplate>
                                                     <TextBlock Text="{Binding Path=Name}"/>

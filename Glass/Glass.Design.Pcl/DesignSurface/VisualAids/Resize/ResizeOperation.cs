@@ -3,13 +3,15 @@ using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using PostSharp.Patterns.Undo;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 {
-    public class ResizeOperation
+    public class ResizeOperation : IDisposable
     {
         private ICanvasItem child;
         private ISnappingEngine snappingEngine;
+        private RecordingScope recordingScope;
 
         private ICanvasItem Child
         {
@@ -47,7 +49,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             HandlePoint = handlePoint;
             SetCanResize(child, handlePoint);
             Opposite = HandlePoint.GetOpposite(child.Rect().MiddlePoint());
-            SnappingEngine = snappingEngine;        
+            SnappingEngine = snappingEngine;
+            this.recordingScope = child.GetRecorder().StartAtomicOperation("Resize", false);
         }
 
         private void SetCanResize(ICanvasItem canvasItem, IPoint handlePoint)
@@ -115,6 +118,12 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             var signOfNewPoint = Math.Sign(newPoint - Opposite.Y);
 
             return signOfLimit == signOfNewPoint;
+        }
+
+        public void Dispose()
+        {
+            this.recordingScope.Complete();
+            this.recordingScope.Dispose();
         }
     }   
 }

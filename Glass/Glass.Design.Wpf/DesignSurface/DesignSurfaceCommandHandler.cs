@@ -142,16 +142,21 @@ namespace Glass.Design.Wpf.DesignSurface
         {
 
             var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
+
+            IEnumerable<ICanvasItem> items = DesignSurface.GetSelectedCanvasItems().ToList();
             ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            Recorder recorder = group.GetRecorder();
+            Recorder recorder = items.GetRecorder();
 
             using (RecordingScope scope = recorder.StartAtomicOperation("Group"))
             {
-                DesignSurface.GetSelectedCanvasItems().Reparent(group);
 
+                // We have to *first* add the group to the document to make it recordable.
                 DesignSurface.CanvasDocument.Children.Add(group);
 
+                items.Reparent(group);
+
+               
                 scope.Complete();
             }
         }

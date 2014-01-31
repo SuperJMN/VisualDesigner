@@ -15,17 +15,19 @@ namespace Glass.Design.Pcl.CanvasItem
 
             destination.SetBounds(rect);
 
-            foreach (var canvasItem in items)
-            {
-                destination.Children.Add(canvasItem);
-                canvasItem.Offset(rect.Location.Negative());
-            }
 
             foreach (var canvasItem in toRemove)
             {
                 var parent = canvasItem.Parent;
                 parent.Children.Remove(canvasItem);
             }
+
+            foreach (var canvasItem in items)
+            {
+                destination.Children.Add(canvasItem);
+                canvasItem.Offset(rect.Location.Negative());
+            }
+
         }
 
         public static void RemoveAndPromoteChildren(this ICanvasItem canvasItem)
