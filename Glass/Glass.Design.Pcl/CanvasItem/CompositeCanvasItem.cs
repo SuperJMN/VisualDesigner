@@ -6,7 +6,7 @@ namespace Glass.Design.Pcl.CanvasItem
     {
         [Surrogate]
         private readonly CanvasItemCollection _items = new CanvasItemCollection();
-        public override CanvasItemCollection Items
+        public override CanvasItemCollection Children
         {
             get { return this._items; }
         }

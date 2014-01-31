@@ -32,16 +32,16 @@ namespace SampleModel
     {
         public CanvasDocument()
         {
-            this.Items = new CanvasItemCollection();
+            this.Children = new CanvasItemCollection();
         }
 
         public CanvasDocument(IEnumerable<ICanvasItem> items )
         {
-            this.Items = new CanvasItemCollection(items);
+            this.Children = new CanvasItemCollection(items);
         }
 
         [Surrogate]
-        public CanvasItemCollection Items { get; private set; }
+        public CanvasItemCollection Children { get; private set; }
 
     }
 }

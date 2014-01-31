@@ -12,12 +12,15 @@ namespace Glass.Design.Pcl.CanvasItem
 {
     [NotifyPropertyChanged]
     [Recordable]
-    public class CanvasItem : ICanvasItem
+    public class CanvasItem : ICanvasItem, IRecordableCallback
     {
-         [NotRecorded]
+        [NotRecorded]
+        private bool undoing;
         private double previousWidth, previousHeight, previousTop, previousLeft;
 
+        [NotRecorded]
         protected bool IsUpdating { get; private set; }
+
         private CanvasItemCollection children;
 
         public CanvasItem()
@@ -30,15 +33,13 @@ namespace Glass.Design.Pcl.CanvasItem
         public ChildrenPositioning ChildrenPositioning { get; protected set; }
 
 
-        //[Browsable(false)]
         [IgnoreAutoChangeNotification]
         public ICanvasItemContainer Parent { get
         {
             return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
         } }
 
-        //[Browsable(false)]
-        public virtual CanvasItemCollection Items
+        public virtual CanvasItemCollection Children
         {
             get
             {
@@ -49,24 +50,18 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        //[Category("Layout")]
         public double Left { get; set; }
 
-       // [Category("Layout")]
         public double Top { get; set; }
 
-        //[Category("Layout")]
         [StrictlyGreaterThan(0)]
         public double Width { get; set; }
 
-        //[Category("Layout")]
         [StrictlyGreaterThan(0)]
         public double Height { get; set; }
 
-        //[Category("Layout")]
         public double Right { get { return Left + Width; } }
 
-       // [Category("Layout")]
         public double Bottom { get { return Top + Height; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -98,7 +93,7 @@ namespace Glass.Design.Pcl.CanvasItem
         {
             if (widthFactor == 1 && heightFactor == 1) return;
 
-            foreach (ICanvasItem child in this.Items)
+            foreach (ICanvasItem child in this.Children)
             {
                 if (!double.IsNaN(widthFactor) && widthFactor != 1)
                 {
@@ -124,7 +119,7 @@ namespace Glass.Design.Pcl.CanvasItem
             {
                 if (leftIncrement == 0 && topIncrement == 0) return;
 
-                foreach (ICanvasItem child in this.Items)
+                foreach (ICanvasItem child in this.Children)
                 {
                     if (!double.IsNaN(leftIncrement) && leftIncrement != 0)
                     {
@@ -141,7 +136,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (!this.IsUpdating)
+            if (!this.IsUpdating && !this.undoing)
             {
                 switch (propertyName)
                 {
@@ -183,7 +178,8 @@ namespace Glass.Design.Pcl.CanvasItem
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public double GetCoordinate(CoordinatePart part)
+        
+        double ICoordinate.GetCoordinate(CoordinatePart part)
         {
             switch (part)
             {
@@ -206,7 +202,7 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
 
-        public void SetCoordinate(CoordinatePart part, double value)
+        void ICoordinate.SetCoordinate(CoordinatePart part, double value)
         {
 
             switch (part)
@@ -232,7 +228,27 @@ namespace Glass.Design.Pcl.CanvasItem
                     throw new ArgumentOutOfRangeException("part");
             }
         }
+         
+        
+        void IRecordableCallback.OnUndoing()
+        {
+            this.undoing = true;
+        }
 
+        void IRecordableCallback.OnUndone()
+        {
+            this.undoing = false;
+        }
+
+        void IRecordableCallback.OnRedoing()
+        {
+            this.undoing = true;
+        }
+
+        void IRecordableCallback.OnRedone()
+        {
+            this.undoing = false;
+        }
     }
 
     public enum ChildrenPositioning

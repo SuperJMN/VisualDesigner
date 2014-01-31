@@ -22,7 +22,7 @@ namespace SampleModel.Serialization
             //    .Include<Ellipse, EllipseDto>();
 
             Mapper.CreateMap<ICanvasItem, ObjectDto>()
-                .ForMember(dto => dto.Objects, expression => expression.ResolveUsing(item => item.Items.Count == 0 ? null : item.Items))
+                .ForMember(dto => dto.Objects, expression => expression.ResolveUsing(item => item.Children.Count == 0 ? null : item.Children))
                 .Include<Mario, MarioDto>()
                 .Include<Sonic, SonicDto>()
                 .Include<Link, LinkDto>()
@@ -40,11 +40,11 @@ namespace SampleModel.Serialization
                               var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItem>);
                               foreach (var canvasItem in mappedChildren)
                               {
-                                  inpc.Items.Add(canvasItem);
+                                  inpc.Children.Add(canvasItem);
                               }
                           })
                 .ForMember(inpc => inpc.Parent, expression => expression.Ignore())
-                .ForMember(inpc => inpc.Items, expression => expression.Ignore())
+                .ForMember(inpc => inpc.Children, expression => expression.Ignore())
                 .Include<MarioDto, Mario>()
                 .Include<SonicDto, Sonic>()
                 .Include<LinkDto, Link>()
@@ -79,7 +79,7 @@ namespace SampleModel.Serialization
 
         public void Serialize(CanvasDocument document)
         {
-            var objects = Mapper.Map<List<ObjectDto>>(document.Items);
+            var objects = Mapper.Map<List<ObjectDto>>(document.Children);
 
             var compositionDto = new ModelDto
                                  {

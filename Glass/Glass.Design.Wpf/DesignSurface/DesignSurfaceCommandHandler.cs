@@ -57,7 +57,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void BringToFront()
         {
-            MoveSelectionTo(DesignSurface.CanvasDocument.Items.Count - 1);
+            MoveSelectionTo(DesignSurface.CanvasDocument.Children.Count - 1);
         }
 
         private void SendToBack()
@@ -71,7 +71,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
             foreach (ICanvasItem child in DesignSurface.SelectedItems)
             {
-                var childId = DesignSurface.CanvasDocument.Items.IndexOf(child);
+                var childId = DesignSurface.CanvasDocument.Children.IndexOf(child);
                 idsToMove.Add(childId);
             }
 
@@ -79,7 +79,7 @@ namespace Glass.Design.Wpf.DesignSurface
             var newIndex = position;
             foreach (var id in idsToMove)
             {
-                DesignSurface.CanvasDocument.Items.Move(id, newIndex);
+                DesignSurface.CanvasDocument.Children.Move(id, newIndex);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void CanUngroup(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Items.Any());
+            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Children.Any());
         }
 
         private void Ungroup(object sender, ExecutedRoutedEventArgs e)
@@ -123,7 +123,7 @@ namespace Glass.Design.Wpf.DesignSurface
                 foreach (var selectedItem in selectedCanvasItems)
                 {
                     selectedItem.RemoveAndPromoteChildren();
-                    DesignSurface.CanvasDocument.Items.Remove(selectedItem);
+                    DesignSurface.CanvasDocument.Children.Remove(selectedItem);
                 }
 
                 recordingScope.Complete();
@@ -150,7 +150,7 @@ namespace Glass.Design.Wpf.DesignSurface
             {
                 DesignSurface.GetSelectedCanvasItems().Reparent(group);
 
-                DesignSurface.CanvasDocument.Items.Add(group);
+                DesignSurface.CanvasDocument.Children.Add(group);
 
                 scope.Complete();
             }

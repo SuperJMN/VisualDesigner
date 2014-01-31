@@ -15,7 +15,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
     public interface ICanvasItemContainer
     {
-        CanvasItemCollection Items { get; }
+        CanvasItemCollection Children { get; }
     }
 
     public static class CanvasItemExtensions
@@ -34,7 +34,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public static Recorder GetRecorder(this ICanvasItemContainer item)
         {
-            return item.QueryInterface<IRecordable>(true).Recorder ?? item.Items.GetRecorder();
+            return item.QueryInterface<IRecordable>(true).Recorder ?? item.Children.GetRecorder();
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Glass.Design.Wpf
             get { throw new NotSupportedException(); }
         }
 
-        public CanvasItemCollection Items { get; private set; }
+        public CanvasItemCollection Children { get; private set; }
       
 
       

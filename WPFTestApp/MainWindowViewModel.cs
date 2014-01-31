@@ -85,8 +85,8 @@ namespace Glass.Design.WpfTester
             //});
 
             var group = new Group { Top = 100, Left = 200, Width = 110, Height = 200 };
-            group.Items.Add(new Mario { Left = 15, Top = 0, Width = 80, Height = 100 });
-            group.Items.Add(new Sonic { Left = 15, Top = 100, Width = 80, Height = 100 });
+            group.Children.Add(new Mario { Left = 15, Top = 0, Width = 80, Height = 100 });
+            group.Children.Add(new Sonic { Left = 15, Top = 100, Width = 80, Height = 100 });
 
             items.Add(group);
 

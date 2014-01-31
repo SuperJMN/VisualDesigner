@@ -28,7 +28,7 @@ namespace Glass.Design.Wpf.DesignSurface
             DesignSurface designSurface = ((DesignSurface)d);
             if (e.NewValue != null)
             {
-                designSurface.ItemsSource = ((ICanvasItemContainer) e.NewValue).Items;
+                designSurface.ItemsSource = ((ICanvasItemContainer) e.NewValue).Children;
             }
             else
             {

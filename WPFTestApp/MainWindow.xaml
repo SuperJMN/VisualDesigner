@@ -35,7 +35,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
                 <Grid>
-                    <viewing:ViewingSurface ItemsSource="{Binding Items}">
+                    <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                 <Setter Property="BorderThickness" Value="0" />
@@ -151,7 +151,7 @@
                 <xcad:LayoutPanel Orientation="Horizontal">
                     <xcad:LayoutAnchorablePane DockWidth="200">
                         <xcad:LayoutAnchorable CanClose="False" Title="Properties">
-                            <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False">
+                            <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="75">
 
                             </xctk:PropertyGrid>
                         </xcad:LayoutAnchorable>
