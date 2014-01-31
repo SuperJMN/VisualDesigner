@@ -5,10 +5,10 @@ namespace Glass.Design.Pcl.CanvasItem
     public class CompositeCanvasItem : CanvasItem
     {
         [Surrogate]
-        private readonly CanvasItemCollection children = new CanvasItemCollection();
-        public override CanvasItemCollection Children
+        private readonly CanvasItemCollection _items = new CanvasItemCollection();
+        public override CanvasItemCollection Items
         {
-            get { return this.children; }
+            get { return this._items; }
         }
     }
 }

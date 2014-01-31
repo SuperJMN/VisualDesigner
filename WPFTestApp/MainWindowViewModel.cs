@@ -39,12 +39,12 @@ namespace Glass.Design.WpfTester
             SaveCommand = new SimpleCommand<object, object>(o => Save());
 
             this.Recorder = new Recorder();
-            this.Model = CreateSampleItems();
-            this.Recorder.AttachToObject(this.Model);
+            this.Document = CreateSampleItems();
+            this.Recorder.AttachToObject(this.Document);
             this.Recorder.Clear();
         }
 
-        private static CanvasModel CreateSampleItems()
+        private static CanvasDocument CreateSampleItems()
         {
             var items = new CanvasItemCollection();
             items.Add(new Link
@@ -85,13 +85,13 @@ namespace Glass.Design.WpfTester
             //});
 
             var group = new Group { Top = 100, Left = 200, Width = 110, Height = 200 };
-            group.Children.Add(new Mario { Left = 15, Top = 0, Width = 80, Height = 100 });
-            group.Children.Add(new Sonic { Left = 15, Top = 100, Width = 80, Height = 100 });
+            group.Items.Add(new Mario { Left = 15, Top = 0, Width = 80, Height = 100 });
+            group.Items.Add(new Sonic { Left = 15, Top = 100, Width = 80, Height = 100 });
 
             items.Add(group);
 
 
-            return new CanvasModel(items);
+            return new CanvasDocument(items);
         }
 
         private void Load()
@@ -101,7 +101,7 @@ namespace Glass.Design.WpfTester
                 using (var fileStream = new FileStream(OpenFileService.FileName, FileMode.Open))
                 {
                     var modelSaver = new XmlModelSerializer(fileStream);
-                    this.Model = modelSaver.Deserialize();
+                    this.Document = modelSaver.Deserialize();
                 }
             }
         }
@@ -113,14 +113,14 @@ namespace Glass.Design.WpfTester
                 using (var fileStream = new FileStream(SaveFileService.FileName, FileMode.Create))
                 {
                     var modelSaver = new XmlModelSerializer(fileStream);
-                    modelSaver.Serialize(this.Model);
+                    modelSaver.Serialize(this.Document);
                 }
             }
         }
 
 
 
-        public CanvasModel Model { get; private set; }
+        public CanvasDocument Document { get; private set; }
 
 
 

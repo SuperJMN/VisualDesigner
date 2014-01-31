@@ -75,27 +75,17 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
         private void StartRecorderOperation()
         {
-            Recorder recorder = this.ItemToDrag.QueryInterface<IRecordable>(true).Recorder;
-            int objectsCount = 1;
-            if (recorder == null)
-            {
-                // This is a selection.
-                if (this.ItemToDrag.Children.Count > 0)
-                {
-                    objectsCount = this.ItemToDrag.Children.Count;
-                    recorder = this.ItemToDrag.Children[0].QueryInterface<IRecordable>(true).Recorder;
-                    // Assertion: all children have the same recorders, and we don't have to search deep for the recorder.
-                }
-            }
-
+            Recorder recorder = this.ItemToDrag.GetRecorder();
 
             if (recorder != null)
             {
                 // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
-                string operationName = string.Format("Move {0} item(s)", objectsCount);
-                this.dragRecordingScope = recorder.StartAtomicOperation(operationName, true);
+                string operationName = "Move";
+                this.dragRecordingScope = recorder.StartAtomicOperation(operationName);
             }
         }
+
+       
 
         public void SetDragTarget(IInputElement hitTestReceiver, ICanvasItem itemToDrag)
         {

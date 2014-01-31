@@ -129,9 +129,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             DragOperationHost.SetDragTarget(movingControl, WrappedSelectedItems);
 
-            var items = DesignSurface.Children;
+            var items = DesignSurface.CanvasDocument.Items;
 
-            var allExceptTarget = items.Except(WrappedSelectedItems.Children);
+            var allExceptTarget = items.Except(WrappedSelectedItems.Items);
 
             DragOperationHost.SnappingEngine.Magnets = allExceptTarget.ToList();
         }

@@ -28,19 +28,20 @@ namespace SampleModel
 
 
     [Recordable]
-    public class CanvasModel
+    public class CanvasDocument : ICanvasItemContainer
     {
-        public CanvasModel()
+        public CanvasDocument()
         {
             this.Items = new CanvasItemCollection();
         }
 
-        public CanvasModel(IEnumerable<ICanvasItem> items )
+        public CanvasDocument(IEnumerable<ICanvasItem> items )
         {
             this.Items = new CanvasItemCollection(items);
         }
 
         [Surrogate]
-        public CanvasItemCollection Items { get; private set; }   
+        public CanvasItemCollection Items { get; private set; }
+
     }
 }

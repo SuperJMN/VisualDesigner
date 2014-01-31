@@ -22,7 +22,7 @@ namespace SampleModel.Serialization
             //    .Include<Ellipse, EllipseDto>();
 
             Mapper.CreateMap<ICanvasItem, ObjectDto>()
-                .ForMember(dto => dto.Objects, expression => expression.ResolveUsing(item => item.Children.Count == 0 ? null : item.Children))
+                .ForMember(dto => dto.Objects, expression => expression.ResolveUsing(item => item.Items.Count == 0 ? null : item.Items))
                 .Include<Mario, MarioDto>()
                 .Include<Sonic, SonicDto>()
                 .Include<Link, LinkDto>()
@@ -40,11 +40,11 @@ namespace SampleModel.Serialization
                               var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItem>);
                               foreach (var canvasItem in mappedChildren)
                               {
-                                  inpc.Children.Add(canvasItem);
+                                  inpc.Items.Add(canvasItem);
                               }
                           })
                 .ForMember(inpc => inpc.Parent, expression => expression.Ignore())
-                .ForMember(inpc => inpc.Children, expression => expression.Ignore())
+                .ForMember(inpc => inpc.Items, expression => expression.Ignore())
                 .Include<MarioDto, Mario>()
                 .Include<SonicDto, Sonic>()
                 .Include<LinkDto, Link>()
@@ -77,9 +77,9 @@ namespace SampleModel.Serialization
 
         }
 
-        public void Serialize(CanvasModel model)
+        public void Serialize(CanvasDocument document)
         {
-            var objects = Mapper.Map<List<ObjectDto>>(model.Items);
+            var objects = Mapper.Map<List<ObjectDto>>(document.Items);
 
             var compositionDto = new ModelDto
                                  {
@@ -89,14 +89,14 @@ namespace SampleModel.Serialization
             serializer.Serialize(stream, compositionDto);
         }
 
-        public CanvasModel Deserialize()
+        public CanvasDocument Deserialize()
         {
             var compositionDto = (ModelDto)serializer.Deserialize(stream);
             var objectDtos = compositionDto.Objects;
             var items = Mapper.Map<List<CanvasItem>>(objectDtos);
-            CanvasModel model = new CanvasModel(items);
+            CanvasDocument document = new CanvasDocument(items);
             
-            return  model;
+            return  document;
         }
     }
 }

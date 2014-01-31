@@ -18,6 +18,7 @@ namespace Glass.Design.WpfTester
         {
             InitializeComponent();
             this.PropertyGrid.SelectedObjectChanged += PropertyGridOnSelectedObjectChanged;
+            this.DesignSurface.CanvasDocument = ((MainWindowViewModel) this.DataContext).Document;
         }
 
         private void PropertyGridOnSelectedObjectChanged(object sender, RoutedPropertyChangedEventArgs<object> routedPropertyChangedEventArgs)

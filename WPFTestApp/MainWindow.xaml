@@ -35,7 +35,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
                 <Grid>
-                    <viewing:ViewingSurface ItemsSource="{Binding Children}">
+                    <viewing:ViewingSurface ItemsSource="{Binding Items}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                 <Setter Property="BorderThickness" Value="0" />
@@ -162,7 +162,7 @@
                             <xcad:LayoutDocument Title="Design Surface" >
 
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" ItemsSource="{Binding Model.Items}">
+                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" CanvasDocument="{Binding Document}">
                                         <designSurfaceWpf:DesignSurface.ItemContainerStyle>
                                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                                 <Setter Property="Left"

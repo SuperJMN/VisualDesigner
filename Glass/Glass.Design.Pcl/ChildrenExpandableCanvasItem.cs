@@ -20,7 +20,7 @@ namespace Glass.Design.Pcl
         {
             foreach (var canvasItem in children)
             {
-                Children.Add(canvasItem);
+                Items.Add(canvasItem);
             }
 
             ComputeBounds();
@@ -38,10 +38,10 @@ namespace Glass.Design.Pcl
         {
             this.BeginUpdate();
 
-            Left = Children.GetLeft();
-            Top = Children.GetTop();
-            Width = Children.GetWidth();
-            Height = Children.GetHeight();
+            Left = Items.GetLeft();
+            Top = Items.GetTop();
+            Width = Items.GetWidth();
+            Height = Items.GetHeight();
 
             this.EndUpdate(false);
         }
@@ -49,7 +49,7 @@ namespace Glass.Design.Pcl
     
         private void AttachToChildrenLayoutEvents()
         {
-            foreach (var child in Children)
+            foreach (var child in Items)
             {
                 child.PropertyChanged += ChildOnPropertyChanged;
             }
@@ -74,7 +74,7 @@ namespace Glass.Design.Pcl
 
         private void DettachFromChildrenLayoutEvents()
         {
-            foreach (var child in Children)
+            foreach (var child in Items)
             {
                 child.PropertyChanged -= ChildOnPropertyChanged;
             }

@@ -31,10 +31,14 @@ namespace Glass.Design.Pcl.CanvasItem
 
 
         //[Browsable(false)]
-        public ICanvasItemParent Parent { get; set; }
+        [IgnoreAutoChangeNotification]
+        public ICanvasItemContainer Parent { get
+        {
+            return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
+        } }
 
         //[Browsable(false)]
-        public virtual CanvasItemCollection Children
+        public virtual CanvasItemCollection Items
         {
             get
             {
@@ -94,7 +98,7 @@ namespace Glass.Design.Pcl.CanvasItem
         {
             if (widthFactor == 1 && heightFactor == 1) return;
 
-            foreach (ICanvasItem child in this.Children)
+            foreach (ICanvasItem child in this.Items)
             {
                 if (!double.IsNaN(widthFactor) && widthFactor != 1)
                 {
@@ -120,7 +124,7 @@ namespace Glass.Design.Pcl.CanvasItem
             {
                 if (leftIncrement == 0 && topIncrement == 0) return;
 
-                foreach (ICanvasItem child in this.Children)
+                foreach (ICanvasItem child in this.Items)
                 {
                     if (!double.IsNaN(leftIncrement) && leftIncrement != 0)
                     {

@@ -1,17 +1,40 @@
-﻿using Glass.Design.Pcl.DesignSurface;
+﻿using System.Collections.Generic;
+using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Model;
+using PostSharp.Patterns.Undo;
 
 namespace Glass.Design.Pcl.CanvasItem
 {
-    public interface ICanvasItem : IPositionable, ISizable, ICanvasItemParent
+    public interface ICanvasItem : IPositionable, ISizable, ICanvasItemContainer
     {
         double Right { get; }
         double Bottom { get; }
 
-        ICanvasItemParent Parent { get; set; }
+        ICanvasItemContainer Parent { get; }
     }
 
-    public interface ICanvasItemParent
+    public interface ICanvasItemContainer
     {
-        CanvasItemCollection Children { get; }
+        CanvasItemCollection Items { get; }
+    }
+
+    public static class CanvasItemExtensions
+    {
+        public static Recorder GetRecorder(this IEnumerable<ICanvasItem> items)
+        {
+            foreach (ICanvasItem child in items)
+            {
+                Recorder recorder = child.GetRecorder();
+                if (recorder != null)
+                    return recorder;
+            }
+
+            return null;
+        }
+
+        public static Recorder GetRecorder(this ICanvasItemContainer item)
+        {
+            return item.QueryInterface<IRecordable>(true).Recorder ?? item.Items.GetRecorder();
+        }
     }
 }

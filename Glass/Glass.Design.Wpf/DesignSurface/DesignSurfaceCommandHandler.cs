@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using Glass.Design.Pcl.CanvasItem;
 using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Undo;
 using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;
 using VerticalAlignment = Glass.Design.Pcl.Core.VerticalAlignment;
 
@@ -56,7 +57,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void BringToFront()
         {
-            MoveSelectionTo(DesignSurface.Children.Count - 1);
+            MoveSelectionTo(DesignSurface.CanvasDocument.Items.Count - 1);
         }
 
         private void SendToBack()
@@ -70,7 +71,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
             foreach (ICanvasItem child in DesignSurface.SelectedItems)
             {
-                var childId = DesignSurface.Children.IndexOf(child);
+                var childId = DesignSurface.CanvasDocument.Items.IndexOf(child);
                 idsToMove.Add(childId);
             }
 
@@ -78,7 +79,7 @@ namespace Glass.Design.Wpf.DesignSurface
             var newIndex = position;
             foreach (var id in idsToMove)
             {
-                DesignSurface.Children.Move(id, newIndex);
+                DesignSurface.CanvasDocument.Items.Move(id, newIndex);
             }
         }
 
@@ -107,17 +108,29 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void CanUngroup(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Children.Any());
+            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Items.Any());
         }
 
         private void Ungroup(object sender, ExecutedRoutedEventArgs e)
         {
-            var selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
-            foreach (var selectedItem in selectedCanvasItems)
+            List<ICanvasItem> selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
+
+            Recorder recorder = selectedCanvasItems.GetRecorder();
+
+            using (RecordingScope recordingScope = recorder.StartAtomicOperation("Ungroup"))
             {
-                selectedItem.RemoveAndPromoteChildren();
-                DesignSurface.Children.Remove(selectedItem);
+
+                foreach (var selectedItem in selectedCanvasItems)
+                {
+                    selectedItem.RemoveAndPromoteChildren();
+                    DesignSurface.CanvasDocument.Items.Remove(selectedItem);
+                }
+
+                recordingScope.Complete();
+               
             }
+
+
         }
 
         private void CanGroupSelection(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
@@ -127,12 +140,20 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void Group(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
+
             var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
-            var group = groupCommandArgs.CreateHostingItem();
+            ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            DesignSurface.GetSelectedCanvasItems().Reparent(group);
+            Recorder recorder = group.GetRecorder();
 
-            DesignSurface.Children.Add(group);
+            using (RecordingScope scope = recorder.StartAtomicOperation("Group"))
+            {
+                DesignSurface.GetSelectedCanvasItems().Reparent(group);
+
+                DesignSurface.CanvasDocument.Items.Add(group);
+
+                scope.Complete();
+            }
         }
     }
 }

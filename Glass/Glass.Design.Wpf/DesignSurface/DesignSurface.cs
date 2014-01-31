@@ -19,6 +19,23 @@ namespace Glass.Design.Wpf.DesignSurface
     [NotifyPropertyChanged]
     public sealed class DesignSurface : MultiSelector, IDesignSurface, IMultiSelector
     {
+
+        public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
+            typeof(ICanvasItemContainer), typeof(DesignSurface), new FrameworkPropertyMetadata(null, OnCanvasDocumentChanged));
+
+        private static void OnCanvasDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            DesignSurface designSurface = ((DesignSurface)d);
+            if (e.NewValue != null)
+            {
+                designSurface.ItemsSource = ((ICanvasItemContainer) e.NewValue).Items;
+            }
+            else
+            {
+                designSurface.ItemsSource = null;
+            }
+        }
+
         static DesignSurface()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignSurface), new FrameworkPropertyMetadata(typeof(DesignSurface)));
@@ -44,6 +61,14 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
         private DesignAidsProvider DesignAidsProvider { get; set; }
+
+        [IgnoreAutoChangeNotification]
+        public ICanvasItemContainer CanvasDocument
+        {
+            get { return (ICanvasItemContainer) GetValue(CanvasDocumentProperty); }
+            set { SetValue(CanvasDocumentProperty, value); }
+        }
+
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
@@ -97,6 +122,7 @@ namespace Glass.Design.Wpf.DesignSurface
                     OnOperationModeChanged));
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
+        private ICanvasItem _rootCanvasItem;
 
         [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode
@@ -166,7 +192,6 @@ namespace Glass.Design.Wpf.DesignSurface
             }
         }
 
-        public CanvasItemCollection Children { get; private set; }
 
         public ICommand GroupCommand { get; private set; }
 
@@ -177,104 +202,6 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
 
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-
-            Children = new CanvasItemCollection(Items.Cast<ICanvasItem>());
-            Children.CollectionChanged += ChildrenOnCollectionChanged;
-
-            foreach (ICanvasItem child in Items)
-            {
-                child.Parent = this;
-            }
-        }
-
-        private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            // TODO: I hate this part!
-            if (ItemsSource == null)
-            {
-                SyncItemCollectionWhenUsingExplictItems(notifyCollectionChangedEventArgs);
-            }
-            else
-            {
-                SyncItemCollectionWhenUsingItemSource(notifyCollectionChangedEventArgs);
-            }
-        }
-
-        // TODO: I hate this method. I'm sure it can be rendered useless!
-        private void SyncItemCollectionWhenUsingItemSource(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            var list = ((IList) ItemsSource);
-
-            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (ICanvasItem newItem in notifyCollectionChangedEventArgs.NewItems)
-                {
-                    newItem.Parent = this;
-                    list.Add(newItem);
-                }
-            }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (ICanvasItem oldItem in notifyCollectionChangedEventArgs.OldItems)
-                {
-                    list.Remove(oldItem);
-                }
-            }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Move)
-            {
-                var oldIndex = notifyCollectionChangedEventArgs.OldStartingIndex;
-                var newIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
-
-                var item = Items[oldIndex];
-                list.RemoveAt(oldIndex);
-                list.Insert(newIndex, item);
-            }
-        }
-
-        // TODO: I hate this method. I'm sure it can be rendered useless!
-        private void SyncItemCollectionWhenUsingExplictItems(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (ICanvasItem newItem in notifyCollectionChangedEventArgs.NewItems)
-                {
-                    newItem.Parent = this;
-                    Items.Add(newItem);
-                }
-            }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (ICanvasItem oldItem in notifyCollectionChangedEventArgs.OldItems)
-                {
-                    Items.Remove(oldItem);
-                }
-            }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Move)
-            {
-                var oldIndex = notifyCollectionChangedEventArgs.OldStartingIndex;
-                var newIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
-
-                var item = Items[oldIndex];
-                Items.RemoveAt(oldIndex);
-                Items.Insert(newIndex, item);
-            }
-        }
-
-        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
-        {
-            base.OnItemsChanged(e);
-
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (ICanvasItem child in e.NewItems)
-                {
-                    child.Parent = this;
-                }
-            }
-        }
 
     }
 }

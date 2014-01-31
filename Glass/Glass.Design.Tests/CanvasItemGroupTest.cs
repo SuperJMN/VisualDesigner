@@ -132,8 +132,8 @@ namespace UnitTestProject1
             group.Height = 120;
 
 
-            var item1 = group.Children[0];
-            var item2 = group.Children[1];
+            var item1 = group.Items[0];
+            var item2 = group.Items[1];
 
             Assert.AreEqual(120, group.Height);
             Assert.AreEqual(60, item1.Height);
@@ -148,8 +148,8 @@ namespace UnitTestProject1
             var group = new CanvasItemSelection(items);
             group.Left = 20;
 
-            var item1 = group.Children[0];
-            var item2 = group.Children[1];
+            var item1 = group.Items[0];
+            var item2 = group.Items[1];
 
             Assert.AreEqual(20, group.Left);
             Assert.AreEqual(20, item1.Left);
@@ -164,8 +164,8 @@ namespace UnitTestProject1
             var group = new CanvasItemSelection(items);
             group.Top = 30;
 
-            var item1 = group.Children[0];
-            var item2 = group.Children[1];
+            var item1 = group.Items[0];
+            var item2 = group.Items[1];
 
             Assert.AreEqual(30, group.Top);
             Assert.AreEqual(30, item1.Top);

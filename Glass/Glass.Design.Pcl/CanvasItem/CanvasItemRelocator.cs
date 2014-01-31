@@ -16,14 +16,14 @@ namespace Glass.Design.Pcl.CanvasItem
 
             foreach (var canvasItem in items)
             {
-                destination.Children.Add(canvasItem);
+                destination.Items.Add(canvasItem);
                 canvasItem.Offset(rect.Location.Negative());
             }
 
             foreach (var canvasItem in toRemove)
             {
                 var parent = canvasItem.Parent;
-                parent.Children.Remove(canvasItem);
+                parent.Items.Remove(canvasItem);
             }
         }
 
@@ -31,13 +31,13 @@ namespace Glass.Design.Pcl.CanvasItem
         {
             var newParent = canvasItem.Parent;
 
-            var children = canvasItem.Children.ToList();
+            var children = canvasItem.Items.ToList();
 
             foreach (var child in children)
             {
                 child.Offset(canvasItem.GetLocation());
-                canvasItem.Children.Remove(child);
-                newParent.Children.Add(child);
+                canvasItem.Items.Remove(child);
+                newParent.Items.Add(child);
             }         
         }
     }

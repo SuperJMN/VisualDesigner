@@ -6,9 +6,10 @@ using Glass.Design.Pcl.CanvasItem;
 
 namespace Glass.Design.Pcl.DesignSurface
 {
-    public interface IDesignSurface : ICanvasItemParent, ICanvasSelector
+    public interface IDesignSurface : ICanvasSelector
     {               
         ICommand GroupCommand { get; }
+        ICanvasItemContainer CanvasDocument { get; }
     }
 
     public interface ICanvasSelector

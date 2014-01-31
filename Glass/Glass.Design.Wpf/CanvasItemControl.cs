@@ -65,8 +65,12 @@ namespace Glass.Design.Wpf
             get { return Top + Height; }
         }
 
-        ICanvasItemParent ICanvasItem.Parent { get; set; }
-        public CanvasItemCollection Children { get; private set; }
+        ICanvasItemContainer ICanvasItem.Parent
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public CanvasItemCollection Items { get; private set; }
       
 
       
