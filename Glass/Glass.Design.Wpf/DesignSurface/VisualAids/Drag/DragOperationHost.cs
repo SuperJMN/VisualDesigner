@@ -8,7 +8,7 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;
 using PostSharp.Patterns.Model;
-using PostSharp.Patterns.Undo;
+using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 {
@@ -80,8 +80,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
             if (recorder != null)
             {
                 // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
-                string operationName = "Move";
-                this.dragRecordingScope = recorder.StartAtomicOperation(operationName);
+                const string operationName = "Move";
+                this.dragRecordingScope = recorder.StartAtomicScope(operationName);
             }
         }
 

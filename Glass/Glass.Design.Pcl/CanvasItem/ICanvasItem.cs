@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Model;
-using PostSharp.Patterns.Undo;
+using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Pcl.CanvasItem
 {

@@ -11,7 +11,7 @@ using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Wpf;
 using MEFedMVVM.ViewModelLocator;
 using PostSharp.Patterns.Model;
-using PostSharp.Patterns.Undo;
+using PostSharp.Patterns.Recording;
 using SampleModel;
 using SampleModel.Serialization;
 
@@ -38,9 +38,9 @@ namespace Glass.Design.WpfTester
             LoadCommand = new SimpleCommand<object, object>(o => Load());
             SaveCommand = new SimpleCommand<object, object>(o => Save());
 
-            this.Recorder = new Recorder();
+            
             this.Document = CreateSampleItems();
-            this.Recorder.AttachToObject(this.Document);
+            this.Recorder = this.Document.QueryInterface<IRecordable>().Recorder;
             this.Recorder.Clear();
         }
 

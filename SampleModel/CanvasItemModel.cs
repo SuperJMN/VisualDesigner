@@ -2,7 +2,7 @@
 using System.Threading;
 using Glass.Design.Pcl.CanvasItem;
 using PostSharp.Patterns.Model;
-using PostSharp.Patterns.Undo;
+using PostSharp.Patterns.Recording;
 
 namespace SampleModel
 {

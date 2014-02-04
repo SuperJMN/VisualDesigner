@@ -6,7 +6,7 @@ using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Contracts;
 using PostSharp.Patterns.Model;
-using PostSharp.Patterns.Undo;
+using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Pcl.CanvasItem
 {
@@ -229,23 +229,12 @@ namespace Glass.Design.Pcl.CanvasItem
             }
         }
          
-        
-        void IRecordableCallback.OnUndoing()
+        void IRecordableCallback.OnReplaying(ReplayKind kind, ReplayContext context)
         {
-            this.undoing = true;
+             this.undoing = true;
         }
 
-        void IRecordableCallback.OnUndone()
-        {
-            this.undoing = false;
-        }
-
-        void IRecordableCallback.OnRedoing()
-        {
-            this.undoing = true;
-        }
-
-        void IRecordableCallback.OnRedone()
+        void IRecordableCallback.OnReplayed(ReplayKind kind, ReplayContext context)
         {
             this.undoing = false;
         }
