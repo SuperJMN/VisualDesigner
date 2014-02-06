@@ -35,7 +35,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type sampleModel:Group}">
                 <Grid>
-                    <viewing:ViewingSurface ItemsSource="{Binding Children}">
+                    <!--<viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                 <Setter Property="BorderThickness" Value="0" />
@@ -57,7 +57,7 @@
                                 <Canvas IsItemsHost="True" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                    </viewing:ViewingSurface>
+                    </viewing:ViewingSurface>-->
 
                     <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent">
                         <BulletDecorator HorizontalAlignment="Right" Margin="2">

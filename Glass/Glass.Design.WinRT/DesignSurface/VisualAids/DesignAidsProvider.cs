@@ -210,10 +210,11 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
 
     internal class UIElementAdapter : IUIElement
     {
-        public UIElementAdapter(MovingControl movingControl)
+        private UIElement UIElement { get; set; }
+
+        public UIElementAdapter(UIElement uiElement)
         {
-
-
+            this.UIElement = uiElement;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

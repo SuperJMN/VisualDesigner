@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
-      <HintPath>..\..\packages\AutoMapper.3.2.0-ci1002\lib\net40\AutoMapper.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper.Net4">
-      <HintPath>..\..\packages\AutoMapper.3.2.0-ci1002\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="PostSharp">
       <HintPath>..\..\packages\PostSharp.3.2.3-alpha\lib\net20\PostSharp.dll</HintPath>
@@ -82,9 +82,9 @@
     <Compile Include="WrappingAdorner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Basics\Glass.Basics.csproj">
+    <ProjectReference Include="..\Glass.Basics\Glass.Basics.Wpf.csproj">
       <Project>{76c3d50b-ca51-480f-8fcd-40f0ea98f4c6}</Project>
-      <Name>Glass.Basics</Name>
+      <Name>Glass.Basics.Wpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
@@ -101,6 +101,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
+      <Link>AutoMapper.Net4.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets" Condition="Exists('..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets')" />
@@ -108,7 +114,6 @@
     <Error Condition="!Exists('..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
     <Error Condition="Exists('..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
   </Target>
-  <Import Project="..\..\packages\AutoMapper.3.2.0-ci1002\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.2.0-ci1002\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -69,7 +69,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void RegisterHandles()
         {
-            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, FrameOfReference, SnappingEngine);
+            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, new UIElementAdapter(FrameOfReference), SnappingEngine);
             //WindowsSizeCursorsThumbCursorConverter = new WindowsSizeCursorsThumbCursorConverter();
 
 
@@ -92,7 +92,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
 
-                WpfUIResizeOperationHandleConnector.RegisterHandle(logicalChild, handlePoint);
+                WpfUIResizeOperationHandleConnector.RegisterHandle(new UIElementAdapter(logicalChild), handlePoint);
                 SetCursorToHandle(logicalChild);
             }
         }

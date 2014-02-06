@@ -82,6 +82,8 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         {
             throw new System.NotImplementedException();
         }
+
+        public bool IsVisible { get; set; }
     }
 
     public class Adorner : IUIElement

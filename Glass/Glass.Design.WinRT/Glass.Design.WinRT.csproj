@@ -128,10 +128,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
-      <HintPath>..\..\packages\AutoMapper.3.2.0-ci1002\lib\windows8\AutoMapper.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper.WinRT">
-      <HintPath>..\..\packages\AutoMapper.3.2.0-ci1002\lib\windows8\AutoMapper.WinRT.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="PostSharp, Version=3.2.3.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -155,6 +155,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.WinRT.dll">
+      <Link>AutoMapper.WinRT.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -165,7 +171,6 @@
     <Error Condition="!Exists('..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
     <Error Condition="Exists('..\..\packages\PostSharp.3.2.3-alpha\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
   </Target>
-  <Import Project="..\..\packages\AutoMapper.3.2.0-ci1002\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.2.0-ci1002\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

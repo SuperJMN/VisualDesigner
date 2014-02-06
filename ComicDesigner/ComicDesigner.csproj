@@ -122,6 +122,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.WinRT.dll">
+      <Link>AutoMapper.WinRT.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
@@ -138,6 +142,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.WinRT">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\windows8\AutoMapper.WinRT.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=3.2.3.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PostSharp.3.2.3-alpha\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
