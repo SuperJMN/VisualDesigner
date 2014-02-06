@@ -4,8 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
-using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
@@ -130,7 +129,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             DragOperationHost.SetDragTarget(movingControl, WrappedSelectedItems);
 
-            var items = DesignSurface.Children;
+            var items = DesignSurface.CanvasDocument.Children;
 
             var allExceptTarget = items.Except(WrappedSelectedItems.Children);
 
@@ -186,7 +185,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
             if (items.Any())
             {
-                WrappedSelectedItems = new CanvasItemSelectionINPC(items);
+                WrappedSelectedItems = new CanvasItemSelection(items);
             }
             else
             {

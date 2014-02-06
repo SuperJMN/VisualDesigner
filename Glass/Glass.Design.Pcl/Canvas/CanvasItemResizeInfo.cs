@@ -1,4 +1,4 @@
-﻿namespace Glass.Design.Pcl.CanvasItem
+﻿namespace Glass.Design.Pcl.Canvas
 {
     internal struct CanvasItemResizeInfo
     {
@@ -13,12 +13,12 @@
 
         public double PositionDelta
         {
-            get { return positionDelta; }
+            get { return this.positionDelta; }
         }
 
         public double SizeDelta
         {
-            get { return sizeDelta; }
+            get { return this.sizeDelta; }
         }
     }
 }

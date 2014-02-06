@@ -1,50 +1,62 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Selection
 {
-    internal class SelectionAdorner : Adorner
+    public class CanvasItemAdorner : Adorner
     {
-        private static readonly SolidColorBrush FillBrushInstance = new SolidColorBrush(Color.FromArgb(50, 147, 218, 255));
-        private static readonly SolidColorBrush PenBrushInstance = new SolidColorBrush(Color.FromArgb(139, 56, 214, 255));
-        private static readonly Pen PenInstance = new Pen(PenBrushInstance, 2);
         private ICanvasItem canvasItem;
 
-        private ICanvasItem CanvasItem
+        public CanvasItemAdorner(UIElement adornedElement, ICanvasItem canvasItem)
+            : base(adornedElement)
+        {        
+            CanvasItem = canvasItem;
+        }
+
+        protected ICanvasItem CanvasItem
         {
             get { return canvasItem; }
             set
             {
                 if (canvasItem != null)
                 {
-                    canvasItem.LeftChanged -= CanvasItemOnPositionChanged;
-                    canvasItem.TopChanged -= CanvasItemOnPositionChanged;
-                    canvasItem.WidthChanged -= CanvasItemOnSizeChanged;
-                    canvasItem.HeightChanged -= CanvasItemOnSizeChanged;
+                    canvasItem.PropertyChanged -= CanvasItemOnPropertyChanged;
                 }
                 canvasItem = value;
                 if (canvasItem != null)
                 {
-                    canvasItem.LeftChanged += CanvasItemOnPositionChanged;
-                    canvasItem.TopChanged += CanvasItemOnPositionChanged;
-                    canvasItem.WidthChanged += CanvasItemOnSizeChanged;
-                    canvasItem.HeightChanged += CanvasItemOnSizeChanged;
+                    canvasItem.PropertyChanged += CanvasItemOnPropertyChanged;
                 }
             }
         }
 
-        private void CanvasItemOnSizeChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
+        private void CanvasItemOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            InvalidateVisual();
+            switch (propertyChangedEventArgs.PropertyName)
+            {
+                case "Top":
+                case "Left":
+                case "Width":
+                case "Height":
+                    InvalidateVisual();
+                    break;
+            }
         }
+    }
+    internal class SelectionAdorner : CanvasItemAdorner
+    {
+        private static readonly SolidColorBrush FillBrushInstance = new SolidColorBrush(Color.FromArgb(50, 147, 218, 255));
+        private static readonly SolidColorBrush PenBrushInstance = new SolidColorBrush(Color.FromArgb(139, 56, 214, 255));
+        private static readonly Pen PenInstance = new Pen(PenBrushInstance, 2);
+       
 
-        private void CanvasItemOnPositionChanged(object sender, LocationChangedEventArgs eventArgs)
-        {
-            InvalidateVisual();
-        }
+ 
+
 
         private static SolidColorBrush FillBrush
         {
@@ -57,14 +69,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Selection
         }
 
         public SelectionAdorner(UIElement adornedElement, ICanvasItem canvasItem)
-            : base(adornedElement)
+            : base(adornedElement, canvasItem)
         {        
-            CanvasItem = canvasItem;
         }
 
         protected override Size MeasureOverride(Size constraint)
         {
-            return new Size(canvasItem.Width, canvasItem.Height);
+            return new Size(CanvasItem.Width, CanvasItem.Height);
         }
 
         protected override void OnRender(DrawingContext drawingContext)

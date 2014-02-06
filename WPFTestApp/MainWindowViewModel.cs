@@ -6,19 +6,22 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Cinch;
-using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Wpf;
 using MEFedMVVM.ViewModelLocator;
+using PostSharp.Patterns.Model;
+using PostSharp.Patterns.Recording;
 using SampleModel;
 using SampleModel.Serialization;
 
 namespace Glass.Design.WpfTester
 {
     [ExportViewModel("MainViewModel")]
-    public class MainWindowViewModel : ViewModelBase
+    [NotifyPropertyChanged]
+    public class MainWindowViewModel 
     {
+        public Recorder Recorder { get; private set; }
         private ISaveFileService SaveFileService { get; set; }
         private IOpenFileService OpenFileService { get; set; }
 
@@ -35,10 +38,13 @@ namespace Glass.Design.WpfTester
             LoadCommand = new SimpleCommand<object, object>(o => Load());
             SaveCommand = new SimpleCommand<object, object>(o => Save());
 
-            Items = CreateSampleItems();
+            
+            this.Document = CreateSampleItems();
+            this.Recorder = this.Document.QueryInterface<IRecordable>().Recorder;
+            this.Recorder.Clear();
         }
 
-        private static CanvasItemCollection CreateSampleItems()
+        private static CanvasDocument CreateSampleItems()
         {
             var items = new CanvasItemCollection();
             items.Add(new Link
@@ -85,7 +91,7 @@ namespace Glass.Design.WpfTester
             items.Add(group);
 
 
-            return items;
+            return new CanvasDocument(items);
         }
 
         private void Load()
@@ -95,8 +101,7 @@ namespace Glass.Design.WpfTester
                 using (var fileStream = new FileStream(OpenFileService.FileName, FileMode.Open))
                 {
                     var modelSaver = new XmlModelSerializer(fileStream);
-                    var composition = modelSaver.Deserialize();
-                    this.Items = new CanvasItemCollection(composition);
+                    this.Document = modelSaver.Deserialize();
                 }
             }
         }
@@ -108,27 +113,15 @@ namespace Glass.Design.WpfTester
                 using (var fileStream = new FileStream(SaveFileService.FileName, FileMode.Create))
                 {
                     var modelSaver = new XmlModelSerializer(fileStream);
-                    modelSaver.Serialize(Items.ToList());
+                    modelSaver.Serialize(this.Document);
                 }
             }
         }
 
 
-        #region Property Items
-        private CanvasItemCollection items;
-        public static readonly PropertyChangedEventArgs itemsEventArgs = ObservableHelper.CreateArgs<MainWindowViewModel>(x => x.Items);
-        public CanvasItemCollection Items
-        {
-            get { return items; }
-            set
-            {
 
-                if (object.ReferenceEquals(items, value)) return;
-                items = value;
-                NotifyPropertyChanged(itemsEventArgs);
-            }
-        }
-        #endregion
+        public CanvasDocument Document { get; private set; }
+
 
 
         public GroupCommandArgs GroupCommandArgs { get; set; }

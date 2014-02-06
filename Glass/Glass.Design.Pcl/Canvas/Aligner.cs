@@ -2,12 +2,16 @@
 using System.Linq;
 using Glass.Design.Pcl.Core;
 
-namespace Glass.Design.Pcl.CanvasItem
+namespace Glass.Design.Pcl.Canvas
 {
     public class Aligner
     {
         private readonly IList<ICanvasItem> canvasItems;
 
+        public Aligner(IEnumerable<ICanvasItem> canvasItems) : this(canvasItems.ToList())
+        {
+            
+        }
         public Aligner(IList<ICanvasItem> canvasItems)
         {
             this.canvasItems = canvasItems;
@@ -15,7 +19,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         private IList<ICanvasItem> CanvasItems
         {
-            get { return canvasItems; }
+            get { return this.canvasItems; }
         }
 
         public void AlignVertically(VerticalAlignment verticalAlignment)
@@ -23,13 +27,13 @@ namespace Glass.Design.Pcl.CanvasItem
             switch (verticalAlignment)
             {
                 case VerticalAlignment.Top:
-                    AlignToTop();
+                    this.AlignToTop();
                     break;
                 case VerticalAlignment.Center:
-                    AlignToMiddleVertical();
+                    this.AlignToMiddleVertical();
                     break;
                 case VerticalAlignment.Bottom:
-                    AlignToBottom();
+                    this.AlignToBottom();
                     break;
             }
         }
@@ -39,13 +43,13 @@ namespace Glass.Design.Pcl.CanvasItem
             switch (horizontalAlignment)
             {
                 case HorizontalAlignment.Left:
-                    AlignLeft();
+                    this.AlignLeft();
                     break;
                 case HorizontalAlignment.Center:
-                    AlignToCenterHorizontal();
+                    this.AlignToCenterHorizontal();
                     break;
                 case HorizontalAlignment.Right:
-                    AlignToRight();
+                    this.AlignToRight();
                     break;
             }
         }
@@ -54,8 +58,8 @@ namespace Glass.Design.Pcl.CanvasItem
 
         private void AlignLeft()
         {
-            var minLeft = CanvasItems.Min(canvasItem => canvasItem.Left);
-            foreach (var canvasItem in CanvasItems)
+            var minLeft = this.CanvasItems.Min(canvasItem => canvasItem.Left);
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Left = minLeft;
             }
@@ -63,8 +67,8 @@ namespace Glass.Design.Pcl.CanvasItem
 
         private void AlignToRight()
         {
-            var maxRight = CanvasItems.Max(item => item.Right);
-            foreach (var canvasItem in CanvasItems)
+            var maxRight = this.CanvasItems.Max(item => item.Right);
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Left = maxRight - canvasItem.Width;
             }
@@ -72,8 +76,8 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public void AlignToTop()
         {
-            var minTop = CanvasItems.Min(item => item.Top);
-            foreach (var canvasItem in CanvasItems)
+            var minTop = this.CanvasItems.Min(item => item.Top);
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Top = minTop;
             }
@@ -81,8 +85,8 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public void AlignToBottom()
         {
-            var maxBottom = CanvasItems.Max(item => item.Bottom);
-            foreach (var canvasItem in CanvasItems)
+            var maxBottom = this.CanvasItems.Max(item => item.Bottom);
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Top = maxBottom - canvasItem.Height;
             }
@@ -90,16 +94,16 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public void AlignToCenterHorizontal()
         {
-            var minLeft = CanvasItems.Min(item => item.Left);
-            var maxRight = CanvasItems.Max(item => item.Right);
+            var minLeft = this.CanvasItems.Min(item => item.Left);
+            var maxRight = this.CanvasItems.Max(item => item.Right);
 
             var middle = (maxRight - minLeft) /2 + minLeft;
-            AdjustLeftsAround(middle);
+            this.AdjustLeftsAround(middle);
         }
 
         private void AdjustTopsAround(double middle)
         {
-            foreach (var canvasItem in CanvasItems)
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Top = middle - canvasItem.Height / 2;
             }
@@ -107,7 +111,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         private void AdjustLeftsAround(double middle)
         {
-            foreach (var canvasItem in CanvasItems)
+            foreach (var canvasItem in this.CanvasItems)
             {
                 canvasItem.Left = middle - canvasItem.Width / 2;
             }
@@ -115,24 +119,24 @@ namespace Glass.Design.Pcl.CanvasItem
 
         public void AlignToMiddleVertical()
         {
-            var minTop = CanvasItems.Min(item => item.Top);
-            var maxBottom = CanvasItems.Max(item => item.Bottom);
+            var minTop = this.CanvasItems.Min(item => item.Top);
+            var maxBottom = this.CanvasItems.Max(item => item.Bottom);
 
             var middle = (maxBottom - minTop) / 2 + minTop;
 
-            AdjustTopsAround(middle);
+            this.AdjustTopsAround(middle);
         }
 
         public void SetAlignEquallyHorizontal()
         {
-            var totalSpace = GetTotalHorizontalSpaceBetween();
-            var averageSpace = totalSpace / (CanvasItems.Count - 1);
-            ApplyHorizontalSpace(averageSpace);
+            var totalSpace = this.GetTotalHorizontalSpaceBetween();
+            var averageSpace = totalSpace / (this.CanvasItems.Count - 1);
+            this.ApplyHorizontalSpace(averageSpace);
         }
 
         private void ApplyHorizontalSpace(double space)
         {
-            var sortedList = GetSortedListByLeft();
+            var sortedList = this.GetSortedListByLeft();
             for (var i = 0; i < sortedList.Count - 1; i++)
             {
                 var item1 = sortedList[i];
@@ -143,7 +147,7 @@ namespace Glass.Design.Pcl.CanvasItem
 
         private IList<ICanvasItem> GetSortedListByLeft()
         {
-            var sortedList = new List<ICanvasItem>(CanvasItems);
+            var sortedList = new List<ICanvasItem>(this.CanvasItems);
             sortedList.Sort((item1, item2) => item1.Left.CompareTo(item2.Left));
             return sortedList;
         }
@@ -151,7 +155,7 @@ namespace Glass.Design.Pcl.CanvasItem
         private double GetTotalHorizontalSpaceBetween()
         {
             var totalSpace = 0D;
-            var sortedList = GetSortedListByLeft();
+            var sortedList = this.GetSortedListByLeft();
 
             for (var i = 0; i < sortedList.Count - 1; i++)
             {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Core;
@@ -22,14 +22,14 @@ namespace UnitTestProject1
             var snappingEngine = new CanvasItemSnappingEngine(8);
             var canvasItems = new List<CanvasItem>
                               {
-                                  new CanvasItem
+                                  new CanvasModelItem
                                   {
                                       Left = 10,
                                       Top = 10,
                                       Height = 20,
                                       Width = 20,
                                   },
-                                  new CanvasItem
+                                  new CanvasModelItem
                                   {
                                       Left = 33,
                                       Top = 10,

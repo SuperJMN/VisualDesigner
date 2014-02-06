@@ -1,8 +1,8 @@
-﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+﻿using System.ComponentModel;
 
 namespace SampleModel
 {
-    public class Link : CanvasItemINPC
+    public class Link : CanvasModelItemModel
     {
          
     }

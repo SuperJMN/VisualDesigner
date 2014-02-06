@@ -3,8 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using AutoMapper;
-using Glass.Design.Pcl.CanvasItem;
-using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+using Glass.Design.Pcl.Canvas;
 
 namespace SampleModel.Serialization
 {
@@ -35,10 +34,10 @@ namespace SampleModel.Serialization
             
 
 
-            Mapper.CreateMap<ObjectDto, CanvasItemINPC>()
+            Mapper.CreateMap<ObjectDto, CanvasItem>()
                 .AfterMap((dto, inpc) =>
                           {
-                              var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItemINPC>);
+                              var mappedChildren = dto.Objects.Select(Mapper.Map<CanvasItem>);
                               foreach (var canvasItem in mappedChildren)
                               {
                                   inpc.Children.Add(canvasItem);
@@ -73,16 +72,16 @@ namespace SampleModel.Serialization
 
             this.stream = stream;
 
-            serializer = new XmlSerializer(typeof(CompositionDto));
+            serializer = new XmlSerializer(typeof(ModelDto));
 
 
         }
 
-        public void Serialize(IList<ICanvasItem> items)
+        public void Serialize(CanvasDocument document)
         {
-            var objects = Mapper.Map<List<ObjectDto>>(items);
+            var objects = Mapper.Map<List<ObjectDto>>(document.Children);
 
-            var compositionDto = new CompositionDto
+            var compositionDto = new ModelDto
                                  {
                                      Objects = objects
                                  };
@@ -90,12 +89,14 @@ namespace SampleModel.Serialization
             serializer.Serialize(stream, compositionDto);
         }
 
-        public IEnumerable<ICanvasItem> Deserialize()
+        public CanvasDocument Deserialize()
         {
-            var compositionDto = (CompositionDto)serializer.Deserialize(stream);
+            var compositionDto = (ModelDto)serializer.Deserialize(stream);
             var objectDtos = compositionDto.Objects;
-            var items = Mapper.Map<List<CanvasItemINPC>>(objectDtos);
-            return items.Cast<ICanvasItem>().ToList();
+            var items = Mapper.Map<List<CanvasItem>>(objectDtos);
+            CanvasDocument document = new CanvasDocument(items);
+            
+            return  document;
         }
     }
 }

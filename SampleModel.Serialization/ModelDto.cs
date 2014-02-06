@@ -4,10 +4,10 @@ using System.Xml.Serialization;
 namespace SampleModel.Serialization
 {
     [XmlRoot("Composition")]
-    public class CompositionDto
+    public class ModelDto
     {
         
-        public CompositionDto()
+        public ModelDto()
         {
             
         }

@@ -10,11 +10,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpfTester="clr-namespace:Glass.Design.WpfTester"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         x:Name="Window"
         viewModelLocator:ViewModelLocator.ViewModel="MainViewModel"
-        Title="Glass Design Demo" Width="700" Height="560" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
+        Title="Glass Design Demo" Width="1200" Height="800" d:DataContext="{d:DesignInstance wpfTester:MainWindowViewModel}">
     <Window.Resources>
         <ResourceDictionary>
 
@@ -56,14 +58,14 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </viewing:ViewingSurface>
-                    
+
                     <Border BorderBrush="Aqua" BorderThickness="1" Background="Transparent">
                         <BulletDecorator HorizontalAlignment="Right" Margin="2">
                             <BulletDecorator.Bullet>
                                 <Image RenderOptions.BitmapScalingMode="Fant" Source="Images/Group.png" Height="16" Stretch="Uniform" />
                             </BulletDecorator.Bullet>
                             <TextBlock VerticalAlignment="Top" Text="Group" FontSize="10" />
-                        </BulletDecorator>                       
+                        </BulletDecorator>
                     </Border>
 
                 </Grid>
@@ -79,7 +81,7 @@
             <DataTemplate DataType="{x:Type sampleModel:Sonic}">
                 <Image Stretch="Fill" Source="/Images/Sonic.png"  />
             </DataTemplate>
-            
+
             <Style x:Key="MenuItemStyle" TargetType="MenuItem">
                 <Setter Property="CommandTarget" Value="{Binding ElementName=DesignSurface}" />
             </Style>
@@ -90,7 +92,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Load…" Command="{Binding LoadCommand}" />
-                <MenuItem Header="Save…" Command="{Binding SaveCommand}" />                
+                <MenuItem Header="Save…" Command="{Binding SaveCommand}" />
             </MenuItem>
             <MenuItem Header="Grouping">
                 <MenuItem Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.GroupCommand}"
@@ -141,26 +143,70 @@
                 <Button Content="Bring to Front" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.BringToFrontCommand}" />
                 <Button Content="Send to back" Command="{x:Static designSurfaceWpf:DesignSurfaceCommands.SendToBackCommand}" />
             </ToolBar>
-           
+
         </ToolBarTray>
-        <Grid>
-            <designSurfaceWpf:DesignSurface Background="Azure" x:Name="DesignSurface" ItemsSource="{Binding Items}">
-                <designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                    <Style TargetType="{x:Type wpf:CanvasItemControl}">
-                        <Setter Property="Left"
+        
+        <xcad:DockingManager>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Properties">
+                            <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="75">
+
+                            </xctk:PropertyGrid>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane>
+                            <xcad:LayoutDocument Title="Design Surface" >
+
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface" CanvasDocument="{Binding Document}">
+                                        <designSurfaceWpf:DesignSurface.ItemContainerStyle>
+                                            <Style TargetType="{x:Type wpf:CanvasItemControl}">
+                                                <Setter Property="Left"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:IPositionable.Left)}" />
-                        <Setter Property="Top"
+                                                <Setter Property="Top"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:IPositionable.Top)}" />
-                        <Setter Property="Width"
+                                                <Setter Property="Width"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Width)}" />
-                        <Setter Property="Height"
+                                                <Setter Property="Height"
                                 Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.(ds:ISizable.Height)}" />
-                    </Style>
-                </designSurfaceWpf:DesignSurface.ItemContainerStyle>             
-            </designSurfaceWpf:DesignSurface>
-            <TextBlock Margin="10" FontSize="18" FontFamily="Verdana"
-                       Text="This is the Designer Surface. Drag and resize items!" IsHitTestVisible="False" />
-        </Grid>
+                                            </Style>
+                                        </designSurfaceWpf:DesignSurface.ItemContainerStyle>
+                                    </designSurfaceWpf:DesignSurface>
+
+                                </Grid>
+
+                            </xcad:LayoutDocument>
+                        </xcad:LayoutDocumentPane>
+                    </xcad:LayoutDocumentPaneGroup>
+
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Undo">
+                            <ListBox ItemsSource="{Binding Path=Recorder.UndoOperations}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick" ToolTip="Double-click to undo to this operation.">
+                                            <Control.Template>
+                                                <ControlTemplate>
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                </ControlTemplate>
+                                                </Control.Template>
+                                        </Control>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                
+                                
+                            </ListBox>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                </xcad:LayoutPanel>
+
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    
     </DockPanel>
 </Window>
 

@@ -16,7 +16,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Selection
         {
             this.multiSelector = multiSelector;
             multiSelector.ItemSpecified += MultiSelectorOnItemSpecified;
-            multiSelector.NoneSpecified += MultiSelectorOnNoneSpecified;
+            multiSelector.SelectionCleared += MultiSelectorOnSelectionCleared;
             SelectionMode = SelectionMode.Direct;
         }
 
@@ -53,7 +53,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Selection
             }
         }
 
-        private void MultiSelectorOnNoneSpecified(object sender, EventArgs eventArgs)
+        private void MultiSelectorOnSelectionCleared(object sender, EventArgs eventArgs)
         {
             multiSelector.UnselectAll();
         }

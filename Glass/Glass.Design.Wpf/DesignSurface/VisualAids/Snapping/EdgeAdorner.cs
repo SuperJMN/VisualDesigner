@@ -2,15 +2,16 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.Core;
+using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
 {
-    public class EdgeAdorner : Adorner
+    public class EdgeAdorner : CanvasItemAdorner
     {
         static EdgeAdorner()
         {
@@ -21,49 +22,12 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
 
         private static Pen Pen { get; set; }
 
-        private CanvasItem item;
-
-        public CanvasItem Item
-        {
-            get { return item; }
-            set
-            {
-                if (item != null)
-                {
-                    item.LeftChanged -= LocationChanged;
-                    item.TopChanged -= LocationChanged;
-                    item.WidthChanged -= ItemOnWidthChanged;
-                    item.HeightChanged -= ItemOnWidthChanged;
-                }
-
-                item = value;
-
-                if (item != null)
-                {
-                    item.LeftChanged += LocationChanged;
-                    item.TopChanged += LocationChanged;
-                    item.WidthChanged += ItemOnWidthChanged;
-                    item.HeightChanged += ItemOnWidthChanged;
-                }
-            }
-        }
-
-        private void ItemOnWidthChanged(object sender, SizeChangeEventArgs sizeChangeEventArgs)
-        {
-            InvalidateVisual();
-        }
-
-        private void LocationChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)
-        {
-            InvalidateVisual();
-        }
-
+        
         public Edge Edge { get; set; }
 
         public EdgeAdorner([NotNull] UIElement adornedElement, CanvasItem item, Edge edge)
-            : base(adornedElement)
+            : base(adornedElement, item)
         {
-            Item = item;
             Edge = edge;
         }
 
@@ -76,13 +40,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
             double segmentEnd;
             if (Edge.Orientation == Orientation.Vertical)
             {
-                segmentStart = Math.Min(Edge.Range.SegmentStart, Item.Top);
-                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Bottom);
+                segmentStart = Math.Min(Edge.Range.SegmentStart, CanvasItem.Top);
+                segmentEnd = Math.Max(Edge.Range.SegmentEnd, CanvasItem.Bottom);
             }
             else
             {
-                segmentStart = Math.Min(Edge.Range.SegmentStart, Item.Left);
-                segmentEnd = Math.Max(Edge.Range.SegmentEnd, Item.Right);
+                segmentStart = Math.Min(Edge.Range.SegmentStart, CanvasItem.Left);
+                segmentEnd = Math.Max(Edge.Range.SegmentEnd, CanvasItem.Right);
             }
 
             var point1 = new Point(Edge.AxisDistance, segmentStart);

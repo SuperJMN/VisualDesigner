@@ -1,6 +1,8 @@
+using Glass.Design.Pcl.DesignSurface;
+
 namespace Glass.Design.Pcl.Core
 {
-    public interface IRect
+    public interface IRect : ICoordinate
     {
         double Left { get; }
         double Top { get; }

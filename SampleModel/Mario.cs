@@ -1,8 +1,8 @@
-﻿using Glass.Design.Pcl.CanvasItem.NotifyPropertyChanged;
+﻿using System.ComponentModel;
 
 namespace SampleModel
 {
-    public class Mario : CanvasItemINPC
+    public class Mario : CanvasModelItemModel
     {
          
     }

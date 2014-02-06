@@ -1,16 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 
 namespace Glass.Design.Pcl.DesignSurface
 {
-    public interface IDesignSurface : ICanvasItemParent, ICanvasSelector
+    public interface IDesignSurface : ICanvasSelector
     {               
         ICommand GroupCommand { get; }
+        ICanvasItemContainer CanvasDocument { get; }
     }
 
     public interface ICanvasSelector
     {
-        CanvasItemCollection SelectedCanvasItems { get; }
+        IList SelectedItems { get; }
+    }
+
+
+    public static class CanvasSelectorExtensions
+    {
+        public static IEnumerable<ICanvasItem> GetSelectedCanvasItems(this ICanvasSelector canvasSelector)
+        {
+            return canvasSelector.SelectedItems.Cast<ICanvasItem>();
+        }
     }
 }

@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Recording;
 using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;
 using VerticalAlignment = Glass.Design.Pcl.Core.VerticalAlignment;
 
@@ -51,12 +52,12 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private bool IsSomethingSelected()
         {
-            return DesignSurface.SelectedCanvasItems.Any();
+            return DesignSurface.SelectedItems.Count > 0;
         }
 
         private void BringToFront()
         {
-            MoveSelectionTo(DesignSurface.Children.Count - 1);
+            MoveSelectionTo(DesignSurface.CanvasDocument.Children.Count - 1);
         }
 
         private void SendToBack()
@@ -68,9 +69,9 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             var idsToMove = new List<int>();
 
-            foreach (var child in DesignSurface.SelectedCanvasItems)
+            foreach (ICanvasItem child in DesignSurface.SelectedItems)
             {
-                var childId = DesignSurface.Children.IndexOf(child);
+                var childId = DesignSurface.CanvasDocument.Children.IndexOf(child);
                 idsToMove.Add(childId);
             }
 
@@ -78,13 +79,13 @@ namespace Glass.Design.Wpf.DesignSurface
             var newIndex = position;
             foreach (var id in idsToMove)
             {
-                DesignSurface.Children.Move(id, newIndex);
+                DesignSurface.CanvasDocument.Children.Move(id, newIndex);
             }
         }
 
         private void AlignVertically(VerticalAlignment alignment)
         {
-            var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
+            var aligner = new Aligner(DesignSurface.SelectedItems.Cast<ICanvasItem>().ToList());
             aligner.AlignVertically(alignment);
         }
 
@@ -95,44 +96,66 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private bool CanAlign()
         {
-            return DesignSurface.SelectedCanvasItems.Count > 1;
+            return DesignSurface.SelectedItems.Count > 1;
         }
 
         private void AlignHorizontally(HorizontalAlignment alignment)
         {
-            var aligner = new Aligner(DesignSurface.SelectedCanvasItems);
+            var aligner = new Aligner(DesignSurface.GetSelectedCanvasItems());
             aligner.AlignHorizontally(alignment);
         }
 
 
         private void CanUngroup(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = DesignSurface.SelectedCanvasItems.All(item => item.Children.Any());
+            e.CanExecute = DesignSurface.GetSelectedCanvasItems().All(item => item.Children.Any());
         }
 
         private void Ungroup(object sender, ExecutedRoutedEventArgs e)
         {
-            var selectedCanvasItems = DesignSurface.SelectedCanvasItems.ToList();
-            foreach (var selectedItem in selectedCanvasItems)
+            List<ICanvasItem> selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
+
+
+            using (RecordingScope recordingScope = CanvasModelItem.Recorder.StartAtomicScope("Ungroup"))
             {
-                selectedItem.RemoveAndPromoteChildren();
-                DesignSurface.Children.Remove(selectedItem);
+
+                foreach (var selectedItem in selectedCanvasItems)
+                {
+                    selectedItem.RemoveAndPromoteChildren();
+                    DesignSurface.CanvasDocument.Children.Remove(selectedItem);
+                }
+
+                recordingScope.Complete();
+               
             }
+
+
         }
 
         private void CanGroupSelection(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
         {
-            canExecuteRoutedEventArgs.CanExecute = DesignSurface.SelectedCanvasItems.Count > 1;
+            canExecuteRoutedEventArgs.CanExecute = DesignSurface.SelectedItems.Count > 1;
         }
 
         private void Group(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
+
             var groupCommandArgs = (GroupCommandArgs)executedRoutedEventArgs.Parameter;
-            var group = groupCommandArgs.CreateHostingItem();
 
-            DesignSurface.SelectedCanvasItems.Reparent(group);
+            IEnumerable<ICanvasItem> items = DesignSurface.GetSelectedCanvasItems().ToList();
+            ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            DesignSurface.Children.Add(group);
+            using (RecordingScope scope = CanvasModelItem.Recorder.StartAtomicScope("Group"))
+            {
+
+                // We have to *first* add the group to the document to make it recordable.
+                DesignSurface.CanvasDocument.Children.Add(group);
+
+                items.Reparent(group);
+
+               
+                scope.Complete();
+            }
         }
     }
 }

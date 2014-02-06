@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
+using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl.DesignSurface
 {
-    public interface ISizable
+    public interface ISizable : INotifyPropertyChanged, ICoordinate
     {
         double Width { get; set; }
         double Height { get; set; }
-        
-        event EventHandler<SizeChangeEventArgs> HeightChanged;
-        event EventHandler<SizeChangeEventArgs> WidthChanged;
+     
     }
+
 }

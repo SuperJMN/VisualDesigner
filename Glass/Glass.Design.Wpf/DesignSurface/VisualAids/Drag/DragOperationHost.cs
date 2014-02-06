@@ -2,11 +2,13 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Glass.Design.Pcl.Annotations;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;
+using PostSharp.Patterns.Model;
+using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 {
@@ -20,6 +22,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         [NotNull]
         public ICanvasItemSnappingEngine SnappingEngine { get; set; }
 
+        private RecordingScope dragRecordingScope;
+
         public DragOperationHost(IInputElement frameOfReference)
         {
             FrameOfReference = frameOfReference;        
@@ -28,16 +32,18 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         }
 
         private void FrameOfReferenceOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
-        {           
-            var position = mouseEventArgs.GetPosition(FrameOfReference);
-            var newPoint = position.ActLike<IPoint>();
-            DragOperation.NotifyNewPosition(newPoint);
-
+        {
             if (!IsDragging)
             {
                 IsDragging = true;
                 OnDragStarted();
             }
+
+            var position = mouseEventArgs.GetPosition(FrameOfReference);
+            var newPoint = position.ActLike<IPoint>();
+            DragOperation.NotifyNewPosition(newPoint);
+
+        
         }
 
         private void InputElementOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -61,12 +67,31 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
         protected virtual void OnDragStarted()
         {
+             StartRecorderOperation();
+
             var handler = DragStarted;
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
+        private void StartRecorderOperation()
+        {
+            // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
+            const string operationName = "Move";
+            this.dragRecordingScope = CanvasModelItem.Recorder.StartAtomicScope(operationName);
+            
+        }
+
+       
+
         public void SetDragTarget(IInputElement hitTestReceiver, ICanvasItem itemToDrag)
         {
+            if ( this.dragRecordingScope != null )
+                throw new InvalidOperationException("There is already an active drag operation.");
+
+
+           
+
+
             this.ItemToDrag = itemToDrag;
             hitTestReceiver.PreviewMouseLeftButtonDown += TargetOnPreviewMouseLeftButtonDown;
         }
@@ -88,6 +113,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
         protected virtual void OnDragEnd()
         {
+            if (this.dragRecordingScope != null)
+            {
+                this.dragRecordingScope.Complete();
+                this.dragRecordingScope.Dispose();
+                this.dragRecordingScope = null;
+            }
+
             var handler = DragEnd;
             if (handler != null) handler(this, EventArgs.Empty);
         }

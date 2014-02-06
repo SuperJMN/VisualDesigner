@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
@@ -64,6 +64,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 ResizeOperation.UpdateHandlePosition(mouseButtonEventArgs.GetPosition(Parent).ActLike<IPoint>());
                 Parent.ReleaseMouseCapture();
                 Parent.MouseMove -= ParentOnMouseMove;
+                ResizeOperation.Dispose();
                 ResizeOperation = null;
                 SnappingEngine.ClearSnappedEdges();
 

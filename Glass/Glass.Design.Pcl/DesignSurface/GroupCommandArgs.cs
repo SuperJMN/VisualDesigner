@@ -1,5 +1,5 @@
 using System;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 
 namespace Glass.Design.Pcl.DesignSurface
 {

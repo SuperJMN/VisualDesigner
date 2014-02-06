@@ -2,16 +2,20 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
+using PostSharp.Patterns.Model;
 
 #endregion
 
 namespace Glass.Design.Wpf
 {
     [DefaultProperty("Content")]
+    [NotifyPropertyChanged]
     public sealed class CanvasItemControl : ContentControl, ICanvasItem
     {
         public static readonly DependencyProperty TopProperty =
@@ -29,16 +33,28 @@ namespace Glass.Design.Wpf
             SizeChanged += OnSizeChanged;
         }
 
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.HeightChanged)
+            {
+                this.OnPropertyChanged("Height");
+            }
+
+            if (e.WidthChanged)
+            {
+                this.OnPropertyChanged("Width");
+            }
+        }
+
+        [IgnoreAutoChangeNotification]
         public double Top
         {
             get { return (double) GetValue(TopProperty); }
             set { SetValue(TopProperty, value); }
         }
 
-        public event EventHandler<LocationChangedEventArgs> LeftChanged;
-
-        public event EventHandler<LocationChangedEventArgs> TopChanged;
-
+   
         public double Right
         {
             get { return Left + Width; }
@@ -49,65 +65,26 @@ namespace Glass.Design.Wpf
             get { return Top + Height; }
         }
 
-        ICanvasItemParent ICanvasItem.Parent { get; set; }
+        ICanvasItemContainer ICanvasItem.Parent
+        {
+            get { throw new NotSupportedException(); }
+        }
+
         public CanvasItemCollection Children { get; private set; }
-        public event EventHandler<SizeChangeEventArgs> HeightChanged;
+      
 
-        public event EventHandler<SizeChangeEventArgs> WidthChanged;
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-        {
-            var sizeChangeEventArgs = new SizeChangeEventArgs(sizeChangedEventArgs.PreviousSize.Height,
-                sizeChangedEventArgs.NewSize.Height);
-
-            if (sizeChangedEventArgs.HeightChanged)
-            {
-                OnHeightChanged(sizeChangeEventArgs);
-            }
-            if (sizeChangedEventArgs.WidthChanged)
-            {
-                OnWidthChanged(sizeChangeEventArgs);
-            }
-        }
-
-        private void OnLeftChanged(LocationChangedEventArgs e)
-        {
-            var handler = LeftChanged;
-            if (handler != null) handler(this, e);
-        }
-
-
-        private void OnTopChanged(LocationChangedEventArgs e)
-        {
-            var handler = TopChanged;
-            if (handler != null) handler(this, e);
-        }
+      
+     
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (CanvasItemControl) d;
-            var oldTop = (double) e.OldValue;
-            var newTop = target.Top;
-            target.OnTopChanged(oldTop, newTop);
+            CanvasItemControl target = (CanvasItemControl) d;
+            Canvas.SetTop(target, target.Top);
+            target.OnPropertyChanged("Top");
         }
 
-        private void OnTopChanged(double oldTop, double newTop)
-        {
-            Canvas.SetTop(this, newTop);
-            OnTopChanged(new LocationChangedEventArgs(oldTop, newTop));
-        }
-
-        private void OnHeightChanged(SizeChangeEventArgs e)
-        {
-            var handler = HeightChanged;
-            if (handler != null) handler(this, e);
-        }
-
-        private void OnWidthChanged(SizeChangeEventArgs e)
-        {
-            var handler = WidthChanged;
-            if (handler != null) handler(this, e);
-        }
+    
+       
 
         #region Left
 
@@ -115,6 +92,7 @@ namespace Glass.Design.Wpf
             DependencyProperty.Register("Left", typeof (double), typeof (CanvasItemControl),
                 new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
 
+        [IgnoreAutoChangeNotification]
         public double Left
         {
             get { return (double) GetValue(LeftProperty); }
@@ -123,18 +101,70 @@ namespace Glass.Design.Wpf
 
         private static void OnLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (CanvasItemControl) d;
-            var oldLeft = (double) e.OldValue;
-            var newLeft = target.Left;
-            target.OnLeftChanged(oldLeft, newLeft);
+            CanvasItemControl target = (CanvasItemControl) d;
+            Canvas.SetLeft(target, target.Left);
+            target.OnPropertyChanged("Left");
         }
 
-        private void OnLeftChanged(double oldLeft, double newLeft)
-        {
-            Canvas.SetLeft(this, newLeft);
-            OnLeftChanged(new LocationChangedEventArgs(oldLeft, newLeft));
-        }
 
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public double GetCoordinate(CoordinatePart part)
+        {
+            switch (part)
+            {
+                case CoordinatePart.None:
+                    return double.NaN;
+                case CoordinatePart.Left:
+                    return this.Left;
+                case CoordinatePart.Right:
+                    return this.Right;
+                case CoordinatePart.Top:
+                    return this.Top;
+                case CoordinatePart.Bottom:
+                    return this.Bottom;
+                case CoordinatePart.Width:
+                    return this.Width;
+                case CoordinatePart.Height:
+                    return this.Height;
+                default:
+                    throw new ArgumentOutOfRangeException("part");
+            }
+        }
+
+        public void SetCoordinate(CoordinatePart part, double value)
+        {
+
+            switch (part)
+            {
+                case CoordinatePart.None:
+                    break;
+                case CoordinatePart.Left:
+                    this.Left = value;
+                    break;
+                case CoordinatePart.Top:
+                    this.Top = value;
+                    break;
+                case CoordinatePart.Width:
+                    this.Width = value;
+                    break;
+                case CoordinatePart.Height:
+                    this.Height = value;
+                    break;
+                case CoordinatePart.Bottom:
+                case CoordinatePart.Right:
+                    throw new NotSupportedException();
+                default:
+                    throw new ArgumentOutOfRangeException("part");
+            }
+        }
     }
 }
