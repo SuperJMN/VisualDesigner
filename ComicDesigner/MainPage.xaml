@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="ComicDesigner.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:StyleMVVM.View"
+    xmlns:comicDesigner="using:ComicDesigner"
+    view:ViewModel.Name="MainViewModel"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl.ItemContainerStyle>
+               <Style TargetType="ContentPresenter"> 
+                   <Setter Property="Canvas.Left" Value="100" />
+                    <Setter Property="Canvas.Top" Value="100" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</Page>

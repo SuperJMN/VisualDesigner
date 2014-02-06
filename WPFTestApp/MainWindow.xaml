@@ -151,6 +151,7 @@
                 <xcad:LayoutPanel Orientation="Horizontal">
                     <xcad:LayoutAnchorablePane DockWidth="200">
                         <xcad:LayoutAnchorable CanClose="False" Title="Properties">
+                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                             <xctk:PropertyGrid Name="PropertyGrid"  SelectedObject="{Binding ElementName=DesignSurface, Path=LastSelectedItem}" SelectedObjectName="{Binding ElementName=DesignSurface, Path=LastSelectedItem.Name}" ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="75">
 
                             </xctk:PropertyGrid>

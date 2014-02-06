@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
+using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Pcl.PlatformAbstraction;
-using Glass.Design.Wpf.Annotations;
-using Glass.Design.Wpf.DesignSurface.VisualAids;
+using Glass.Design.WinRT.DesignSurface.VisualAids;
+using Glass.Design.WinRT.DesignSurface.VisualAids.Resize;
 using PostSharp.Patterns.Model;
-using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
-namespace Glass.Design.Wpf.DesignSurface
+namespace Glass.Design.WinRT.DesignSurface
 {
     [NotifyPropertyChanged]
-    public sealed class DesignSurface : MultiSelector, IDesignSurface, IMultiSelector
+    public sealed class DesignSurface : Selector, IDesignSurface, IMultiSelector
     {
 
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
-            typeof(ICanvasItemContainer), typeof(DesignSurface), new FrameworkPropertyMetadata(null, OnCanvasDocumentChanged));
+            typeof(ICanvasItemContainer), typeof(DesignSurface), new PropertyMetadata(null, OnCanvasDocumentChanged));
 
         private static void OnCanvasDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -39,18 +38,24 @@ namespace Glass.Design.Wpf.DesignSurface
             }
         }
 
-        static DesignSurface()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignSurface), new FrameworkPropertyMetadata(typeof(DesignSurface)));
-        }
-
         public DesignSurface()
         {
-            MouseLeftButtonDown += OnMouseLeftButtonDown;
+            
+            //MouseLeftButtonDown += OnMouseLeftButtonDown;
             SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
             CommandHandler = new DesignSurfaceCommandHandler(this, this);
+
+            this.ManipulationStarted += OnManipulationStarted;
+
+            DefaultStyleKey = typeof (DesignSurface);
+
+        }
+
+        private void OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs manipulationStartedRoutedEventArgs)
+        {
+            RaiseNoneSpecified();            
         }
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
@@ -60,7 +65,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            RaiseNoneSpecified();
+            
         }
 
         private DesignAidsProvider DesignAidsProvider { get; set; }
@@ -87,7 +92,7 @@ namespace Glass.Design.Wpf.DesignSurface
             }
         }
 
-        private void ContainerOnLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void ContainerOnLeftButtonDown(object sender, InputDeviceEventHandlerArgs mouseButtonEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
              OnItemSelected(item);
@@ -121,7 +126,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public static readonly DependencyProperty PlaneOperationModeProperty =
             DependencyProperty.Register("PlanePlaneOperationMode", typeof(PlaneOperation), typeof(DesignSurface),
-                new FrameworkPropertyMetadata(PlaneOperation.Resize,
+                new PropertyMetadata(PlaneOperation.Resize,
                     OnOperationModeChanged));
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
@@ -149,6 +154,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         #endregion
 
+        public IList SelectedItems { get; private set; }
         public event EventHandler<object> ItemSpecified;
 
         private void OnItemSelected(object e)
@@ -162,6 +168,10 @@ namespace Glass.Design.Wpf.DesignSurface
         public object LastSelectedItem { get; private set; }
 
         public event EventHandler SelectionCleared;
+        public void UnselectAll()
+        {
+            throw new NotImplementedException();
+        }
 
         private void RaiseNoneSpecified()
         {
@@ -171,29 +181,29 @@ namespace Glass.Design.Wpf.DesignSurface
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnPreviewMouseLeftButtonDown(e);
-            Focus();
-        }
+        //protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnPreviewMouseLeftButtonDown(e);
+        //    Focus();
+        //}
 
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
-        {
-            OnKeyDown(e);
-            if (e.Key == Key.LeftCtrl)
-            {
-                SelectionHandler.SelectionMode = SelectionMode.Add;
-            }
-        }
+        //protected override void OnPreviewKeyDown(KeyEventArgs e)
+        //{
+        //    OnKeyDown(e);
+        //    if (e.Key == Key.LeftCtrl)
+        //    {
+        //        SelectionHandler.SelectionMode = SelectionMode.Add;
+        //    }
+        //}
 
-        protected override void OnPreviewKeyUp(KeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-            if (e.Key == Key.LeftCtrl)
-            {
-                SelectionHandler.SelectionMode = SelectionMode.Direct;
-            }
-        }
+        //protected override void OnPreviewKeyUp(KeyEventArgs e)
+        //{
+        //    base.OnKeyUp(e);
+        //    if (e.Key == Key.LeftCtrl)
+        //    {
+        //        SelectionHandler.SelectionMode = SelectionMode.Direct;
+        //    }
+        //}
 
 
         public ICommand GroupCommand { get; private set; }
@@ -222,6 +232,9 @@ namespace Glass.Design.Wpf.DesignSurface
         public double Right { get; private set; }
         public double Bottom { get; private set; }
         public ICanvasItemContainer Parent { get; private set; }
+        public event PointingManipulationEventHandler PointingManipulationStart;
+        public event PointingManipulationEventHandler PointerMove;
+        public event PointingManipulationEventHandler PointerManipulsationEnd;
         public void AddAdorner(IAdorner adorner)
         {
             throw new NotImplementedException();
