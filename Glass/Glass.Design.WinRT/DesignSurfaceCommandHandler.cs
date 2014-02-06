@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;

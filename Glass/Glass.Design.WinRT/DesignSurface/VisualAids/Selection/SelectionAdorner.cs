@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;

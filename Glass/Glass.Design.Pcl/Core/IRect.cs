@@ -1,5 +1,3 @@
-using Glass.Design.Pcl.DesignSurface;
-
 namespace Glass.Design.Pcl.Core
 {
     public interface IRect : ICoordinate

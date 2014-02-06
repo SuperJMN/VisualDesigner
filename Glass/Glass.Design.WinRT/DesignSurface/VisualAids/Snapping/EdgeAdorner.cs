@@ -1,5 +1,4 @@
 ﻿using Windows.UI;
-using Windows.UI.Xaml;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;

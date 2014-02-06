@@ -1,6 +1,4 @@
-﻿using Windows.Foundation;
-
-namespace Glass.Design.WinRT.Core
+﻿namespace Glass.Design.WinRT.Core
 {
     public struct Vector
     {

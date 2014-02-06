@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Glass.Design.Wpf.DesignSurface;
 
 namespace Glass.Design.Wpf.Viewing
 {

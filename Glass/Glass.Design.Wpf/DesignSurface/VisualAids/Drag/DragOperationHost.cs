@@ -4,7 +4,6 @@ using System.Windows.Input;
 using AutoMapper;
 using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.Canvas;
-using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using PostSharp.Patterns.Recording;

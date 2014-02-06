@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Windows.Devices.Input;
-using Windows.UI.Xaml;
 using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;

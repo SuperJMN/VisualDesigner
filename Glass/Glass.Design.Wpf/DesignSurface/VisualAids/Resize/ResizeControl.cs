@@ -5,7 +5,6 @@ using AutoMapper;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
-using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Rect = Glass.Design.Pcl.Core.Rect;
 

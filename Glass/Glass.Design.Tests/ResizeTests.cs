@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using Glass.Design.Pcl.Canvas;
-using Glass.Design.Pcl.Core;
+﻿using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,5 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Glass.Design.Pcl.Canvas;
+﻿using Glass.Design.Pcl.Canvas;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;
 using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 

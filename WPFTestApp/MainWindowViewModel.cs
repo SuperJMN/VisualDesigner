@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Cinch;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
-using Glass.Design.Wpf;
 using MEFedMVVM.ViewModelLocator;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;

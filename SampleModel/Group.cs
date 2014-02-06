@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace SampleModel
+﻿namespace SampleModel
 {
     public class Group : CanvasModelItemModel
     {

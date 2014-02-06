@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using Glass.Design;
-using Glass.Design.Pcl;
-using Glass.Design.Pcl.Core;
+﻿using Glass.Design.Pcl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Point = Glass.Design.Pcl.Core.Point;
 using Rect = Glass.Design.Pcl.Core.Rect;

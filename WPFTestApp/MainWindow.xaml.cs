@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Recording;
-using SampleModel;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace Glass.Design.WpfTester
