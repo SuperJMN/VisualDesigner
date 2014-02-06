@@ -5,19 +5,20 @@ using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;
 using VerticalAlignment = Glass.Design.Pcl.Core.VerticalAlignment;
+using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT
 {
     public sealed class DesignSurfaceCommandHandler
     {
         private IDesignSurface DesignSurface { get; set; }
-        private UIElement UIElement { get; set; }
+        private IUIElement IUIElement { get; set; }
 
 
-        public DesignSurfaceCommandHandler(IDesignSurface designSurface, UIElement uiElement)
+        public DesignSurfaceCommandHandler(IDesignSurface designSurface, IUIElement uiElement)
         {
             DesignSurface = designSurface;
-            UIElement = uiElement;
+            IUIElement = uiElement;
 
             
         }

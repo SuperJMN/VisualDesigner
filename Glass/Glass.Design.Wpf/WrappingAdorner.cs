@@ -13,6 +13,8 @@ namespace Glass.Design.Wpf
 
         private UIElement chrome;
 
+        private Rect p;
+
         public WrappingAdorner(UIElement adornedElement, UIElement chrome, ICanvasItem canvasItem)
             : base(adornedElement, canvasItem)
         {

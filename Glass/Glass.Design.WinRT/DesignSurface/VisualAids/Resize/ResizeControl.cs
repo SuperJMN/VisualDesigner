@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using AutoMapper;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using ImpromptuInterface;
+using FoundationPoint = Windows.Foundation.Point;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 {
@@ -86,9 +86,9 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
             {
 
 
-                var childRect = this.GetRectRelativeToParent(logicalChild).ActLike<IRect>();
+                var childRect = this.GetRectRelativeToParent(logicalChild);
 
-                var parentRect = CanvasItem.Rect().ActLike<IRect>();
+                var parentRect = CanvasItem.Rect();
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
 
@@ -99,9 +99,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void SetCursorToHandle(FrameworkElement handle)
         {
-            var handleRect = this.GetRectRelativeToParent(handle).ActLike<IRect>();
-            var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, ActualWidth, ActualHeight);
-            //handle.Cursor = WindowsSizeCursorsThumbCursorConverter.GetCursor(handleRect, parentRect);
+            // TODO: This has to set the cursor in WinRT. Pretty useless, since it's touch-enabled
         }
 
         #endregion
@@ -148,13 +146,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         public static Rect GetRectRelativeToParent(this UIElement parent, UIElement child)
         {
             var transform = parent.TransformToVisual(child);
-            var point = transform.TransformPoint(new Point());
-            return new Rect(point, child.RenderSize);
+            var point = transform.TransformPoint(new FoundationPoint());
+            return new Rect(Mapper.Map<Point>(point), Mapper.Map<Size>(child.RenderSize));
         }
-
-
-        /// <summary>
-
+        
     }
 
 }

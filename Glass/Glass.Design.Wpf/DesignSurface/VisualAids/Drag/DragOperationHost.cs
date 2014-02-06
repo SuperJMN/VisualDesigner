@@ -1,14 +1,14 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using AutoMapper;
 using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using ImpromptuInterface;
-using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;
+using Point = Glass.Design.Pcl.Core.Point;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 {
@@ -40,7 +40,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
             }
 
             var position = mouseEventArgs.GetPosition(FrameOfReference);
-            var newPoint = position.ActLike<IPoint>();
+            var newPoint = Mapper.Map<Point>(position);
             DragOperation.NotifyNewPosition(newPoint);
 
         
@@ -51,7 +51,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
             if (DragOperation != null)
             {
                 var position = mouseButtonEventArgs.GetPosition(FrameOfReference);
-                DragOperation.NotifyNewPosition(position.ActLike<IPoint>());
+                DragOperation.NotifyNewPosition(Mapper.Map<Point>(position));
                 FrameOfReference.ReleaseMouseCapture();
                 FrameOfReference.MouseMove -= FrameOfReferenceOnMouseMove;
                 DragOperation = null;                
@@ -100,7 +100,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         {
             args.Handled = true;
 
-            var startingPoint = args.GetPosition(FrameOfReference).ActLike<IPoint>();
+            var startingPoint = Mapper.Map<Point>(args.GetPosition(FrameOfReference));
             DragOperation = new DragOperation(ItemToDrag, startingPoint, SnappingEngine);            
 
             FrameOfReference.CaptureMouse();

@@ -177,7 +177,7 @@ namespace Glass.Design.Pcl.Canvas
         {
             var currentSeparation = GetHorizontalSpaceBetween(item1, item2);
             var deltaSeparation = separation - currentSeparation;
-            var offset = ServiceLocator.CoreTypesFactory.CreatePoint(deltaSeparation, 0);
+            var offset = new Point(deltaSeparation, 0);
             item2.Offset(offset);
         }
     }

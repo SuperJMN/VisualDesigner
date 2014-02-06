@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using Glass.Design.Pcl.Core;
-using Glass.Design.Wpf.Core;
-using ImpromptuInterface;
+﻿using Glass.Design.Pcl.Core;
 using Point = System.Windows.Point;
 
 namespace Glass.Design.WpfTester
@@ -11,12 +8,6 @@ namespace Glass.Design.WpfTester
     /// </summary>
     public partial class App
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-
-            ServiceLocator.CoreTypesFactory = new CoreTypesFactoryWpf();
-        }
     }
 
     

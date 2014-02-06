@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using Windows.Foundation;
 using PostSharp.Patterns.Collections;
 using StyleMVVM.DependencyInjection;
-using StyleMVVM.View;
 using StyleMVVM.ViewModel;
 
 namespace ComicDesigner
@@ -10,6 +9,8 @@ namespace ComicDesigner
     public class MainViewModel : BaseViewModel
     {
         private AdvisableCollection<ModelObject> items;
+
+        private Rect p;
 
         [ImportConstructor]
         public MainViewModel()

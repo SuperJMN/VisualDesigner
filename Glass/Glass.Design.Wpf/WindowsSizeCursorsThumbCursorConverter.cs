@@ -1,9 +1,8 @@
 ﻿using System.Windows.Input;
+using AutoMapper;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Wpf.Converters;
-using ImpromptuInterface;
-using Point = System.Windows.Point;
 
 
 namespace Glass.Design.Wpf
@@ -30,7 +29,7 @@ namespace Glass.Design.Wpf
 
             var center = new Point(halfSide, halfSide);
 
-            var deg = Geometrics.GetDegress(center.ActLike<IPoint>(), end.ActLike<IPoint>());
+            var deg = Geometrics.GetDegress(Mapper.Map<Point>(center), end);
 
             var segment = GetHotSpotSegment(deg);
 

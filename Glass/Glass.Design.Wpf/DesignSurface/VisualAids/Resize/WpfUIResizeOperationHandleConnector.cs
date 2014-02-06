@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using ImpromptuInterface;
+using Point = Glass.Design.Pcl.Core.Point;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
@@ -54,14 +55,15 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         {
             var x = CanvasItem.Width * handlePoint.X + CanvasItem.Left;
             var y = CanvasItem.Height * handlePoint.Y + CanvasItem.Top;
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return new Point(x, y);
         }
 
         private void ParentOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (ResizeOperation != null)
             {
-                ResizeOperation.UpdateHandlePosition(mouseButtonEventArgs.GetPosition(Parent).ActLike<IPoint>());
+                var position = Mapper.Map<Point>(mouseButtonEventArgs.GetPosition(Parent));
+                ResizeOperation.UpdateHandlePosition(position);
                 Parent.ReleaseMouseCapture();
                 Parent.MouseMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
@@ -79,7 +81,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         private void ParentOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
         {
             var position = mouseEventArgs.GetPosition(Parent);
-            var newPoint = position.ActLike<IPoint>();
+            var newPoint = Mapper.Map<Point>(position);
             ResizeOperation.UpdateHandlePosition(newPoint);
 
             if (!IsDragging)

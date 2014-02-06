@@ -4,6 +4,8 @@ using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;
 
+using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
+
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 {
     public class EdgeAdorner : CanvasItemAdorner
@@ -15,7 +17,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
             //Pen.DashStyle = new DashStyle(new[] { 2D, 2D }, 0);
         }
 
-        public EdgeAdorner(UIElement adornedElement, ICanvasItem canvasItem) : base(adornedElement, canvasItem)
+        public EdgeAdorner(IUIElement adornedElement, ICanvasItem canvasItem) : base(adornedElement, canvasItem)
         {
         }
 
@@ -24,7 +26,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         
         public Edge Edge { get; set; }
 
-        //public EdgeAdorner([NotNull] UIElement adornedElement, CanvasItem item, Edge edge)
+        //public EdgeAdorner([NotNull] IUIElement adornedElement, CanvasItem item, Edge edge)
         //    : base(adornedElement, item)
         //{
         //    Edge = edge;
@@ -59,5 +61,6 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 
         //    drawingContext.DrawLine(Pen, point1, point2);
         //}
+        public override bool IsHitTestVisible { get; set; }
     }
 }

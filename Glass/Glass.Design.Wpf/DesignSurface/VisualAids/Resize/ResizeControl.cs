@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using AutoMapper;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using ImpromptuInterface;
+using Rect = Glass.Design.Pcl.Core.Rect;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
@@ -79,9 +80,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             var logicalChildren = enumerable.OfType<FrameworkElement>();
             foreach (var logicalChild in logicalChildren)
             {
-                var childRect = logicalChild.GetRectRelativeToParent().ActLike<IRect>();
+                var rectRelativeToParent = Mapper.Map<Rect>(logicalChild.GetRectRelativeToParent());
+                var childRect = rectRelativeToParent;
 
-                var parentRect = CanvasItem.Rect().ActLike<IRect>();
+                var parentRect = Mapper.Map<Rect>(CanvasItem.Rect());
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
                 
@@ -92,8 +94,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
         private void SetCursorToHandle(FrameworkElement handle)
         {
-            var handleRect = handle.GetRectRelativeToParent().ActLike<IRect>();
-            var parentRect = ServiceLocator.CoreTypesFactory.CreateRect(0, 0, ActualWidth, ActualHeight);
+            var handleRect = Mapper.Map<Rect>(handle.GetRectRelativeToParent());
+            var parentRect = new Rect(0, 0, ActualWidth, ActualHeight);
             handle.Cursor = WindowsSizeCursorsThumbCursorConverter.GetCursor(handleRect, parentRect);
         }
 

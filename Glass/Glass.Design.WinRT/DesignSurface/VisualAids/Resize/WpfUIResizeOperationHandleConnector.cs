@@ -1,34 +1,34 @@
 using System.Collections.Generic;
 using Windows.Devices.Input;
-using Windows.Foundation;
 using Windows.UI.Xaml;
+using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using ImpromptuInterface;
+using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 {
     public class WpfUIResizeOperationHandleConnector
     {
         private ICanvasItem CanvasItem { get; set; }
-        private UIElement Parent { get; set; }
+        private IUIElement Parent { get; set; }
         private IEdgeSnappingEngine SnappingEngine { get; set; }
 
-        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, UIElement parent, IEdgeSnappingEngine snappingEngine)
+        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IUIElement parent, IEdgeSnappingEngine snappingEngine)
         {
             CanvasItem = canvasItem;
             Parent = parent;
             SnappingEngine = snappingEngine;
-            Handles = new Dictionary<UIElement, IPoint>();
+            Handles = new Dictionary<IUIElement, IPoint>();
         }
 
-        private IDictionary<UIElement, IPoint> Handles { get; set; }
+        private IDictionary<IUIElement, IPoint> Handles { get; set; }
         private ResizeOperation ResizeOperation { get; set; }
 
 
-        public void RegisterHandle(UIElement handle, IPoint point)
+        public void RegisterHandle(IUIElement handle, IPoint point)
         {
             Handles.Add(handle, point);
             //handle.PreviewMouseLeftButtonDown += HandleOnMouseLeftButtonDown;
@@ -38,13 +38,13 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         {
             //mouseButtonEventArgs.Handled = true;
 
-            var inputElement = (UIElement)sender;
+            var inputElement = (IUIElement)sender;
 
             var handlePoint = Handles[inputElement];
 
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
-            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);            
+            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);
             //Parent.CaptureMouse();
 
             //Parent.MouseMove += ParentOnMouseMove;
@@ -55,14 +55,15 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         {
             var x = CanvasItem.Width * handlePoint.X + CanvasItem.Left;
             var y = CanvasItem.Height * handlePoint.Y + CanvasItem.Top;
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return new Point(x, y);
         }
 
         private void ParentOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (ResizeOperation != null)
             {
-                ResizeOperation.UpdateHandlePosition(mouseButtonEventArgs.GetPosition(Parent).ActLike<IPoint>());
+                var newPoint = Mapper.Map<Point>(mouseButtonEventArgs.GetPosition(Parent));
+                ResizeOperation.UpdateHandlePosition(newPoint);
                 //Parent.ReleaseMouseCapture();
                 //Parent.MouseMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
@@ -93,7 +94,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
     internal class MouseButtonEventArgs
     {
-        public Point GetPosition(UIElement parent)
+        public Point GetPosition(IUIElement parent)
         {
             throw new System.NotImplementedException();
         }

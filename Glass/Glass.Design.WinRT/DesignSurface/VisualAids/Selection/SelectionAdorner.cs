@@ -3,14 +3,17 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.PlatformAbstraction;
+using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
 {
-    public class CanvasItemAdorner : UIElement
+    public abstract class CanvasItemAdorner : IUIElement
     {
         private ICanvasItem canvasItem;
 
-        public CanvasItemAdorner(UIElement adornedElement, ICanvasItem canvasItem)
+        public CanvasItemAdorner(IUIElement adornedElement, ICanvasItem canvasItem)
          //   : base(adornedElement)
         {        
             CanvasItem = canvasItem;
@@ -50,10 +53,68 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         {
             throw new System.NotImplementedException();
         }
+
+        public event FingerManipulationEventHandler FingerDown;
+        public event FingerManipulationEventHandler FingerMove;
+        public event FingerManipulationEventHandler FingerUp;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public double GetCoordinate(CoordinatePart part)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetCoordinate(CoordinatePart part, double value)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public CanvasItemCollection Children { get; private set; }
+        public double Right { get; private set; }
+        public double Bottom { get; private set; }
+        public ICanvasItemContainer Parent { get; private set; }
+        public abstract bool IsHitTestVisible { get; set; }
+
+        public void AddAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
-    public class Adorner : UIElement
+    public class Adorner : IUIElement
     {
+        public event FingerManipulationEventHandler FingerDown;
+        public event FingerManipulationEventHandler FingerMove;
+        public event FingerManipulationEventHandler FingerUp;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public double GetCoordinate(CoordinatePart part)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetCoordinate(CoordinatePart part, double value)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public CanvasItemCollection Children { get; private set; }
+        public double Right { get; private set; }
+        public double Bottom { get; private set; }
+        public ICanvasItemContainer Parent { get; private set; }
+        public bool IsVisible { get; set; }
+        public bool IsHitTestVisible { get; set; }
+
+        public void AddAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     internal class SelectionAdorner : CanvasItemAdorner
@@ -76,7 +137,9 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
             get { return PenInstance; }
         }
 
-        public SelectionAdorner(UIElement adornedElement, ICanvasItem canvasItem)
+        public override bool IsHitTestVisible { get; set; }
+
+        public SelectionAdorner(IUIElement adornedElement, ICanvasItem canvasItem)
             : base(adornedElement, canvasItem)
         {        
         }

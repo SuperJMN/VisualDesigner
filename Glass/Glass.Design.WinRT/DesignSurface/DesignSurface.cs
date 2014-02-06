@@ -240,6 +240,8 @@ namespace Glass.Design.WinRT.DesignSurface
             throw new NotImplementedException();
         }
 
+        public bool IsVisible { get; set; }
+
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;

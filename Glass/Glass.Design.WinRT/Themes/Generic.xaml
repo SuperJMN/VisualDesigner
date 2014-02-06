@@ -21,7 +21,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" />
+                    <Canvas  />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

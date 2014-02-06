@@ -47,7 +47,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         {
             if (ResizingAdorner != null)
             {
-                ResizingAdorner.Visibility = Visibility.Visible;                
+                ResizingAdorner.IsVisible = true;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         {
             if (ResizingAdorner != null)
             {
-                ResizingAdorner.Visibility = Visibility.Collapsed;
+                ResizingAdorner.IsVisible = false;
             }
         }
 
@@ -117,12 +117,12 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
                     SetupDragOperationHost(new UIElementAdapter(movingControl));
 
                     //MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, WrappedSelectedItems);
-                    
+
                     var resizeControl = new ResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine);
-                
+
                     //ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, WrappedSelectedItems);
                     AdornerLayer.Add(MovingAdorner);
-                    AdornerLayer.Add(ResizingAdorner);                    
+                    AdornerLayer.Add(ResizingAdorner);
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         {
             var items = SelectionAdorners.Keys.ToList();
 
-            if (WrappedSelectedItems !=null)
+            if (WrappedSelectedItems != null)
             {
                 WrappedSelectedItems.Dispose();
             }
@@ -191,7 +191,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
             }
             else
             {
-                
+
                 WrappedSelectedItems = null;
             }
         }
@@ -212,7 +212,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
     {
         public UIElementAdapter(MovingControl movingControl)
         {
-            
+
 
         }
 
@@ -239,6 +239,9 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         {
             throw new NotImplementedException();
         }
+
+        public bool IsVisible { get; set; }
+        public bool IsHitTestVisible { get; set; }
 
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;

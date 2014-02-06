@@ -1,21 +1,22 @@
 ﻿using Windows.UI.Xaml;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;
+using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT
 {
     public class WrappingAdorner : CanvasItemAdorner
     {
 
-        private UIElement chrome;
+        private IUIElement chrome;
 
-        public WrappingAdorner(UIElement adornedElement, UIElement chrome, ICanvasItem canvasItem)
+        public WrappingAdorner(IUIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
             : base(adornedElement, canvasItem)
         {
             Chrome = chrome;
         }
 
-        public UIElement Chrome { get; set; }
+        public IUIElement Chrome { get; set; }
 
         //protected override int VisualChildrenCount
         //{
@@ -35,7 +36,7 @@ namespace Glass.Design.WinRT
         //    return chrome;
         //}
 
-        //public UIElement Chrome
+        //public IUIElement Chrome
         //{
         //    get { return chrome; }
         //    set
@@ -66,5 +67,6 @@ namespace Glass.Design.WinRT
         //    chrome.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
         //    return size;
         //}
+        public override bool IsHitTestVisible { get; set; }
     }
 }

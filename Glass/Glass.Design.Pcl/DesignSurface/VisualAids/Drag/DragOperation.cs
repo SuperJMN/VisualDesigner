@@ -39,7 +39,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             var delta = newPoint.Subtract(StartingPoint);
             var newChildLocation = ChildStartingPoint.Add(delta);
 
-            var originalRect = ServiceLocator.CoreTypesFactory.CreateRect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);
+            var originalRect = new Rect(newChildLocation.X, newChildLocation.Y, Child.Width, Child.Height);
 
             SnappingEngine.SetSourceRectForDrag(originalRect);                                                
         }

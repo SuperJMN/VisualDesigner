@@ -3,21 +3,14 @@ using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using Glass.Design.Wpf.Core;
-using ImpromptuInterface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Point = Glass.Design.Pcl.Core.Point;
 
 namespace UnitTestProject1
 {
     [TestClass]
     public class ResizeTests
     {
-
-        static ResizeTests()
-        {
-            ServiceLocator.CoreTypesFactory = new CoreTypesFactoryWpf();
-        }
-
         [TestMethod]
         public void IncreaseWidthTopRight()
         {
@@ -29,8 +22,8 @@ namespace UnitTestProject1
                                  Top = 20,
                              };
 
-            var hookPoint = new Point(40, 20).ActLike<IPoint>();
-            var newPoint = new Point(50, 20).ActLike<IPoint>();
+            var hookPoint = new Point(40, 20);
+            var newPoint = new Point(50, 20);
 
             var resizeOperation = new ResizeOperation(canvasItem, newPoint , new NoEffectsCanvasItemSnappingEngine());
             resizeOperation.UpdateHandlePosition(newPoint);

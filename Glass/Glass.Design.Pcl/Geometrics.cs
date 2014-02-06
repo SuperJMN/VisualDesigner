@@ -43,7 +43,7 @@ namespace Glass.Design.Pcl
             var distanceY = halfPointY - a.Y;
             var y = halfPointY + distanceY;
 
-            var opposite = ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            var opposite = new Point(x, y);
 
             return opposite;
         }

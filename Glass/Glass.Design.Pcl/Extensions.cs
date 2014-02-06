@@ -19,17 +19,17 @@ namespace Glass.Design.Pcl
 
         public static IRect Rect(this ICanvasItem item)
         {
-            return ServiceLocator.CoreTypesFactory.CreateRect(item.Left, item.Top, item.Width, item.Height);
+            return new Rect(item.Left, item.Top, item.Width, item.Height);
         }
 
         public static IPoint MiddlePoint(this IRect item)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(item.Left + item.Width / 2, item.Top + item.Height / 2);
+            return new Point(item.Left + item.Width / 2, item.Top + item.Height / 2);
         }
 
         public static IPoint GetLocation(this IPositionable positionable)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(positionable.Left, positionable.Top);
+            return new Point(positionable.Left, positionable.Top);
         }
 
         public static ISize GetSize(this ISizable sizable)
@@ -57,28 +57,28 @@ namespace Glass.Design.Pcl
 
         public static IPoint Subtract(this IPoint point, IVector vector)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(point.X - vector.X, point.Y - vector.Y);
+            return new Point(point.X - vector.X, point.Y - vector.Y);
         }
 
         public static IPoint Subtract(this IPoint point, IPoint vector)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(point.X - vector.X, point.Y - vector.Y);
+            return new Point(point.X - vector.X, point.Y - vector.Y);
         }
 
         public static IPoint Add(this IPoint point, IPoint vector)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(point.X + vector.X, point.Y + vector.Y);
+            return new Point(point.X + vector.X, point.Y + vector.Y);
         }
 
 
         public static IPoint Add(this IPoint point, IVector vector)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(point.X + vector.X, point.Y + vector.Y);
+            return new Point(point.X + vector.X, point.Y + vector.Y);
         }
 
         public static IPoint Swap(this IPoint point)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(point.Y, point.X);
+            return new Point(point.Y, point.X);
         }
 
 
@@ -87,21 +87,21 @@ namespace Glass.Design.Pcl
             var x = 2 * middlePoint.X - handlePosition.X;
             var y = 2 * middlePoint.Y - handlePosition.Y;
 
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return new Point(x, y);
         }
 
         public static IPoint FromParentToLocal(this IPoint origin, IPoint destination)
         {
             var x = origin.X - destination.X;
             var y = origin.Y - destination.Y;
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return new Point(x, y);
         }
 
         public static IPoint FromLocalToParent(this IPoint origin, IPoint destination)
         {
             var x = origin.X + destination.X;
             var y = origin.Y + destination.Y;
-            return ServiceLocator.CoreTypesFactory.CreatePoint(x, y);
+            return new Point(x, y);
         }
 
         public static Range Swap(this Range range)
@@ -116,7 +116,7 @@ namespace Glass.Design.Pcl
             var propX = MathOperations.SquareRounding(middleThumb.X, parentSize.Width, 3) / 3D;
             var propY = MathOperations.SquareRounding(middleThumb.Y, parentSize.Height, 3) / 3D;
 
-            return ServiceLocator.CoreTypesFactory.CreatePoint(propX, propY);
+            return new Point(propX, propY);
         }
 
         public static IVector ToVector(this ISize size)
@@ -181,7 +181,7 @@ namespace Glass.Design.Pcl
             var right = items.Max(item => item.Right);
             var bottom = items.Max(item => item.Bottom);
 
-            return ServiceLocator.CoreTypesFactory.CreateRect(left, top, right - left, bottom - top);
+            return new Rect(left, top, right - left, bottom - top);
         }
 
         public static void Offset(this ICanvasItem canvasItem, IPoint point)
@@ -198,7 +198,7 @@ namespace Glass.Design.Pcl
 
         public static IPoint Negative(this IPoint point)
         {
-            return ServiceLocator.CoreTypesFactory.CreatePoint(-point.X, -point.Y);
+            return new Point(-point.X, -point.Y);
         }
 
         public static IRect GetBoundingRect(IList<ICoordinate> children)
@@ -209,7 +209,7 @@ namespace Glass.Design.Pcl
             var width = GetWidth(children);
             var height = GetHeight(children);
 
-            return ServiceLocator.CoreTypesFactory.CreateRect(left, top, width, height);
+            return new Rect(left, top, width, height);
         }
 
         public static double GetWidth(this IEnumerable<ICoordinate> children)
