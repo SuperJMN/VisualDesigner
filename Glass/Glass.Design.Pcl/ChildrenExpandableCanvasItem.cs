@@ -8,13 +8,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Pcl
 {
-    public class ChildrenExpandableCanvasItem : CanvasItem.CanvasItem, IDisposable
+    public class ChildrenExpandableCanvasItem : CanvasVisualItem, IDisposable
     {
         protected ChildrenExpandableCanvasItem(IEnumerable<ICanvasItem> children)
         {

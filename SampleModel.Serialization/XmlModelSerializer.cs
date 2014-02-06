@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using AutoMapper;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 
 namespace SampleModel.Serialization
 {

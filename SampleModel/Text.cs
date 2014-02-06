@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
-using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Label : CanvasItemModel
+    public class Label : CanvasModelItemModel
     {
         public string Text { get; set; }
     }

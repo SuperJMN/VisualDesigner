@@ -2,7 +2,7 @@
 
 namespace SampleModel
 {
-    public class Mario : CanvasItemModel
+    public class Mario : CanvasModelItemModel
     {
          
     }

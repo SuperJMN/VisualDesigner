@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Glass.Design.Pcl.Annotations;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
@@ -75,14 +75,10 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
         private void StartRecorderOperation()
         {
-            Recorder recorder = this.ItemToDrag.GetRecorder();
-
-            if (recorder != null)
-            {
-                // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
-                const string operationName = "Move";
-                this.dragRecordingScope = recorder.StartAtomicScope(operationName);
-            }
+            // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
+            const string operationName = "Move";
+            this.dragRecordingScope = CanvasModelItem.Recorder.StartAtomicScope(operationName);
+            
         }
 
        

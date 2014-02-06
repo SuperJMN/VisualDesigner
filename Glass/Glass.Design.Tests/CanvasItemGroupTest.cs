@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
@@ -12,7 +12,7 @@ namespace UnitTestProject1
             get
             {
 
-                var item = new CanvasItem
+                var item = new CanvasModelItem
                            {
                                Left = 10,
                                Width = 120,
@@ -28,7 +28,7 @@ namespace UnitTestProject1
         {
             get
             {
-                var item = new CanvasItem
+                var item = new CanvasModelItem
                            {
                                Left = 40,
                                Width = 110,
@@ -193,7 +193,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void ItemsWithZeroWidth()
         {
-            var item = new CanvasItem() { Left = 0, Top = 0, Width = 0, Height = 0 };
+            var item = new CanvasModelItem() { Left = 0, Top = 0, Width = 0, Height = 0 };
 
             var items = new List<ICanvasItem>() { item };
 
@@ -204,7 +204,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void ItemsWithZeroHeight()
         {
-            var item = new CanvasItem() { Left = 0, Top = 0, Width = 0, Height = 0 };
+            var item = new CanvasModelItem() { Left = 0, Top = 0, Width = 0, Height = 0 };
 
             var items = new List<ICanvasItem>() { item };
 

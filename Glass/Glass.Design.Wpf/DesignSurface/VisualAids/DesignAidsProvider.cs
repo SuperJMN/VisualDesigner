@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;

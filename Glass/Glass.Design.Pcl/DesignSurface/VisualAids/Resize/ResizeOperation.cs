@@ -1,6 +1,6 @@
 ﻿using System;
 using Glass.Design.Pcl.Annotations;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using PostSharp.Patterns.Recording;
@@ -50,7 +50,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             SetCanResize(child, handlePoint);
             Opposite = HandlePoint.GetOpposite(child.Rect().MiddlePoint());
             SnappingEngine = snappingEngine;
-            this.recordingScope = child.GetRecorder().StartAtomicScope("Resize", false);
+            this.recordingScope = CanvasModelItem.Recorder.StartAtomicScope("Resize", false);
         }
 
         private void SetCanResize(ICanvasItem canvasItem, IPoint handlePoint)

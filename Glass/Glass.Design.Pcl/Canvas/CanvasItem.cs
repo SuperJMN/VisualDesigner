@@ -1,18 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using Glass.Design.Pcl.Core;
-using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Contracts;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;
 
-namespace Glass.Design.Pcl.CanvasItem
+// ReSharper disable CompareOfFloatsByEqualityOperator
+
+namespace Glass.Design.Pcl.Canvas
 {
     [NotifyPropertyChanged]
-    [Recordable]
-    public class CanvasItem : ICanvasItem, IRecordableCallback
+    public abstract class CanvasItem : ICanvasItem, IRecordableCallback
     {
         [NotRecorded]
         private bool undoing;
@@ -21,16 +20,15 @@ namespace Glass.Design.Pcl.CanvasItem
         [NotRecorded]
         protected bool IsUpdating { get; private set; }
 
-        private CanvasItemCollection children;
 
-        public CanvasItem()
+        protected CanvasItem()
         {
-            this.Width = this.previousWidth = 1;
-            this.Height = this.previousHeight = 1;
+            this.previousWidth = 1;
+            this.previousHeight = 1;
           
         }
 
-        public ChildrenPositioning ChildrenPositioning { get; protected set; }
+        internal ChildrenPositioning ChildrenPositioning { get; set; }
 
 
         [IgnoreAutoChangeNotification]
@@ -39,30 +37,21 @@ namespace Glass.Design.Pcl.CanvasItem
             return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
         } }
 
-        public virtual CanvasItemCollection Children
-        {
-            get
-            {
-                // Lazy initialization ensures the collection is not created if the property is overridden.
-                if ( this.children == null )
-                    this.children = new CanvasItemCollection();
-                return children;
-            }
-        }
+        public abstract CanvasItemCollection Children { get; }
 
-        public double Left { get; set; }
+        public abstract double Left { get; set; }
 
-        public double Top { get; set; }
+        public abstract double Top { get; set; }
 
         [StrictlyGreaterThan(0)]
-        public double Width { get; set; }
+        public abstract double Width { get; set; }
 
         [StrictlyGreaterThan(0)]
-        public double Height { get; set; }
+        public abstract double Height { get; set; }
 
-        public double Right { get { return Left + Width; } }
+        public double Right { get { return this.Left + this.Width; } }
 
-        public double Bottom { get { return Top + Height; } }
+        public double Bottom { get { return this.Top + this.Height; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -91,6 +80,7 @@ namespace Glass.Design.Pcl.CanvasItem
         
         protected virtual void OnResized(double widthFactor, double heightFactor)
         {
+
             if (widthFactor == 1 && heightFactor == 1) return;
 
             foreach (ICanvasItem child in this.Children)
@@ -174,7 +164,7 @@ namespace Glass.Design.Pcl.CanvasItem
                 }
             }
 
-            PropertyChangedEventHandler handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -239,11 +229,4 @@ namespace Glass.Design.Pcl.CanvasItem
             this.undoing = false;
         }
     }
-
-    public enum ChildrenPositioning
-    {
-        Relative,
-        Absolute
-    }
-
 }

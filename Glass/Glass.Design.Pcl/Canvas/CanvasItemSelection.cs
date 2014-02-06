@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Glass.Design.Pcl.CanvasItem
+namespace Glass.Design.Pcl.Canvas
 {
     public class CanvasItemSelection : ChildrenExpandableCanvasItem
     {        

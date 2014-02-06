@@ -2,7 +2,7 @@
 using System.Linq;
 using Glass.Design.Pcl.Core;
 
-namespace Glass.Design.Pcl.CanvasItem
+namespace Glass.Design.Pcl.Canvas
 {
     public static class CanvasItemRelocator
     {

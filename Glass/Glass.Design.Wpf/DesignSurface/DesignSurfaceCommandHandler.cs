@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Recording;
 using HorizontalAlignment = Glass.Design.Pcl.Core.HorizontalAlignment;
@@ -115,9 +115,8 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             List<ICanvasItem> selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
 
-            Recorder recorder = selectedCanvasItems.GetRecorder();
 
-            using (RecordingScope recordingScope = recorder.StartAtomicScope("Ungroup"))
+            using (RecordingScope recordingScope = CanvasModelItem.Recorder.StartAtomicScope("Ungroup"))
             {
 
                 foreach (var selectedItem in selectedCanvasItems)
@@ -146,9 +145,7 @@ namespace Glass.Design.Wpf.DesignSurface
             IEnumerable<ICanvasItem> items = DesignSurface.GetSelectedCanvasItems().ToList();
             ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            Recorder recorder = items.GetRecorder();
-
-            using (RecordingScope scope = recorder.StartAtomicScope("Group"))
+            using (RecordingScope scope = CanvasModelItem.Recorder.StartAtomicScope("Group"))
             {
 
                 // We have to *first* add the group to the document to make it recordable.

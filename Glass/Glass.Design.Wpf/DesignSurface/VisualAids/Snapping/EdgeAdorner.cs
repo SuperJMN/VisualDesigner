@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Wpf.Annotations;

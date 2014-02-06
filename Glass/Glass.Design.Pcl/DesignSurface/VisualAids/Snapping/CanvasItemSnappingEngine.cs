@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Snapping

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using ImpromptuInterface;

@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
-using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Sonic : CanvasItemModel
+    public class Sonic : CanvasModelItemModel
     {
          
     }

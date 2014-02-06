@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
-using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Link : CanvasItemModel
+    public class Link : CanvasModelItemModel
     {
          
     }

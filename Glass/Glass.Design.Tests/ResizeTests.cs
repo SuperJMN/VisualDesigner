@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
@@ -21,7 +21,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void IncreaseWidthTopRight()
         {
-            var canvasItem = new CanvasItem
+            var canvasItem = new CanvasModelItem
                              {
                                  Width = 30,
                                  Height = 30,

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Selection

@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using Glass.Design.Pcl.CanvasItem;
+using Glass.Design.Pcl.Canvas;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;
 
 namespace SampleModel
 {
-    public class CanvasItemModel : CompositeCanvasItem
+    public class CanvasModelItemModel : CanvasModelItem
     {
         private static int nextId;
         private readonly int id = Interlocked.Increment(ref nextId);
 
-        public CanvasItemModel()
+        public CanvasModelItemModel()
         {
             this.Name = this.GetType().Name + id;
         }

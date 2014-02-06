@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
-using Glass.Design.Pcl.CanvasItem;
 
 namespace SampleModel
 {
-    public class Shape : CanvasItemModel
+    public class Shape : CanvasModelItemModel
     {
         public Color FillColor { get; set; }
     }
