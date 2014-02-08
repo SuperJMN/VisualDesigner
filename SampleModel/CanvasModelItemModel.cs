@@ -41,7 +41,7 @@ namespace SampleModel
         }
 
         [Surrogate]
-        public CanvasItemCollection Children { get; private set; }
+        public CanvasItemCollection Children { get; set; }
 
     }
 }

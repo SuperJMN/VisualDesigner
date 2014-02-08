@@ -71,10 +71,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public double Top { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-        public CanvasItemCollection Children { get; private set; }
-        public double Right { get; private set; }
-        public double Bottom { get; private set; }
-        public ICanvasItemContainer Parent { get; private set; }
+        public CanvasItemCollection Children { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
         public abstract bool IsHitTestVisible { get; set; }
 
         public void AddAdorner(IAdorner adorner)
@@ -105,10 +105,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public double Top { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-        public CanvasItemCollection Children { get; private set; }
-        public double Right { get; private set; }
-        public double Bottom { get; private set; }
-        public ICanvasItemContainer Parent { get; private set; }
+        public CanvasItemCollection Children { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
         public bool IsVisible { get; set; }
         public bool IsHitTestVisible { get; set; }
 

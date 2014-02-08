@@ -32,12 +32,16 @@ namespace Glass.Design.Pcl.Canvas
 
 
         [IgnoreAutoChangeNotification]
-        public ICanvasItemContainer Parent { get
+        public ICanvasItemContainer Parent
+        {
+            get
         {
             return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
-        } }
+        }
+            set { throw new NotImplementedException(); }
+        }
 
-        public abstract CanvasItemCollection Children { get; }
+        public abstract CanvasItemCollection Children { get; set; }
 
         public abstract double Left { get; set; }
 
@@ -49,9 +53,17 @@ namespace Glass.Design.Pcl.Canvas
         [StrictlyGreaterThan(0)]
         public abstract double Height { get; set; }
 
-        public double Right { get { return this.Left + this.Width; } }
+        public double Right
+        {
+            get { return this.Left + this.Width; }
+            set { throw new NotImplementedException(); }
+        }
 
-        public double Bottom { get { return this.Top + this.Height; } }
+        public double Bottom
+        {
+            get { return this.Top + this.Height; }
+            set { throw new NotImplementedException(); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

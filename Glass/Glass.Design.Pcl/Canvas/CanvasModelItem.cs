@@ -23,7 +23,11 @@ namespace Glass.Design.Pcl.Canvas
             this.Height = 1;
         }
 
-        public override CanvasItemCollection Children { get { return this.items; } }
+        public override CanvasItemCollection Children
+        {
+            get { return this.items; }
+            set { throw new System.NotImplementedException(); }
+        }
 
         public override double Left { get; set; }
         public override double Top { get; set; }

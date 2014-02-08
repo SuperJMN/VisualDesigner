@@ -6,7 +6,7 @@ namespace Glass.Design.Pcl.DesignSurface
 {
     public static class CanvasSelectorExtensions
     {
-        public static IEnumerable<ICanvasItem> GetSelectedCanvasItems(this ICanvasSelector canvasSelector)
+        public static IEnumerable<ICanvasItem> GetSelectedCanvasItems(this IMultiSelector canvasSelector)
         {
             return canvasSelector.SelectedItems.Cast<ICanvasItem>();
         }

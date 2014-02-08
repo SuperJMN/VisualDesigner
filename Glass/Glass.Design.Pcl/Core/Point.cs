@@ -26,7 +26,8 @@ namespace Glass.Design.Pcl.Core
 
         public void Offset(double offsetX, double offsetY)
         {
-            throw new System.NotImplementedException();
+            X += offsetX;
+            Y += offsetY;
         }
 
         public bool Equals(Point other)

@@ -4,7 +4,7 @@ using Glass.Design.Pcl.PlatformAbstraction;
 
 namespace Glass.Design.Pcl.DesignSurface
 {
-    public interface IDesignSurface : IUIElement, ICanvasSelector
+    public interface IDesignSurface : IMultiSelector, IUIElement
     {               
         ICommand GroupCommand { get; }
         ICanvasItemContainer CanvasDocument { get; }

@@ -16,8 +16,8 @@ using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.Select
 
 namespace Glass.Design.Wpf.DesignSurface
 {
-    [NotifyPropertyChanged]
-    public sealed class DesignSurface : MultiSelector, IDesignSurface, IMultiSelector
+    //[NotifyPropertyChanged]
+    public sealed class DesignSurface : MultiSelector, IDesignSurface
     {
 
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
@@ -123,6 +123,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
         private ICanvasItem _rootCanvasItem;
+        private CanvasItemCollection children;
 
         [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode
@@ -202,33 +203,52 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event FingerManipulationEventHandler FingerDown;
+        public event FingerManipulationEventHandler FingerMove;
+        public event FingerManipulationEventHandler FingerUp;
+        public event PropertyChangedEventHandler PropertyChanged;        
+
         public double GetCoordinate(CoordinatePart part)
         {
             throw new NotImplementedException();
         }
 
-        public void SetCoordinate(CoordinatePart part, double value)
+        void ICoordinate.SetCoordinate(CoordinatePart part, double value)
         {
             throw new NotImplementedException();
         }
 
-        public double Left { get; set; }
-        public double Top { get; set; }
-        public CanvasItemCollection Children { get; private set; }
-        public double Right { get; private set; }
-        public double Bottom { get; private set; }
-        public ICanvasItemContainer Parent { get; private set; }
-        public void AddAdorner(IAdorner adorner)
+        void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        double IPositionable.Left { get; set; }
+        double IPositionable.Top { get; set; }
+
+        CanvasItemCollection ICanvasItemContainer.Children
+        {
+            get { return children; }
+            set { children = value; }
+        }
+
+        double ICanvasItem.Right { get; set; }
+        double ICanvasItem.Bottom { get; set; }
+        ICanvasItemContainer ICanvasItem.Parent { get; set; }
+
+        void IUIElement.AddAdorner(IAdorner adorner)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsVisible { get; set; }
-
-
-        public event FingerManipulationEventHandler FingerDown;
-        public event FingerManipulationEventHandler FingerMove;
-        public event FingerManipulationEventHandler FingerUp;
+        bool IUIElement.IsVisible { get; set; }
     }
 }

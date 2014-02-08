@@ -232,10 +232,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         public double Top { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-        public CanvasItemCollection Children { get; private set; }
-        public double Right { get; private set; }
-        public double Bottom { get; private set; }
-        public ICanvasItemContainer Parent { get; private set; }
+        public CanvasItemCollection Children { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
         public void AddAdorner(IAdorner adorner)
         {
             throw new NotImplementedException();

@@ -57,19 +57,22 @@ namespace Glass.Design.Wpf
         public double Right
         {
             get { return Left + Width; }
+            set { throw new NotImplementedException(); }
         }
 
         public double Bottom
         {
             get { return Top + Height; }
+            set { throw new NotImplementedException(); }
         }
 
         ICanvasItemContainer ICanvasItem.Parent
         {
             get { throw new NotSupportedException(); }
+            set { throw new NotImplementedException(); }
         }
 
-        public CanvasItemCollection Children { get; private set; }
+        public CanvasItemCollection Children { get; set; }
       
 
       

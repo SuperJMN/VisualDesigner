@@ -6,9 +6,10 @@ namespace Glass.Design.Pcl.Core
         private double y;
         private double width;
         private double height;
-        
 
-        public Rect(Point location, Size size) : this()
+
+        public Rect(Point location, Size size)
+            : this()
         {
             x = location.X;
             y = location.Y;
@@ -17,8 +18,12 @@ namespace Glass.Design.Pcl.Core
         }
 
         public Rect(double left, double top, double width, double height)
+            : this()
         {
-            throw new System.NotImplementedException();
+            x = left;
+            y = top;
+            Width = width;
+            Height = height;
         }
 
         public double GetCoordinate(CoordinatePart part)
@@ -31,8 +36,8 @@ namespace Glass.Design.Pcl.Core
             throw new System.NotImplementedException();
         }
 
-        public double Left { get; private set; }
-        public double Top { get; private set; }
+        public double Left { get { return X; } }
+        public double Top { get { return Y; } }
 
         public double Width
         {
@@ -68,8 +73,8 @@ namespace Glass.Design.Pcl.Core
             set { y = value; }
         }
 
-        public double Right { get; private set; }
-        public double Bottom { get; private set; }
+        public double Right { get { return X + Width; } }
+        public double Bottom { get { return Y + Height; } }
 
         public bool Equals(Rect other)
         {
@@ -79,7 +84,7 @@ namespace Glass.Design.Pcl.Core
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Rect && Equals((Rect) obj);
+            return obj is Rect && Equals((Rect)obj);
         }
 
         public override int GetHashCode()
@@ -87,9 +92,9 @@ namespace Glass.Design.Pcl.Core
             unchecked
             {
                 var hashCode = Left.GetHashCode();
-                hashCode = (hashCode*397) ^ Top.GetHashCode();
-                hashCode = (hashCode*397) ^ Width.GetHashCode();
-                hashCode = (hashCode*397) ^ Height.GetHashCode();
+                hashCode = (hashCode * 397) ^ Top.GetHashCode();
+                hashCode = (hashCode * 397) ^ Width.GetHashCode();
+                hashCode = (hashCode * 397) ^ Height.GetHashCode();
                 return hashCode;
             }
         }

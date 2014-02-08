@@ -2,9 +2,10 @@ namespace Glass.Design.Pcl.Core
 {
     public struct Size : ISize
     {
-        public Size(double width, double height)
+        public Size(double width, double height) : this()
         {
-            throw new System.NotImplementedException();
+            Width = width;
+            Height = height;
         }
 
         public double Width { get; set; }
