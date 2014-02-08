@@ -19,7 +19,7 @@ using PostSharp.Patterns.Model;
 namespace Glass.Design.WinRT.DesignSurface
 {
     [NotifyPropertyChanged]
-    public sealed class DesignSurface : Selector, IDesignSurface, IMultiSelector
+    public sealed class DesignSurface : ItemsControl, IDesignSurface, IMultiSelector
     {
 
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
@@ -42,7 +42,7 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             
             //MouseLeftButtonDown += OnMouseLeftButtonDown;
-            SelectionChanged += OnSelectionChanged;
+            //SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
             CommandHandler = new DesignSurfaceCommandHandler(this, this);
