@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -12,6 +13,7 @@ using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.DesignSurface.VisualAids;
 using PostSharp.Patterns.Model;
+using Point = Glass.Design.Pcl.Core.Point;
 using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
 namespace Glass.Design.Wpf.DesignSurface
@@ -28,7 +30,7 @@ namespace Glass.Design.Wpf.DesignSurface
             DesignSurface designSurface = ((DesignSurface)d);
             if (e.NewValue != null)
             {
-                designSurface.ItemsSource = ((ICanvasItemContainer) e.NewValue).Children;
+                designSurface.ItemsSource = ((ICanvasItemContainer)e.NewValue).Children;
             }
             else
             {
@@ -52,7 +54,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
-        
+
         private SelectionHandler SelectionHandler { get; set; }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -65,7 +67,7 @@ namespace Glass.Design.Wpf.DesignSurface
         [IgnoreAutoChangeNotification]
         public ICanvasItemContainer CanvasDocument
         {
-            get { return (ICanvasItemContainer) GetValue(CanvasDocumentProperty); }
+            get { return (ICanvasItemContainer)GetValue(CanvasDocumentProperty); }
             set { SetValue(CanvasDocumentProperty, value); }
         }
 
@@ -87,7 +89,7 @@ namespace Glass.Design.Wpf.DesignSurface
         private void ContainerOnLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-             OnItemSelected(item);
+            OnItemSelected(item);
             mouseButtonEventArgs.Handled = true;
         }
 
@@ -152,7 +154,7 @@ namespace Glass.Design.Wpf.DesignSurface
         private void OnItemSelected(object e)
         {
             this.LastSelectedItem = e;
-         
+
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);
         }
@@ -173,6 +175,19 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             base.OnPreviewMouseLeftButtonDown(e);
             Focus();
+
+            var point = e.GetPosition(null);
+            var pclPoint = Mapper.Map<Point>(point);
+            OnFingerDown(new FingerManipulationEventArgs { Point = pclPoint });
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            var point = e.GetPosition(null);
+            var pclPoint = Mapper.Map<Point>(point);
+            OnFingerMove(new FingerManipulationEventArgs { Point = pclPoint });
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -204,9 +219,40 @@ namespace Glass.Design.Wpf.DesignSurface
 
 
         public event FingerManipulationEventHandler FingerDown;
+
+        private void OnFingerDown(FingerManipulationEventArgs args)
+        {
+            var handler = FingerDown;
+            if (handler != null) handler(this, args);
+        }
+
         public event FingerManipulationEventHandler FingerMove;
+
+        private void OnFingerMove(FingerManipulationEventArgs args)
+        {
+            var handler = FingerMove;
+            if (handler != null) handler(this, args);
+        }
+
         public event FingerManipulationEventHandler FingerUp;
-        public event PropertyChangedEventHandler PropertyChanged;        
+
+        private void OnFingerUp(FingerManipulationEventArgs args)
+        {
+            var handler = FingerUp;
+            if (handler != null) handler(this, args);
+        }
+
+        public void CaptureInput()
+        {
+            CaptureMouse();
+        }
+
+        public void ReleaseInput()
+        {
+            ReleaseMouseCapture();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public double GetCoordinate(CoordinatePart part)
         {
@@ -250,5 +296,19 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
         bool IUIElement.IsVisible { get; set; }
+        public object GetCoreInstance()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonUp(e);
+
+            var point = e.GetPosition(null);
+            var pclPoint = Mapper.Map<Point>(point);
+            OnFingerUp(new FingerManipulationEventArgs { Point = pclPoint });
+        }
     }
 }

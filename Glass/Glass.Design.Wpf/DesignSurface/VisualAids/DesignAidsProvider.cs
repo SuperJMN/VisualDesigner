@@ -7,10 +7,12 @@ using System.Windows.Documents;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Wpf.PlatformSpecific;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids
 {
@@ -109,13 +111,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
                 if (wrappedSelectedItems != null)
                 {
-                    var movingControl = new MovingControl();
+                    var movingControl = new UIElementAdapter(new MovingControl());
 
                     SetupDragOperationHost(movingControl);
 
                     MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, WrappedSelectedItems);
                     
-                    var resizeControl = new ResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine);
+                    var resizeControl = new UIElementAdapter(new ResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine));
                 
                     ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, WrappedSelectedItems);
                     AdornerLayer.Add(MovingAdorner);
@@ -124,7 +126,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             }
         }
 
-        private void SetupDragOperationHost(IInputElement movingControl)
+        private void SetupDragOperationHost(IUserInputReceiver movingControl)
         {
             DragOperationHost.SetDragTarget(movingControl, WrappedSelectedItems);
 

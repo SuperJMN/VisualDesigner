@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
 
 namespace Glass.Design.Wpf
@@ -9,11 +10,10 @@ namespace Glass.Design.Wpf
     public class WrappingAdorner : CanvasItemAdorner
     {
 
-        private UIElement chrome;
-
-        private Rect p;
-
-        public WrappingAdorner(UIElement adornedElement, UIElement chrome, ICanvasItem canvasItem)
+        private IUIElement chrome;
+        private UIElement chromeCoreInstance;
+        
+        public WrappingAdorner(UIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
             : base(adornedElement, canvasItem)
         {
             Chrome = chrome;
@@ -34,38 +34,42 @@ namespace Glass.Design.Wpf
                 throw new ArgumentOutOfRangeException();
             }
 
-            return chrome;
+            return (Visual) (chrome.GetCoreInstance());
         }
 
-        public UIElement Chrome
+        public IUIElement Chrome
         {
             get { return chrome; }
             set
             {
                 if (chrome != null)
                 {
-                    RemoveVisualChild(chrome);
+                    RemoveVisualChild(ChromeCoreInstance);
                 }
                 chrome = value;
                 if (chrome != null)
                 {
-                    AddVisualChild(chrome);
+                    AddVisualChild(ChromeCoreInstance);
                 }
             }
         }
 
-     
+        private UIElement ChromeCoreInstance
+        {
+            get { return (UIElement) Chrome.GetCoreInstance(); }
+        }
+
 
         protected override Size MeasureOverride(Size constraint)
         {
-            chrome.Measure(constraint);
-            return chrome.DesiredSize;
+            ChromeCoreInstance.Measure(constraint);
+            return ChromeCoreInstance.DesiredSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
             var size = new Size(CanvasItem.Width, CanvasItem.Height);
-            chrome.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
+            ChromeCoreInstance.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
             return size;
         }
     }

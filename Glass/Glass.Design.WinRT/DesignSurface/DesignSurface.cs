@@ -242,8 +242,22 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public bool IsVisible { get; set; }
 
+        public object GetCoreInstance()
+        {
+            return this;
+        }
+
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
+        public void CaptureInput()
+        {
+            
+        }
+
+        public void ReleaseInput()
+        {
+            
+        }
     }
 }

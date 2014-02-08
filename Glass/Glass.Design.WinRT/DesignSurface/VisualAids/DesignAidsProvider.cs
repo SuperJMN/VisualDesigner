@@ -244,9 +244,23 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids
         public bool IsVisible { get; set; }
         public bool IsHitTestVisible { get; set; }
 
+        public object GetCoreInstance()
+        {
+            return UIElement;
+        }
+
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
+        public void CaptureInput()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReleaseInput()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class AdornerLayer : Collection<object>

@@ -7,5 +7,6 @@ namespace Glass.Design.Pcl.PlatformAbstraction
         void AddAdorner(IAdorner adorner);
         bool IsVisible { get; set; }
         bool IsHitTestVisible { get; set; }
+        object GetCoreInstance();
     }
 }

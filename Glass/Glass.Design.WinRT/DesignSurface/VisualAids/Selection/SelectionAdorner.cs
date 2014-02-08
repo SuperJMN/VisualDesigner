@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Glass.Design.Pcl.Canvas;
@@ -56,6 +57,16 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
+        public void CaptureInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ReleaseInput()
+        {
+            throw new NotImplementedException();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public double GetCoordinate(CoordinatePart part)
         {
@@ -76,6 +87,11 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public double Bottom { get; set; }
         public ICanvasItemContainer Parent { get; set; }
         public abstract bool IsHitTestVisible { get; set; }
+       
+        public object GetCoreInstance()
+        {
+            throw new NotImplementedException();
+        }
 
         public void AddAdorner(IAdorner adorner)
         {
@@ -90,6 +106,16 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
+        public void CaptureInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ReleaseInput()
+        {
+            throw new NotImplementedException();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public double GetCoordinate(CoordinatePart part)
         {
@@ -111,6 +137,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public ICanvasItemContainer Parent { get; set; }
         public bool IsVisible { get; set; }
         public bool IsHitTestVisible { get; set; }
+        public object GetCoreInstance()
+        {
+            throw new NotImplementedException();
+        }
 
         public void AddAdorner(IAdorner adorner)
         {
