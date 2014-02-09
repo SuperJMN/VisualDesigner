@@ -260,4 +260,8 @@ namespace Glass.Design.WinRT.DesignSurface
             
         }
     }
+
+    internal class MouseButtonEventArgs
+    {
+    }
 }

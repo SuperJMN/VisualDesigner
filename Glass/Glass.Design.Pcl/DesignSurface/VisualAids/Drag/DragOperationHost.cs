@@ -2,13 +2,12 @@ using System;
 using AutoMapper;
 using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.Canvas;
-using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
 using PostSharp.Patterns.Recording;
-using Point = Glass.Design.Pcl.Core.Point;
 
-namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
+namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
 {
 
     public class DragOperationHost
@@ -37,7 +36,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
                 OnDragStarted();
             }
 
-            var position = args.Point;
+            var position = args.GetPosition(FrameOfReference);
             var newPoint = Mapper.Map<Point>(position);
             DragOperation.NotifyNewPosition(newPoint);
 
@@ -48,7 +47,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
         {
             if (DragOperation != null)
             {
-                var position = args.Point;
+                var position = args.GetPosition(FrameOfReference);
                 DragOperation.NotifyNewPosition(Mapper.Map<Point>(position));
                 FrameOfReference.ReleaseInput();
                 FrameOfReference.FingerMove -= FrameOfReferenceOnMouseMove;
@@ -90,9 +89,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
 
         private void TargetOnPreviewMouseLeftButtonDown(object sender, FingerManipulationEventArgs fingerManipulationEventArgs)
         {
-            //args.Handled = true;
+            fingerManipulationEventArgs.Handled = true;
 
-            var startingPoint = fingerManipulationEventArgs.Point;
+            var startingPoint = fingerManipulationEventArgs.GetPosition(FrameOfReference);
 
             DragOperation = new DragOperation(ItemToDrag, startingPoint, SnappingEngine);            
 

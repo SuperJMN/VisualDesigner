@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Drag;

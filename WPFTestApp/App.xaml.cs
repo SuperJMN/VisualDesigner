@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using AutoMapper;
-
+using Glass.Design.Pcl.Core;
+using Glass.Design.Wpf.PlatformSpecific;
 using NetCorePoint = System.Windows.Point;
 using PclPoint = Glass.Design.Pcl.Core.Point;
 
@@ -21,6 +22,7 @@ namespace Glass.Design.WpfTester
             base.OnStartup(e);
 
             SetupPlatformToPclMappings();
+            ServiceLocator.InputProvider = new NetCoreInputProvider();
         }
 
         private void SetupPlatformToPclMappings()

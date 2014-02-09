@@ -115,8 +115,10 @@
     <Compile Include="DesignSurface\ISizable.cs" />
     <Compile Include="DesignSurface\SizeChangeEventArgs.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\DragOperation.cs" />
+    <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeOperation.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\WpfUIResizeOperationHandleConnector.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemSnappingEngine.cs" />
@@ -151,6 +153,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\packages\AutoMapper.3.1.1\lib\portable-windows8+net40+wp8+sl5+MonoAndroid+MonoTouch\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp">
       <HintPath>..\..\packages\PostSharp.3.2.3-alpha\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
     </Reference>

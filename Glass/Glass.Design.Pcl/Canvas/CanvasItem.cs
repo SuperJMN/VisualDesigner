@@ -37,6 +37,7 @@ namespace Glass.Design.Pcl.Canvas
             get
         {
             return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
+                return null;
         }
             set { throw new NotImplementedException(); }
         }

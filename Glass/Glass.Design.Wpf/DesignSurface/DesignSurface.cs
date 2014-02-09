@@ -178,7 +178,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
             var point = e.GetPosition(null);
             var pclPoint = Mapper.Map<Point>(point);
-            OnFingerDown(new FingerManipulationEventArgs { Point = pclPoint });
+            OnFingerDown(new FingerManipulationEventArgs());
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -187,7 +187,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
             var point = e.GetPosition(null);
             var pclPoint = Mapper.Map<Point>(point);
-            OnFingerMove(new FingerManipulationEventArgs { Point = pclPoint });
+            OnFingerMove(new FingerManipulationEventArgs());
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -308,7 +308,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
             var point = e.GetPosition(null);
             var pclPoint = Mapper.Map<Point>(point);
-            OnFingerUp(new FingerManipulationEventArgs { Point = pclPoint });
+            OnFingerUp(new FingerManipulationEventArgs());
         }
     }
 }

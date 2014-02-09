@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Documents;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;

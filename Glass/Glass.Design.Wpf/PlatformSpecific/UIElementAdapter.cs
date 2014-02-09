@@ -48,22 +48,26 @@ namespace Glass.Design.Wpf.PlatformSpecific
 
         private void UIElementOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            mouseButtonEventArgs.Handled = true;
-
             var corePoint = mouseButtonEventArgs.GetPosition(null);
-            var point = Mapper.Map<Point>(corePoint);
+            var point = Mapper.Map<Point>(corePoint);           
 
-            OnFingerDown(new FingerManipulationEventArgs { Point = point });
+            var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+
+            OnFingerDown(fingerManipulationEventArgs);
+
+            mouseButtonEventArgs.Handled = fingerManipulationEventArgs.Handled;
         }
 
         private void UIElementOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            mouseButtonEventArgs.Handled = true;
-
             var corePoint = mouseButtonEventArgs.GetPosition(null);
             var point = Mapper.Map<Point>(corePoint);
 
-            OnFingerUp(new FingerManipulationEventArgs { Point = point });
+
+            var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+            OnFingerUp(fingerManipulationEventArgs);
+
+            mouseButtonEventArgs.Handled = fingerManipulationEventArgs.Handled;
         }
 
         private void UIElementOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
@@ -71,7 +75,10 @@ namespace Glass.Design.Wpf.PlatformSpecific
             var corePoint = mouseEventArgs.GetPosition(null);
             var point = Mapper.Map<Point>(corePoint);
 
-            OnFingerMove(new FingerManipulationEventArgs { Point = point });
+
+            var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+            OnFingerMove(fingerManipulationEventArgs);
+            mouseEventArgs.Handled = fingerManipulationEventArgs.Handled;
         }
 
         public UIElementAdapter(UIElement uiElement)

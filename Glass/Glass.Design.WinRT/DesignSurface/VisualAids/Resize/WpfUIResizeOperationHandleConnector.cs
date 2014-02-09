@@ -5,6 +5,7 @@ using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.PlatformAbstraction;
 using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
@@ -30,10 +31,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         public void RegisterHandle(IUIElement handle, IPoint point)
         {
             Handles.Add(handle, point);
-            //handle.PreviewMouseLeftButtonDown += HandleOnMouseLeftButtonDown;
+            handle.FingerDown += HandleOnMouseLeftButtonDown;
         }
 
-        private void HandleOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void HandleOnMouseLeftButtonDown(object sender, FingerManipulationEventArgs args)
         {
             //mouseButtonEventArgs.Handled = true;
 
@@ -44,10 +45,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
             ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);
-            //Parent.CaptureMouse();
+            Parent.CaptureInput();
 
-            //Parent.MouseMove += ParentOnMouseMove;
-            //Parent.MouseLeftButtonUp += ParentOnMouseLeftButtonUp;
+            Parent.FingerMove += ParentOnMouseMove;
+            Parent.FingerUp += ParentOnMouseLeftButtonUp;
         }
 
         private IPoint ConvertProportionalToAbsolute(IPoint handlePoint)
@@ -57,14 +58,14 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
             return new Point(x, y);
         }
 
-        private void ParentOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void ParentOnMouseLeftButtonUp(object sender, FingerManipulationEventArgs args)
         {
             if (ResizeOperation != null)
             {
-                var newPoint = Mapper.Map<Point>(mouseButtonEventArgs.GetPosition(Parent));
+                var newPoint = args.Point;
                 ResizeOperation.UpdateHandlePosition(newPoint);
-                //Parent.ReleaseMouseCapture();
-                //Parent.MouseMove -= ParentOnMouseMove;
+                Parent.ReleaseInput();
+                Parent.FingerMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
                 ResizeOperation = null;
                 SnappingEngine.ClearSnappedEdges();
@@ -77,11 +78,11 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private bool IsDragging { get; set; }
 
-        private void ParentOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+        private void ParentOnMouseMove(object sender, FingerManipulationEventArgs args)
         {
-            //var position = mouseEventArgs.GetPosition(Parent);
-            //var newPoint = position.ActLike<IPoint>();
-            //ResizeOperation.UpdateHandlePosition(newPoint);
+            var point = args.Point;
+
+            ResizeOperation.UpdateHandlePosition(point);
 
             if (!IsDragging)
             {
@@ -91,13 +92,5 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         }
     }
 
-    internal class MouseButtonEventArgs
-    {
-        public Point GetPosition(IUIElement parent)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Handled { get; set; }
-    }
+    
 }

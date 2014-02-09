@@ -1,54 +1,51 @@
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
 using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
-using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using Point = Glass.Design.Pcl.Core.Point;
+using Glass.Design.Pcl.PlatformAbstraction;
 
-namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
+namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 {
     public class WpfUIResizeOperationHandleConnector
     {
         private ICanvasItem CanvasItem { get; set; }
-        private IInputElement Parent { get; set; }
+        private IUserInputReceiver Parent { get; set; }
         private IEdgeSnappingEngine SnappingEngine { get; set; }
 
-        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IInputElement parent, IEdgeSnappingEngine snappingEngine)
+        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {
             CanvasItem = canvasItem;
             Parent = parent;
             SnappingEngine = snappingEngine;
-            Handles = new Dictionary<IInputElement, IPoint>();
+            Handles = new Dictionary<IUserInputReceiver, IPoint>();
         }
 
-        private IDictionary<IInputElement, IPoint> Handles { get; set; }
+        private IDictionary<IUserInputReceiver, IPoint> Handles { get; set; }
         private ResizeOperation ResizeOperation { get; set; }
 
 
-        public void RegisterHandle(IInputElement handle, IPoint point)
+        public void RegisterHandle(IUserInputReceiver handle, IPoint point)
         {
             Handles.Add(handle, point);
-            handle.PreviewMouseLeftButtonDown += HandleOnMouseLeftButtonDown;
+            handle.FingerDown += HandleOnMouseLeftButtonDown;
         }
 
-        private void HandleOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void HandleOnMouseLeftButtonDown(object sender, FingerManipulationEventArgs args)
         {
-            mouseButtonEventArgs.Handled = true;
+            args.Handled = true;
 
-            var inputElement = (IInputElement)sender;
+            var inputElement = (IUserInputReceiver)sender;
 
             var handlePoint = Handles[inputElement];
 
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
             ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);            
-            Parent.CaptureMouse();
+            Parent.CaptureInput();
 
-            Parent.MouseMove += ParentOnMouseMove;
-            Parent.MouseLeftButtonUp += ParentOnMouseLeftButtonUp;
+            Parent.FingerMove += ParentOnMouseMove;
+            Parent.FingerUp += ParentOnMouseLeftButtonUp;
         }
 
         private IPoint ConvertProportionalToAbsolute(IPoint handlePoint)
@@ -58,14 +55,14 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             return new Point(x, y);
         }
 
-        private void ParentOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void ParentOnMouseLeftButtonUp(object sender, FingerManipulationEventArgs args)
         {
             if (ResizeOperation != null)
             {
-                var position = Mapper.Map<Point>(mouseButtonEventArgs.GetPosition(Parent));
+                var position = args.GetPosition(Parent);
                 ResizeOperation.UpdateHandlePosition(position);
-                Parent.ReleaseMouseCapture();
-                Parent.MouseMove -= ParentOnMouseMove;
+                Parent.ReleaseInput();
+                Parent.FingerMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
                 ResizeOperation = null;
                 SnappingEngine.ClearSnappedEdges();
@@ -78,10 +75,13 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
         private bool IsDragging { get; set; }
 
-        private void ParentOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+        private void ParentOnMouseMove(object sender, FingerManipulationEventArgs args)
         {
-            var position = mouseEventArgs.GetPosition(Parent);
-            var newPoint = Mapper.Map<Point>(position);
+            var position = args.GetPosition(Parent);
+            var parentPositon = ((IUIElement) Parent).GetLocation();
+            var finalPoint = position.Add(parentPositon);
+
+            var newPoint = Mapper.Map<Point>(finalPoint);
             ResizeOperation.UpdateHandlePosition(newPoint);
 
             if (!IsDragging)

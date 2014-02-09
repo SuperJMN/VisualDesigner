@@ -5,7 +5,10 @@ using AutoMapper;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.PlatformAbstraction;
+using Glass.Design.Wpf.PlatformSpecific;
 using Rect = Glass.Design.Pcl.Core.Rect;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
@@ -19,7 +22,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizeControl), new FrameworkPropertyMetadata(typeof(ResizeControl)));
         }
 
-        public ResizeControl(CanvasItem itemToResize, IInputElement parent, IEdgeSnappingEngine snappingEngine)
+        public ResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {
             SnappingEngine = snappingEngine;
             FrameOfReference = parent;
@@ -85,8 +88,9 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 var parentRect = Mapper.Map<Rect>(CanvasItem.Rect());
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
-                
-                WpfUIResizeOperationHandleConnector.RegisterHandle(logicalChild, handlePoint);
+
+                var uiElement = new UIElementAdapter(logicalChild);
+                WpfUIResizeOperationHandleConnector.RegisterHandle(uiElement, handlePoint);
                 SetCursorToHandle(logicalChild);
             }
         }
@@ -103,24 +107,24 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         #region FrameOfReference
 
         public static readonly DependencyProperty FrameOfReferenceProperty =
-            DependencyProperty.Register("FrameOfReference", typeof(IInputElement), typeof(ResizeControl),
+            DependencyProperty.Register("FrameOfReference", typeof(IUserInputReceiver), typeof(ResizeControl),
                 new FrameworkPropertyMetadata(null, OnFrameOfReferenceChanged));
 
-        public IInputElement FrameOfReference
+        public IUserInputReceiver FrameOfReference
         {
-            get { return (IInputElement)GetValue(FrameOfReferenceProperty); }
+            get { return (IUserInputReceiver)GetValue(FrameOfReferenceProperty); }
             set { SetValue(FrameOfReferenceProperty, value); }
         }
 
         private static void OnFrameOfReferenceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var target = (ResizeControl)d;
-            var oldFrameOfReference = (IInputElement)e.OldValue;
+            var oldFrameOfReference = (IUserInputReceiver)e.OldValue;
             var newFrameOfReference = target.FrameOfReference;
             target.OnFrameOfReferenceChanged(oldFrameOfReference, newFrameOfReference);
         }
 
-        protected void OnFrameOfReferenceChanged(IInputElement oldFrameOfReference, IInputElement newFrameOfReference)
+        protected void OnFrameOfReferenceChanged(IUserInputReceiver oldFrameOfReference, IUserInputReceiver newFrameOfReference)
         {
             if (IsLoaded)
             {
