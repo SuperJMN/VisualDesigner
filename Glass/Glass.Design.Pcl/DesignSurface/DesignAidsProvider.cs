@@ -1,34 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Windows;
-using System.Windows.Documents;
 using Glass.Design.Pcl.Canvas;
-using Glass.Design.Pcl.DesignSurface;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Drag;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
-using Glass.Design.Wpf.DesignSurface.VisualAids.Drag;
-using Glass.Design.Wpf.DesignSurface.VisualAids.Resize;
-using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
-using Glass.Design.Wpf.DesignSurface.VisualAids.Snapping;
-using Glass.Design.Wpf.PlatformSpecific;
 
-namespace Glass.Design.Wpf.DesignSurface.VisualAids
+namespace Glass.Design.Pcl.DesignSurface
 {
-    internal class DesignAidsProvider
+    public class DesignAidsProvider
     {
 
-        public DesignAidsProvider(DesignSurface designSurface)
+        public DesignAidsProvider(IDesignSurface designSurface)
         {
             DesignSurface = designSurface;
-            DesignSurface.Loaded += DesignSurfaceOnLoaded;
 
 
-            SelectionAdorners = new Dictionary<ICanvasItem, SelectionAdorner>();
+            SelectionAdorners = new Dictionary<ICanvasItem, IAdorner>();
 
-            EdgeAdorners = new Dictionary<Edge, EdgeAdorner>();
+            EdgeAdorners = new Dictionary<Edge, IAdorner>();
 
             PlaneOperation = PlaneOperation.Resize;
             DragOperationHost = new DragOperationHost(DesignSurface);
@@ -47,7 +39,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             if (ResizingAdorner != null)
             {
-                ResizingAdorner.Visibility = Visibility.Visible;                
+                ResizingAdorner.IsVisible = true;
             }
         }
 
@@ -55,11 +47,11 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             if (ResizingAdorner != null)
             {
-                ResizingAdorner.Visibility = Visibility.Hidden;
+                ResizingAdorner.IsVisible = false;
             }
         }
 
-        public Dictionary<Edge, EdgeAdorner> EdgeAdorners { get; set; }
+        public Dictionary<Edge, IAdorner> EdgeAdorners { get; set; }
 
         private void SnappedEdgesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
@@ -68,7 +60,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
                 foreach (Edge removedEdge in notifyCollectionChangedEventArgs.OldItems)
                 {
                     var adorner = EdgeAdorners[removedEdge];
-                    AdornerLayer.Remove(adorner);
+                    DesignSurface.RemoveAdorner(adorner);
                     EdgeAdorners.Remove(removedEdge);
                 }
             }
@@ -76,16 +68,16 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             {
                 foreach (Edge addedEdge in notifyCollectionChangedEventArgs.NewItems)
                 {
-                    var edgeAdorner = new EdgeAdorner(DesignSurface, WrappedSelectedItems, addedEdge);
+                    var edgeAdorner = ServiceLocator.UIElementFactory.CreateEdgeAdorner(DesignSurface, WrappedSelectedItems, addedEdge);
                     EdgeAdorners.Add(addedEdge, edgeAdorner);
-                    AdornerLayer.Add(edgeAdorner);
+                    DesignSurface.AddAdorner(edgeAdorner);
                 }
             }
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Reset)
             {
                 foreach (var adorner in EdgeAdorners.Values)
                 {
-                    AdornerLayer.Remove(adorner);
+                    DesignSurface.RemoveAdorner(adorner);
                 }
 
                 EdgeAdorners.Clear();
@@ -104,25 +96,25 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             {
                 if (wrappedSelectedItems != null)
                 {
-                    AdornerLayer.Remove(ResizingAdorner);
-                    AdornerLayer.Remove(MovingAdorner);
+                    DesignSurface.RemoveAdorner(ResizingAdorner);
+                    DesignSurface.RemoveAdorner(MovingAdorner);
                 }
 
                 wrappedSelectedItems = value;
 
                 if (wrappedSelectedItems != null)
                 {
-                    var movingControl = new UIElementAdapter(new MovingControl());
+                    var movingControl = ServiceLocator.UIElementFactory.CreateMovingControl();
 
                     SetupDragOperationHost(movingControl);
 
-                    MovingAdorner = new WrappingAdorner(DesignSurface, movingControl, WrappedSelectedItems);
-                    
-                    var resizeControl = new UIElementAdapter(new ResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine));
-                
-                    ResizingAdorner = new WrappingAdorner(DesignSurface, resizeControl, WrappedSelectedItems);
-                    AdornerLayer.Add(MovingAdorner);
-                    AdornerLayer.Add(ResizingAdorner);                    
+                    MovingAdorner = ServiceLocator.UIElementFactory.CreateWrappingAdorner(DesignSurface, movingControl, WrappedSelectedItems);
+
+                    var resizeControl = ServiceLocator.UIElementFactory.CreateResizeControl(WrappedSelectedItems, DesignSurface, SnappingEngine);
+
+                    ResizingAdorner = ServiceLocator.UIElementFactory.CreateWrappingAdorner(DesignSurface, resizeControl, WrappedSelectedItems);
+                    DesignSurface.AddAdorner(MovingAdorner);
+                    DesignSurface.AddAdorner(ResizingAdorner);                    
                 }
             }
         }
@@ -139,23 +131,17 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         }
 
 
-        private Dictionary<ICanvasItem, SelectionAdorner> SelectionAdorners { get; set; }
+        private Dictionary<ICanvasItem, IAdorner> SelectionAdorners { get; set; }
 
-        private AdornerLayer AdornerLayer { get; set; }
-
-        private DesignSurface DesignSurface
+        private IDesignSurface DesignSurface
         {
             get;
             set;
         }
 
-        private Adorner ResizingAdorner { get; set; }
-        private Adorner MovingAdorner { get; set; }
+        private IAdorner ResizingAdorner { get; set; }
+        private IAdorner MovingAdorner { get; set; }
 
-        private void DesignSurfaceOnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            AdornerLayer = AdornerLayer.GetAdornerLayer(DesignSurface);
-        }
 
         public void AddItemToSelection(ICanvasItem item)
         {
@@ -171,8 +157,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
 
         private void AddSelectionAdorner(ICanvasItem canvasItem)
         {
-            var selectionAdorner = new SelectionAdorner(DesignSurface, canvasItem) { IsHitTestVisible = false };
-            AdornerLayer.Add(selectionAdorner);
+            var selectionAdorner = ServiceLocator.UIElementFactory.CreateSelectionAdorner(DesignSurface, canvasItem);
+            DesignSurface.AddAdorner(selectionAdorner);
             SelectionAdorners.Add(canvasItem, selectionAdorner);
         }
 
@@ -180,7 +166,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             var items = SelectionAdorners.Keys.ToList();
 
-            if (WrappedSelectedItems !=null)
+            if (WrappedSelectedItems != null)
             {
                 WrappedSelectedItems.Dispose();
             }
@@ -191,7 +177,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
             }
             else
             {
-                
+
                 WrappedSelectedItems = null;
             }
         }
@@ -200,7 +186,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids
         {
             var adorner = SelectionAdorners[container];
             SelectionAdorners.Remove(container);
-            AdornerLayer.Remove(adorner);
+            DesignSurface.RemoveAdorner(adorner);
         }
 
         public PlaneOperation PlaneOperation { get; set; }

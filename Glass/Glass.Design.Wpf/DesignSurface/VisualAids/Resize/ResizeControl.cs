@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using AutoMapper;
 using Glass.Basics.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
@@ -13,7 +15,7 @@ using Rect = Glass.Design.Pcl.Core.Rect;
 
 namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 {
-    public sealed class ResizeControl : Control
+    public sealed class ResizeControl : Control, IUIElement
     {
         public IEdgeSnappingEngine SnappingEngine { get; set; }
 
@@ -22,7 +24,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizeControl), new FrameworkPropertyMetadata(typeof(ResizeControl)));
         }
 
-        public ResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
+        public ResizeControl(ICanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {
             SnappingEngine = snappingEngine;
             FrameOfReference = parent;
@@ -137,5 +139,51 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         }
 
         #endregion
+
+        public event FingerManipulationEventHandler FingerDown;
+        public event FingerManipulationEventHandler FingerMove;
+        public event FingerManipulationEventHandler FingerUp;
+        public void CaptureInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ReleaseInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public double GetCoordinate(CoordinatePart part)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetCoordinate(CoordinatePart part, double value)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public CanvasItemCollection Children { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
+        public void AddAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void RemoveAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsVisible { get; set; }
+        public object GetCoreInstance()
+        {
+            return this;
+        }
     }
 }

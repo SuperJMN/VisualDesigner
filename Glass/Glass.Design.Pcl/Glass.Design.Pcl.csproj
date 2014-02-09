@@ -104,6 +104,7 @@
     <Compile Include="Core\Size.cs" />
     <Compile Include="Core\VerticalAlignment.cs" />
     <Compile Include="DesignSurface\CanvasSelectorExtensions.cs" />
+    <Compile Include="DesignSurface\DesignAidsProvider.cs" />
     <Compile Include="DesignSurface\GroupCommandArgs.cs" />
     <Compile Include="DesignSurface\ICanvasSelector.cs" />
     <Compile Include="DesignSurface\PlaneOperation.cs" />

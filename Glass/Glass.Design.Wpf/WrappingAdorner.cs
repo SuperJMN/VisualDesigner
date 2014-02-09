@@ -13,8 +13,8 @@ namespace Glass.Design.Wpf
         private IUIElement chrome;
         private UIElement chromeCoreInstance;
         
-        public WrappingAdorner(UIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
-            : base(adornedElement, canvasItem)
+        public WrappingAdorner(IUIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
+            : base((UIElement) adornedElement.GetCoreInstance(), canvasItem)
         {
             Chrome = chrome;
         }

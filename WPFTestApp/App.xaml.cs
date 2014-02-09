@@ -23,6 +23,7 @@ namespace Glass.Design.WpfTester
 
             SetupPlatformToPclMappings();
             ServiceLocator.InputProvider = new NetCoreInputProvider();
+            ServiceLocator.UIElementFactory = new NetCoreUIElementFactory();
         }
 
         private void SetupPlatformToPclMappings()

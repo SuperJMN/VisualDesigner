@@ -38,9 +38,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
 
             var position = args.GetPosition(FrameOfReference);
             var newPoint = Mapper.Map<Point>(position);
-            DragOperation.NotifyNewPosition(newPoint);
-
-        
+            DragOperation.NotifyNewPosition(newPoint);        
         }
 
         private void InputElementOnMouseLeftButtonUp(object sender, FingerManipulationEventArgs args)
@@ -81,7 +79,9 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
         public void SetDragTarget(IUserInputReceiver hitTestReceiver, ICanvasItem itemToDrag)
         {
             if ( this.dragRecordingScope != null )
+            {
                 throw new InvalidOperationException("There is already an active drag operation.");         
+            }
 
             this.ItemToDrag = itemToDrag;
             hitTestReceiver.FingerDown += TargetOnPreviewMouseLeftButtonDown;

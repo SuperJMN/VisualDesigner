@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using AutoMapper;
+using Glass.Basics;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
@@ -147,7 +149,15 @@ namespace Glass.Design.Wpf.PlatformSpecific
 
         public void AddAdorner(IAdorner adorner)
         {
-            throw new NotImplementedException();
+            var adornerLayer = AdornerLayer.GetAdornerLayer(UIElement);
+            adornerLayer.Add((Adorner) adorner);
+        }
+
+        public void RemoveAdorner(IAdorner adorner)
+        {
+            var adornerLayer = AdornerLayer.GetAdornerLayer(UIElement);
+
+            var adorners = adornerLayer.GetAdorners(UIElement);
         }
 
         public bool IsVisible { get; set; }
@@ -190,5 +200,5 @@ namespace Glass.Design.Wpf.PlatformSpecific
         {
             UIElement.ReleaseMouseCapture();
         }
-    }
+    }    
 }

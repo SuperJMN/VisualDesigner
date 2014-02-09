@@ -3,7 +3,9 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
@@ -175,18 +177,14 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             base.OnPreviewMouseLeftButtonDown(e);
             Focus();
-
-            var point = e.GetPosition(null);
-            var pclPoint = Mapper.Map<Point>(point);
+            
             OnFingerDown(new FingerManipulationEventArgs());
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-
-            var point = e.GetPosition(null);
-            var pclPoint = Mapper.Map<Point>(point);
+          
             OnFingerMove(new FingerManipulationEventArgs());
         }
 
@@ -290,15 +288,24 @@ namespace Glass.Design.Wpf.DesignSurface
         double ICanvasItem.Bottom { get; set; }
         ICanvasItemContainer ICanvasItem.Parent { get; set; }
 
-        void IUIElement.AddAdorner(IAdorner adorner)
+        public void AddAdorner(IAdorner adorner)
         {
-            throw new NotImplementedException();
+            var coreInstance = (Visual) GetCoreInstance();
+            var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
+            adornerLayer.Add((Adorner) adorner);
+        }
+
+        public void RemoveAdorner(IAdorner adorner)
+        {
+            var coreInstance = (Visual)GetCoreInstance();
+            var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
+            adornerLayer.Remove((Adorner) adorner);
         }
 
         bool IUIElement.IsVisible { get; set; }
         public object GetCoreInstance()
         {
-            throw new NotImplementedException();
+            return this;
         }
 
 

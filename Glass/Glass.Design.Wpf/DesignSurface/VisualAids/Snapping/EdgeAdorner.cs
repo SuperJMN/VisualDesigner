@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.Annotations;
 using Glass.Design.Wpf.Core;
 using Glass.Design.Wpf.DesignSurface.VisualAids.Selection;
@@ -23,8 +24,8 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Snapping
         
         public Edge Edge { get; set; }
 
-        public EdgeAdorner([NotNull] UIElement adornedElement, ICanvasItem item, Edge edge)
-            : base(adornedElement, item)
+        public EdgeAdorner([NotNull] IUIElement adornedElement, ICanvasItem item, Edge edge)
+            : base((UIElement) adornedElement.GetCoreInstance(), item)
         {
             Edge = edge;
         }
