@@ -3,21 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    
-    xmlns:resize="clr-namespace:Glass.Design.Wpf.DesignSurface.VisualAids.Resize"
-    xmlns:drag1="clr-namespace:Glass.Design.Wpf.DesignSurface.VisualAids.Drag"
-    xmlns:wpf="clr-namespace:Glass.Design.Wpf"
-    xmlns:viewing="clr-namespace:Glass.Design.Wpf.Viewing"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:designSurface1="using:Glass.Design.WinRT.DesignSurface"
     xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
     xmlns:resize1="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
+    xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     mc:Ignorable="d">
 
     <Brush x:Key="DarkBrush">#6494EC</Brush>
     <Brush x:Key="LightBrush">#8B38D6FF</Brush>
 
-    <Style TargetType="designSurface1:DesignSurface">
+    <Style TargetType="designSurface:DesignSurface">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -27,7 +22,7 @@
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="designSurface1:DesignSurface">
+                <ControlTemplate TargetType="designSurface:DesignSurface">
                     <Border
                         Background="{TemplateBinding Background}">
                         <ItemsPresenter />

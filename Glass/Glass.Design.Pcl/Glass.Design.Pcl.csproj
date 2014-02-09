@@ -119,7 +119,7 @@
     <Compile Include="DesignSurface\VisualAids\Drag\DragOperationHost.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeOperation.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\AspectRatioKeeper.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\WpfUIResizeOperationHandleConnector.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\UIResizeOperationHandleConnector.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionHandler.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionMode.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemSnappingEngine.cs" />

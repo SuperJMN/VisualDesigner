@@ -1,12 +1,53 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Documents;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
 
-namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
+namespace Glass.Design.Wpf.DesignSurface.VisualAids.Selection
 {
-    public class SelectionAdorner : IAdorner
+    public class CanvasItemAdorner : Adorner, IAdorner
     {
+        private ICanvasItem canvasItem;
+
+        public CanvasItemAdorner(UIElement adornedElement, ICanvasItem canvasItem)
+            : base(adornedElement)
+        {        
+            CanvasItem = canvasItem;
+        }
+
+        protected ICanvasItem CanvasItem
+        {
+            get { return canvasItem; }
+            set
+            {
+                if (canvasItem != null)
+                {
+                    canvasItem.PropertyChanged -= CanvasItemOnPropertyChanged;
+                }
+                canvasItem = value;
+                if (canvasItem != null)
+                {
+                    canvasItem.PropertyChanged += CanvasItemOnPropertyChanged;
+                }
+            }
+        }
+
+        private void CanvasItemOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            switch (propertyChangedEventArgs.PropertyName)
+            {
+                case "Top":
+                case "Left":
+                case "Width":
+                case "Height":
+                    InvalidateVisual();
+                    break;
+            }
+        }
+
+        public new IUIElement AdornedElement { get; set; }
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
@@ -33,8 +74,6 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
 
         public double Left { get; set; }
         public double Top { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
         public CanvasItemCollection Children { get; set; }
         public double Right { get; set; }
         public double Bottom { get; set; }
@@ -50,12 +89,9 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         }
 
         public bool IsVisible { get; set; }
-        public bool IsHitTestVisible { get; set; }
         public object GetCoreInstance()
         {
-            throw new System.NotImplementedException();
+            return this;
         }
-
-        public IUIElement AdornedElement { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
         }
 
         private WindowsSizeCursorsThumbCursorConverter WindowsSizeCursorsThumbCursorConverter { get; set; }
-        private WpfUIResizeOperationHandleConnector WpfUIResizeOperationHandleConnector { get; set; }
+        private UIResizeOperationHandleConnector UIResizeOperationHandleConnector { get; set; }
 
         #region CreateHostingItem
 
@@ -74,7 +74,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
 
         private void RegisterHandles()
         {
-            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, FrameOfReference, SnappingEngine);
+            UIResizeOperationHandleConnector = new UIResizeOperationHandleConnector(CanvasItem, FrameOfReference, SnappingEngine);
             WindowsSizeCursorsThumbCursorConverter = new WindowsSizeCursorsThumbCursorConverter();
 
             var thumbContainer = (UIElement)Template.FindName("PART_ThumbContainer", this);
@@ -92,7 +92,7 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Resize
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
 
                 var uiElement = new UIElementAdapter(logicalChild);
-                WpfUIResizeOperationHandleConnector.RegisterHandle(uiElement, handlePoint);
+                UIResizeOperationHandleConnector.RegisterHandle(uiElement, handlePoint);
                 SetCursorToHandle(logicalChild);
             }
         }

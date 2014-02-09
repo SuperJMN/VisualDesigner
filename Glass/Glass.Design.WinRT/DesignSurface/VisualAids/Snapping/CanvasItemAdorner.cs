@@ -1,12 +1,17 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
 
-namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
+namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 {
-    public class SelectionAdorner : IAdorner
+    public class CanvasItemAdorner : IAdorner
     {
+        protected CanvasItemAdorner(IUIElement adornedElement, ICanvasItem canvasItem)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;

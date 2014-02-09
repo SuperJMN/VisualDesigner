@@ -1,5 +1,5 @@
-﻿using Windows.Foundation;
-using PostSharp.Patterns.Collections;
+﻿using Glass.Design.Pcl.Canvas;
+using Model;
 using StyleMVVM.DependencyInjection;
 using StyleMVVM.ViewModel;
 
@@ -8,21 +8,19 @@ namespace ComicDesigner
     [Export("MainViewModel")]
     public class MainViewModel : BaseViewModel
     {
-        private AdvisableCollection<ModelObject> items;
-
-        private Rect p;
+        private CanvasItemCollection items;
 
         [ImportConstructor]
         public MainViewModel()
         {
-            Items = new AdvisableCollection<ModelObject>();
+            Items = new CanvasItemCollection();
             for (int i = 0; i < 5; i++)
             {
-                Items.Add(new ModelObject());
+                Items.Add(new CanvasRectangle());
             }
         }
 
-        public AdvisableCollection<ModelObject> Items
+        public CanvasItemCollection Items
         {
             get { return items; }
             set
@@ -31,9 +29,5 @@ namespace ComicDesigner
                 OnPropertyChanged();
             }
         }
-    }
-
-    public class ModelObject
-    {
     }
 }

@@ -1,34 +1,31 @@
 using System.Collections.Generic;
-using Windows.Devices.Input;
 using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
-using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
-using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
-namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
+namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
 {
-    public class WpfUIResizeOperationHandleConnector
+    public class UIResizeOperationHandleConnector
     {
         private ICanvasItem CanvasItem { get; set; }
-        private IUIElement Parent { get; set; }
+        private IUserInputReceiver Parent { get; set; }
         private IEdgeSnappingEngine SnappingEngine { get; set; }
 
-        public WpfUIResizeOperationHandleConnector(ICanvasItem canvasItem, IUIElement parent, IEdgeSnappingEngine snappingEngine)
+        public UIResizeOperationHandleConnector(ICanvasItem canvasItem, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {
             CanvasItem = canvasItem;
             Parent = parent;
             SnappingEngine = snappingEngine;
-            Handles = new Dictionary<IUIElement, IPoint>();
+            Handles = new Dictionary<IUserInputReceiver, IPoint>();
         }
 
-        private IDictionary<IUIElement, IPoint> Handles { get; set; }
+        private IDictionary<IUserInputReceiver, IPoint> Handles { get; set; }
         private ResizeOperation ResizeOperation { get; set; }
 
 
-        public void RegisterHandle(IUIElement handle, IPoint point)
+        public void RegisterHandle(IUserInputReceiver handle, IPoint point)
         {
             Handles.Add(handle, point);
             handle.FingerDown += HandleOnMouseLeftButtonDown;
@@ -36,15 +33,15 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void HandleOnMouseLeftButtonDown(object sender, FingerManipulationEventArgs args)
         {
-            //mouseButtonEventArgs.Handled = true;
+            args.Handled = true;
 
-            var inputElement = (IUIElement)sender;
+            var inputElement = (IUserInputReceiver)sender;
 
             var handlePoint = Handles[inputElement];
 
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
-            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);
+            ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);            
             Parent.CaptureInput();
 
             Parent.FingerMove += ParentOnMouseMove;
@@ -62,8 +59,8 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         {
             if (ResizeOperation != null)
             {
-                var newPoint = args.Point;
-                ResizeOperation.UpdateHandlePosition(newPoint);
+                var position = args.GetPosition(Parent);
+                ResizeOperation.UpdateHandlePosition(position);
                 Parent.ReleaseInput();
                 Parent.FingerMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
@@ -80,9 +77,12 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void ParentOnMouseMove(object sender, FingerManipulationEventArgs args)
         {
-            var point = args.Point;
+            var position = args.GetPosition(Parent);
+            var parentPositon = ((IUIElement) Parent).GetLocation();
+            var finalPoint = position.Add(parentPositon);
 
-            ResizeOperation.UpdateHandlePosition(point);
+            var newPoint = Mapper.Map<Point>(finalPoint);
+            ResizeOperation.UpdateHandlePosition(newPoint);
 
             if (!IsDragging)
             {
@@ -91,6 +91,4 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
             }
         }
     }
-
-    
 }

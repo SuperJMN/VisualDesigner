@@ -1,5 +1,5 @@
 ﻿using Glass.Design.Pcl.Canvas;
-using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;
+using Glass.Design.WinRT.DesignSurface.VisualAids.Snapping;
 using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT
@@ -65,7 +65,6 @@ namespace Glass.Design.WinRT
         //    var size = new Size(CanvasItem.Width, CanvasItem.Height);
         //    chrome.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
         //    return size;
-        //}
-        public override bool IsHitTestVisible { get; set; }
+        //}        
     }
 }

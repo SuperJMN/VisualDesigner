@@ -108,6 +108,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TypedTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -163,6 +164,20 @@
     <Reference Include="StyleMVVM.CSharp">
       <HintPath>..\packages\StyleMVVM.CSharp.3.1.5\lib\netcore45\StyleMVVM.CSharp.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
+      <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
+      <Name>Glass.Design.Pcl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass\Glass.Design.WinRT\Glass.Design.WinRT.csproj">
+      <Project>{1043FB8A-64B5-42E9-B614-2D6DDEDA3B92}</Project>
+      <Name>Glass.Design.WinRT</Name>
+    </ProjectReference>
+    <ProjectReference Include="Model\Model.csproj">
+      <Project>{04367dad-a033-4f81-a974-089a3d9350d2}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using AutoMapper;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
+using Glass.Design.Pcl.PlatformAbstraction;
+using Glass.Design.WinRT.PlatformSpecific;
 using FoundationPoint = Windows.Foundation.Point;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
@@ -16,35 +19,38 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
     {
         public IEdgeSnappingEngine SnappingEngine { get; set; }
 
-
-
-        public ResizeControl(CanvasItem itemToResize, UIElement parent, IEdgeSnappingEngine snappingEngine)
+        static ResizeControl()
         {
-            DefaultStyleKey = typeof(ResizeControl);
+
+        }
+
+        public ResizeControl(ICanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
+        {
             SnappingEngine = snappingEngine;
             FrameOfReference = parent;
             CanvasItem = itemToResize;
+            DefaultStyleKey = typeof (ResizeControl);
         }
 
-        //private WindowsSizeCursorsThumbCursorConverter WindowsSizeCursorsThumbCursorConverter { get; set; }
-        private WpfUIResizeOperationHandleConnector WpfUIResizeOperationHandleConnector { get; set; }
+
+        private UIResizeOperationHandleConnector UIResizeOperationHandleConnector { get; set; }
 
         #region CreateHostingItem
 
         public static readonly DependencyProperty CanvasItemProperty =
-            DependencyProperty.Register("CreateHostingItem", typeof(ICanvasItem), typeof(ResizeControl),
+            DependencyProperty.Register("CreateHostingItem", typeof (ICanvasItem), typeof (ResizeControl),
                 new PropertyMetadata(null, OnCanvasItemChanged));
 
         public ICanvasItem CanvasItem
         {
-            get { return (ICanvasItem)GetValue(CanvasItemProperty); }
+            get { return (ICanvasItem) GetValue(CanvasItemProperty); }
             set { SetValue(CanvasItemProperty, value); }
         }
 
         private static void OnCanvasItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (ResizeControl)d;
-            var oldCanvasItem = (ICanvasItem)e.OldValue;
+            var target = (ResizeControl) d;
+            var oldCanvasItem = (ICanvasItem) e.OldValue;
             var newCanvasItem = target.CanvasItem;
             target.OnCanvasItemChanged(oldCanvasItem, newCanvasItem);
         }
@@ -53,11 +59,11 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         {
             //if (IsLoaded)
             //{
-            //    RegisterHandles();
+            RegisterHandles();
             //}
             //else
             //{
-            Loaded += OnLoaded;
+            //    Loaded += OnLoaded;
             //}
         }
 
@@ -69,11 +75,11 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void RegisterHandles()
         {
-            WpfUIResizeOperationHandleConnector = new WpfUIResizeOperationHandleConnector(CanvasItem, new UIElementAdapter(FrameOfReference), SnappingEngine);
-            //WindowsSizeCursorsThumbCursorConverter = new WindowsSizeCursorsThumbCursorConverter();
+            UIResizeOperationHandleConnector = new UIResizeOperationHandleConnector(CanvasItem, FrameOfReference,
+                SnappingEngine);
 
 
-            var thumbContainer = (UIElement)FindName("PART_ThumbContainer");
+            var thumbContainer = (UIElement) FindName("PART_ThumbContainer");
 
             var visualChildren = new List<DependencyObject>();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(thumbContainer); i++)
@@ -92,64 +98,103 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
 
-                WpfUIResizeOperationHandleConnector.RegisterHandle(new UIElementAdapter(logicalChild), handlePoint);
-                SetCursorToHandle(logicalChild);
+                UIResizeOperationHandleConnector.RegisterHandle(new UIElementAdapter(logicalChild), handlePoint);
+                //SetCursorToHandle(logicalChild);
             }
         }
 
-        private void SetCursorToHandle(FrameworkElement handle)
-        {
-            // TODO: This has to set the cursor in WinRT. Pretty useless, since it's touch-enabled
-        }
+        //private void SetCursorToHandle(FrameworkElement handle)
+        //{
+        //    var handleRect = Mapper.Map<Rect>(handle.GetRectRelativeToParent());
+        //    var parentRect = new Rect(0, 0, ActualWidth, ActualHeight);
+        //    handle.Cursor = WindowsSizeCursorsThumbCursorConverter.GetCursor(handleRect, parentRect);
+        //}
 
         #endregion
 
         #region FrameOfReference
 
         public static readonly DependencyProperty FrameOfReferenceProperty =
-            DependencyProperty.Register("FrameOfReference", typeof(UIElement), typeof(ResizeControl),
+            DependencyProperty.Register("FrameOfReference", typeof (IUserInputReceiver), typeof (ResizeControl),
                 new PropertyMetadata(null, OnFrameOfReferenceChanged));
 
-        public UIElement FrameOfReference
+        public IUserInputReceiver FrameOfReference
         {
-            get { return (UIElement)GetValue(FrameOfReferenceProperty); }
+            get { return (IUserInputReceiver) GetValue(FrameOfReferenceProperty); }
             set { SetValue(FrameOfReferenceProperty, value); }
         }
 
         private static void OnFrameOfReferenceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (ResizeControl)d;
-            var oldFrameOfReference = (UIElement)e.OldValue;
+            var target = (ResizeControl) d;
+            var oldFrameOfReference = (IUserInputReceiver) e.OldValue;
             var newFrameOfReference = target.FrameOfReference;
             target.OnFrameOfReferenceChanged(oldFrameOfReference, newFrameOfReference);
         }
 
-        protected void OnFrameOfReferenceChanged(UIElement oldFrameOfReference, UIElement newFrameOfReference)
+        protected void OnFrameOfReferenceChanged(IUserInputReceiver oldFrameOfReference,
+            IUserInputReceiver newFrameOfReference)
         {
             //if (IsLoaded)
             //{
-            //    RegisterHandles();
+            RegisterHandles();
             //}
             //else
             //{
-                Loaded += OnLoaded;
+            //    Loaded += OnLoaded;
             //}
         }
 
         #endregion
-    }
 
+        public event FingerManipulationEventHandler FingerDown;
+        public event FingerManipulationEventHandler FingerMove;
+        public event FingerManipulationEventHandler FingerUp;
 
-
-    static public class VisualExtensions
-    {
-        public static Rect GetRectRelativeToParent(this UIElement parent, UIElement child)
+        public void CaptureInput()
         {
-            var transform = parent.TransformToVisual(child);
-            var point = transform.TransformPoint(new FoundationPoint());
-            return new Rect(Mapper.Map<Point>(point), Mapper.Map<Size>(child.RenderSize));
+            throw new System.NotImplementedException();
         }
-        
-    }
 
+        public void ReleaseInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public double GetCoordinate(CoordinatePart part)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetCoordinate(CoordinatePart part, double value)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public CanvasItemCollection Children { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
+
+        public void AddAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void RemoveAdorner(IAdorner adorner)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsVisible { get; set; }
+
+        public object GetCoreInstance()
+        {
+            return this;
+        }
+    }
 }

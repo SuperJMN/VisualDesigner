@@ -4,22 +4,18 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Glass.Design.Pcl.Annotations;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Pcl.PlatformAbstraction;
-using Glass.Design.WinRT.DesignSurface.VisualAids;
-using Glass.Design.WinRT.DesignSurface.VisualAids.Resize;
 using PostSharp.Patterns.Model;
 
 namespace Glass.Design.WinRT.DesignSurface
 {
-    [NotifyPropertyChanged]
-    public sealed class DesignSurface : ItemsControl, IDesignSurface, IMultiSelector
+    //[NotifyPropertyChanged]
+    public sealed class DesignSurface : ListView, IDesignSurface
     {
 
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
@@ -30,7 +26,7 @@ namespace Glass.Design.WinRT.DesignSurface
             DesignSurface designSurface = ((DesignSurface)d);
             if (e.NewValue != null)
             {
-                designSurface.ItemsSource = ((ICanvasItemContainer) e.NewValue).Children;
+                designSurface.ItemsSource = ((ICanvasItemContainer)e.NewValue).Children;
             }
             else
             {
@@ -38,34 +34,30 @@ namespace Glass.Design.WinRT.DesignSurface
             }
         }
 
-        public DesignSurface()
+        static DesignSurface()
         {
             
-            //MouseLeftButtonDown += OnMouseLeftButtonDown;
-            //SelectionChanged += OnSelectionChanged;
+        }
+
+        public DesignSurface()
+        {
+            PointerPressed += OnPointerPressed;
+            SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
             CommandHandler = new DesignSurfaceCommandHandler(this, this);
 
-            this.ManipulationStarted += OnManipulationStarted;
-
             DefaultStyleKey = typeof (DesignSurface);
-
-        }
-
-        private void OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs manipulationStartedRoutedEventArgs)
-        {
-            RaiseNoneSpecified();            
         }
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
-        
+
         private SelectionHandler SelectionHandler { get; set; }
 
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void OnPointerPressed(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            
+            RaiseNoneSpecified();
         }
 
         private DesignAidsProvider DesignAidsProvider { get; set; }
@@ -73,7 +65,7 @@ namespace Glass.Design.WinRT.DesignSurface
         [IgnoreAutoChangeNotification]
         public ICanvasItemContainer CanvasDocument
         {
-            get { return (ICanvasItemContainer) GetValue(CanvasDocumentProperty); }
+            get { return (ICanvasItemContainer)GetValue(CanvasDocumentProperty); }
             set { SetValue(CanvasDocumentProperty, value); }
         }
 
@@ -92,24 +84,24 @@ namespace Glass.Design.WinRT.DesignSurface
             }
         }
 
-        private void ContainerOnLeftButtonDown(object sender, InputDeviceEventHandlerArgs mouseButtonEventArgs)
+        private void ContainerOnLeftButtonDown(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-             OnItemSelected(item);
-            mouseButtonEventArgs.Handled = true;
+            OnItemSelected(item);
+            pointerRoutedEventArgs.Handled = true;
         }
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             var designerItem = (CanvasItemControl)element;
-            designerItem.PreviewMouseLeftButtonDown += ContainerOnLeftButtonDown;
+            designerItem.PointerPressed += ContainerOnLeftButtonDown;
             base.PrepareContainerForItemOverride(element, item);
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
             var designerItem = (CanvasItemControl)element;
-            designerItem.PreviewMouseLeftButtonDown -= ContainerOnLeftButtonDown;
+            designerItem.PointerPressed -= ContainerOnLeftButtonDown;
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
@@ -131,6 +123,7 @@ namespace Glass.Design.WinRT.DesignSurface
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
         private ICanvasItem _rootCanvasItem;
+        private CanvasItemCollection children;
 
         [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode
@@ -160,7 +153,7 @@ namespace Glass.Design.WinRT.DesignSurface
         private void OnItemSelected(object e)
         {
             this.LastSelectedItem = e;
-         
+
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);
         }
@@ -185,6 +178,15 @@ namespace Glass.Design.WinRT.DesignSurface
         //{
         //    base.OnPreviewMouseLeftButtonDown(e);
         //    Focus();
+            
+        //    OnFingerDown(new FingerManipulationEventArgs());
+        //}
+
+        //protected override void OnMouseMove(MouseEventArgs e)
+        //{
+        //    base.OnMouseMove(e);
+          
+        //    OnFingerMove(new FingerManipulationEventArgs());
         //}
 
         //protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -208,60 +210,113 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public ICommand GroupCommand { get; private set; }
 
-        [UsedImplicitly]
-        public DesignSurfaceCommandHandler DesignSurfaceCommandHandler
+        //[UsedImplicitly]
+        //public DesignSurfaceCommandHandler DesignSurfaceCommandHandler
+        //{
+        //    get { return designSurfaceCommandHandler; }
+        //}
+
+
+        public event FingerManipulationEventHandler FingerDown;
+
+        private void OnFingerDown(FingerManipulationEventArgs args)
         {
-            get { return designSurfaceCommandHandler; }
+            var handler = FingerDown;
+            if (handler != null) handler(this, args);
         }
 
+        public event FingerManipulationEventHandler FingerMove;
+
+        private void OnFingerMove(FingerManipulationEventArgs args)
+        {
+            var handler = FingerMove;
+            if (handler != null) handler(this, args);
+        }
+
+        public event FingerManipulationEventHandler FingerUp;
+
+        private void OnFingerUp(FingerManipulationEventArgs args)
+        {
+            var handler = FingerUp;
+            if (handler != null) handler(this, args);
+        }
+
+        public void CaptureInput()
+        {
+            //CapturePointer(new Pointer());
+        }
+
+        public void ReleaseInput()
+        {
+            //ReleasePointerCaptures();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public double GetCoordinate(CoordinatePart part)
         {
             throw new NotImplementedException();
         }
 
-        public void SetCoordinate(CoordinatePart part, double value)
+        void ICoordinate.SetCoordinate(CoordinatePart part, double value)
         {
             throw new NotImplementedException();
         }
 
-        public double Left { get; set; }
-        public double Top { get; set; }
-        public CanvasItemCollection Children { get; set; }
-        public double Right { get; set; }
-        public double Bottom { get; set; }
-        public ICanvasItemContainer Parent { get; set; }
-        public event PointingManipulationEventHandler PointingManipulationStart;
-        public event PointingManipulationEventHandler PointerMove;
-        public event PointingManipulationEventHandler PointerManipulsationEnd;
+        void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        double IPositionable.Left { get; set; }
+        double IPositionable.Top { get; set; }
+
+        CanvasItemCollection ICanvasItemContainer.Children
+        {
+            get { return children; }
+            set { children = value; }
+        }
+
+        double ICanvasItem.Right { get; set; }
+        double ICanvasItem.Bottom { get; set; }
+        ICanvasItemContainer ICanvasItem.Parent { get; set; }
+
         public void AddAdorner(IAdorner adorner)
         {
-            throw new NotImplementedException();
+            //var coreInstance = (Visual) GetCoreInstance();
+            //var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
+            //adornerLayer.Add((Adorner) adorner);
         }
 
-        public bool IsVisible { get; set; }
+        public void RemoveAdorner(IAdorner adorner)
+        {
+            //var coreInstance = (Visual)GetCoreInstance();
+            //var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
+            //adornerLayer.Remove((Adorner) adorner);
+        }
 
+        bool IUIElement.IsVisible { get; set; }
         public object GetCoreInstance()
         {
             return this;
         }
 
-        public event FingerManipulationEventHandler FingerDown;
-        public event FingerManipulationEventHandler FingerMove;
-        public event FingerManipulationEventHandler FingerUp;
-        public void CaptureInput()
-        {
-            
-        }
 
-        public void ReleaseInput()
-        {
-            
-        }
-    }
+        //protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        //{
+        //    base.OnPreviewMouseLeftButtonUp(e);
 
-    internal class MouseButtonEventArgs
-    {
+        //    var point = e.GetPosition(null);
+        //    var pclPoint = Mapper.Map<Point>(point);
+        //    OnFingerUp(new FingerManipulationEventArgs());
+        //}
     }
 }

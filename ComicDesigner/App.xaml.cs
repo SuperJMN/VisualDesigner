@@ -7,7 +7,16 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
+using AutoMapper;
+using Glass.Design.Pcl.Core;
+using Glass.Design.WinRT.PlatformSpecific;
 using StyleMVVM;
+
+using WinRTPoint = Windows.Foundation.Point;
+using PclPoint = Glass.Design.Pcl.Core.Point;
+
+using WinRTRect = Windows.Foundation.Rect;
+using PclRect = Glass.Design.Pcl.Core.Rect;
 
 namespace ComicDesigner
 {
@@ -66,6 +75,9 @@ namespace ComicDesigner
             if (rootFrame.Content == null)
             {
                 SetupBootstrapper();
+                SetupPlatformToPclMappings();
+                ServiceLocator.InputProvider = new WinRTInputProvider();
+                ServiceLocator.UIElementFactory = new WinRTUIElementFactory();
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
@@ -111,5 +123,23 @@ namespace ComicDesigner
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+
+        private void SetupPlatformToPclMappings()
+        {
+            Mapper.CreateMap<WinRTPoint, Point>();
+            Mapper.CreateMap<WinRTRect, Rect>()
+                .ForMember(rect => rect.Location, expression => expression.Ignore())
+                .ForMember(rect => rect.Size, expression => expression.Ignore())
+                ;
+
+
+            Mapper.CreateMap<Point, WinRTPoint>();
+            Mapper.CreateMap<Rect, WinRTRect>()               
+                ;
+
+            Mapper.AssertConfigurationIsValid();
+        }
+
     }
 }

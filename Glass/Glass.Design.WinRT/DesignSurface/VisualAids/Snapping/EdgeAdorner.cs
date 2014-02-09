@@ -1,8 +1,6 @@
 ﻿using Windows.UI;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
-using Glass.Design.WinRT.DesignSurface.VisualAids.Selection;
-
 using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
@@ -19,8 +17,6 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         public EdgeAdorner(IUIElement adornedElement, ICanvasItem canvasItem) : base(adornedElement, canvasItem)
         {
         }
-
-        private static Pen Pen { get; set; }
 
         
         public Edge Edge { get; set; }
@@ -60,6 +56,6 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 
         //    drawingContext.DrawLine(Pen, point1, point2);
         //}
-        public override bool IsHitTestVisible { get; set; }
+        
     }
 }

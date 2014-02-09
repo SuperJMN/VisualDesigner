@@ -6,8 +6,6 @@ using Windows.UI.Xaml.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using PostSharp.Patterns.Model;
-using Point = Glass.Design.Pcl.Core.Point;
-using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT
 {
@@ -170,18 +168,6 @@ namespace Glass.Design.WinRT
                 default:
                     throw new ArgumentOutOfRangeException("part");
             }
-        }
-    }
-
-    public delegate void InputDeviceEventHandler(object sender, InputDeviceEventHandlerArgs args);
-
-    public class InputDeviceEventHandlerArgs
-    {
-        public bool Handled { get; set; }
-
-        public Point GetPoint(IUIElement frameOfReference)
-        {
-            throw new NotImplementedException();
         }
     }
 }
