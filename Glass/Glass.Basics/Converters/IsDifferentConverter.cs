@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters
+namespace Glass.Basics.Wpf.Converters
 {
     /// <summary>
     /// WPF/Silverlight ValueConverter : return true if Value differs from Parameter

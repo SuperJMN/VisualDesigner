@@ -7,7 +7,7 @@ using System.Linq;
 
 #endregion
 
-namespace Glass.Basics.Collections
+namespace Glass.Basics.Wpf.Collections
 {
     public class ObservableCollectionSynchronizer<T>
     {

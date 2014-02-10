@@ -1,4 +1,4 @@
-﻿namespace Glass.Basics.Behaviors.DragDrop
+﻿namespace Glass.Basics.Wpf.Behaviors.DragDrop
 {
     public enum DropModes
     {

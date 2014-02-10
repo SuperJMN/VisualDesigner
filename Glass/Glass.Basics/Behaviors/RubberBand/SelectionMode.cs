@@ -1,4 +1,4 @@
-﻿namespace Glass.Basics.Behaviors.RubberBand
+﻿namespace Glass.Basics.Wpf.Behaviors.RubberBand
 {
     public enum SelectionMode
     {

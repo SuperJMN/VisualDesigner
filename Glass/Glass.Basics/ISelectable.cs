@@ -1,7 +1,7 @@
 ﻿using System;
-using Glass.Basics.Core;
+using Glass.Basics.Wpf.Core;
 
-namespace Glass.Basics
+namespace Glass.Basics.Wpf
 {
     public interface ISelectable
     {

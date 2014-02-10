@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Glass.Basics.Extensions;
+using Glass.Basics.Wpf.Extensions;
 
-namespace Glass.Basics.Behaviors.DragDrop
+namespace Glass.Basics.Wpf.Behaviors.DragDrop
 {
     public static class ChildrenRetriever
     {

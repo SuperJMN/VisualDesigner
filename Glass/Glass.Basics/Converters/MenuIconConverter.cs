@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace Glass.Basics.Converters {
+namespace Glass.Basics.Wpf.Converters {
     /// <summary>
     /// This class simply converts a image url into a Image
     /// for use within a MenuItem

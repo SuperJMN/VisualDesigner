@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:local="clr-namespace:Glass.Basics.Controls.EditableTextBlock"
-    xmlns:fontFamilyPicker="clr-namespace:Glass.Basics.Controls.FontFamilyPicker">
+    xmlns:local="clr-namespace:Glass.Basics.Wpf.Controls.EditableTextBlock"
+    xmlns:fontFamilyPicker="clr-namespace:Glass.Basics.Wpf.Controls.FontFamilyPicker">
 
     <Style TargetType="{x:Type local:EditableTextBlock}">
         <Setter Property="Focusable" Value="False" />

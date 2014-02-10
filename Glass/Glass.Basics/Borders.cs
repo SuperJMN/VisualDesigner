@@ -1,4 +1,4 @@
-namespace Glass.Basics
+namespace Glass.Basics.Wpf
 {
     public struct Borders
     {

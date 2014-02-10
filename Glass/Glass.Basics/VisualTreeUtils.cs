@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Glass.Basics
+namespace Glass.Basics.Wpf
 {
     public static class VisualTreeUtils
     {

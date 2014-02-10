@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Glass.Basics.Extensions
+namespace Glass.Basics.Wpf.Extensions
 {
     public static class PanelExtensions
     {

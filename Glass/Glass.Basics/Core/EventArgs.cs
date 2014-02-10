@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Glass.Basics.Core
+namespace Glass.Basics.Wpf.Core
 {
     public class EventArgs<T> : EventArgs
     {

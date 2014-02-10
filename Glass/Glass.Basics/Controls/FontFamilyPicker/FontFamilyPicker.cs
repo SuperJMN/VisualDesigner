@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Glass.Basics.Controls.FontFamilyPicker
+namespace Glass.Basics.Wpf.Controls.FontFamilyPicker
 {
     public class FontFamilyPicker : Control
     {

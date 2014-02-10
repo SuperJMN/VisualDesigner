@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Glass.Basics.Converters
+namespace Glass.Basics.Wpf.Converters
 {
 	[ValueConversion(typeof(ImageSource), typeof(Image))]
 	public class ImageSourceToImageConverter : IValueConverter

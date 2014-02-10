@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Glass.Basics.Extensions
+namespace Glass.Basics.Wpf.Extensions
 {
     public static class BitmapSourceExtensions
     {

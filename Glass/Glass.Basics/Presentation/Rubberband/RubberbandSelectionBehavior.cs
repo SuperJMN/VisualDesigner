@@ -6,9 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Glass.Basics.Extensions;
+using Glass.Basics.Wpf.Extensions;
 
-namespace Glass.Basics.Presentation.Rubberband
+namespace Glass.Basics.Wpf.Presentation.Rubberband
 {
     public class RubberbandSelectionBehavior : RubberbandBehavior
     {

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Interactivity;
 
-namespace Glass.Basics
+namespace Glass.Basics.Wpf
 {
 // ReSharper disable UnusedMember.Global
     public class RoutedEventTrigger : EventTriggerBase<DependencyObject>

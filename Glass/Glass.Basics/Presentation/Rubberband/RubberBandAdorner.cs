@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace Glass.Basics.Presentation.Rubberband
+namespace Glass.Basics.Wpf.Presentation.Rubberband
 {
     public class RubberBandAdorner : ControlAdorner
     {

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters
+namespace Glass.Basics.Wpf.Converters
 {
     /// <summary>
     /// WPF/Silverlight ValueConverter : does Value match the regular expression (=Parameter) ?

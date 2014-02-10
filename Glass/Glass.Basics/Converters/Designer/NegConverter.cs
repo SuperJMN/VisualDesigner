@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters.Designer
+namespace Glass.Basics.Wpf.Converters.Designer
 {
     [ValueConversion(typeof(bool), typeof(bool))]
     public class NegConverter : IValueConverter

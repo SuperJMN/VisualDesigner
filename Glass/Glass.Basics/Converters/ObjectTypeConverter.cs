@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters
+namespace Glass.Basics.Wpf.Converters
 {
     public class ObjectTypeConverter : IValueConverter
     {

@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Glass.Basics.Converters.Designer
+namespace Glass.Basics.Wpf.Converters.Designer
 {
     /// <summary>
     /// A value converter which contains a list of IValueConverters and invokes their Convert or ConvertBack methods

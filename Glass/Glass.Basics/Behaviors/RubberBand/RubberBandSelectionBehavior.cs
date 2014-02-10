@@ -6,9 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
-using Glass.Basics.Core;
+using Glass.Basics.Wpf.Core;
 
-namespace Glass.Basics.Behaviors.RubberBand {
+namespace Glass.Basics.Wpf.Behaviors.RubberBand {
     public class RubberBandSelectionBehavior : Behavior<ItemsControl> {
         private RubberBandBehavior behavior;
         private Dictionary<ISelectable, bool> originalStates;

@@ -6,9 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using Glass.Basics.Extensions;
+using Glass.Basics.Wpf.Extensions;
 
-namespace Glass.Basics.Behaviors.DragDrop
+namespace Glass.Basics.Wpf.Behaviors.DragDrop
 {
     public class DragDropBehavior : Behavior<FrameworkElement>
     {

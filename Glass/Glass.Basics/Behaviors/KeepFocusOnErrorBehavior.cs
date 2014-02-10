@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace Glass.Basics.Behaviors {
+namespace Glass.Basics.Wpf.Behaviors {
     public class KeepFocusOnErrorBehavior : Behavior<UIElement>
     {
         private IList<UIElement> elementsToObserveFocusLoss;

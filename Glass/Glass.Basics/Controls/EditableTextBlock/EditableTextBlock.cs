@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Glass.Basics.Controls.EditableTextBlock
+namespace Glass.Basics.Wpf.Controls.EditableTextBlock
 {
     public class EditableTextBlock : Control
     {

@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-
-namespace Glass.Basics.Styles
+namespace Glass.Basics.Wpf.Styles
 {
 
     public class MaximizeButton : CheckBox

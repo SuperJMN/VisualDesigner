@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Glass.Basics.Attributes
+namespace Glass.Basics.Wpf.Attributes
 {
     [AttributeUsage(AttributeTargets.All)]
     public sealed class LocalizedCategoryAttribute : CategoryAttribute

@@ -5,9 +5,9 @@
 using System;
 using System.Globalization;
 using System.Runtime;
-using Glass.Basics.Properties;
+using Glass.Basics.Wpf.Properties;
 
-namespace Glass.Basics.Attributes
+namespace Glass.Basics.Wpf.Attributes
 {
     internal class LocalizableString
     {

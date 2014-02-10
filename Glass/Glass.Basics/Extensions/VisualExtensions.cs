@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-namespace Glass.Basics.Extensions
+namespace Glass.Basics.Wpf.Extensions
 {
     static public class VisualExtensions
     {

@@ -7,7 +7,7 @@
     <ProjectGuid>{76C3D50B-CA51-480F-8FCD-40F0EA98F4C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Glass.Basics</RootNamespace>
+    <RootNamespace>Glass.Basics.Wpf</RootNamespace>
     <AssemblyName>Glass.Basics</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -99,6 +99,7 @@
     <Compile Include="Controls\BindableGrid\BoundGridColumnDefinitionCollection.cs" />
     <Compile Include="Controls\BindableGrid\BoundGridRowDefinitionCollection.cs" />
     <Compile Include="Controls\BindableGrid\BindableGrid.cs" />
+    <Compile Include="Controls\DottedGrid.cs" />
     <Compile Include="Converters\ObjectTypeConverter.cs" />
     <Compile Include="Core\EventArgs.cs" />
     <Compile Include="Extensions\BitmapSourceExtensions.cs" />

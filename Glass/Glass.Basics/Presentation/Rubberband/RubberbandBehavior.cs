@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Interactivity;
 
-namespace Glass.Basics.Presentation.Rubberband
+namespace Glass.Basics.Wpf.Presentation.Rubberband
 {
     public class RubberbandBehavior : Behavior<FrameworkElement>
     {

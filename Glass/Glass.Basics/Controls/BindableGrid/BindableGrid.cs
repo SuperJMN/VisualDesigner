@@ -2,11 +2,11 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using Glass.Basics.Collections;
+using Glass.Basics.Wpf.Collections;
 
 #endregion
 
-namespace Glass.Basics.Controls.BindableGrid
+namespace Glass.Basics.Wpf.Controls.BindableGrid
 {
     public class BindableGrid : Grid
     {

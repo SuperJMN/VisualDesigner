@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Glass.Basics.Presentation.Rubberband
+namespace Glass.Basics.Wpf.Presentation.Rubberband
 {
     public class RubberBandAttacher
     {

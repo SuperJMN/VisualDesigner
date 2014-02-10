@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters {
+namespace Glass.Basics.Wpf.Converters {
     public class FlaggedEnumConverter : DependencyObject, IValueConverter {
 
         public Enum OriginalValue {

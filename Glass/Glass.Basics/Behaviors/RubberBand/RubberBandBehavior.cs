@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using Glass.Basics.Core;
+using Glass.Basics.Wpf.Core;
 
-namespace Glass.Basics.Behaviors.RubberBand
+namespace Glass.Basics.Wpf.Behaviors.RubberBand
 {
     public class RubberBandBehavior : Behavior<FrameworkElement>
     {

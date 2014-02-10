@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using AutoMapper;
-using Glass.Basics.Extensions;
+using Glass.Basics.Wpf.Extensions;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;

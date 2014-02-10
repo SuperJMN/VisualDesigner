@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters.Designer
+namespace Glass.Basics.Wpf.Converters.Designer
 {
     /// <summary>
     /// WPF/Silverlight ValueConverter : return true if Value is greater than Parameter

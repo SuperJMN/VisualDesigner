@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Glass.Basics.Presentation {
+namespace Glass.Basics.Wpf.Presentation {
 
     public class ControlAdorner : Adorner {
 

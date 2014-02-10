@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace Glass.Basics
+namespace Glass.Basics.Wpf
 {
     public static class RoutedEventHelper
     {

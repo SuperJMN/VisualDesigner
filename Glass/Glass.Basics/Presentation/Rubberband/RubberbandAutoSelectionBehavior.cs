@@ -2,9 +2,9 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Glass.Basics.Extensions;
+using Glass.Basics.Wpf.Extensions;
 
-namespace Glass.Basics.Presentation.Rubberband
+namespace Glass.Basics.Wpf.Presentation.Rubberband
 {
     public class RubberbandAutoSelectionBehavior: RubberbandBehavior
     {

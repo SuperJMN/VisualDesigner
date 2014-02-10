@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Glass.Basics.Presentation
+namespace Glass.Basics.Wpf.Presentation
 {
     public static class ItemsControlExtensions
     {

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:converters="clr-namespace:Glass.Basics.Converters"
-                    xmlns:themes="clr-namespace:Glass.Basics.Styles"
+                    xmlns:converters="clr-namespace:Glass.Basics.Wpf.Converters"
+                    xmlns:themes="clr-namespace:Glass.Basics.Wpf.Styles"
                     mc:Ignorable="d">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Glass.Basics;component/Styles/Themes/Brushes.xaml"/>

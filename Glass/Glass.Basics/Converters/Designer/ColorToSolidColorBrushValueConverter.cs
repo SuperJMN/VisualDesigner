@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Glass.Basics.Converters.Designer
+namespace Glass.Basics.Wpf.Converters.Designer
 {
     public class ColorToSolidColorBrushValueConverter : IValueConverter
     {

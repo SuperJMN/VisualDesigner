@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Glass.Basics.Converters.Designer
+namespace Glass.Basics.Wpf.Converters.Designer
 {
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class Bool2VisibilityConverter : IValueConverter

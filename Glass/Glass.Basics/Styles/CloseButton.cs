@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace Glass.Basics.Styles
+namespace Glass.Basics.Wpf.Styles
 {
     public class CloseButton : ToggleButton
     {

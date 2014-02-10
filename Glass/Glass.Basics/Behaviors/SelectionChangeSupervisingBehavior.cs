@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace Glass.Basics.Behaviors
+namespace Glass.Basics.Wpf.Behaviors
 {
     public class SelectionChangeSupervisingBehavior : Behavior<Selector>
     {
