@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 
-namespace ComicDesigner
+namespace Delay
 {
     /// <summary>
     /// Class that implements a workaround for a Silverlight XAML parser
@@ -56,18 +56,18 @@ namespace ComicDesigner
             get
             {
                 // Defer creating collection until needed
-                if (null == values)
+                if (null == _values)
                 {
-                    values = new Collection<SetterValueBindingHelper>();
+                    _values = new Collection<SetterValueBindingHelper>();
                 }
-                return values;
+                return _values;
             }
         }
 
         /// <summary>
         /// Backing store for the Values property.
         /// </summary>
-        private Collection<SetterValueBindingHelper> values;
+        private Collection<SetterValueBindingHelper> _values;
 
         /// <summary>
         /// Gets the value of the PropertyBinding attached DependencyProperty.

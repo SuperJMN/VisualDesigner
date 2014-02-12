@@ -8,6 +8,7 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
+    xmlns:delay="using:Delay"
     view:ViewModel.Name="MainViewModel"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
@@ -22,6 +23,10 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Button Content="Sample button" />
         <designSurface:DesignSurface ItemsSource="{Binding Items}">
             <designSurface:DesignSurface.ItemTemplate>
@@ -33,25 +38,38 @@
                 <StaticResource ResourceKey="TypedTemplateSelector" />
             </designSurface:DesignSurface.ItemTemplateSelector>
 
-            WINRT DOESN'T SUPPORT STYLE SETTERS TO HAVE BINDING AS VALUE!
+            <!-- I DON'T KNOW WHY THIS DOESN'T WORK AND THE SAME IN THE BUTTON (BELOW) WORKS PERFECTLY -->
             <designSurface:DesignSurface.ItemContainerStyle>                
                 <Style TargetType="winRt:CanvasItemControl">
-                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
+                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <comicDesigner:SetterValueBindingHelper
-                                Property="Canvas.Left"
-                                Binding="{Binding Path=Content.Left}"/>
+                            <delay:SetterValueBindingHelper
+                                Property="Left"
+                                Binding="{Binding Name}"/>
                         </Setter.Value>
-                    </Setter>
-                    <!--<Setter Property="Top"
-                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Top}" />
-                    <Setter Property="Width"
-                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Width}" />
-                    <Setter Property="Height"
-                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Height}" />-->
+                    </Setter>                   
                 </Style>                
             </designSurface:DesignSurface.ItemContainerStyle>
             
-        </designSurface:DesignSurface>       
+        </designSurface:DesignSurface>
+
+        <Button
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            DataContext="Coco">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <!-- WPF syntax:
+                    <Setter Property="Content" Value="{Binding}"/> -->
+                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
+                        <Setter.Value>
+                            <delay:SetterValueBindingHelper
+                                Property="Content"
+                                Binding="{Binding}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Page>
