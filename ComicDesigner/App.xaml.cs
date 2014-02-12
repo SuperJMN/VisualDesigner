@@ -86,6 +86,7 @@ namespace ComicDesigner
             }
             // Ensure the current window is active
             Window.Current.Activate();
+XamlInspector.Client.Run();
         }
 
         private void SetupBootstrapper()
