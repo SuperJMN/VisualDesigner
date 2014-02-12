@@ -16,7 +16,7 @@ namespace ComicDesigner
             Items = new CanvasItemCollection();
             for (int i = 0; i < 5; i++)
             {
-                Items.Add(new CanvasRectangle() { Left = 0, Top = 0, Width = 100, Height = 50 });
+                Items.Add(new CanvasRectangle() { Left = i * 30, Top = i * 20, Width = 100, Height = 50 });
             }
         }
 

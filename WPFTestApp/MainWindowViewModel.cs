@@ -114,15 +114,13 @@ namespace Glass.Design.WpfTester
             }
         }
 
-
-
         public CanvasDocument Document { get; private set; }
-
-
 
         public GroupCommandArgs GroupCommandArgs { get; set; }
 
         public ICommand LoadCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        
+        public ICanvasItem SelectedItem { get; set; }
     }
 }

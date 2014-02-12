@@ -10,14 +10,42 @@
     view:ViewModel.Name="MainViewModel"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
-        <!--<comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"></comicDesigner:TypedTemplateSelector>-->
+        <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
+                                             DefaultTemplateKey="DefaultTemplate" />
         <DataTemplate x:Key="Type:CanvasRectangle">
-            <Rectangle Fill="Red" />
+            <Rectangle Fill="Red" Width="30" Height="30" />
+        </DataTemplate>
+        <DataTemplate x:Key="DefaultTemplate">
+            <Rectangle Fill="Blue" />
         </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button Content="Sample button" />
-        <designSurface:DesignSurface ItemsSource="{Binding Items}" />        
+        <designSurface:DesignSurface ItemsSource="{Binding Items}">
+            <designSurface:DesignSurface.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Fill="Red" />
+                </DataTemplate>
+            </designSurface:DesignSurface.ItemTemplate>
+            <designSurface:DesignSurface.ItemTemplateSelector>
+                <StaticResource ResourceKey="TypedTemplateSelector" />
+            </designSurface:DesignSurface.ItemTemplateSelector>
+
+            <!--WINRT DON'T SUPPORT STYLE SETTERS TO HAVE BINDING AS VALUE!--><!--
+            <designSurface:DesignSurface.ItemContainerStyle>                
+                <Style TargetType="winRt:CanvasItemControl">
+                    <Setter Property="Left"
+                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Left}" />
+                    <Setter Property="Top"
+                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Top}" />
+                    <Setter Property="Width"
+                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Width}" />
+                    <Setter Property="Height"
+                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Height}" />
+                </Style>                
+            </designSurface:DesignSurface.ItemContainerStyle>-->
+            
+        </designSurface:DesignSurface>       
     </Grid>
 </Page>

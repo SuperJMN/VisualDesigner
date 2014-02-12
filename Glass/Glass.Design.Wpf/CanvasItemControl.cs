@@ -69,7 +69,6 @@ namespace Glass.Design.Wpf
         ICanvasItemContainer ICanvasItem.Parent
         {
             get { throw new NotSupportedException(); }
-            set { throw new NotImplementedException(); }
         }
 
         public CanvasItemCollection Children { get; set; }

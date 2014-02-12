@@ -53,26 +53,19 @@ namespace Glass.Design.WinRT
         public double Right
         {
             get { return Left + Width; }
-            set { throw new NotImplementedException(); }
         }
 
         public double Bottom
         {
             get { return Top + Height; }
-            set { throw new NotImplementedException(); }
         }
 
-        ICanvasItemContainer ICanvasItem.Parent
+        ICanvasItemContainer ICanvasItem.Parent      
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotImplementedException(); }
+            get; set;
         }
 
-        public CanvasItemCollection Children { get; set; }
-      
-
-      
-     
+        public CanvasItemCollection Children { get; set; }     
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -80,9 +73,6 @@ namespace Glass.Design.WinRT
             Canvas.SetTop(target, target.Top);
             target.OnPropertyChanged("Top");
         }
-
-    
-       
 
         #region Left
 

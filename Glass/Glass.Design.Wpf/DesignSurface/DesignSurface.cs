@@ -127,7 +127,6 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
         private ICanvasItem _rootCanvasItem;
-        private CanvasItemCollection children;
 
         [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode
@@ -155,20 +154,16 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void OnItemSelected(object e)
         {
-            this.LastSelectedItem = e;
-
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);
         }
 
-        public object LastSelectedItem { get; private set; }
+        
 
         public event EventHandler SelectionCleared;
 
         private void RaiseNoneSpecified()
         {
-            this.LastSelectedItem = null;
-
             var handler = SelectionCleared;
             if (handler != null) handler(this, EventArgs.Empty);
         }
@@ -275,18 +270,14 @@ namespace Glass.Design.Wpf.DesignSurface
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        double IPositionable.Left { get; set; }
-        double IPositionable.Top { get; set; }
+        public double Left { get; set; }
+        public double Top { get; set; }
 
-        CanvasItemCollection ICanvasItemContainer.Children
-        {
-            get { return children; }
-            set { children = value; }
-        }
+        public CanvasItemCollection Children { get; set; }
 
-        double ICanvasItem.Right { get; set; }
-        double ICanvasItem.Bottom { get; set; }
-        ICanvasItemContainer ICanvasItem.Parent { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public ICanvasItemContainer Parent { get; set; }
 
         public void AddAdorner(IAdorner adorner)
         {
@@ -302,7 +293,7 @@ namespace Glass.Design.Wpf.DesignSurface
             adornerLayer.Remove((Adorner) adorner);
         }
 
-        bool IUIElement.IsVisible { get; set; }
+        public bool IsVisible { get; set; }
         public object GetCoreInstance()
         {
             return this;

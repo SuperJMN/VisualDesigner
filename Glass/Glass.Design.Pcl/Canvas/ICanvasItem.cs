@@ -4,9 +4,9 @@ namespace Glass.Design.Pcl.Canvas
 {
     public interface ICanvasItem : IPositionable, ISizable, ICanvasItemContainer
     {
-        double Right { get; set; }
-        double Bottom { get; set; }
+        double Right { get; }
+        double Bottom { get; }
 
-        ICanvasItemContainer Parent { get; set; }
+        ICanvasItemContainer Parent { get; }
     }
 }

@@ -285,8 +285,8 @@ namespace Glass.Design.WinRT.DesignSurface
             set { children = value; }
         }
 
-        double ICanvasItem.Right { get; set; }
-        double ICanvasItem.Bottom { get; set; }
+        public double Right { get; private set; }
+        public double Bottom { get; private set; }
         ICanvasItemContainer ICanvasItem.Parent { get; set; }
 
         public void AddAdorner(IAdorner adorner)

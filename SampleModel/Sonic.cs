@@ -1,6 +1,6 @@
 ﻿namespace SampleModel
 {
-    public class Sonic : CanvasModelItemModel
+    public class Sonic : CanvasItemViewModel
     {
          
     }

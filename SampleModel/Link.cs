@@ -1,6 +1,6 @@
 ﻿namespace SampleModel
 {
-    public class Link : CanvasModelItemModel
+    public class Link : CanvasItemViewModel
     {
          
     }

@@ -25,7 +25,7 @@ namespace Glass.Design.Pcl.Canvas
         {
             this.previousWidth = 1;
             this.previousHeight = 1;
-          
+
         }
 
         internal ChildrenPositioning ChildrenPositioning { get; set; }
@@ -35,11 +35,9 @@ namespace Glass.Design.Pcl.Canvas
         public ICanvasItemContainer Parent
         {
             get
-        {
-            return (ICanvasItemContainer) this.QueryInterface<IAggregatable>(true).Parent;
-                return null;
-        }
-            set { throw new NotImplementedException(); }
+            {
+                return (ICanvasItemContainer)this.QueryInterface<IAggregatable>(true).Parent;
+            }            
         }
 
         public abstract CanvasItemCollection Children { get; set; }
@@ -57,13 +55,11 @@ namespace Glass.Design.Pcl.Canvas
         public double Right
         {
             get { return this.Left + this.Width; }
-            set { throw new NotImplementedException(); }
         }
 
         public double Bottom
         {
             get { return this.Top + this.Height; }
-            set { throw new NotImplementedException(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -90,7 +86,6 @@ namespace Glass.Design.Pcl.Canvas
 
         }
 
-        
         protected virtual void OnResized(double widthFactor, double heightFactor)
         {
 
@@ -102,16 +97,16 @@ namespace Glass.Design.Pcl.Canvas
                 {
                     double origin = this.ChildrenPositioning == ChildrenPositioning.Absolute ? this.Left : 0;
 
-                    child.Width = child.Width*widthFactor;
-                    child.Left = origin + (child.Left - origin)*widthFactor;
+                    child.Width = child.Width * widthFactor;
+                    child.Left = origin + (child.Left - origin) * widthFactor;
                 }
 
                 if (!double.IsNaN(heightFactor) && heightFactor != 1)
                 {
                     double origin = this.ChildrenPositioning == ChildrenPositioning.Absolute ? this.Top : 0;
 
-                    child.Height = child.Height*heightFactor;
-                    child.Top = origin + (child.Top - origin)*heightFactor;
+                    child.Height = child.Height * heightFactor;
+                    child.Top = origin + (child.Top - origin) * heightFactor;
                 }
             }
         }
@@ -144,35 +139,35 @@ namespace Glass.Design.Pcl.Canvas
                 switch (propertyName)
                 {
                     case "Top":
-                    {
-                        this.OnMoved(0, this.Top - this.previousTop);
-                        this.previousTop = this.Top;
-                        break;
-                    }
+                        {
+                            this.OnMoved(0, this.Top - this.previousTop);
+                            this.previousTop = this.Top;
+                            break;
+                        }
 
                     case "Left":
-                    {
-                        this.OnMoved(this.Left - this.previousLeft, 0);
-                        this.previousLeft = this.Left;
-                        break;
-                    }
+                        {
+                            this.OnMoved(this.Left - this.previousLeft, 0);
+                            this.previousLeft = this.Left;
+                            break;
+                        }
 
                     case "Width":
-                    {
-                        double factor = this.Width/this.previousWidth;
-                        this.OnResized(factor, 1);
-                        this.previousWidth = this.Width;
-                        break;
-                    }
+                        {
+                            double factor = this.Width / this.previousWidth;
+                            this.OnResized(factor, 1);
+                            this.previousWidth = this.Width;
+                            break;
+                        }
 
                     case "Height":
-                    {
-                        double factor = this.Height/this.previousHeight;
-                        this.OnResized(1, factor);
-                        this.previousHeight = this.Height;
+                        {
+                            double factor = this.Height / this.previousHeight;
+                            this.OnResized(1, factor);
+                            this.previousHeight = this.Height;
 
-                        break;
-                    }
+                            break;
+                        }
 
                 }
             }
@@ -181,7 +176,7 @@ namespace Glass.Design.Pcl.Canvas
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+
         double ICoordinate.GetCoordinate(CoordinatePart part)
         {
             switch (part)
@@ -231,10 +226,10 @@ namespace Glass.Design.Pcl.Canvas
                     throw new ArgumentOutOfRangeException("part");
             }
         }
-         
+
         void IRecordableCallback.OnReplaying(ReplayKind kind, ReplayContext context)
         {
-             this.undoing = true;
+            this.undoing = true;
         }
 
         void IRecordableCallback.OnReplayed(ReplayKind kind, ReplayContext context)

@@ -1,6 +1,6 @@
 ﻿namespace SampleModel
 {
-    public class Mario : CanvasModelItemModel
+    public class Mario : CanvasItemViewModel
     {
          
     }

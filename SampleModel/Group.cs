@@ -1,6 +1,6 @@
 ﻿namespace SampleModel
 {
-    public class Group : CanvasModelItemModel
+    public class Group : CanvasItemViewModel
     {
         
     }
