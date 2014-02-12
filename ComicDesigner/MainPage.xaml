@@ -45,7 +45,7 @@
                         <Setter.Value>
                             <delay:SetterValueBindingHelper
                                 Property="Left"
-                                Binding="{Binding Name}"/>
+                                Binding="{Binding Left}"/>
                         </Setter.Value>
                     </Setter>                   
                 </Style>                
