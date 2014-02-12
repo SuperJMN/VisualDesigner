@@ -1,5 +1,5 @@
 using System.Xml.Serialization;
-using SampleModel.Annotations;
+using Glass.Design.Pcl.Annotations;
 
 namespace SampleModel.Serialization
 {

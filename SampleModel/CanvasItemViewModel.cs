@@ -20,9 +20,6 @@ namespace SampleModel
             // For better debugging.
             return string.Format("{0} #{5}, Left={1}, Top={2}, Width={3}, Height={4}", this.GetType().Name, this.Left,
                 this.Top, this.Width, this.Height, this.id);
-        }        
-
-        public new double Left { get; set; }
-
+        }                
     }
 }

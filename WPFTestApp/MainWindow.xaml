@@ -42,13 +42,13 @@
                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
                                 <Setter Property="BorderThickness" Value="0" />
                                 <Setter Property="Left"
-                                        Value="{Binding Path=(ds:IPositionable.Left)}" />
+                                        Value="{Binding Left}" />
                                 <Setter Property="Top"
-                                        Value="{Binding Path=(ds:IPositionable.Top)}" />
+                                        Value="{Binding Top}" />
                                 <Setter Property="Width"
-                                        Value="{Binding Path=(ds:ISizable.Width)}" />
+                                        Value="{Binding Width}" />
                                 <Setter Property="Height"
-                                        Value="{Binding Path=(ds:ISizable.Height)}" />
+                                        Value="{Binding Height}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type wpf:CanvasItemControl}">
@@ -172,10 +172,10 @@
                                                                     CanvasDocument="{Binding Document}">
                                         <designSurfaceWpf:DesignSurface.ItemContainerStyle>
                                             <Style TargetType="{x:Type wpf:CanvasItemControl}">
-                                                <Setter Property="Left" Value="{Binding Path=(ds:IPositionable.Left)}" />
-                                                <Setter Property="Top" Value="{Binding Path=(ds:IPositionable.Top)}" />
-                                                <Setter Property="Width" Value="{Binding Path=(ds:ISizable.Width)}" />
-                                                <Setter Property="Height" Value="{Binding Path=(ds:ISizable.Height)}" />
+                                                <Setter Property="Left" Value="{Binding Left, Mode=TwoWay}" />
+                                                <Setter Property="Top" Value="{Binding Top}" />
+                                                <Setter Property="Width" Value="{Binding Width}" />
+                                                <Setter Property="Height" Value="{Binding Height}" />
                                             </Style>
                                         </designSurfaceWpf:DesignSurface.ItemContainerStyle>
                                     </designSurfaceWpf:DesignSurface>

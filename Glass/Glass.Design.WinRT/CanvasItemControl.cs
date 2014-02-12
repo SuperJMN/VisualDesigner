@@ -60,10 +60,7 @@ namespace Glass.Design.WinRT
             get { return Top + Height; }
         }
 
-        ICanvasItemContainer ICanvasItem.Parent      
-        {
-            get; set;
-        }
+        public ICanvasItemContainer Parent { get; private set; }
 
         public CanvasItemCollection Children { get; set; }     
 

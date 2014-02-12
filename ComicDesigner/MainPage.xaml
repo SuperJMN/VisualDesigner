@@ -7,6 +7,7 @@
     xmlns:view="using:StyleMVVM.View"
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
+    xmlns:winRt="using:Glass.Design.WinRT"
     view:ViewModel.Name="MainViewModel"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
@@ -32,19 +33,24 @@
                 <StaticResource ResourceKey="TypedTemplateSelector" />
             </designSurface:DesignSurface.ItemTemplateSelector>
 
-            <!--WINRT DON'T SUPPORT STYLE SETTERS TO HAVE BINDING AS VALUE!--><!--
+            WINRT DOESN'T SUPPORT STYLE SETTERS TO HAVE BINDING AS VALUE!
             <designSurface:DesignSurface.ItemContainerStyle>                
                 <Style TargetType="winRt:CanvasItemControl">
-                    <Setter Property="Left"
-                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Left}" />
-                    <Setter Property="Top"
+                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
+                        <Setter.Value>
+                            <comicDesigner:SetterValueBindingHelper
+                                Property="Canvas.Left"
+                                Binding="{Binding Path=Content.Left}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <!--<Setter Property="Top"
                                 Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Top}" />
                     <Setter Property="Width"
                                 Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Width}" />
                     <Setter Property="Height"
-                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Height}" />
+                                Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Height}" />-->
                 </Style>                
-            </designSurface:DesignSurface.ItemContainerStyle>-->
+            </designSurface:DesignSurface.ItemContainerStyle>
             
         </designSurface:DesignSurface>       
     </Grid>

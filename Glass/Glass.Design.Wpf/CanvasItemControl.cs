@@ -17,14 +17,10 @@ namespace Glass.Design.Wpf
     [NotifyPropertyChanged]
     public sealed class CanvasItemControl : ContentControl, ICanvasItem
     {
-        public static readonly DependencyProperty TopProperty =
-            DependencyProperty.Register("Top", typeof (double), typeof (CanvasItemControl),
-                new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
-
         static CanvasItemControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof (CanvasItemControl),
-                new FrameworkPropertyMetadata(typeof (CanvasItemControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CanvasItemControl),
+                new FrameworkPropertyMetadata(typeof(CanvasItemControl)));
         }
 
         public CanvasItemControl()
@@ -47,68 +43,51 @@ namespace Glass.Design.Wpf
         }
 
         [IgnoreAutoChangeNotification]
+        public double Left
+        {
+            get { return (double)GetValue(LeftProperty); }
+            set { SetValue(LeftProperty, value); }
+        }
+
+
+        [IgnoreAutoChangeNotification]
         public double Top
         {
-            get { return (double) GetValue(TopProperty); }
+            get { return (double)GetValue(TopProperty); }
             set { SetValue(TopProperty, value); }
         }
 
-   
-        public double Right
-        {
-            get { return Left + Width; }
-            set { throw new NotImplementedException(); }
-        }
 
-        public double Bottom
-        {
-            get { return Top + Height; }
-            set { throw new NotImplementedException(); }
-        }
-
-        ICanvasItemContainer ICanvasItem.Parent
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public ICanvasItemContainer Parent { get; private set; }
 
         public CanvasItemCollection Children { get; set; }
-      
 
-      
-     
+
+        public static readonly DependencyProperty TopProperty =
+          DependencyProperty.Register("Top", typeof(double), typeof(CanvasItemControl),
+              new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
+
+
+        public static readonly DependencyProperty LeftProperty =
+            DependencyProperty.Register("Left", typeof(double), typeof(CanvasItemControl),
+                new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
+
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasItemControl target = (CanvasItemControl) d;
+            CanvasItemControl target = (CanvasItemControl)d;
             Canvas.SetTop(target, target.Top);
             target.OnPropertyChanged("Top");
         }
 
-    
-       
-
-        #region Left
-
-        public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof (double), typeof (CanvasItemControl),
-                new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
-
-        [IgnoreAutoChangeNotification]
-        public double Left
-        {
-            get { return (double) GetValue(LeftProperty); }
-            set { SetValue(LeftProperty, value); }
-        }
 
         private static void OnLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasItemControl target = (CanvasItemControl) d;
+            CanvasItemControl target = (CanvasItemControl)d;
             Canvas.SetLeft(target, target.Left);
             target.OnPropertyChanged("Left");
         }
 
-
-        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -139,6 +118,16 @@ namespace Glass.Design.Wpf
                 default:
                     throw new ArgumentOutOfRangeException("part");
             }
+        }
+
+        public double Right
+        {
+            get { return Left + Width; }
+        }
+
+        public double Bottom
+        {
+            get { return Top + Height; }
         }
 
         public void SetCoordinate(CoordinatePart part, double value)

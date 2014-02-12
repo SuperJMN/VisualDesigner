@@ -279,15 +279,14 @@ namespace Glass.Design.WinRT.DesignSurface
         double IPositionable.Left { get; set; }
         double IPositionable.Top { get; set; }
 
-        CanvasItemCollection ICanvasItemContainer.Children
+        public CanvasItemCollection Children
         {
-            get { return children; }
-            set { children = value; }
+            get { return children; }            
         }
 
         public double Right { get; private set; }
         public double Bottom { get; private set; }
-        ICanvasItemContainer ICanvasItem.Parent { get; set; }
+        public ICanvasItemContainer Parent { get; private set; }
 
         public void AddAdorner(IAdorner adorner)
         {
