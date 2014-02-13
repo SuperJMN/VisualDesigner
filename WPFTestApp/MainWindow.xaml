@@ -148,66 +148,7 @@
             </ToolBar>
 
         </ToolBarTray>
-
-        <xcad:DockingManager>
-            <xcad:LayoutRoot>
-                <xcad:LayoutPanel Orientation="Horizontal">
-                    <xcad:LayoutAnchorablePane DockWidth="200">
-                        <xcad:LayoutAnchorable CanClose="False" Title="Properties">
-                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                            <xctk:PropertyGrid AutoGenerateProperties="True"
-                                               SelectedObject="{Binding SelectedItem}"
-                                               SelectedObjectName="{Binding SelectedItem.Name}"
-                                               ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="75" />
-                        </xcad:LayoutAnchorable>
-                    </xcad:LayoutAnchorablePane>
-
-                    <xcad:LayoutDocumentPaneGroup>
-                        <xcad:LayoutDocumentPane>
-                            <xcad:LayoutDocument Title="Design Surface">
-
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <designSurfaceWpf:DesignSurface Background="Snow" x:Name="DesignSurface"
-                                                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                                                    CanvasDocument="{Binding Document}">
-                                        <designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                                            <Style TargetType="{x:Type wpf:CanvasItemControl}">
-                                                <Setter Property="Left" Value="{Binding Left, Mode=TwoWay}" />
-                                                <Setter Property="Top" Value="{Binding Top}" />
-                                                <Setter Property="Width" Value="{Binding Width}" />
-                                                <Setter Property="Height" Value="{Binding Height}" />
-                                            </Style>
-                                        </designSurfaceWpf:DesignSurface.ItemContainerStyle>
-                                    </designSurfaceWpf:DesignSurface>
-                                </Grid>
-                            </xcad:LayoutDocument>
-                        </xcad:LayoutDocumentPane>
-                    </xcad:LayoutDocumentPaneGroup>
-
-                    <xcad:LayoutAnchorablePane DockWidth="200">
-                        <xcad:LayoutAnchorable CanClose="False" Title="Undo">
-                            <ListBox ItemsSource="{Binding Path=Recorder.UndoOperations}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick"
-                                                 ToolTip="Double-click to undo to this operation.">
-                                            <Control.Template>
-                                                <ControlTemplate>
-                                                    <TextBlock Text="{Binding Path=Name}" />
-                                                </ControlTemplate>
-                                            </Control.Template>
-                                        </Control>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-
-
-                            </ListBox>
-                        </xcad:LayoutAnchorable>
-                    </xcad:LayoutAnchorablePane>
-                </xcad:LayoutPanel>
-
-            </xcad:LayoutRoot>
-        </xcad:DockingManager>
+        <wpfTester:DockingPart/>
 
     </DockPanel>
 </Window>
