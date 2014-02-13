@@ -1,0 +1,76 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:designSurface="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
+    xmlns:Wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
+    mc:Ignorable="d"
+    x:Class="Glass.Design.WpfTester.DockingPart"
+    x:Name="UserControl"
+    d:DesignWidth="1192" d:DesignHeight="724.08">
+
+    <Grid x:Name="LayoutRoot">
+        <xcad:DockingManager>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Properties">
+                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                            <xctk:PropertyGrid AutoGenerateProperties="True"
+                                               SelectedObject="{Binding SelectedItem}"
+                                               SelectedObjectName="{Binding SelectedItem.Name}"
+                                               ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="75" />
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane>
+                            <xcad:LayoutDocument Title="Design Surface">
+
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <designSurface:DesignSurface Background="Snow" x:Name="DesignSurface"
+                                                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                                                 CanvasDocument="{Binding Document}">
+                                        <designSurface:DesignSurface.ItemContainerStyle>
+                                            <Style TargetType="{x:Type Wpf:CanvasItemControl}">
+                                                <Setter Property="Left" Value="{Binding Left, Mode=TwoWay}" />
+                                                <Setter Property="Top" Value="{Binding Top}" />
+                                                <Setter Property="Width" Value="{Binding Width}" />
+                                                <Setter Property="Height" Value="{Binding Height}" />
+                                            </Style>
+                                        </designSurface:DesignSurface.ItemContainerStyle>
+                                    </designSurface:DesignSurface>
+                                </Grid>
+                            </xcad:LayoutDocument>
+                        </xcad:LayoutDocumentPane>
+                    </xcad:LayoutDocumentPaneGroup>
+
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable CanClose="False" Title="Undo">
+                            <ListBox ItemsSource="{Binding Recorder.UndoOperations}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Control MouseDoubleClick="Control_OnMouseDoubleClick"
+                                                 ToolTip="Double-click to undo to this operation.">
+                                            <Control.Template>
+                                                <ControlTemplate>
+                                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </ControlTemplate>
+                                            </Control.Template>
+                                        </Control>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+
+                            </ListBox>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                </xcad:LayoutPanel>
+
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Grid>
+</UserControl>

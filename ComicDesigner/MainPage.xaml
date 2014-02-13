@@ -8,9 +8,7 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:delay="using:Delay"
     xmlns:resize="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
-    xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
     view:ViewModel.Name="MainViewModel"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
@@ -49,18 +47,18 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
+                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <delay:SetterValueBindingHelper>
-                                <delay:SetterValueBindingHelper 
+                            <comicDesigner:SetterValueBindingHelper>
+                                <comicDesigner:SetterValueBindingHelper 
                                     Type="Canvas"
                                     Property="Left"
                                     Binding="{Binding Left, Mode=TwoWay}" />
-                                <delay:SetterValueBindingHelper 
+                                <comicDesigner:SetterValueBindingHelper 
                                     Type="Canvas"
                                     Property="Top"
                                     Binding="{Binding Top, Mode=TwoWay}" />
-                            </delay:SetterValueBindingHelper>
+                            </comicDesigner:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>
@@ -78,24 +76,24 @@
             </designSurface:DesignSurface.ItemsPanel>-->
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
-                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
+                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <delay:SetterValueBindingHelper>
-                                <delay:SetterValueBindingHelper 
+                            <comicDesigner:SetterValueBindingHelper>
+                                <comicDesigner:SetterValueBindingHelper 
                                     Type="Canvas"
                                     Property="Left"
                                     Binding="{Binding Left, Mode=TwoWay}" />
-                                <delay:SetterValueBindingHelper 
+                                <comicDesigner:SetterValueBindingHelper 
                                     Type="Canvas"
                                     Property="Top"
                                     Binding="{Binding Top, Mode=TwoWay}" />
-                                <delay:SetterValueBindingHelper                                 
+                                <comicDesigner:SetterValueBindingHelper                                 
                                     Property="Width"
                                     Binding="{Binding Width, Mode=TwoWay}" />
-                                <delay:SetterValueBindingHelper 
+                                <comicDesigner:SetterValueBindingHelper 
                                     Property="Height"
                                     Binding="{Binding Height, Mode=TwoWay}" />
-                            </delay:SetterValueBindingHelper>
+                            </comicDesigner:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>

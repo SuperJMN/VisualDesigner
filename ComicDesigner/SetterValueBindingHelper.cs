@@ -13,9 +13,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media.Animation;
 
-namespace Delay
+namespace ComicDesigner
 {
     /// <summary>
     /// Class that implements a workaround for a Silverlight XAML parser
