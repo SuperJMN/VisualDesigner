@@ -14,7 +14,6 @@ namespace Glass.Design.WpfTester
 		public DockingPart()
 		{
 			this.InitializeComponent();
-            this.DesignSurface.CanvasDocument = ((MainWindowViewModel) this.DataContext).Document;
 		}
 
 	    private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)

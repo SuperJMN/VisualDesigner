@@ -9,67 +9,97 @@
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
     xmlns:delay="using:Delay"
+    xmlns:resize="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
+    xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
     view:ViewModel.Name="MainViewModel"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
-        <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
+
+        <ResourceDictionary>      
+
+            <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
-        <DataTemplate x:Key="Type:CanvasRectangle">
-            <Rectangle Fill="Red" Width="30" Height="30" />
-        </DataTemplate>
-        <DataTemplate x:Key="DefaultTemplate">
-            <Rectangle Fill="Blue" />
-        </DataTemplate>
+            <DataTemplate x:Key="Type:CanvasRectangle">
+                <Rectangle Fill="Red" />
+            </DataTemplate>
+            <DataTemplate x:Key="DefaultTemplate">
+                <Rectangle Fill="Blue" />
+            </DataTemplate>
+
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Button Content="Sample button" />
-        <designSurface:DesignSurface ItemsSource="{Binding Items}">
-            <designSurface:DesignSurface.ItemTemplate>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--THIS DOES WORK-->
+        <ListBox ItemsSource="{Binding  Items}">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Fill="Red" />
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
-            </designSurface:DesignSurface.ItemTemplate>
-            <designSurface:DesignSurface.ItemTemplateSelector>
-                <StaticResource ResourceKey="TypedTemplateSelector" />
-            </designSurface:DesignSurface.ItemTemplateSelector>
-
-            <!-- I DON'T KNOW WHY THIS DOESN'T WORK AND THE SAME IN THE BUTTON (BELOW) WORKS PERFECTLY -->
-            <designSurface:DesignSurface.ItemContainerStyle>                
-                <Style TargetType="winRt:CanvasItemControl">
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
                     <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <delay:SetterValueBindingHelper
-                                Property="Left"
-                                Binding="{Binding Left}"/>
-                        </Setter.Value>
-                    </Setter>                   
-                </Style>                
-            </designSurface:DesignSurface.ItemContainerStyle>
-            
-        </designSurface:DesignSurface>
-
-        <Button
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            DataContext="Coco">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <!-- WPF syntax:
-                    <Setter Property="Content" Value="{Binding}"/> -->
-                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
-                        <Setter.Value>
-                            <delay:SetterValueBindingHelper
-                                Property="Content"
-                                Binding="{Binding}"/>
+                            <delay:SetterValueBindingHelper>
+                                <delay:SetterValueBindingHelper 
+                                    Type="Canvas"
+                                    Property="Left"
+                                    Binding="{Binding Left, Mode=TwoWay}" />
+                                <delay:SetterValueBindingHelper 
+                                    Type="Canvas"
+                                    Property="Top"
+                                    Binding="{Binding Top, Mode=TwoWay}" />
+                            </delay:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>
-            </Button.Style>
-        </Button>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <!--THIS DOES NOT WORK-->
+        <designSurface:DesignSurface Background="PowderBlue" 
+                                     ItemTemplateSelector="{StaticResource TypedTemplateSelector}"
+                                     ItemsSource="{Binding  Items}" Grid.Row="1">            
+            <!--<designSurface:DesignSurface.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </designSurface:DesignSurface.ItemsPanel>-->
+            <designSurface:DesignSurface.ItemContainerStyle>
+                <Style TargetType="winRt:CanvasItemControl">
+                    <Setter Property="delay:SetterValueBindingHelper.PropertyBinding">
+                        <Setter.Value>
+                            <delay:SetterValueBindingHelper>
+                                <delay:SetterValueBindingHelper 
+                                    Type="Canvas"
+                                    Property="Left"
+                                    Binding="{Binding Left, Mode=TwoWay}" />
+                                <delay:SetterValueBindingHelper 
+                                    Type="Canvas"
+                                    Property="Top"
+                                    Binding="{Binding Top, Mode=TwoWay}" />
+                                <delay:SetterValueBindingHelper                                 
+                                    Property="Width"
+                                    Binding="{Binding Width, Mode=TwoWay}" />
+                                <delay:SetterValueBindingHelper 
+                                    Property="Height"
+                                    Binding="{Binding Height, Mode=TwoWay}" />
+                            </delay:SetterValueBindingHelper>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </designSurface:DesignSurface.ItemContainerStyle>
+        </designSurface:DesignSurface>
     </Grid>
 </Page>

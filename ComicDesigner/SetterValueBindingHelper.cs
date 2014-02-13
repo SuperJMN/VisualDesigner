@@ -13,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Delay
 {
@@ -165,32 +166,36 @@ namespace Delay
             }
 
             // Get the type on which to set the Binding
-            TypeInfo type = null;
+            TypeInfo typeInfo = null;
             if (null == item.Type)
             {
                 // No type specified; setting for the specified element
-                type = element.GetType().GetTypeInfo();
+                typeInfo = element.GetType().GetTypeInfo();
             }
             else
             {
                 // Try to get the type from the type system
-                type = System.Type.GetType(item.Type).GetTypeInfo();
-                if (null == type)
+                var type = System.Type.GetType(item.Type);
+                if (type != null)
                 {
+                    typeInfo = type.GetTypeInfo();
+                }
+
+                if (type == null)
+                {
+                    
                     // Search for the type in the list of assemblies
                     foreach (var assembly in AssembliesToSearch)
                     {
                         // Match on short or full name
-                        type = assembly.DefinedTypes
-                            .Where(t => (t.FullName == item.Type) || (t.Name == item.Type))
-                            .FirstOrDefault();
-                        if (null != type)
+                        typeInfo = assembly.DefinedTypes.FirstOrDefault(t => (t.FullName == item.Type) || (t.Name == item.Type));
+                        if (null != typeInfo)
                         {
                             // Found; done searching
                             break;
                         }
                     }
-                    if (null == type)
+                    if (null == typeInfo)
                     {
                         // Unable to find the requested type anywhere
                         throw new ArgumentException(
@@ -205,7 +210,7 @@ namespace Delay
             // Get the DependencyProperty for which to set the Binding
             DependencyProperty property = null;
 
-            var allProperties = type.GetAllProperties();
+            var allProperties = typeInfo.GetAllProperties();
             var field = allProperties.FirstOrDefault(info => info.Name.Equals(item.Property + "Property"));
 
             if (null != field)
@@ -220,7 +225,7 @@ namespace Delay
                         CultureInfo.CurrentCulture,
                         "Unable to access DependencyProperty \"{0}\" on type \"{1}\".",
                         item.Property,
-                        type.Name));
+                        typeInfo.Name));
             }
 
             // Set the specified Binding on the specified property

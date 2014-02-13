@@ -15,7 +15,7 @@ using PostSharp.Patterns.Model;
 namespace Glass.Design.WinRT.DesignSurface
 {
     //[NotifyPropertyChanged]
-    public sealed class DesignSurface : ListView, IDesignSurface
+    public sealed class DesignSurface : ItemsControl, IDesignSurface
     {
 
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
@@ -34,20 +34,15 @@ namespace Glass.Design.WinRT.DesignSurface
             }
         }
 
-        static DesignSurface()
-        {
-            
-        }
-
         public DesignSurface()
         {
+            this.DefaultStyleKey = typeof(DesignSurface);
+
             PointerPressed += OnPointerPressed;
-            SelectionChanged += OnSelectionChanged;
+            //SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
-            CommandHandler = new DesignSurfaceCommandHandler(this, this);
-
-            DefaultStyleKey = typeof (DesignSurface);
+            CommandHandler = new DesignSurfaceCommandHandler(this, this);            
         }
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
@@ -91,18 +86,18 @@ namespace Glass.Design.WinRT.DesignSurface
             pointerRoutedEventArgs.Handled = true;
         }
 
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-        {
-            var designerItem = (CanvasItemControl)element;
-            designerItem.PointerPressed += ContainerOnLeftButtonDown;
-            base.PrepareContainerForItemOverride(element, item);
-        }
+        //protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        //{
+        //    var designerItem = (ContentControl)element;
+        //    designerItem.PointerPressed += ContainerOnLeftButtonDown;
+        //    //base.PrepareContainerForItemOverride(element, item);
+        //}
 
-        protected override void ClearContainerForItemOverride(DependencyObject element, object item)
-        {
-            var designerItem = (CanvasItemControl)element;
-            designerItem.PointerPressed -= ContainerOnLeftButtonDown;
-        }
+        //protected override void ClearContainerForItemOverride(DependencyObject element, object item)
+        //{
+        //    var designerItem = (CanvasItemControl)element;
+        //    designerItem.PointerPressed -= ContainerOnLeftButtonDown;
+        //}
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -163,7 +158,7 @@ namespace Glass.Design.WinRT.DesignSurface
         public event EventHandler SelectionCleared;
         public void UnselectAll()
         {
-            throw new NotImplementedException();
+            //SelectedItems.Clear();
         }
 
         private void RaiseNoneSpecified()
