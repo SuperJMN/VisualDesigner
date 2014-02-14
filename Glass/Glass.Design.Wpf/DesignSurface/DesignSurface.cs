@@ -20,7 +20,7 @@ using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.Select
 
 namespace Glass.Design.Wpf.DesignSurface
 {
-    //[NotifyPropertyChanged]
+    [NotifyPropertyChanged]
     public sealed class DesignSurface : MultiSelector, IDesignSurface
     {
 

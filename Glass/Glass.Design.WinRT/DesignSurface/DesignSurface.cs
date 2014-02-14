@@ -14,7 +14,7 @@ using PostSharp.Patterns.Model;
 
 namespace Glass.Design.WinRT.DesignSurface
 {
-    //[NotifyPropertyChanged]
+    [NotifyPropertyChanged]
     public sealed class DesignSurface : ItemsControl, IDesignSurface
     {
 
