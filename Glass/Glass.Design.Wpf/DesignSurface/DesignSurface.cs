@@ -91,7 +91,7 @@ namespace Glass.Design.Wpf.DesignSurface
         private void ContainerOnLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            OnItemSelected(item);
+            RaiseItemSpecified(item);
             mouseButtonEventArgs.Handled = true;
         }
 
@@ -152,7 +152,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public event EventHandler<object> ItemSpecified;
 
-        private void OnItemSelected(object e)
+        private void RaiseItemSpecified(object e)
         {
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);

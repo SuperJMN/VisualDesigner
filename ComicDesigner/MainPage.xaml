@@ -48,10 +48,12 @@
                     <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
                             <comicDesigner:SetterValueBindingHelper>
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <comicDesigner:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Left"
 									Binding="{Binding Left, Mode=TwoWay}" />
+                                
                                 <comicDesigner:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Top"
@@ -62,6 +64,7 @@
                                 <comicDesigner:SetterValueBindingHelper 
 									Property="Height"
 									Binding="{Binding Height, Mode=TwoWay}" />
+                                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                             </comicDesigner:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
+using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -51,7 +50,11 @@ namespace Glass.Design.WinRT.DesignSurface
             ((INotifyCollectionChanged)SelectedItems).CollectionChanged += OnCollectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
-            CommandHandler = new DesignSurfaceCommandHandler(this, this);            
+            CommandHandler = new DesignSurfaceCommandHandler(this, this);
+
+            PopupsDictionary = new Dictionary<IAdorner, Popup>();
+
+            Children = new CanvasItemCollection();
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -86,7 +89,7 @@ namespace Glass.Design.WinRT.DesignSurface
 
             if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Reset)
             {
-                
+               
             }
 
             else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
@@ -95,19 +98,20 @@ namespace Glass.Design.WinRT.DesignSurface
                 {
                     DesignAidsProvider.AddItemToSelection(newItem);
                 }
-            } else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (ICanvasItem removedItem in removedItems)
                 {
                     DesignAidsProvider.RemoveItemFromSelection(removedItem);
                 }
-            }                          
+            }
         }
 
         private void ContainerOnLeftButtonDown(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
             var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            OnItemSelected(item);
+            RaiseItemSpecified(item);
             pointerRoutedEventArgs.Handled = true;
         }
 
@@ -171,25 +175,29 @@ namespace Glass.Design.WinRT.DesignSurface
         public IList SelectedItems { get; private set; }
         public event EventHandler<object> ItemSpecified;
 
-        private void OnItemSelected(object e)
+        private void RaiseItemSpecified(object e)
         {
-            this.LastSelectedItem = e;
+            this.SelectedItem = e;
 
             var handler = ItemSpecified;
             if (handler != null) handler(this, e);
         }
 
-        public object LastSelectedItem { get; private set; }
+        public object SelectedItem { get; private set; }
 
         public event EventHandler SelectionCleared;
         public void UnselectAll()
         {
+            foreach (ICanvasItem item in SelectedItems)
+            {
+                DesignAidsProvider.RemoveItemFromSelection(item);
+            }
             SelectedItems.Clear();
         }
 
         private void RaiseNoneSpecified()
         {
-            this.LastSelectedItem = null;
+            this.SelectedItem = null;
 
             var handler = SelectionCleared;
             if (handler != null) handler(this, EventArgs.Empty);
@@ -199,14 +207,14 @@ namespace Glass.Design.WinRT.DesignSurface
         //{
         //    base.OnPreviewMouseLeftButtonDown(e);
         //    Focus();
-            
+
         //    OnFingerDown(new FingerManipulationEventArgs());
         //}
 
         //protected override void OnMouseMove(MouseEventArgs e)
         //{
         //    base.OnMouseMove(e);
-          
+
         //    OnFingerMove(new FingerManipulationEventArgs());
         //}
 
@@ -231,12 +239,17 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public ICommand GroupCommand { get; private set; }
 
-        //[UsedImplicitly]
-        //public DesignSurfaceCommandHandler DesignSurfaceCommandHandler
-        //{
-        //    get { return designSurfaceCommandHandler; }
-        //}
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
+        {
+            base.OnPointerPressed(e);
 
+            var currentPoint = e.GetCurrentPoint(this);
+            var point = new Point(currentPoint.Position.X, currentPoint.Position.Y);
+            
+            var args = new FingerManipulationEventArgs { Point = point, Handled = true};
+
+            OnFingerDown(args);
+        }
 
         public event FingerManipulationEventHandler FingerDown;
 
@@ -302,37 +315,36 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public CanvasItemCollection Children
         {
-            get { return children; }            
+            get;
+            private set;
         }
 
         public double Right { get; private set; }
         public double Bottom { get; private set; }
         public ICanvasItemContainer Parent { get; private set; }
 
+        private Dictionary<IAdorner, Popup> PopupsDictionary { get; set; }
+
         public void AddAdorner(IAdorner adorner)
         {
-            var popUp = new Popup();
-           
-            
-            var coreInstance = (UIElement) adorner.GetCoreInstance();
+            var popup = new Popup();
 
-            popUp.Child = coreInstance;
+            var coreInstance = (UIElement)adorner.GetCoreInstance();
 
-            var transform = coreInstance.TransformToVisual(Window.Current.Content);
-            var point = transform.TransformPoint(new FoundationPoint(0, 0));
-            popUp.HorizontalOffset = adorner.Left;
-            popUp.VerticalOffset = adorner.Top;
-            popUp.IsOpen = true;
-            //var coreInstance = (Visual) GetCoreInstance();
-            //var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
-            //adornerLayer.Add((Adorner) adorner);
+            popup.Child = coreInstance;
+
+            popup.HorizontalOffset = adorner.Left;
+            popup.VerticalOffset = adorner.Top;
+            popup.IsOpen = true;
+
+            PopupsDictionary.Add(adorner, popup);
         }
 
         public void RemoveAdorner(IAdorner adorner)
         {
-            //var coreInstance = (Visual)GetCoreInstance();
-            //var adornerLayer = AdornerLayer.GetAdornerLayer(coreInstance);
-            //adornerLayer.Remove((Adorner) adorner);
+            var popup = PopupsDictionary[adorner];
+            popup.IsOpen = false;
+            PopupsDictionary.Remove(adorner);
         }
 
         bool IUIElement.IsVisible { get; set; }
