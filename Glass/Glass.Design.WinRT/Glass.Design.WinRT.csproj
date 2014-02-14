@@ -120,7 +120,7 @@
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemAdorner.cs" />
     <Compile Include="InputDeviceEventHandler.cs" />
     <Compile Include="InputDeviceEventHandlerArgs.cs" />
-    <Compile Include="PlatformSpecific\NetCoreUIElementFactory.cs" />
+    <Compile Include="PlatformSpecific\WinRTUIElementFactory.cs" />
     <Compile Include="PlatformSpecific\UIElementAdapter.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
