@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Glass.Design.Pcl;
-using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Model;
 using StyleMVVM.DependencyInjection;
@@ -14,19 +13,21 @@ namespace ComicDesigner
     public class MainViewModel : BaseViewModel
     {
         private ObservableCollection<CanvasItemViewModel> items;
-        private static readonly Random RandomGenerator = new Random((int) DateTime.Now.Ticks);
+        private static readonly Random RandomGenerator = new Random((int)DateTime.Now.Ticks);
 
         [ImportConstructor]
         public MainViewModel()
         {
             Items = new ObservableCollection<CanvasItemViewModel>();
 
-           LoadItemsCommand = new DelegateCommand(OnLoadItems);
+            LoadItemsCommand = new DelegateCommand(OnLoadItems);
         }
 
         private void OnLoadItems(object parameter)
         {
-            for (var i = 0; i < 5; i++)
+            const int numOfItems = 5;
+
+            for (var i = 0; i < numOfItems; i++)
             {
                 var item = GetSampleItem(i);
                 Items.Add(item);
@@ -49,11 +50,11 @@ namespace ComicDesigner
                 case 2:
                     item = new Mario { Width = 120, Height = 120 };
                     break;
-                    default:
-                throw new NotSupportedException("Invalid type of model");
+                default:
+                    throw new NotSupportedException("Invalid type of model");
             }
 
-            var horzRange = Math.Max(0, (int) (SurfaceWidth - item.Width));
+            var horzRange = Math.Max(0, (int)(SurfaceWidth - item.Width));
             var vertRange = Math.Max(0, (int)(SurfaceHeight - item.Height));
 
             var x = RandomGenerator.Next(horzRange);
