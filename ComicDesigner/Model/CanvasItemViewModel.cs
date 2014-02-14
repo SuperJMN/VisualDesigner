@@ -6,12 +6,12 @@ using PostSharp.Patterns.Recording;
 
 namespace Model
 {
-    public class CanvasModelItemModel : CanvasModelItem
+    public class CanvasItemViewModel : CanvasModelItem
     {
         private static int nextId;
         private readonly int id = Interlocked.Increment(ref nextId);
 
-        public CanvasModelItemModel()
+        public CanvasItemViewModel()
         {
             this.Name = this.GetType().Name + id;
         }

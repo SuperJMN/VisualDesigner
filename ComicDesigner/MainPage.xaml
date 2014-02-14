@@ -1,5 +1,4 @@
 ﻿<Page
-    x:Class="ComicDesigner.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,17 +7,30 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:resize="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
-    view:ViewModel.Name="MainViewModel"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    x:Class="ComicDesigner.MainPage"
+    view:ViewModel.Name="MainViewModel"    
+    comicDesigner:SizeChange.IsEnabled="True"
+    comicDesigner:SizeChange.ActualWidth="{Binding SurfaceWidth, Mode=TwoWay}"
+    comicDesigner:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
 
-        <ResourceDictionary>      
+        <ResourceDictionary>
 
             <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
+
+            <!--TEMPLATE TYPES (they are searched using their keys in the form of: Type:(NameOfType) by the TypedTemplateSelector -->
+
             <DataTemplate x:Key="Type:CanvasRectangle">
-                <Rectangle Fill="Red" />
+                <Rectangle Fill="DeepSkyBlue"  Stroke="CornflowerBlue" StrokeThickness="1" />
+            </DataTemplate>
+            <DataTemplate x:Key="Type:Ellipse">
+                <Ellipse Fill="LightGreen"  Stroke="Green" StrokeThickness="1" />
+            </DataTemplate>
+            <DataTemplate x:Key="Type:Mario">
+                <Image Source="Images/Mario.png" />
             </DataTemplate>
             <DataTemplate x:Key="DefaultTemplate">
                 <Rectangle Fill="Blue" />
@@ -27,77 +39,39 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <!--THIS DOES WORK-->
-        <ListBox ItemsSource="{Binding  Items}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
-                        <Setter.Value>
-                            <comicDesigner:SetterValueBindingHelper>
-                                <comicDesigner:SetterValueBindingHelper 
-                                    Type="Canvas"
-                                    Property="Left"
-                                    Binding="{Binding Left, Mode=TwoWay}" />
-                                <comicDesigner:SetterValueBindingHelper 
-                                    Type="Canvas"
-                                    Property="Top"
-                                    Binding="{Binding Top, Mode=TwoWay}" />
-                            </comicDesigner:SetterValueBindingHelper>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
-
-        <!--THIS DOES NOT WORK-->
-        <designSurface:DesignSurface Background="PowderBlue" 
-                                     ItemTemplateSelector="{StaticResource TypedTemplateSelector}"
-                                     ItemsSource="{Binding  Items}" Grid.Row="1">            
-            <!--<designSurface:DesignSurface.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </designSurface:DesignSurface.ItemsPanel>-->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <designSurface:DesignSurface Background="White" 
+			ItemTemplateSelector="{StaticResource TypedTemplateSelector}"			
+			ItemsSource="{Binding Items}">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
                     <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
                             <comicDesigner:SetterValueBindingHelper>
                                 <comicDesigner:SetterValueBindingHelper 
-                                    Type="Canvas"
-                                    Property="Left"
-                                    Binding="{Binding Left, Mode=TwoWay}" />
+									Type="Canvas"
+									Property="Left"
+									Binding="{Binding Left, Mode=TwoWay}" />
                                 <comicDesigner:SetterValueBindingHelper 
-                                    Type="Canvas"
-                                    Property="Top"
-                                    Binding="{Binding Top, Mode=TwoWay}" />
+									Type="Canvas"
+									Property="Top"
+									Binding="{Binding Top, Mode=TwoWay}" />
                                 <comicDesigner:SetterValueBindingHelper                                 
-                                    Property="Width"
-                                    Binding="{Binding Width, Mode=TwoWay}" />
+									Property="Width"
+									Binding="{Binding Width, Mode=TwoWay}" />
                                 <comicDesigner:SetterValueBindingHelper 
-                                    Property="Height"
-                                    Binding="{Binding Height, Mode=TwoWay}" />
+									Property="Height"
+									Binding="{Binding Height, Mode=TwoWay}" />
                             </comicDesigner:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>
             </designSurface:DesignSurface.ItemContainerStyle>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="GotFocus">
+                    <core:InvokeCommandAction Command="{Binding LoadItemsCommand}"/>
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
     </Grid>
 </Page>

@@ -6,9 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Glass.Design.WinRT/Themes/Generic.xaml" />
+                <ResourceDictionary Source="ms-appx:///Glass.Design.WinRT/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

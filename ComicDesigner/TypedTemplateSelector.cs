@@ -30,7 +30,7 @@ namespace ComicDesigner
             // grab the Type name. Type will be searched as Type:NAME as shown below
             /*
                 <DataTemplate x:Key="Type:SampleDataItem">
-                    <Grid HorizontalAlignment="Left" Width="250" Height="250">
+                    <Grid HorizontalAlignment="Left" SurfaceWidth="250" SurfaceHeight="250">
                         <TextBlock Text="{Binding Title}" />
                     </Grid>
                 </DataTemplate>

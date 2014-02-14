@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using Windows.Storage;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.Core;
 using Model;
 using StyleMVVM.DependencyInjection;
 using StyleMVVM.ViewModel;
@@ -10,22 +13,58 @@ namespace ComicDesigner
     [Export("MainViewModel")]
     public class MainViewModel : BaseViewModel
     {
-        private CanvasItemCollection items;
+        private ObservableCollection<CanvasItemViewModel> items;
+        private static readonly Random RandomGenerator = new Random((int) DateTime.Now.Ticks);
 
         [ImportConstructor]
         public MainViewModel()
         {
-            Items = new CanvasItemCollection();
-            Entities = new ObservableCollection<Entity>();
+            Items = new ObservableCollection<CanvasItemViewModel>();
 
-            for (int i = 0; i < 5; i++)
+           LoadItemsCommand = new DelegateCommand(OnLoadItems);
+        }
+
+        private void OnLoadItems(object parameter)
+        {
+            for (var i = 0; i < 5; i++)
             {
-                Items.Add(new CanvasRectangle { Left = i * 200, Top = i * 120, Width = 100, Height = 50 });
-                Entities.Add(new Entity(i.ToString()));
+                var item = GetSampleItem(i);
+                Items.Add(item);
             }
         }
 
-        public CanvasItemCollection Items
+        private CanvasItemViewModel GetSampleItem(int i)
+        {
+
+            CanvasItemViewModel item;
+
+            switch (i % 3)
+            {
+                case 0:
+                    item = new CanvasRectangle { Width = 200, Height = 200 };
+                    break;
+                case 1:
+                    item = new Ellipse { Width = 200, Height = 100 };
+                    break;
+                case 2:
+                    item = new Mario { Width = 120, Height = 120 };
+                    break;
+                    default:
+                throw new NotSupportedException("Invalid type of model");
+            }
+
+            var horzRange = Math.Max(0, (int) (SurfaceWidth - item.Width));
+            var vertRange = Math.Max(0, (int)(SurfaceHeight - item.Height));
+
+            var x = RandomGenerator.Next(horzRange);
+            var y = RandomGenerator.Next(vertRange);
+
+            item.SetLocation(new Point(x, y));
+
+            return item;
+        }
+
+        public ObservableCollection<CanvasItemViewModel> Items
         {
             get { return items; }
             set
@@ -35,31 +74,10 @@ namespace ComicDesigner
             }
         }
 
-        public ObservableCollection<Entity> Entities { get; set; }
+        public ICommand LoadItemsCommand { get; set; }
 
-        public Entity SelectedEntity { get; set; }
-    }
+        public double SurfaceWidth { get; set; }
 
-    public class Entity
-    {
-        private string name;
-        private bool selected;
-
-        public Entity(string name)
-        {
-            this.name = name;
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public bool Selected
-        {
-            get { return selected; }
-            set { selected = value; }
-        }
+        public double SurfaceHeight { get; set; }
     }
 }
