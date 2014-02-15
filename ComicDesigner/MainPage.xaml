@@ -15,15 +15,15 @@
     comicDesigner:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
-
         <ResourceDictionary>
-
             <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
 
             <!--TEMPLATE TYPES (they are searched using their keys in the form of: Type:(NameOfType) by the TypedTemplateSelector -->
 
-            <DataTemplate x:Key="Type:CanvasRectangle">
+            
+            <!-- ReSharper disable Xaml.RedundantResource -->
+            <DataTemplate x:Key="Type:CanvasRectangle">                
                 <Rectangle Fill="DeepSkyBlue"  Stroke="CornflowerBlue" StrokeThickness="1" />
             </DataTemplate>
             <DataTemplate x:Key="Type:Ellipse">
@@ -35,6 +35,7 @@
             <DataTemplate x:Key="DefaultTemplate">
                 <Rectangle Fill="Blue" />
             </DataTemplate>
+            <!-- ReSharper restore Xaml.RedundantResource -->
 
         </ResourceDictionary>
     </Page.Resources>
@@ -71,7 +72,7 @@
                 </Style>
             </designSurface:DesignSurface.ItemContainerStyle>
             <interactivity:Interaction.Behaviors>
-                <core:EventTriggerBehavior EventName="GotFocus">
+                <core:EventTriggerBehavior>
                     <core:InvokeCommandAction Command="{Binding LoadItemsCommand}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
