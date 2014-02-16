@@ -34,7 +34,7 @@
                                                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                                                  CanvasDocument="{Binding Document}">
                                         <designSurface:DesignSurface.ItemContainerStyle>
-                                            <Style TargetType="{x:Type Wpf:CanvasItemControl}">
+                                            <Style TargetType="{x:Type Wpf:CanvasItemControl}" BasedOn="{StaticResource {x:Type Wpf:CanvasItemControl}}">
                                                 <Setter Property="Left" Value="{Binding Left, Mode=TwoWay}" />
                                                 <Setter Property="Top" Value="{Binding Top}" />
                                                 <Setter Property="Width" Value="{Binding Width}" />

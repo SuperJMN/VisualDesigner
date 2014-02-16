@@ -18,12 +18,12 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Pcl.PlatformAbstraction;
 using PostSharp.Patterns.Model;
 using FoundationPoint = Windows.Foundation.Point;
-using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
+using DesignSurfaceSelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
 
 namespace Glass.Design.WinRT.DesignSurface
 {
     [NotifyPropertyChanged]
-    public sealed class DesignSurface : ItemsControl, IDesignSurface
+    public sealed class DesignSurface : DesignSurfaceBase, IDesignSurface
     {
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
             typeof(ICanvasItemContainer), typeof(DesignSurface), new PropertyMetadata(null, OnCanvasDocumentChanged));
@@ -32,8 +32,7 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             DefaultStyleKey = typeof(DesignSurface);
             SelectedItems = new ObservableCollection<ICanvasItem>();
-
-            PointerPressed += OnPointerPressed;
+            
             ((INotifyCollectionChanged)SelectedItems).CollectionChanged += OnCollectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
@@ -160,8 +159,10 @@ namespace Glass.Design.WinRT.DesignSurface
             OnSelectionChanged(notifyCollectionChangedEventArgs);
         }
 
-        private void OnPointerPressed(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
+
+        protected override void OnFingerDown(FingerManipulationEventArgs args)
         {
+            base.OnFingerDown(args);
             RaiseNoneSpecified();
         }
 
@@ -242,23 +243,7 @@ namespace Glass.Design.WinRT.DesignSurface
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        private void OnFingerDown(FingerManipulationEventArgs args)
-        {
-            var handler = FingerDown;
-            if (handler != null) handler(this, args);
-        }
-
-        private void OnFingerMove(FingerManipulationEventArgs args)
-        {
-            var handler = FingerMove;
-            if (handler != null) handler(this, args);
-        }
-
-        private void OnFingerUp(FingerManipulationEventArgs args)
-        {
-            var handler = FingerUp;
-            if (handler != null) handler(this, args);
-        }
+      
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -324,18 +309,7 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public IList SelectedItems { get; private set; }
 
-        protected override void OnPointerPressed(PointerRoutedEventArgs e)
-        {
-            base.OnPointerPressed(e);
-
-            var currentPoint = e.GetCurrentPoint(this);
-            var point = new Point(currentPoint.Position.X, currentPoint.Position.Y);
-
-            var args = new FingerManipulationEventArgs { Point = point, Handled = true };            
-
-            OnFingerDown(args);
-        }
-
+     
         private void ClearSelectionPopups()
         {
             foreach (ICanvasItem item in SelectedItems)
@@ -349,7 +323,7 @@ namespace Glass.Design.WinRT.DesignSurface
 
             if (keyRoutedEventArgs.Key == VirtualKey.Control && keyRoutedEventArgs.KeyStatus.WasKeyDown)
             {
-                SelectionHandler.SelectionMode = SelectionMode.Add;
+                SelectionHandler.SelectionMode = DesignSurfaceSelectionMode.Add;
             }
         }
 
@@ -357,7 +331,7 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             if (keyRoutedEventArgs.Key == VirtualKey.Control && keyRoutedEventArgs.KeyStatus.IsKeyReleased)
             {
-                SelectionHandler.SelectionMode = SelectionMode.Direct;
+                SelectionHandler.SelectionMode = DesignSurfaceSelectionMode.Direct;
             }
 
         }    

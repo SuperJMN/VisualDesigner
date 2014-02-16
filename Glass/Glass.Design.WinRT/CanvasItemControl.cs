@@ -10,7 +10,7 @@ using PostSharp.Patterns.Model;
 namespace Glass.Design.WinRT
 {
     [NotifyPropertyChanged]
-    public sealed class CanvasItemControl : ContentControl, ICanvasItem
+    public sealed class CanvasItemControl : GridViewItem, ICanvasItem
     {
         public static readonly DependencyProperty TopProperty =
             DependencyProperty.Register("Top", typeof (double), typeof (CanvasItemControl),
@@ -23,7 +23,7 @@ namespace Glass.Design.WinRT
 
         public CanvasItemControl()
         {
-            DefaultStyleKey = typeof(CanvasItemControl);
+            //DefaultStyleKey = typeof(CanvasItemControl);
 
             SizeChanged += OnSizeChanged;
         }

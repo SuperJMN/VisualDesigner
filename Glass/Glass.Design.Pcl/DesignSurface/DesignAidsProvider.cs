@@ -146,13 +146,13 @@ namespace Glass.Design.Pcl.DesignSurface
         public void AddItemToSelection(ICanvasItem item)
         {
             AddSelectionAdorner(item);
-            // TODO RE-ENABLE: WrapSelectedItems();
+            WrapSelectedItems();
         }
 
         public void RemoveItemFromSelection(ICanvasItem item)
         {
             RemoveSelectionAdorner(item);
-            // TODO RE-ENABLE: WrapSelectedItems();
+            WrapSelectedItems();
         }
 
         private void AddSelectionAdorner(ICanvasItem canvasItem)

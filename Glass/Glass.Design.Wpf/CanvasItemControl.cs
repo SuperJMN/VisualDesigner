@@ -15,12 +15,12 @@ namespace Glass.Design.Wpf
 {
     [DefaultProperty("Content")]
     [NotifyPropertyChanged]
-    public sealed class CanvasItemControl : ContentControl, ICanvasItem
+    public sealed class CanvasItemControl : ListBoxItem, ICanvasItem
     {
         static CanvasItemControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CanvasItemControl),
-                new FrameworkPropertyMetadata(typeof(CanvasItemControl)));
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(CanvasItemControl),
+            //    new FrameworkPropertyMetadata(typeof(CanvasItemControl)));
         }
 
         public CanvasItemControl()

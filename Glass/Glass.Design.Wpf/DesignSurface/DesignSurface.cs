@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,6 +57,7 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
 
+        public IList<object> SelectedItems { get; private set; }
         public event EventHandler<object> ItemSpecified;
 
 

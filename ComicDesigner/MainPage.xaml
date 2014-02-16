@@ -46,6 +46,8 @@
 			ItemsSource="{Binding Items}">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
                     <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
                             <comicDesigner:SetterValueBindingHelper>

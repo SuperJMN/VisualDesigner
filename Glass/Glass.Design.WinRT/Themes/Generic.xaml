@@ -51,7 +51,7 @@
         </Setter>
     </Style>-->
 
-    <Style TargetType="winRt:CanvasItemControl">
+    <!--<Style TargetType="winRt:CanvasItemControl">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="winRt:CanvasItemControl">
@@ -63,7 +63,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <Style x:Key="ResizeThumbStyle" TargetType="Thumb">       
         <Setter Property="Background" Value="{StaticResource LightBrush}" />

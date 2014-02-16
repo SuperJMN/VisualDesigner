@@ -62,6 +62,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignSurface\DesignSurfaceBase.cs" />
     <Compile Include="DesignSurface\DesignSurfaceCommandHandler.cs" />
     <Compile Include="DesignSurface\DesignSurfaceCommands.cs" />
     <Compile Include="Converters\IThumbCursorConverter.cs" />

@@ -115,6 +115,7 @@
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="DesignSurfaceCommandHandler.cs" />
+    <Compile Include="DesignSurface\DesignSurfaceBase.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemAdorner.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
     <Compile Include="PlatformSpecific\WinRTInputProvider.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
     <Compile Include="VisualExtensions.cs" />
