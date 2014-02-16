@@ -16,12 +16,13 @@ using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.Wpf.Annotations;
 using PostSharp.Patterns.Model;
 using Point = Glass.Design.Pcl.Core.Point;
-using SelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
+using DesignSurfaceSelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
+using SelectionMode = System.Windows.Controls.SelectionMode;
 
 namespace Glass.Design.Wpf.DesignSurface
 {
     [NotifyPropertyChanged]
-    public sealed class DesignSurface : MultiSelector, IDesignSurface
+    public sealed class DesignSurface : ListBox, IDesignSurface
     {
         public static readonly DependencyProperty CanvasDocumentProperty = DependencyProperty.Register("CanvasDocument",
             typeof (ICanvasItemContainer), typeof (DesignSurface),
@@ -35,6 +36,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public DesignSurface()
         {
+            this.SelectionMode = SelectionMode.Multiple;
             MouseLeftButtonDown += OnMouseLeftButtonDown;
             SelectionChanged += OnSelectionChanged;
             DesignAidsProvider = new DesignAidsProvider(this);
@@ -140,7 +142,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            RaiseNoneSpecified();
+            //RaiseNoneSpecified();
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
@@ -222,7 +224,7 @@ namespace Glass.Design.Wpf.DesignSurface
             OnKeyDown(e);
             if (e.Key == Key.LeftCtrl)
             {
-                SelectionHandler.SelectionMode = SelectionMode.Add;
+                SelectionHandler.SelectionMode = DesignSurfaceSelectionMode.Add;
             }
         }
 
@@ -231,7 +233,7 @@ namespace Glass.Design.Wpf.DesignSurface
             base.OnKeyUp(e);
             if (e.Key == Key.LeftCtrl)
             {
-                SelectionHandler.SelectionMode = SelectionMode.Direct;
+                SelectionHandler.SelectionMode = DesignSurfaceSelectionMode.Direct;
             }
         }
 

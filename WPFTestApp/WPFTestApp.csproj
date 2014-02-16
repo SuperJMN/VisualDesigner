@@ -57,6 +57,7 @@
     <Reference Include="MEFedMVVM.WPF">
       <HintPath>..\packages\Cinch.2.0.70832\lib\net40\MEFedMVVM.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PostSharp">
       <HintPath>..\packages\PostSharp.3.2.5-alpha\lib\net20\PostSharp.dll</HintPath>
     </Reference>
@@ -69,6 +70,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -154,6 +156,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass\Glass.Basics\Glass.Basics.Wpf.csproj">
+      <Project>{76C3D50B-CA51-480F-8FCD-40F0EA98F4C6}</Project>
+      <Name>Glass.Basics.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Glass\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
       <Name>Glass.Design.Pcl</Name>

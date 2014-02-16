@@ -8,14 +8,17 @@ using System.Windows.Interactivity;
 using System.Windows.Media;
 using Glass.Basics.Wpf.Core;
 
-namespace Glass.Basics.Wpf.Behaviors.RubberBand {
-    public class RubberBandSelectionBehavior : Behavior<ItemsControl> {
+namespace Glass.Basics.Wpf.Behaviors.RubberBand
+{
+    public abstract class RubberBandSelectionBehavior<T> : Behavior<T> where T : ItemsControl
+    {
         private RubberBandBehavior behavior;
-        private Dictionary<ISelectable, bool> originalStates;
+        private HashSet<object> selectedItemsBackup;
 
-        protected override void OnAttached() {
+        protected override void OnAttached()
+        {
             behavior = new RubberBandBehavior();
-            originalStates = new Dictionary<ISelectable, bool>();
+            SelectedItemsBackup = new HashSet<object>();
 
             behavior.DragFinished += BehaviorOnDragFinished;
             behavior.DragStarted += BehaviorOnDragStarted;
@@ -25,15 +28,17 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
             base.OnAttached();
         }
 
-        private void BehaviorOnDragStarted(object sender, EventArgs eventArgs) {
+        private void BehaviorOnDragStarted(object sender, EventArgs eventArgs)
+        {
 
-            containers = GetSelectableContainers();
+            containers = GetContainers();
 
             if (AutomaticSelectionMode)
                 SelectionMode = GetAutomaticSelectionMode();
 
 
-            if (SelectionMode == SelectionMode.Invert || SelectionMode == SelectionMode.Add) {
+            if (SelectionMode == SelectionMode.Invert || SelectionMode == SelectionMode.Add)
+            {
                 SaveSelectionState();
             }
         }
@@ -42,64 +47,57 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
         {
             containersIntoRubberBand = GetContainersWithinRubberBand(e.Data);
 
-            if (SelectionMode == SelectionMode.Add || SelectionMode == SelectionMode.Direct) {
-                if (SelectionMode == SelectionMode.Direct) {
+            if (SelectionMode == SelectionMode.Add || SelectionMode == SelectionMode.Direct)
+            {
+                if (SelectionMode == SelectionMode.Direct)
+                {
                     Unselect(containers);
-                } else {
+                }
+                else
+                {
                     RestoreOriginalStates();
                 }
 
-                foreach (var container in containersIntoRubberBand) {
-                    if (!container.IsSelected) {
-                        container.IsSelected = true;
+                foreach (var container in containersIntoRubberBand)
+                {
+                    if (!GetSelectedState(container))
+                    {
+                        SetSelectedState(container, true);
                     }
                 }
-            } else {
-                RestoreOriginalStates();
-                foreach (var container in containersIntoRubberBand) {
-                    var selectionValue = false;
-
-                    if (originalStates.ContainsKey(container)) {
-                        selectionValue = !originalStates[container];
-                    }
-
-                    container.IsSelected = selectionValue;
-                }
+            }
+            else
+            {
+                RestoreOriginalStates();             
             }
         }
 
-        private void BehaviorOnDragFinished(object sender, EventArgs<Rect> rect) {
+        private void BehaviorOnDragFinished(object sender, EventArgs<Rect> rect)
+        {
             var contained = GetContainersWithinRubberBand(rect.Data);
-            if (!contained.Any()) {
+            if (!contained.Any())
+            {
                 Unselect(containers);
-            }
+            }              
         }
 
-        private void SaveSelectionState() {
-            originalStates.Clear();
+        protected abstract void SetSelectedState(DependencyObject container, bool value);
+        protected abstract bool GetSelectedState(DependencyObject container);
 
-            foreach (var selectable in containers) {
-                originalStates.Add(selectable, selectable.IsSelected);
-            }
+        protected abstract void SaveSelectionState();
+
+        private void RestoreOriginalStates()
+        {
+            //foreach (var originalState in selectedItemsBackup)
+            //{
+            //    var item = originalState.Key;
+            //    item.IsSelected = originalState.Value;
+            //}
         }
 
-        private void RestoreOriginalStates() {
-            foreach (var originalState in originalStates) {
-                var item = originalState.Key;
-                item.IsSelected = originalState.Value;
-            }
-        }
+        protected abstract void Unselect(IEnumerable<DependencyObject> containers);
 
-        private static void Unselect(IEnumerable<ISelectable> containers) {
-            if (containers == null)
-                return;
-
-            foreach (var selectable in containers) {
-                selectable.IsSelected = false;
-            }
-        }
-
-        private IEnumerable<ISelectable> GetSelectableContainers()
+        private IEnumerable<DependencyObject> GetContainers()
         {
             var items = AssociatedObject.Items;
             var itemContainerGenerator = AssociatedObject.ItemContainerGenerator;
@@ -111,40 +109,42 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
                 containers.Add(dpo);
             }
 
-            return containers.OfType<ISelectable>();
+            return containers;
         }
 
-        private IEnumerable<ISelectable> GetContainersWithinRubberBand(Rect rect)
+        private IEnumerable<DependencyObject> GetContainersWithinRubberBand(Rect rect)
         {
-            var list = new List<ISelectable>();
-            var containers = GetSelectableContainers();
-            foreach (DependencyObject container in containers)
-            {                
+            var list = new List<DependencyObject>();
+            var containers = GetContainers();
+            foreach (var container in containers)
+            {
                 var itemBounds = VisualTreeHelper.GetDescendantBounds((Visual)container);
                 var containerOffset = VisualTreeHelper.GetOffset((Visual)container);
 
                 itemBounds.Offset(containerOffset);
 
                 if (rect.Contains(itemBounds))
-                    list.Add((ISelectable)container);
+                    list.Add(container);
             }
             return list;
         }
 
-        protected override void OnDetaching() {
+        protected override void OnDetaching()
+        {
             behavior.Detach();
             base.OnDetaching();
         }
 
         #region SelectionMode
 
-        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(RubberBandSelectionBehavior), new FrameworkPropertyMetadata(SelectionMode.Direct));
+        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(RubberBandSelectionBehavior<>), new FrameworkPropertyMetadata(SelectionMode.Direct));
 
-        private IEnumerable<ISelectable> containersIntoRubberBand;
+        private IEnumerable<DependencyObject> containersIntoRubberBand;
 
-        private IEnumerable<ISelectable> containers;
+        private IEnumerable<DependencyObject> containers;
 
-        public SelectionMode SelectionMode {
+        public SelectionMode SelectionMode
+        {
             // ReSharper disable MemberCanBePrivate.Global
             get { return (SelectionMode)GetValue(SelectionModeProperty); }
             // ReSharper restore MemberCanBePrivate.Global
@@ -157,10 +157,11 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
 
 
         public static readonly DependencyProperty AutomaticSelectionModeProperty =
-            DependencyProperty.Register("AutomaticSelectionMode", typeof(bool), typeof(RubberBandSelectionBehavior),
+            DependencyProperty.Register("AutomaticSelectionMode", typeof(bool), typeof(RubberBandSelectionBehavior<T>),
                 new FrameworkPropertyMetadata(true));
 
-        public bool AutomaticSelectionMode {
+        public bool AutomaticSelectionMode
+        {
             get { return (bool)GetValue(AutomaticSelectionModeProperty); }
             set { SetValue(AutomaticSelectionModeProperty, value); }
         }
@@ -170,7 +171,7 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
         #region IsEnabled
 
         public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(RubberBandSelectionBehavior),
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(RubberBandSelectionBehavior<T>),
                 new FrameworkPropertyMetadata(true,
                     OnIsEnabledChanged));
 
@@ -180,9 +181,15 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
             set { SetValue(IsEnabledProperty, value); }
         }
 
+        protected HashSet<object> SelectedItemsBackup
+        {
+            get { return selectedItemsBackup; }
+            set { selectedItemsBackup = value; }
+        }
+
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (RubberBandSelectionBehavior)d;
+            var target = (RubberBandSelectionBehavior<T>)d;
             var oldIsEnabled = (bool)e.OldValue;
             var newIsEnabled = target.IsEnabled;
             target.OnIsEnabledChanged(oldIsEnabled, newIsEnabled);
@@ -197,16 +204,45 @@ namespace Glass.Basics.Wpf.Behaviors.RubberBand {
 
 
 
-        
 
-        private static SelectionMode GetAutomaticSelectionMode() {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+
+        private static SelectionMode GetAutomaticSelectionMode()
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
                 return SelectionMode.Invert;
             }
-            if (Keyboard.IsKeyDown(Key.LeftShift)) {
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
                 return SelectionMode.Add;
             }
             return SelectionMode.Direct;
+        }
+    }
+
+    public class ListBoxSelectionBehavior : RubberBandSelectionBehavior<ListBox>
+    {
+        protected override void SetSelectedState(DependencyObject container, bool value)
+        {
+            var item = (ListBoxItem) container;
+            item.IsSelected = value;
+        }
+
+        protected override bool GetSelectedState(DependencyObject container)
+        {
+            var item = (ListBoxItem)container;
+            return item.IsSelected;
+        }
+
+        protected override void SaveSelectionState()
+        {
+            var selection = new List<object>(AssociatedObject.SelectedItems.Cast<object>());
+            SelectedItemsBackup = new HashSet<object>(selection);
+        }
+
+        protected override void Unselect(IEnumerable<DependencyObject> containers)
+        {
+            AssociatedObject.SelectedItems.Clear();
         }
     }
 }

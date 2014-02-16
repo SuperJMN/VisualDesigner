@@ -6,6 +6,8 @@
     xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:designSurface="clr-namespace:Glass.Design.Wpf.DesignSurface;assembly=Glass.Design.Wpf"
     xmlns:Wpf="clr-namespace:Glass.Design.Wpf;assembly=Glass.Design.Wpf"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:rubberBand="clr-namespace:Glass.Basics.Wpf.Behaviors.RubberBand;assembly=Glass.Basics"
     mc:Ignorable="d"
     x:Class="Glass.Design.WpfTester.DockingPart"
     x:Name="UserControl"
@@ -41,6 +43,9 @@
                                                 <Setter Property="Height" Value="{Binding Height}" />
                                             </Style>
                                         </designSurface:DesignSurface.ItemContainerStyle>
+                                        <i:Interaction.Behaviors>
+                                            <rubberBand:ListBoxSelectionBehavior />
+                                        </i:Interaction.Behaviors>
                                     </designSurface:DesignSurface>
                                 </Grid>
                             </xcad:LayoutDocument>
