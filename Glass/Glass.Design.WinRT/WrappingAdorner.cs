@@ -7,6 +7,7 @@ namespace Glass.Design.WinRT
     public class WrappingAdorner : CanvasItemAdorner
     {
 
+        
         private IUIElement chrome;
 
         public WrappingAdorner(IUIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
@@ -15,7 +16,17 @@ namespace Glass.Design.WinRT
             Chrome = chrome;
         }
 
-        public IUIElement Chrome { get; set; }
+        public IUIElement Chrome
+        {
+            get { return chrome; }
+            set
+            {
+                chrome = value;
+                Chrome.Width = CanvasItem.Width;
+                Chrome.Height = CanvasItem.Height;
+            }
+        }
+
 
         //protected override int VisualChildrenCount
         //{
@@ -52,7 +63,6 @@ namespace Glass.Design.WinRT
         //    }
         //}
 
-     
 
         //protected override Size MeasureOverride(Size constraint)
         //{
@@ -66,5 +76,9 @@ namespace Glass.Design.WinRT
         //    chrome.Arrange(new Rect(new Point(CanvasItem.Left, CanvasItem.Top), size));
         //    return size;
         //}        
+        public override object GetCoreInstance()
+        {
+            return Chrome;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,27 +12,25 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Resize;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.WinRT.PlatformSpecific;
-using FoundationPoint = Windows.Foundation.Point;
 
-namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
+namespace Glass.Design.WinRT
 {
-    public sealed class ResizeControl : Control
+    public sealed class ResizeControl : Control, IControl
     {
+        public ResizeControl()
+        {
+            this.DefaultStyleKey = typeof(ResizeControl);
+        }
+
+        //public ResizeControl(ICanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
+        //    : this()
+        //{            
+        //    SnappingEngine = snappingEngine;
+        //    FrameOfReference = parent;
+        //    CanvasItem = itemToResize;            
+        //}
+
         public IEdgeSnappingEngine SnappingEngine { get; set; }
-
-        static ResizeControl()
-        {
-
-        }
-
-        public ResizeControl(ICanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
-        {
-            SnappingEngine = snappingEngine;
-            FrameOfReference = parent;
-            CanvasItem = itemToResize;
-            DefaultStyleKey = typeof (ResizeControl);
-        }
-
 
         private UIResizeOperationHandleConnector UIResizeOperationHandleConnector { get; set; }
 
@@ -57,20 +56,13 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
         private void OnCanvasItemChanged(ICanvasItem oldCanvasItem, ICanvasItem newCanvasItem)
         {
-            //if (IsLoaded)
-            //{
-            RegisterHandles();
-            //}
-            //else
-            //{
-            //    Loaded += OnLoaded;
-            //}
+        
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        protected override void OnApplyTemplate()
         {
-            RegisterHandles();
-            Loaded -= OnLoaded;
+            base.OnApplyTemplate();
+            //RegisterHandles();
         }
 
         private void RegisterHandles()
@@ -80,6 +72,8 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
 
             var thumbContainer = (UIElement) FindName("PART_ThumbContainer");
+
+            Debug.Assert(thumbContainer != null, "ThumbContainer part not found!");
 
             var visualChildren = new List<DependencyObject>();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(thumbContainer); i++)
@@ -98,8 +92,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 
                 var handlePoint = childRect.GetHandlePoint(parentRect.Size);
 
-                UIResizeOperationHandleConnector.RegisterHandle(new UIElementAdapter(logicalChild), handlePoint);
-                //SetCursorToHandle(logicalChild);
+                UIResizeOperationHandleConnector.RegisterHandle(new UIElementAdapter(logicalChild), handlePoint);                
             }
         }
 
@@ -135,14 +128,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
         protected void OnFrameOfReferenceChanged(IUserInputReceiver oldFrameOfReference,
             IUserInputReceiver newFrameOfReference)
         {
-            //if (IsLoaded)
-            //{
-            RegisterHandles();
-            //}
-            //else
-            //{
-            //    Loaded += OnLoaded;
-            //}
+            
         }
 
         #endregion

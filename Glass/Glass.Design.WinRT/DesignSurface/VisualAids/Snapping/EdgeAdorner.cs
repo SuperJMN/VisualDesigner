@@ -14,8 +14,9 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
             //Pen.DashStyle = new DashStyle(new[] { 2D, 2D }, 0);
         }
 
-        public EdgeAdorner(IUIElement adornedElement, ICanvasItem canvasItem) : base(adornedElement, canvasItem)
+        public EdgeAdorner(IUIElement adornedElement, ICanvasItem canvasItem, Edge edge) : base(adornedElement, canvasItem)
         {
+            Edge = edge;
         }
 
         
@@ -56,6 +57,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 
         //    drawingContext.DrawLine(Pen, point1, point2);
         //}
-        
+
+        public override object GetCoreInstance()
+        {
+            return null;
+        }
     }
 }

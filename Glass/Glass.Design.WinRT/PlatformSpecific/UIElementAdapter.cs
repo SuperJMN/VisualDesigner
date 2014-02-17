@@ -2,15 +2,13 @@ using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
 
 namespace Glass.Design.WinRT.PlatformSpecific
 {
-
-    internal class UIElementAdapter : IUIElement
+    public class UIElementAdapter : IUIElement
     {
         private double left;
         private double top;
@@ -59,10 +57,6 @@ namespace Glass.Design.WinRT.PlatformSpecific
 
         private void UIElementOnPointerReleased(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            var corePoint = pointerRoutedEventArgs.GetCurrentPoint(null);
-            var point = Mapper.Map<Point>(corePoint);
-
-
             var fingerManipulationEventArgs = new FingerManipulationEventArgs();
             OnFingerUp(fingerManipulationEventArgs);
 
@@ -71,10 +65,6 @@ namespace Glass.Design.WinRT.PlatformSpecific
 
         private void UIElementOnPointerMoved(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            var corePoint = pointerRoutedEventArgs.GetCurrentPoint(null);
-            var point = Mapper.Map<Point>(corePoint);
-
-
             var fingerManipulationEventArgs = new FingerManipulationEventArgs();
             OnFingerMove(fingerManipulationEventArgs);
             pointerRoutedEventArgs.Handled = fingerManipulationEventArgs.Handled;

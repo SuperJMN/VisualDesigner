@@ -114,6 +114,7 @@
     <Compile Include="CanvasItemControl.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\PointExtensions.cs" />
+    <Compile Include="ResizeControl.cs" />
     <Compile Include="DesignSurfaceCommandHandler.cs" />
     <Compile Include="DesignSurface\DesignSurfaceBase.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemAdorner.cs" />
     <Compile Include="InputDeviceEventHandler.cs" />
     <Compile Include="InputDeviceEventHandlerArgs.cs" />
+    <Compile Include="PlatformSpecific\ControlAdapter.cs" />
+    <Compile Include="PlatformSpecific\FrameworkElementAdapter.cs" />
     <Compile Include="PlatformSpecific\WinRTUIElementFactory.cs" />
     <Compile Include="PlatformSpecific\UIElementAdapter.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
@@ -128,7 +131,6 @@
     <Compile Include="PlatformSpecific\WinRTInputProvider.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
     <Compile Include="VisualExtensions.cs" />
     <Compile Include="WrappingAdorner.cs" />
   </ItemGroup>
@@ -166,6 +168,9 @@
       <Link>AutoMapper.WinRT.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DesignSurface\VisualAids\Resize\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

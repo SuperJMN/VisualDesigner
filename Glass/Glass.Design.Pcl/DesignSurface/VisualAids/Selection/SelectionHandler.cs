@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Glass.Design.Pcl.DesignSurface.VisualAids.Selection
 {
@@ -7,7 +8,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Selection
     {
         private readonly IMultiSelector multiSelector;
 
-        private IList SelectedItems
+        private IList<object> SelectedItems
         {
             get { return multiSelector.SelectedItems; }
         }

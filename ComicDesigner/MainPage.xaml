@@ -7,7 +7,8 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"    
+    xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"    
     x:Class="ComicDesigner.MainPage"
     view:ViewModel.Name="MainViewModel"    
     comicDesigner:SizeChange.IsEnabled="True"
@@ -16,14 +17,19 @@
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
         <ResourceDictionary>
+
             <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
 
             <!--TEMPLATE TYPES (they are searched using their keys in the form of: Type:(NameOfType) by the TypedTemplateSelector -->
 
-            
+
+            <!-- ReSharper restore Xaml.RedundantResource -->
+
+
+
             <!-- ReSharper disable Xaml.RedundantResource -->
-            <DataTemplate x:Key="Type:CanvasRectangle">                
+            <DataTemplate x:Key="Type:CanvasRectangle">
                 <Rectangle Fill="DeepSkyBlue"  Stroke="CornflowerBlue" StrokeThickness="1" />
             </DataTemplate>
             <DataTemplate x:Key="Type:Ellipse">
@@ -35,15 +41,16 @@
             <DataTemplate x:Key="DefaultTemplate">
                 <Rectangle Fill="Blue" />
             </DataTemplate>
-            <!-- ReSharper restore Xaml.RedundantResource -->
+
+
 
         </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <designSurface:DesignSurface Background="White" 
-			ItemTemplateSelector="{StaticResource TypedTemplateSelector}"			
-			ItemsSource="{Binding Items}">
+                                     ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
+                                     ItemsSource="{Binding Items}">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -56,7 +63,7 @@
 									Type="Canvas"
 									Property="Left"
 									Binding="{Binding Left, Mode=TwoWay}" />
-                                
+
                                 <comicDesigner:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Top"
@@ -77,7 +84,7 @@
                 <core:EventTriggerBehavior>
                     <core:InvokeCommandAction Command="{Binding LoadItemsCommand}"/>
                 </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
+            </interactivity:Interaction.Behaviors>                        
         </designSurface:DesignSurface>
     </Grid>
 </Page>

@@ -3,10 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
-    xmlns:resize1="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
+    xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"    
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
+    xmlns:winRt="using:Glass.Design.WinRT"
     mc:Ignorable="d">
 
     <Brush x:Key="DarkBrush">#6494EC</Brush>
@@ -31,45 +30,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <!--<Style TargetType="viewing:ViewingSurface}">
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" />
-                </ItemsPanelTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="viewing:ViewingSurface">
-                    <Border Background="{TemplateBinding Background}">
-                        <ItemsPresenter />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-
-    <!--<Style TargetType="winRt:CanvasItemControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="winRt:CanvasItemControl">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{StaticResource LightBrush}"
-                            BorderThickness="1" d:DesignWidth="93" d:DesignHeight="84">
-                        <ContentPresenter Content="{TemplateBinding Content}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
+  
 
     <Style x:Key="ResizeThumbStyle" TargetType="Thumb">       
         <Setter Property="Background" Value="{StaticResource LightBrush}" />
         <Setter Property="Foreground" Value="{StaticResource DarkBrush}" />
-        <Setter Property="Width" Value="10" />
-        <Setter Property="Height" Value="10" />
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
@@ -80,42 +47,6 @@
                             <Border BorderBrush="{StaticResource DarkBrush}" BorderThickness="1" Background="White" />
                         </Grid>
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="resize1:ResizeControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="resize1:ResizeControl">
-                    <Grid Margin="-5" x:Name="PART_ThumbContainer">
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
-                            VerticalAlignment="Top" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Center"
-                            VerticalAlignment="Top" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
-                            VerticalAlignment="Top" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
-                            VerticalAlignment="Center" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom" />
-                        <Thumb
-                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom" />
-                    </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -150,4 +81,41 @@
         </Setter>
     </Style>
 
+
+    <Style TargetType="winRt:ResizeControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="winRt:ResizeControl">
+                    <Grid Margin="-10" x:Name="PART_ThumbContainer">
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
+                            VerticalAlignment="Top" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Center"
+                            VerticalAlignment="Top" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
+                            VerticalAlignment="Top" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom" />
+                        <Thumb
+                            Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom" />
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

@@ -30,10 +30,8 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public DesignSurface()
         {
-            DefaultStyleKey = typeof(DesignSurface);
-            SelectedItems = new ObservableCollection<ICanvasItem>();
-            
-            ((INotifyCollectionChanged)SelectedItems).CollectionChanged += OnCollectionChanged;
+            DefaultStyleKey = typeof(DesignSurface);            
+
             DesignAidsProvider = new DesignAidsProvider(this);
             SelectionHandler = new SelectionHandler(this);
             CommandHandler = new DesignSurfaceCommandHandler(this, this);
@@ -43,7 +41,25 @@ namespace Glass.Design.WinRT.DesignSurface
             Children = new CanvasItemCollection();
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
-        }       
+
+            SelectionChanged += OnSelectionChanged;
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        {
+            var newItems = selectionChangedEventArgs.AddedItems;
+            var removedItems = selectionChangedEventArgs.RemovedItems;
+
+            foreach (ICanvasItem newItem in newItems)
+            {
+                DesignAidsProvider.AddItemToSelection(newItem);
+            }
+
+            foreach (ICanvasItem removedItem in removedItems)
+            {
+                DesignAidsProvider.RemoveItemFromSelection(removedItem);
+            }
+        }
 
         private DesignSurfaceCommandHandler CommandHandler { get; set; }
 
@@ -59,9 +75,7 @@ namespace Glass.Design.WinRT.DesignSurface
             get { return (ICanvasItemContainer)GetValue(CanvasDocumentProperty); }
             set { SetValue(CanvasDocumentProperty, value); }
         }
-
-
-
+        
         public event EventHandler<object> ItemSpecified;
 
         public event EventHandler SelectionCleared;
@@ -153,45 +167,12 @@ namespace Glass.Design.WinRT.DesignSurface
             }
         }
 
-        private void OnCollectionChanged(object sender,
-            NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            OnSelectionChanged(notifyCollectionChangedEventArgs);
-        }
-
 
         protected override void OnFingerDown(FingerManipulationEventArgs args)
         {
             base.OnFingerDown(args);
             RaiseNoneSpecified();
         }
-
-        private void OnSelectionChanged(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            var newItems = notifyCollectionChangedEventArgs.NewItems;
-            var removedItems = notifyCollectionChangedEventArgs.OldItems;
-
-            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Reset)
-            {
-                ClearSelectionPopups();
-            }
-
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (ICanvasItem newItem in newItems)
-                {
-                    DesignAidsProvider.AddItemToSelection(newItem);
-                }
-            }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (ICanvasItem removedItem in removedItems)
-                {
-                    DesignAidsProvider.RemoveItemFromSelection(removedItem);
-                }
-            }
-        }
-
 
 
         private void ContainerOnLeftButtonDown(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
@@ -243,7 +224,7 @@ namespace Glass.Design.WinRT.DesignSurface
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-      
+
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -292,24 +273,11 @@ namespace Glass.Design.WinRT.DesignSurface
 
         #endregion
 
-
-
-        //{
-        //    base.OnPreviewMouseLeftButtonUp(e);
-
-        //    var point = e.GetPosition(null);
-        //    var pclPoint = Mapper.Map<Point>(point);
-        //    OnFingerUp(new FingerManipulationEventArgs());
-        //}
-
         private CanvasItemCollection children;
-        public object SelectedItem { get; private set; }
+        
+        
         private Dictionary<IAdorner, Popup> PopupsDictionary { get; set; }
-        //protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
-
-        public IList SelectedItems { get; private set; }
-
-     
+        
         private void ClearSelectionPopups()
         {
             foreach (ICanvasItem item in SelectedItems)
@@ -334,6 +302,8 @@ namespace Glass.Design.WinRT.DesignSurface
                 SelectionHandler.SelectionMode = DesignSurfaceSelectionMode.Direct;
             }
 
-        }    
+        }
+
+
     }
 }

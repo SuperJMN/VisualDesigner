@@ -123,7 +123,7 @@ namespace Glass.Design.Pcl.DesignSurface
         {
             DragOperationHost.SetDragTarget(movingControl, WrappedSelectedItems);
 
-            var items = DesignSurface.CanvasDocument.Children;
+            var items = DesignSurface.Children;
 
             var allExceptTarget = items.Except(WrappedSelectedItems.Children);
 
@@ -145,13 +145,13 @@ namespace Glass.Design.Pcl.DesignSurface
 
         public void AddItemToSelection(ICanvasItem item)
         {
-            AddSelectionAdorner(item);
+            //AddSelectionAdorner(item);
             WrapSelectedItems();
         }
 
         public void RemoveItemFromSelection(ICanvasItem item)
         {
-            RemoveSelectionAdorner(item);
+            //RemoveSelectionAdorner(item);
             WrapSelectedItems();
         }
 
@@ -164,16 +164,14 @@ namespace Glass.Design.Pcl.DesignSurface
 
         private void WrapSelectedItems()
         {
-            var items = SelectionAdorners.Keys.ToList();
-
             if (WrappedSelectedItems != null)
             {
                 WrappedSelectedItems.Dispose();
             }
 
-            if (items.Any())
+            if (DesignSurface.SelectedItems.Count > 0)
             {
-                WrappedSelectedItems = new CanvasItemSelection(items);
+                WrappedSelectedItems = new CanvasItemSelection(DesignSurface.SelectedItems.Cast<ICanvasItem>());
             }
             else
             {

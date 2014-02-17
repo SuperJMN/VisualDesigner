@@ -1,15 +1,23 @@
 using System.ComponentModel;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 {
-    public class CanvasItemAdorner : IAdorner
+    public abstract class CanvasItemAdorner : Control, IAdorner
     {
+        private double left;
+        private double top;
+        private double width;
+        private double height;
+
         protected CanvasItemAdorner(IUIElement adornedElement, ICanvasItem canvasItem)
         {
-            throw new System.NotImplementedException();
+            AdornedElement = adornedElement;
+            CanvasItem = canvasItem;
         }
 
         public event FingerManipulationEventHandler FingerDown;
@@ -36,10 +44,30 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
             throw new System.NotImplementedException();
         }
 
-        public double Left { get; set; }
-        public double Top { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+        public double Left
+        {
+            get { return CanvasItem.Left; }
+            set { CanvasItem.Left = value; }
+        }
+
+        public double Top
+        {
+            get { return CanvasItem.Top; }
+            set { CanvasItem.Top = value; }
+        }
+
+        public double Width
+        {
+            get { return CanvasItem.Width; }
+            set { CanvasItem.Width = value; }
+        }
+
+        public double Height
+        {
+            get { return CanvasItem.Height; }
+            set { CanvasItem.Height = value; }
+        }
+
         public CanvasItemCollection Children { get; set; }
         public double Right { get; set; }
         public double Bottom { get; set; }
@@ -56,11 +84,10 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 
         public bool IsVisible { get; set; }
         public bool IsHitTestVisible { get; set; }
-        public object GetCoreInstance()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract object GetCoreInstance();
+        
 
         public IUIElement AdornedElement { get; set; }
+        public ICanvasItem CanvasItem { get; set; }
     }
 }

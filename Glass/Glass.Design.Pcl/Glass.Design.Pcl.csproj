@@ -140,6 +140,8 @@
     <Compile Include="PlatformAbstraction\FingerManipulationEventArgs.cs" />
     <Compile Include="PlatformAbstraction\FingerManipulationEventHandler.cs" />
     <Compile Include="PlatformAbstraction\IAdorner.cs" />
+    <Compile Include="PlatformAbstraction\IControl.cs" />
+    <Compile Include="PlatformAbstraction\IFrameworkElement.cs" />
     <Compile Include="PlatformAbstraction\IUIElement.cs" />
     <Compile Include="PlatformAbstraction\IUserInputReceiver.cs" />
     <Compile Include="PlatformAbstraction\PointingManipulationEventArgs.cs" />
