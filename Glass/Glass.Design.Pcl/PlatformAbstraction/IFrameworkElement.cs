@@ -1,7 +1,9 @@
-﻿namespace Glass.Design.Pcl.PlatformAbstraction
+﻿using Glass.Design.Pcl.DesignSurface;
+
+namespace Glass.Design.Pcl.PlatformAbstraction
 {
-    public interface IFrameworkElement : IUIElement
-    {
-         
+    public interface IFrameworkElement : IUIElement, ISizable
+    {        
+      
     }
 }

@@ -12,15 +12,14 @@ namespace Glass.Design.WinRT.PlatformSpecific
     {
         private double left;
         private double top;
-        private double width;
-        private double height;
+        
         private CanvasItemCollection children;
         private double right;
         private double bottom;
         private ICanvasItemContainer parent;
         private UIElement uiElement;
 
-        private UIElement UIElement
+        protected UIElement UIElement
         {
             get { return uiElement; }
             set
@@ -47,20 +46,29 @@ namespace Glass.Design.WinRT.PlatformSpecific
         private void UIElementOnPointerPressed(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
             var corePoint = pointerRoutedEventArgs.GetCurrentPoint(null);
+            if (corePoint.Properties.IsLeftButtonPressed)
+            {
 
-            var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+                var fingerManipulationEventArgs = new FingerManipulationEventArgs();
 
-            OnFingerDown(fingerManipulationEventArgs);
+                OnFingerDown(fingerManipulationEventArgs);
 
-            pointerRoutedEventArgs.Handled = fingerManipulationEventArgs.Handled;
+                pointerRoutedEventArgs.Handled = fingerManipulationEventArgs.Handled;
+            }
         }
 
         private void UIElementOnPointerReleased(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            var fingerManipulationEventArgs = new FingerManipulationEventArgs();
-            OnFingerUp(fingerManipulationEventArgs);
+            var corePoint = pointerRoutedEventArgs.GetCurrentPoint(null);
+            if (corePoint.Properties.IsLeftButtonPressed)
+            {
 
-            pointerRoutedEventArgs.Handled = fingerManipulationEventArgs.Handled;
+                var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+
+                OnFingerUp(fingerManipulationEventArgs);
+
+                pointerRoutedEventArgs.Handled = fingerManipulationEventArgs.Handled;
+            }
         }
 
         private void UIElementOnPointerMoved(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
@@ -96,19 +104,7 @@ namespace Glass.Design.WinRT.PlatformSpecific
         {
             get { return top; }
             set { top = value; }
-        }
-
-        public double Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        public double Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
+        }     
 
         public CanvasItemCollection Children
         {

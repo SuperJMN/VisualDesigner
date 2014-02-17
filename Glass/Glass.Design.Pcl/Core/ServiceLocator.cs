@@ -15,9 +15,9 @@ namespace Glass.Design.Pcl.Core
 
     public interface IUIElementFactory
     {
-        IUIElement CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine);
-        IUIElement CreateMovingControl();
-        IAdorner CreateWrappingAdorner(IUIElement adornerElement, IUIElement chrome, ICanvasItem canvasItem);
+        IControl CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine);
+        IControl CreateMovingControl();
+        IAdorner CreateWrappingAdorner(IUIElement adornerElement, IControl chrome, ICanvasItem canvasItem);
         IAdorner CreateEdgeAdorner(IUIElement adornedElement, ICanvasItem item, Edge edge);
         IAdorner CreateSelectionAdorner(IDesignSurface designSurface, ICanvasItem canvasItem);
     }

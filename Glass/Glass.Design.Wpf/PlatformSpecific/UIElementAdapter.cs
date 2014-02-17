@@ -12,7 +12,7 @@ using Point = Glass.Design.Pcl.Core.Point;
 
 namespace Glass.Design.Wpf.PlatformSpecific
 {
-    internal class UIElementAdapter : IUIElement
+    public class UIElementAdapter : IUIElement
     {
         private double left;
         private double top;
@@ -24,7 +24,7 @@ namespace Glass.Design.Wpf.PlatformSpecific
         private ICanvasItemContainer parent;
         private UIElement uiElement;
 
-        private UIElement UIElement
+        protected UIElement UIElement
         {
             get { return uiElement; }
             set
@@ -109,19 +109,7 @@ namespace Glass.Design.Wpf.PlatformSpecific
         {
             get { return top; }
             set { top = value; }
-        }
-
-        public double Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        public double Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
+        }      
 
         public CanvasItemCollection Children
         {

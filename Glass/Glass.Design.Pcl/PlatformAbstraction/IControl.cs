@@ -1,6 +1,6 @@
 ﻿namespace Glass.Design.Pcl.PlatformAbstraction
 {
-    public interface IControl : IUIElement
+    public interface IControl : IFrameworkElement
     {
          
     }

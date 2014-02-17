@@ -16,6 +16,7 @@ using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Selection;
 using Glass.Design.Pcl.PlatformAbstraction;
+using Glass.Design.WinRT.PlatformSpecific;
 using PostSharp.Patterns.Model;
 using FoundationPoint = Windows.Foundation.Point;
 using DesignSurfaceSelectionMode = Glass.Design.Pcl.DesignSurface.VisualAids.Selection.SelectionMode;
@@ -85,7 +86,8 @@ namespace Glass.Design.WinRT.DesignSurface
         public void UnselectAll()
         {
             ClearSelectionPopups();
-            SelectedItems.Clear();
+            
+            //SelectedItems.Clear();
         }
 
         public event FingerManipulationEventHandler FingerDown;
@@ -129,9 +131,11 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             var popup = new Popup();
 
-            var coreInstance = (UIElement)adorner.GetCoreInstance();
+            var coreInstance = adorner.GetCoreInstance();
 
-            popup.Child = coreInstance;
+            var uiElementAdapter = (FrameworkElementAdapter) coreInstance;
+
+            popup.Child = (UIElement) uiElementAdapter.GetCoreInstance();
 
             popup.HorizontalOffset = adorner.Left;
             popup.VerticalOffset = adorner.Top;
@@ -175,11 +179,15 @@ namespace Glass.Design.WinRT.DesignSurface
         }
 
 
-        private void ContainerOnLeftButtonDown(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
+        private void ContainerOnPointerPressed(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            RaiseItemSpecified(item);
-            pointerRoutedEventArgs.Handled = true;
+            var currentPoint = pointerRoutedEventArgs.GetCurrentPoint(null);
+            if (currentPoint.Properties.IsLeftButtonPressed)
+            {
+                var item = ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
+                RaiseItemSpecified(item);
+                pointerRoutedEventArgs.Handled = true;
+            }
         }
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -187,7 +195,7 @@ namespace Glass.Design.WinRT.DesignSurface
             base.PrepareContainerForItemOverride(element, item);
 
             var designerItem = (CanvasItemControl)element;
-            designerItem.PointerPressed += ContainerOnLeftButtonDown;
+            designerItem.PointerPressed += ContainerOnPointerPressed;
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
@@ -195,7 +203,7 @@ namespace Glass.Design.WinRT.DesignSurface
             base.ClearContainerForItemOverride(element, item);
 
             var designerItem = (CanvasItemControl)element;
-            designerItem.PointerPressed -= ContainerOnLeftButtonDown;
+            designerItem.PointerPressed -= ContainerOnPointerPressed;
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)

@@ -2,7 +2,6 @@
 using Windows.UI.Xaml.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
-using Glass.Design.WinRT.PlatformSpecific;
 using Glass.Design.Pcl.PlatformAbstraction;
 
 namespace Glass.Design.WinRT.DesignSurface.VisualAids.Drag

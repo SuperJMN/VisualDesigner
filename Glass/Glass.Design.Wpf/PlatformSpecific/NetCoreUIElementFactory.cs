@@ -1,3 +1,4 @@
+using System.Windows.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -12,17 +13,17 @@ namespace Glass.Design.Wpf.PlatformSpecific
 {
     public class NetCoreUIElementFactory : IUIElementFactory
     {
-        public IUIElement CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
+        public IControl CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {
-            return new ResizeControl(itemToResize, parent, snappingEngine);
+            return new ControlAdapter(new ResizeControl(itemToResize, parent, snappingEngine));
         }
 
-        public IUIElement CreateMovingControl()
+        public IControl CreateMovingControl()
         {
-            return new MovingControl();
+            return new ControlAdapter(new MovingControl());
         }
 
-        public IAdorner CreateWrappingAdorner(IUIElement adornerElement, IUIElement chrome, ICanvasItem canvasItem)
+        public IAdorner CreateWrappingAdorner(IUIElement adornerElement, IControl chrome, ICanvasItem canvasItem)
         {
             return new WrappingAdorner(adornerElement, chrome, canvasItem);
         }

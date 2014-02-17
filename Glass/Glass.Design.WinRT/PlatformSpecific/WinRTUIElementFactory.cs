@@ -1,5 +1,3 @@
-using System;
-using Windows.UI.Popups;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -11,20 +9,20 @@ namespace Glass.Design.WinRT.PlatformSpecific
 {
     public class WinRTUIElementFactory : IUIElementFactory
     {
-        public IUIElement CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
+        public IControl CreateResizeControl(CanvasItem itemToResize, IUserInputReceiver parent, IEdgeSnappingEngine snappingEngine)
         {            
-            return new ResizeControl
+            return new ControlAdapter(new ResizeControl
                    {
                        CanvasItem = itemToResize, FrameOfReference = parent, SnappingEngine = snappingEngine
-                   };
+                   });
         }
 
-        public IUIElement CreateMovingControl()
+        public IControl CreateMovingControl()
         {            
-            return new DesignSurface.VisualAids.Drag.MovingControl();
+            return new ControlAdapter(new DesignSurface.VisualAids.Drag.MovingControl());
         }
 
-        public IAdorner CreateWrappingAdorner(IUIElement adornerElement, IUIElement chrome, ICanvasItem canvasItem)
+        public IAdorner CreateWrappingAdorner(IUIElement adornerElement, IControl chrome, ICanvasItem canvasItem)
         {
             return new WrappingAdorner(adornerElement, chrome, canvasItem);
         }

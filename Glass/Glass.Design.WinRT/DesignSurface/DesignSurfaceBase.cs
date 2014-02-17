@@ -18,11 +18,14 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             base.OnPointerPressed(e);
             var currentPoint = e.GetCurrentPoint(this);
-            var point = new Point(currentPoint.Position.X, currentPoint.Position.Y);
 
-            var args = new FingerManipulationEventArgs { Point = point, Handled = true };
+            if (currentPoint.Properties.IsLeftButtonPressed)
+            {
+                var point = new Point(currentPoint.Position.X, currentPoint.Position.Y);
+                var args = new FingerManipulationEventArgs { Point = point, Handled = true };
 
-            OnFingerDown(args);
+                OnFingerDown(args);
+            }
         }
 
         protected override void OnPointerMoved(PointerRoutedEventArgs e)

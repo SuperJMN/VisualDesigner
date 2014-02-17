@@ -12,6 +12,7 @@
     <Brush x:Key="LightBrush">#8B38D6FF</Brush>
 
     <Style TargetType="designSurface:DesignSurface">
+        <Setter Property="SelectionMode" Value="Extended" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

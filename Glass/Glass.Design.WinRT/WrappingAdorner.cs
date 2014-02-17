@@ -1,4 +1,5 @@
 ﻿using Glass.Design.Pcl.Canvas;
+using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Snapping;
 using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
@@ -7,21 +8,22 @@ namespace Glass.Design.WinRT
     public class WrappingAdorner : CanvasItemAdorner
     {
 
-        
-        private IUIElement chrome;
 
-        public WrappingAdorner(IUIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
+        private IControl chrome;
+
+        public WrappingAdorner(IUIElement adornedElement, IControl chrome, ICanvasItem canvasItem)
             : base(adornedElement, canvasItem)
         {
             Chrome = chrome;
         }
 
-        public IUIElement Chrome
+        public IControl Chrome
         {
             get { return chrome; }
             set
             {
                 chrome = value;
+
                 Chrome.Width = CanvasItem.Width;
                 Chrome.Height = CanvasItem.Height;
             }

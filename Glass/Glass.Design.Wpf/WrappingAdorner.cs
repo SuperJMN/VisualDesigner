@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.PlatformAbstraction;
@@ -10,10 +11,10 @@ namespace Glass.Design.Wpf
     public class WrappingAdorner : CanvasItemAdorner
     {
 
-        private IUIElement chrome;
+        private IControl chrome;
         private UIElement chromeCoreInstance;
-        
-        public WrappingAdorner(IUIElement adornedElement, IUIElement chrome, ICanvasItem canvasItem)
+
+        public WrappingAdorner(IUIElement adornedElement, IControl chrome, ICanvasItem canvasItem)
             : base((UIElement) adornedElement.GetCoreInstance(), canvasItem)
         {
             Chrome = chrome;
@@ -37,7 +38,7 @@ namespace Glass.Design.Wpf
             return (Visual) (chrome.GetCoreInstance());
         }
 
-        public IUIElement Chrome
+        public IControl Chrome
         {
             get { return chrome; }
             set
@@ -49,14 +50,18 @@ namespace Glass.Design.Wpf
                 chrome = value;
                 if (chrome != null)
                 {
+
+                    Chrome.Width = CanvasItem.Width;
+                    Chrome.Height = CanvasItem.Height;
+
                     AddVisualChild(ChromeCoreInstance);
                 }
             }
         }
 
-        private UIElement ChromeCoreInstance
+        private Control ChromeCoreInstance
         {
-            get { return (UIElement) Chrome.GetCoreInstance(); }
+            get { return (Control)Chrome.GetCoreInstance(); }
         }
 
 

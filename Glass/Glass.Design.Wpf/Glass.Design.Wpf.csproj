@@ -74,6 +74,8 @@
     <Compile Include="DesignSurface\VisualAids\Selection\CanvasItemAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\SelectionAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\EdgeAdorner.cs" />
+    <Compile Include="PlatformSpecific\ControlAdapter.cs" />
+    <Compile Include="PlatformSpecific\FrameworkElementAdapter.cs" />
     <Compile Include="PlatformSpecific\NetCoreInputProvider.cs" />
     <Compile Include="PlatformSpecific\NetCoreUIElementFactory.cs" />
     <Compile Include="PlatformSpecific\UIElementAdapter.cs" />
