@@ -114,11 +114,13 @@
     <Compile Include="CanvasItemControl.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\PointExtensions.cs" />
-    <Compile Include="ResizeControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
     <Compile Include="DesignSurfaceCommandHandler.cs" />
     <Compile Include="DesignSurface\DesignSurfaceBase.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\Adorner.cs" />
+    <Compile Include="DesignSurface\VisualAids\Selection\CanvasItemAdorner.cs" />
     <Compile Include="DesignSurface\VisualAids\Snapping\CanvasItemAdorner.cs" />
     <Compile Include="InputDeviceEventHandler.cs" />
     <Compile Include="InputDeviceEventHandlerArgs.cs" />
@@ -169,9 +171,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DesignSurface\VisualAids\Resize\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

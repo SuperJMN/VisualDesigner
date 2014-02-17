@@ -6,6 +6,7 @@
     xmlns:drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"    
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
+    xmlns:resize="using:Glass.Design.WinRT.DesignSurface.VisualAids.Resize"
     mc:Ignorable="d">
 
     <Brush x:Key="DarkBrush">#6494EC</Brush>
@@ -83,10 +84,10 @@
     </Style>
 
 
-    <Style TargetType="winRt:ResizeControl">
+    <Style TargetType="resize:ResizeControl">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="winRt:ResizeControl">
+                <ControlTemplate TargetType="resize:ResizeControl">
                     <Grid Margin="-10" x:Name="PART_ThumbContainer">
                         <Thumb
                             Style="{StaticResource ResizeThumbStyle}" HorizontalAlignment="Left"

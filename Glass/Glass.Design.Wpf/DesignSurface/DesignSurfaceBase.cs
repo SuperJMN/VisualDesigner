@@ -1,8 +1,7 @@
 ﻿using System.Windows.Controls;
 using Glass.Design.Pcl.PlatformAbstraction;
 
-
-namespace Glass.Design.WinRT.DesignSurface
+namespace Glass.Design.Wpf.DesignSurface
 {
     public abstract class DesignSurfaceBase : ListBox, IUserInputReceiver
     {

@@ -39,7 +39,7 @@
                 <Grid>
                     <viewing:ViewingSurface ItemsSource="{Binding Children}">
                         <viewing:ViewingSurface.ItemContainerStyle>
-                            <Style TargetType="{x:Type wpf:CanvasItemControl}">
+                            <Style TargetType="{x:Type wpf:DesignSurfaceItem}">
                                 <Setter Property="BorderThickness" Value="0" />
                                 <Setter Property="Left"
                                         Value="{Binding Left}" />
@@ -51,7 +51,7 @@
                                         Value="{Binding Height}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type wpf:CanvasItemControl}">
+                                        <ControlTemplate TargetType="{x:Type wpf:DesignSurfaceItem}">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </ControlTemplate>
                                     </Setter.Value>

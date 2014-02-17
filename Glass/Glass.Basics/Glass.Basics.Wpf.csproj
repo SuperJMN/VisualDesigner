@@ -91,6 +91,7 @@
     <Compile Include="Attributes\LocalizableString.cs" />
     <Compile Include="Attributes\LocalizedCategoryAttribute.cs" />
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
+    <Compile Include="Behaviors\RubberBand\ListBoxSelectionBehavior.cs" />
     <Compile Include="Behaviors\SelectionChangeSupervisingBehavior.cs" />
     <Compile Include="Behaviors\DragDrop\ChildrenRetriever.cs" />
     <Compile Include="Behaviors\DragDrop\DragDropBehavior.cs" />

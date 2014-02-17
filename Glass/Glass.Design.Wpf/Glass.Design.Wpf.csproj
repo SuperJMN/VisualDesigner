@@ -68,7 +68,7 @@
     <Compile Include="Converters\IThumbCursorConverter.cs" />
     <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
-    <Compile Include="CanvasItemControl.cs" />
+    <Compile Include="DesignSurfaceItem.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
     <Compile Include="DesignSurface\VisualAids\Selection\CanvasItemAdorner.cs" />

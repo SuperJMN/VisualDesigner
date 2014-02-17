@@ -1,6 +1,4 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -9,21 +7,13 @@ using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using PostSharp.Patterns.Model;
 
-#endregion
-
 namespace Glass.Design.Wpf
 {
     [DefaultProperty("Content")]
     [NotifyPropertyChanged]
-    public sealed class CanvasItemControl : ListBoxItem, ICanvasItem
+    public sealed class DesignSurfaceItem : ListBoxItem, ICanvasItem
     {
-        static CanvasItemControl()
-        {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(CanvasItemControl),
-            //    new FrameworkPropertyMetadata(typeof(CanvasItemControl)));
-        }
-
-        public CanvasItemControl()
+        public DesignSurfaceItem()
         {
             SizeChanged += OnSizeChanged;
         }
@@ -64,18 +54,18 @@ namespace Glass.Design.Wpf
 
 
         public static readonly DependencyProperty TopProperty =
-          DependencyProperty.Register("Top", typeof(double), typeof(CanvasItemControl),
+          DependencyProperty.Register("Top", typeof(double), typeof(DesignSurfaceItem),
               new FrameworkPropertyMetadata(double.NaN, OnTopChanged));
 
 
         public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof(double), typeof(CanvasItemControl),
+            DependencyProperty.Register("Left", typeof(double), typeof(DesignSurfaceItem),
                 new FrameworkPropertyMetadata(double.NaN, OnLeftChanged));
 
 
         private static void OnTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasItemControl target = (CanvasItemControl)d;
+            var target = (DesignSurfaceItem)d;
             Canvas.SetTop(target, target.Top);
             target.OnPropertyChanged("Top");
         }
@@ -83,7 +73,7 @@ namespace Glass.Design.Wpf
 
         private static void OnLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasItemControl target = (CanvasItemControl)d;
+            var target = (DesignSurfaceItem)d;
             Canvas.SetLeft(target, target.Left);
             target.OnPropertyChanged("Left");
         }
@@ -93,7 +83,7 @@ namespace Glass.Design.Wpf
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+            var handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
