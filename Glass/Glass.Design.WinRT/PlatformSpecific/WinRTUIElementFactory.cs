@@ -3,6 +3,7 @@ using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
 using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
+using Glass.Design.WinRT.DesignSurface.VisualAids.Resize;
 using Glass.Design.WinRT.DesignSurface.VisualAids.Snapping;
 
 namespace Glass.Design.WinRT.PlatformSpecific

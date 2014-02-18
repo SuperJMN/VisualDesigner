@@ -93,14 +93,18 @@
     <Compile Include="Core\CoordinatePart.cs" />
     <Compile Include="Core\HorizontalAlignment.cs" />
     <Compile Include="Core\ICoordinate.cs" />
+    <Compile Include="Core\IInputProvider.cs" />
     <Compile Include="Core\ISize.cs" />
+    <Compile Include="Core\IUIElementFactory.cs" />
     <Compile Include="Core\Point.cs" />
     <Compile Include="Core\Rect.cs" />
-    <Compile Include="Core\ServiceLocator.cs" />
     <Compile Include="Core\ICoreTypesFactory.cs" />
     <Compile Include="Core\IPoint.cs" />
     <Compile Include="Core\IRect.cs" />
     <Compile Include="Core\IVector.cs" />
+    <Compile Include="Core\ServiceLocator.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Size.cs" />
     <Compile Include="Core\VerticalAlignment.cs" />
     <Compile Include="DesignSurface\CanvasSelectorExtensions.cs" />

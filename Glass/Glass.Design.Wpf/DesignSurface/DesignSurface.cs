@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -59,10 +60,13 @@ namespace Glass.Design.Wpf.DesignSurface
         }
 
 
-        public IList<object> SelectedItems { get; private set; }
+        IList<object> IMultiSelector.SelectedItems
+        {
+            get { return SelectedItems.Cast<object>().ToList(); }            
+        }
+
         public event EventHandler<object> ItemSpecified;
-
-
+        
         public event EventHandler SelectionCleared;
 
 
@@ -100,7 +104,11 @@ namespace Glass.Design.Wpf.DesignSurface
         public double Left { get; set; }
         public double Top { get; set; }
 
-        public CanvasItemCollection Children { get; private set; }
+        CanvasItemCollection ICanvasItemContainer.Children
+        {
+            get { return new CanvasItemCollection(Items.Cast<ICanvasItem>()); }
+            
+        }
 
         public double Right { get; private set; }
         public double Bottom { get; private set; }
@@ -170,7 +178,7 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             base.PrepareContainerForItemOverride(element, item);
 
-            var designerItem = (CanvasItemControl) element;
+            var designerItem = (DesignSurfaceItem) element;
             designerItem.PreviewMouseLeftButtonDown += ContainerOnLeftButtonDown;            
         }
 
@@ -178,18 +186,18 @@ namespace Glass.Design.Wpf.DesignSurface
         {
             base.ClearContainerForItemOverride(element, item);
 
-            var designerItem = (CanvasItemControl) element;
+            var designerItem = (DesignSurfaceItem) element;
             designerItem.PreviewMouseLeftButtonDown -= ContainerOnLeftButtonDown;
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            return item is CanvasItemControl;
+            return item is DesignSurfaceItem;
         }
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new CanvasItemControl();
+            return new DesignSurfaceItem();
         }
 
         private void RaiseItemSpecified(object e)
@@ -287,6 +295,8 @@ namespace Glass.Design.Wpf.DesignSurface
 
         private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
         private ICanvasItem _rootCanvasItem;
+        private IList<object> selectedItems;
+        private CanvasItemCollection children;
 
         [IgnoreAutoChangeNotification]
         public PlaneOperation PlaneOperationMode

@@ -52,7 +52,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type wpf:CanvasItemControl}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+    <Style TargetType="{x:Type wpf:DesignSurfaceItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
     </Style>

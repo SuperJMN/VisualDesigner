@@ -13,7 +13,7 @@ using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
 using Glass.Design.WinRT.PlatformSpecific;
 
-namespace Glass.Design.WinRT
+namespace Glass.Design.WinRT.DesignSurface.VisualAids.Resize
 {
     public sealed class ResizeControl : Control, IControl
     {

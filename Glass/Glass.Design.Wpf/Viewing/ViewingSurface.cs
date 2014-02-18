@@ -12,12 +12,12 @@ namespace Glass.Design.Wpf.Viewing
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            return item is CanvasItemControl;
+            return item is DesignSurfaceItem;
         }
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new CanvasItemControl();
+            return new DesignSurfaceItem();
         }
 
     }
