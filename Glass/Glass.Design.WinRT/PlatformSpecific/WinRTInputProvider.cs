@@ -1,9 +1,9 @@
-﻿using System;
-using Glass.Design.Pcl.Canvas;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
+using AutoMapper;
 using Glass.Design.Pcl.Core;
-using Glass.Design.Pcl.DesignSurface;
-using Glass.Design.Pcl.DesignSurface.VisualAids.Snapping;
 using Glass.Design.Pcl.PlatformAbstraction;
+using FoundationPoint = Windows.Foundation.Point;
 
 namespace Glass.Design.WinRT.PlatformSpecific
 {
@@ -11,10 +11,18 @@ namespace Glass.Design.WinRT.PlatformSpecific
     {
         public Point GetMousePositionRelativeTo(IUserInputReceiver inputReceiver)
         {
-            //var mousePositionRelativeTo = Mouse.GetPosition((IInputElement)inputReceiver);
-            //var pclPoint = Mapper.Map<Point>(mousePositionRelativeTo);
-            //return pclPoint;
-            return new Point();
+            
+            var receiver = (UIElement) inputReceiver;
+            var position = receiver
+                .TransformToVisual(Window.Current.Content)
+                .TransformPoint(new FoundationPoint());
+
+            var finalPosition = new FoundationPoint(
+                position.X + Window.Current.CoreWindow.PointerPosition.X, 
+                position.Y + Window.Current.CoreWindow.PointerPosition.Y
+                );
+
+            return Mapper.Map<Point>(finalPosition);
         }
     }
 

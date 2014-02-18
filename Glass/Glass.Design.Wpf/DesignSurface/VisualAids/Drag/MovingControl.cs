@@ -39,12 +39,12 @@ namespace Glass.Design.Wpf.DesignSurface.VisualAids.Drag
             if (handler != null) handler(this, args);
         }
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             throw new System.NotImplementedException();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             throw new System.NotImplementedException();
         }

@@ -85,27 +85,9 @@ namespace Glass.Design.WinRT.DesignSurface
 
         public void UnselectAll()
         {
-            ClearSelectionPopups();
-            
-            //SelectedItems.Clear();
-        }
-
-        public event FingerManipulationEventHandler FingerDown;
-
-        public event FingerManipulationEventHandler FingerMove;
-
-        public event FingerManipulationEventHandler FingerUp;
-
-        public void CaptureInput()
-        {
-            //CapturePointer(new Pointer());
-        }
-
-        public void ReleaseInput()
-        {
-            //ReleasePointerCaptures();
-        }
-
+            ClearSelectionPopups();                       
+        }        
+     
         public event PropertyChangedEventHandler PropertyChanged;
 
         public double GetCoordinate(CoordinatePart part)

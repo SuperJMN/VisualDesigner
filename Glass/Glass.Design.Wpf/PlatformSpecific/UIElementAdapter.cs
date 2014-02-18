@@ -179,12 +179,12 @@ namespace Glass.Design.Wpf.PlatformSpecific
             if (handler != null) handler(this, args);
         }
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             UIElement.CaptureMouse();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             UIElement.ReleaseMouseCapture();
         }

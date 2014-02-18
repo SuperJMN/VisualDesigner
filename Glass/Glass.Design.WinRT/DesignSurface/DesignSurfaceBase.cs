@@ -22,7 +22,10 @@ namespace Glass.Design.WinRT.DesignSurface
             if (currentPoint.Properties.IsLeftButtonPressed)
             {
                 var point = new Point(currentPoint.Position.X, currentPoint.Position.Y);
-                var args = new FingerManipulationEventArgs { Point = point, Handled = true };
+                var args = new FingerManipulationEventArgs
+                           {
+                               Point = point, Handled = true, Pointer = e.Pointer,
+                           };
 
                 OnFingerDown(args);
             }
@@ -70,14 +73,15 @@ namespace Glass.Design.WinRT.DesignSurface
             if (handler != null) handler(this, args);
         }
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
-            //CapturePointer(new Pointer());
+            var p = (Pointer) pointer;
+            CapturePointer(p);
         }
 
-        public void ReleaseInput()
-        {
-            //ReleasePointerCaptures();
+        public void ReleaseInput(object pointer)
+        {            
+            ReleasePointerCaptures();
         }
     }
 }

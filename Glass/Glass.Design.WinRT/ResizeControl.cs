@@ -137,12 +137,12 @@ namespace Glass.Design.WinRT
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             throw new System.NotImplementedException();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             throw new System.NotImplementedException();
         }

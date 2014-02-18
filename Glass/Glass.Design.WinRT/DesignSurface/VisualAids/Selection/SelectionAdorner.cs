@@ -42,12 +42,12 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Selection
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             throw new NotImplementedException();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             throw new NotImplementedException();
         }

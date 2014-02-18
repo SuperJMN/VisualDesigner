@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
+using AutoMapper;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.PlatformAbstraction;
@@ -12,7 +13,7 @@ namespace Glass.Design.WinRT.PlatformSpecific
     {
         private double left;
         private double top;
-        
+
         private CanvasItemCollection children;
         private double right;
         private double bottom;
@@ -45,11 +46,12 @@ namespace Glass.Design.WinRT.PlatformSpecific
 
         private void UIElementOnPointerPressed(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
-            var corePoint = pointerRoutedEventArgs.GetCurrentPoint(null);
-            if (corePoint.Properties.IsLeftButtonPressed)
+            var pointerPoint = pointerRoutedEventArgs.GetCurrentPoint(null);
+            if (pointerPoint.Properties.IsLeftButtonPressed)
             {
-
-                var fingerManipulationEventArgs = new FingerManipulationEventArgs();
+                var pointer = pointerRoutedEventArgs.Pointer;
+                var corePoint = Mapper.Map<Point>(pointerPoint.Position);
+                var fingerManipulationEventArgs = new FingerManipulationEventArgs { Pointer = pointer, Point = corePoint };
 
                 OnFingerDown(fingerManipulationEventArgs);
 
@@ -104,7 +106,7 @@ namespace Glass.Design.WinRT.PlatformSpecific
         {
             get { return top; }
             set { top = value; }
-        }     
+        }
 
         public CanvasItemCollection Children
         {
@@ -174,12 +176,12 @@ namespace Glass.Design.WinRT.PlatformSpecific
             if (handler != null) handler(this, args);
         }
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             //UIElement.CapturePointer(new Pointer())
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             //UIElement.ReleasePointerCaptures();
         }

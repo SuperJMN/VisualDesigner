@@ -5,7 +5,7 @@ namespace Glass.Design.Pcl.PlatformAbstraction
         event FingerManipulationEventHandler FingerDown;
         event FingerManipulationEventHandler FingerMove;
         event FingerManipulationEventHandler FingerUp;
-        void CaptureInput();
-        void ReleaseInput();
+        void CaptureInput(object pointer);
+        void ReleaseInput(object pointer);
     }
 }

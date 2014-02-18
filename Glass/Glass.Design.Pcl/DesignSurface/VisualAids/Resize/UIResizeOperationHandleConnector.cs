@@ -42,7 +42,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             var absolutePoint = ConvertProportionalToAbsolute(handlePoint);
 
             ResizeOperation = new ResizeOperation(CanvasItem, absolutePoint, SnappingEngine);            
-            Parent.CaptureInput();
+            Parent.CaptureInput(null);
 
             Parent.FingerMove += ParentOnMouseMove;
             Parent.FingerUp += ParentOnMouseLeftButtonUp;
@@ -61,7 +61,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             {
                 var position = args.GetPosition(Parent);
                 ResizeOperation.UpdateHandlePosition(position);
-                Parent.ReleaseInput();
+                Parent.ReleaseInput(null);
                 Parent.FingerMove -= ParentOnMouseMove;
                 ResizeOperation.Dispose();
                 ResizeOperation = null;

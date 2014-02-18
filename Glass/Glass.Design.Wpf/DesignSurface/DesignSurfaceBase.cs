@@ -31,12 +31,12 @@ namespace Glass.Design.WinRT.DesignSurface
             if (handler != null) handler(this, args);
         }
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             //CapturePointer(new Pointer());
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             //ReleasePointerCaptures();
         }

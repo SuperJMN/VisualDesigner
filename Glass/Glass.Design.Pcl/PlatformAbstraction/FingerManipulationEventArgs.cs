@@ -4,8 +4,10 @@ namespace Glass.Design.Pcl.PlatformAbstraction
 {
     public class FingerManipulationEventArgs
     {
-        public IPoint Point { get; set; }
+        public Point Point { get; set; }
         public bool Handled { get; set; }
+
+        public object Pointer { get; set; }
 
         public Point GetPosition(IUserInputReceiver relativeTo)
         {

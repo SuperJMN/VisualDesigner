@@ -23,12 +23,12 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         public event FingerManipulationEventHandler FingerDown;
         public event FingerManipulationEventHandler FingerMove;
         public event FingerManipulationEventHandler FingerUp;
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             throw new System.NotImplementedException();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             throw new System.NotImplementedException();
         }

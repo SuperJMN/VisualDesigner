@@ -19,6 +19,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
         [NotNull]
         public ICanvasItemSnappingEngine SnappingEngine { get; set; }
 
+        public object Pointer { get; set; }
+
         private RecordingScope dragRecordingScope;
 
         public DragOperationHost(IUserInputReceiver frameOfReference)
@@ -37,22 +39,23 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             }
 
             var position = args.GetPosition(FrameOfReference);
-            var newPoint = Mapper.Map<Point>(position);
-            DragOperation.NotifyNewPosition(newPoint);        
+
+            DragOperation.NotifyNewPosition(position);        
         }
 
-        private void InputElementOnMouseLeftButtonUp(object sender, FingerManipulationEventArgs args)
+        private void FrameOfReferenceOnMouseLeftButtonUp(object sender, FingerManipulationEventArgs args)
         {
             if (DragOperation != null)
             {
                 var position = args.GetPosition(FrameOfReference);
                 DragOperation.NotifyNewPosition(Mapper.Map<Point>(position));
-                FrameOfReference.ReleaseInput();
+                FrameOfReference.ReleaseInput(Pointer);
                 FrameOfReference.FingerMove -= FrameOfReferenceOnMouseMove;
                 DragOperation = null;                
                 SnappingEngine.ClearSnappedEdges();
 
                 IsDragging = false;
+                Pointer = null;
                 OnDragEnd();
             }
         }
@@ -91,14 +94,16 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
         {
             fingerManipulationEventArgs.Handled = true;
 
+            Pointer = fingerManipulationEventArgs.Pointer;
+
             var startingPoint = fingerManipulationEventArgs.GetPosition(FrameOfReference);
 
-            DragOperation = new DragOperation(ItemToDrag, startingPoint, SnappingEngine);            
+            DragOperation = new DragOperation(ItemToDrag, startingPoint, SnappingEngine);
 
-            FrameOfReference.CaptureInput();
+            FrameOfReference.CaptureInput(Pointer);
 
             FrameOfReference.FingerMove += FrameOfReferenceOnMouseMove;
-            FrameOfReference.FingerUp += InputElementOnMouseLeftButtonUp;            
+            FrameOfReference.FingerUp += FrameOfReferenceOnMouseLeftButtonUp;            
         }
 
         public event EventHandler DragEnd;

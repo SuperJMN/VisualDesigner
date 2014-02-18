@@ -75,12 +75,12 @@ namespace Glass.Design.Wpf.DesignSurface
 
         public event FingerManipulationEventHandler FingerUp;
 
-        public void CaptureInput()
+        public void CaptureInput(object pointer)
         {
             CaptureMouse();
         }
 
-        public void ReleaseInput()
+        public void ReleaseInput(object pointer)
         {
             ReleaseMouseCapture();
         }

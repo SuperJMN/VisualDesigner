@@ -48,5 +48,15 @@ namespace Glass.Design.Pcl.Core
                 return (X.GetHashCode()*397) ^ Y.GetHashCode();
             }
         }
+
+        public static Point operator +(Point one, Point another)
+        {
+            return Sum(one, another);
+        }
+
+        private static Point Sum(Point one, Point another)
+        {
+            return new Point(one.X + another.X, one.Y + another.Y);
+        }
     }
 }
