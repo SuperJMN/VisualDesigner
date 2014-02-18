@@ -1,4 +1,25 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">  
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vectorGraphics="using:ComicDesigner.VectorGraphics">
+
+
+
+    <Style TargetType="vectorGraphics:IconControl">
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="vectorGraphics:IconControl">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Path Data="{TemplateBinding DataGeometry}"
+                              Fill="{TemplateBinding Foreground}"
+                              Stretch="Uniform"
+                              Margin="{TemplateBinding Padding}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

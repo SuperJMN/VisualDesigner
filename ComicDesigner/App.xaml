@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Glass.Design.WinRT/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="VectorGraphics/GeometryData.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>    

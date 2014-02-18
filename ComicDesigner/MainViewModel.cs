@@ -25,13 +25,26 @@ namespace ComicDesigner
 
         private void OnLoadItems(object parameter)
         {
-            const int numOfItems = 5;
+            const int numOfItems = 20;
 
             for (var i = 0; i < numOfItems; i++)
             {
                 var item = GetSampleItem(i);
                 Items.Add(item);
             }
+
+
+            var middlePoint = new Point(SurfaceWidth / 2, SurfaceHeight / 2);
+
+
+            var marioWidth = 200;
+            var marioHeight = 240;
+
+            var mario = new Mario { Left = middlePoint.X - marioWidth / 2D, Top = middlePoint.Y - marioHeight / 2D, Width = marioWidth, Height = marioHeight };
+            var bubble = new Bubble { Left = mario.Right - 70, Top = mario.Top - 170, Width = 250, Height = 280, Text = "WOW. Much ViewModel. So RT. Such Designer." };
+
+            Items.Add(mario);
+            Items.Add(bubble);
         }
 
         private CanvasItemViewModel GetSampleItem(int i)
@@ -39,7 +52,7 @@ namespace ComicDesigner
 
             CanvasItemViewModel item;
 
-            switch (i % 3)
+            switch (i % 2)
             {
                 case 0:
                     item = new CanvasRectangle { Width = 200, Height = 200 };
@@ -47,9 +60,7 @@ namespace ComicDesigner
                 case 1:
                     item = new Ellipse { Width = 200, Height = 100 };
                     break;
-                case 2:
-                    item = new Mario { Width = 120, Height = 120 };
-                    break;
+
                 default:
                     throw new NotSupportedException("Invalid type of model");
             }

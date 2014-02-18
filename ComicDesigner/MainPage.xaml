@@ -8,7 +8,9 @@
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"    
-    xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"    
+    xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
+    xmlns:vectorGraphics="using:ComicDesigner.VectorGraphics"
+    xmlns:model="using:Model"
     x:Class="ComicDesigner.MainPage"
     view:ViewModel.Name="MainViewModel"    
     comicDesigner:SizeChange.IsEnabled="True"
@@ -38,12 +40,22 @@
             <DataTemplate x:Key="Type:Mario">
                 <Image Source="Images/Mario.png" />
             </DataTemplate>
+            <DataTemplate x:Key="Type:Bubble">
+                <Grid d:DataContext="{d:DesignInstance model:Bubble}">
+                    <vectorGraphics:IconControl Data="{StaticResource BubbleSpeechData}" Foreground="Black"
+                                                Background="Transparent" />
+                    <ContentControl Margin="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <TextBlock Text="{Binding Text}" 
+                                   TextWrapping="WrapWholeWords" 
+                                   FontFamily="Comic Sans MS"
+                                   FontSize="15"
+                                   TextAlignment="Center" />
+                    </ContentControl>
+                </Grid>
+            </DataTemplate>
             <DataTemplate x:Key="DefaultTemplate">
                 <Rectangle Fill="Blue" />
             </DataTemplate>
-
-
-
         </ResourceDictionary>
     </Page.Resources>
 
@@ -84,7 +96,7 @@
                 <core:EventTriggerBehavior>
                     <core:InvokeCommandAction Command="{Binding LoadItemsCommand}"/>
                 </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>                        
+            </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
     </Grid>
 </Page>
