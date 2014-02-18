@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,10 +10,7 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
 {
     public abstract class CanvasItemAdorner : Control, IAdorner
     {
-        private double left;
-        private double top;
-        private double width;
-        private double height;
+        private ICanvasItem canvasItem;
 
         protected CanvasItemAdorner(IUIElement adornedElement, ICanvasItem canvasItem)
         {
@@ -34,6 +32,13 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, e);
+        }
+
         public double GetCoordinate(CoordinatePart part)
         {
             throw new System.NotImplementedException();
@@ -47,25 +52,41 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         public double Left
         {
             get { return CanvasItem.Left; }
-            set { CanvasItem.Left = value; }
+            set
+            {
+                CanvasItem.Left = value;      
+                OnPropertyChanged(new PropertyChangedEventArgs("Left"));
+            }
         }
 
         public double Top
         {
             get { return CanvasItem.Top; }
-            set { CanvasItem.Top = value; }
+            set
+            {
+                CanvasItem.Top = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Top"));
+            }
         }
 
         public double Width
         {
             get { return CanvasItem.Width; }
-            set { CanvasItem.Width = value; }
+            set
+            {
+                CanvasItem.Width = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Width"));
+            }
         }
 
         public double Height
         {
             get { return CanvasItem.Height; }
-            set { CanvasItem.Height = value; }
+            set
+            {
+                CanvasItem.Height = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Height"));
+            }
         }
 
         public CanvasItemCollection Children { get; set; }
@@ -83,11 +104,27 @@ namespace Glass.Design.WinRT.DesignSurface.VisualAids.Snapping
         }
 
         public bool IsVisible { get; set; }
-        public bool IsHitTestVisible { get; set; }
+        
         public abstract object GetCoreInstance();
         
 
         public IUIElement AdornedElement { get; set; }
-        public ICanvasItem CanvasItem { get; set; }
+
+        public ICanvasItem CanvasItem
+        {
+            get { return canvasItem; }
+            set
+            {
+                canvasItem = value;
+                canvasItem.PropertyChanged += CanvasItemOnPropertyChanged;
+            }
+        }
+
+        private void CanvasItemOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            // Whenever a property in the CanvasItem changes, the properties of the adorner should change, too.
+            this.Left = CanvasItem.Left;
+            this.Top = CanvasItem.Top;
+        }
     }
 }

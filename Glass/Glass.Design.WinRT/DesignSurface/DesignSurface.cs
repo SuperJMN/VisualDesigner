@@ -114,6 +114,18 @@ namespace Glass.Design.WinRT.DesignSurface
             var popup = new Popup();
 
             var coreInstance = adorner.GetCoreInstance();
+            adorner.PropertyChanged += (sender, args) =>
+                                       {
+                                           // I don't like how this is implemented. Refactor!
+                                           if (args.PropertyName.Equals("Left"))
+                                           {
+                                               popup.HorizontalOffset = adorner.Left;
+                                           }
+                                           if (args.PropertyName.Equals("Top"))
+                                           {
+                                               popup.VerticalOffset = adorner.Top;
+                                           }
+                                       };
 
             var uiElementAdapter = (FrameworkElementAdapter) coreInstance;
 

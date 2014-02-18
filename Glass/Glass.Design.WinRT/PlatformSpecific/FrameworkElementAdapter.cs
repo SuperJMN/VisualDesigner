@@ -5,10 +5,7 @@ namespace Glass.Design.WinRT.PlatformSpecific
 {
     public class FrameworkElementAdapter : UIElementAdapter, IFrameworkElement
     {
-        private double width1;
-        private double height1;
-
-        public FrameworkElementAdapter(UIElement uiElement) : base(uiElement)
+        protected FrameworkElementAdapter(UIElement uiElement) : base(uiElement)
         {
         }
 
