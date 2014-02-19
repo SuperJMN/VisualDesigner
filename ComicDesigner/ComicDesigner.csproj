@@ -110,6 +110,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="InitializationBootstrapper.cs" />
+    <Compile Include="ToolbarControl.xaml.cs">
+      <DependentUpon>ToolbarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ITool.cs" />
+    <Compile Include="Tools\IToolProvider.cs" />
+    <Compile Include="Tools\MarioTool.cs" />
+    <Compile Include="ToolbarViewModel.cs" />
+    <Compile Include="Tools\SpeechBubbleTool.cs" />
+    <Compile Include="Tools\ToolProvider.cs" />
     <Compile Include="VectorGraphics\IconControl.cs" />
     <Compile Include="UIUtils\SizeChange.cs" />
     <Compile Include="UIUtils\SetterValueBindingHelper.cs" />
@@ -120,6 +129,7 @@
     </Compile>
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -151,6 +161,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolbarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VectorGraphics\GeometryData.xaml">
       <SubType>Designer</SubType>

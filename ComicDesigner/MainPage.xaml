@@ -7,8 +7,7 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"    
-    xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:vectorGraphics="using:ComicDesigner.VectorGraphics"
     xmlns:model="using:Model"
     xmlns:uiUtils="using:ComicDesigner.UIUtils"
@@ -61,9 +60,13 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <designSurface:DesignSurface Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
-                                     ItemsSource="{Binding Items}">
+                                     ItemsSource="{Binding Items}" Grid.Column="1">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -99,5 +102,6 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
+        <comicDesigner:ToolbarControl Grid.Column="0" />
     </Grid>
 </Page>
