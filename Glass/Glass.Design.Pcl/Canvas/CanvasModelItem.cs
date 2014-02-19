@@ -6,7 +6,7 @@ namespace Glass.Design.Pcl.Canvas
     [Recordable]
     public class CanvasModelItem : CanvasItem
     {
-        [Surrogate]
+        [Child]
         private readonly CanvasItemCollection items = new CanvasItemCollection();
 
         static CanvasModelItem()

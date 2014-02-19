@@ -40,7 +40,7 @@ namespace Model
             this.Children = new CanvasItemCollection(items);
         }
 
-        [Surrogate]
+        [Child]
         public CanvasItemCollection Children { get; set; }
 
     }

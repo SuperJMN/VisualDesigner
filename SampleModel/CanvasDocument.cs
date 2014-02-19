@@ -18,7 +18,7 @@ namespace SampleModel
             this.Children = new CanvasItemCollection(items);
         }
 
-        [Surrogate]
+        [Child]
         public CanvasItemCollection Children { get; set; }
 
     }

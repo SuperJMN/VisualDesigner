@@ -1,5 +1,6 @@
 ﻿namespace SampleModel
 {
+
     public class Color
     {
         public Color(byte alpha, byte r, byte g, byte b)
@@ -15,9 +16,9 @@
             
         }
 
-        public byte R { get; set; }
-        public byte G { get; set; }
-        public byte B { get; set; }
-        public byte A { get; set; }
+        public byte R { get; private set; }
+        public byte G { get; private set; }
+        public byte B { get; private set; }
+        public byte A { get; private set; }
     }
 }

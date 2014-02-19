@@ -13,11 +13,9 @@ namespace Glass.Design.Pcl.Canvas
     [NotifyPropertyChanged]
     public abstract class CanvasItem : ICanvasItem, IRecordableCallback
     {
-        [NotRecorded]
         private bool undoing;
         private double previousWidth, previousHeight, previousTop, previousLeft;
 
-        [NotRecorded]
         protected bool IsUpdating { get; private set; }
 
 
