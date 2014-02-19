@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace ComicDesigner
+namespace ComicDesigner.UIUtils
 {
     public class SizeChange : DependencyObject
     {

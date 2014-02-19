@@ -11,16 +11,17 @@
     xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
     xmlns:vectorGraphics="using:ComicDesigner.VectorGraphics"
     xmlns:model="using:Model"
+    xmlns:uiUtils="using:ComicDesigner.UIUtils"
     x:Class="ComicDesigner.MainPage"
     view:ViewModel.Name="MainViewModel"    
-    comicDesigner:SizeChange.IsEnabled="True"
-    comicDesigner:SizeChange.ActualWidth="{Binding SurfaceWidth, Mode=TwoWay}"
-    comicDesigner:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
+    uiUtils:SizeChange.IsEnabled="True"
+    uiUtils:SizeChange.ActualWidth="{Binding SurfaceWidth, Mode=TwoWay}"
+    uiUtils:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
         <ResourceDictionary>
 
-            <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
+            <uiUtils:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
 
             <!--TEMPLATE TYPES (they are searched using their keys in the form of: Type:(NameOfType) by the TypedTemplateSelector -->
@@ -67,27 +68,27 @@
                 <Style TargetType="winRt:CanvasItemControl">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
+                    <Setter Property="uiUtils:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <comicDesigner:SetterValueBindingHelper>
+                            <uiUtils:SetterValueBindingHelper>
                                 <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Left"
 									Binding="{Binding Left, Mode=TwoWay}" />
 
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Top"
 									Binding="{Binding Top, Mode=TwoWay}" />
-                                <comicDesigner:SetterValueBindingHelper                                 
+                                <uiUtils:SetterValueBindingHelper                                 
 									Property="Width"
 									Binding="{Binding Width, Mode=TwoWay}" />
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Property="Height"
 									Binding="{Binding Height, Mode=TwoWay}" />
                                 <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
-                            </comicDesigner:SetterValueBindingHelper>
+                            </uiUtils:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>

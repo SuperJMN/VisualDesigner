@@ -109,11 +109,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InitializationBootstrapper.cs" />
     <Compile Include="VectorGraphics\IconControl.cs" />
-    <Compile Include="SizeChange.cs" />
-    <Compile Include="SetterValueBindingHelper.cs" />
+    <Compile Include="UIUtils\SizeChange.cs" />
+    <Compile Include="UIUtils\SetterValueBindingHelper.cs" />
     <Compile Include="VectorGraphics\StringToPathGeometryConverter.cs" />
-    <Compile Include="TypedTemplateSelector.cs" />
+    <Compile Include="UIUtils\TypedTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
