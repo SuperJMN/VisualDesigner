@@ -1,7 +1,7 @@
 using Model;
 using StyleMVVM.DependencyInjection;
 
-namespace ComicDesigner.Tools
+namespace ComicDesigner.Tooling.Tools
 {
     [Export(typeof(ITool))]
     public class MarioTool : ITool

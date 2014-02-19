@@ -12,13 +12,17 @@ namespace ComicDesigner
     [Export("MainViewModel")]
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<CanvasItemViewModel> items;
+        private IEditingContext EditingContext { get; set; }
+        private CanvasItemViewModelCollection items;
         private static readonly Random RandomGenerator = new Random((int)DateTime.Now.Ticks);
 
         [ImportConstructor]
-        public MainViewModel()
+        public MainViewModel(IEditingContext editingContext)
         {
-            Items = new ObservableCollection<CanvasItemViewModel>();
+            EditingContext = editingContext;
+
+            // Since we're Main, we have to instance the document into the editing context.
+            EditingContext.Document = new Document();
 
             LoadItemsCommand = new DelegateCommand(OnLoadItems);
         }
@@ -35,7 +39,6 @@ namespace ComicDesigner
 
 
             var middlePoint = new Point(SurfaceWidth / 2, SurfaceHeight / 2);
-
 
             var marioWidth = 200;
             var marioHeight = 240;
@@ -76,14 +79,9 @@ namespace ComicDesigner
             return item;
         }
 
-        public ObservableCollection<CanvasItemViewModel> Items
+        public CanvasItemViewModelCollection Items
         {
-            get { return items; }
-            set
-            {
-                items = value;
-                OnPropertyChanged();
-            }
+            get { return EditingContext.Document.Graphics; }            
         }
 
         public ICommand LoadItemsCommand { get; set; }

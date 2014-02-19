@@ -109,16 +109,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditingContext.cs" />
+    <Compile Include="IEditingContext.cs" />
     <Compile Include="InitializationBootstrapper.cs" />
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\ITool.cs" />
-    <Compile Include="Tools\IToolProvider.cs" />
-    <Compile Include="Tools\MarioTool.cs" />
+    <Compile Include="Tooling\ITool.cs" />
+    <Compile Include="Tooling\IToolProvider.cs" />
+    <Compile Include="Tooling\Tools\MarioTool.cs" />
     <Compile Include="ToolbarViewModel.cs" />
-    <Compile Include="Tools\SpeechBubbleTool.cs" />
-    <Compile Include="Tools\ToolProvider.cs" />
+    <Compile Include="Tooling\Tools\SpeechBubbleTool.cs" />
+    <Compile Include="Tooling\ToolProvider.cs" />
     <Compile Include="VectorGraphics\IconControl.cs" />
     <Compile Include="UIUtils\SizeChange.cs" />
     <Compile Include="UIUtils\SetterValueBindingHelper.cs" />

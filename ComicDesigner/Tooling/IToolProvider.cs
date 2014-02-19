@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ComicDesigner.Tools
+namespace ComicDesigner.Tooling
 {
     public interface IToolProvider
     {

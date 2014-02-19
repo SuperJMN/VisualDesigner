@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using StyleMVVM.DependencyInjection;
 
-namespace ComicDesigner.Tools
+namespace ComicDesigner.Tooling
 {
     [Export(typeof(IToolProvider))]
     public partial class ToolProvider : IToolProvider

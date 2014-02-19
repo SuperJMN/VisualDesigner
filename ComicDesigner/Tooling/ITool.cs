@@ -1,6 +1,6 @@
 using Model;
 
-namespace ComicDesigner.Tools
+namespace ComicDesigner.Tooling
 {
     public interface ITool
     {

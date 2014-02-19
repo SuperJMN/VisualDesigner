@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="Bubble.cs" />
     <Compile Include="CanvasItemViewModel.cs" />
+    <Compile Include="CanvasItemViewModelCollection.cs" />
     <Compile Include="CanvasRectangle.cs" />
+    <Compile Include="Document.cs" />
     <Compile Include="Ellipse.cs" />
     <Compile Include="Mario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
