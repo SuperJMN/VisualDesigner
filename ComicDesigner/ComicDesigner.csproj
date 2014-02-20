@@ -109,16 +109,29 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditingContext.cs" />
+    <Compile Include="IEditingContext.cs" />
+    <Compile Include="InitializationBootstrapper.cs" />
+    <Compile Include="ToolbarControl.xaml.cs">
+      <DependentUpon>ToolbarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tooling\ITool.cs" />
+    <Compile Include="Tooling\IToolProvider.cs" />
+    <Compile Include="Tooling\Tools\MarioTool.cs" />
+    <Compile Include="ToolbarViewModel.cs" />
+    <Compile Include="Tooling\Tools\SpeechBubbleTool.cs" />
+    <Compile Include="Tooling\ToolProvider.cs" />
     <Compile Include="VectorGraphics\IconControl.cs" />
-    <Compile Include="SizeChange.cs" />
-    <Compile Include="SetterValueBindingHelper.cs" />
+    <Compile Include="UIUtils\SizeChange.cs" />
+    <Compile Include="UIUtils\SetterValueBindingHelper.cs" />
     <Compile Include="VectorGraphics\StringToPathGeometryConverter.cs" />
-    <Compile Include="TypedTemplateSelector.cs" />
+    <Compile Include="UIUtils\TypedTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -146,6 +159,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolbarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VectorGraphics\GeometryData.xaml">
       <SubType>Designer</SubType>

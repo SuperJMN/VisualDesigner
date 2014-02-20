@@ -7,20 +7,20 @@
     xmlns:comicDesigner="using:ComicDesigner"
     xmlns:designSurface="using:Glass.Design.WinRT.DesignSurface"
     xmlns:winRt="using:Glass.Design.WinRT"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"    
-    xmlns:Drag="using:Glass.Design.WinRT.DesignSurface.VisualAids.Drag"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:vectorGraphics="using:ComicDesigner.VectorGraphics"
     xmlns:model="using:Model"
+    xmlns:uiUtils="using:ComicDesigner.UIUtils"
     x:Class="ComicDesigner.MainPage"
     view:ViewModel.Name="MainViewModel"    
-    comicDesigner:SizeChange.IsEnabled="True"
-    comicDesigner:SizeChange.ActualWidth="{Binding SurfaceWidth, Mode=TwoWay}"
-    comicDesigner:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
+    uiUtils:SizeChange.IsEnabled="True"
+    uiUtils:SizeChange.ActualWidth="{Binding SurfaceWidth, Mode=TwoWay}"
+    uiUtils:SizeChange.ActualHeight="{Binding SurfaceHeight, Mode=TwoWay}"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance comicDesigner:MainViewModel}">
     <Page.Resources>
         <ResourceDictionary>
 
-            <comicDesigner:TypedTemplateSelector x:Key="TypedTemplateSelector"
+            <uiUtils:TypedTemplateSelector x:Key="TypedTemplateSelector"
                                              DefaultTemplateKey="DefaultTemplate" />
 
             <!--TEMPLATE TYPES (they are searched using their keys in the form of: Type:(NameOfType) by the TypedTemplateSelector -->
@@ -60,34 +60,38 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <designSurface:DesignSurface Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
-                                     ItemsSource="{Binding Items}">
+                                     ItemsSource="{Binding Items}" Grid.Column="1">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                    <Setter Property="comicDesigner:SetterValueBindingHelper.PropertyBinding">
+                    <Setter Property="uiUtils:SetterValueBindingHelper.PropertyBinding">
                         <Setter.Value>
-                            <comicDesigner:SetterValueBindingHelper>
+                            <uiUtils:SetterValueBindingHelper>
                                 <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Left"
 									Binding="{Binding Left, Mode=TwoWay}" />
 
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Top"
 									Binding="{Binding Top, Mode=TwoWay}" />
-                                <comicDesigner:SetterValueBindingHelper                                 
+                                <uiUtils:SetterValueBindingHelper                                 
 									Property="Width"
 									Binding="{Binding Width, Mode=TwoWay}" />
-                                <comicDesigner:SetterValueBindingHelper 
+                                <uiUtils:SetterValueBindingHelper 
 									Property="Height"
 									Binding="{Binding Height, Mode=TwoWay}" />
                                 <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
-                            </comicDesigner:SetterValueBindingHelper>
+                            </uiUtils:SetterValueBindingHelper>
                         </Setter.Value>
                     </Setter>
                 </Style>
@@ -98,5 +102,6 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
+        <comicDesigner:ToolbarControl Grid.Column="0" />
     </Grid>
 </Page>

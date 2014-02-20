@@ -13,10 +13,5 @@ namespace ComicDesigner
         {
             this.InitializeComponent();
         }
-
-        private void DesignSurface_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

@@ -25,6 +25,8 @@ namespace ComicDesigner
     /// </summary>
     sealed partial class App : Application
     {
+        private readonly InitializationBootstrapper initializationBootstrapper;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -33,6 +35,7 @@ namespace ComicDesigner
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            initializationBootstrapper = new InitializationBootstrapper(this);
         }
 
         /// <summary>
@@ -73,12 +76,7 @@ namespace ComicDesigner
             }
 
             if (rootFrame.Content == null)
-            {
-                SetupBootstrapper();
-                SetupPlatformToPclMappings();
-                ServiceLocator.InputProvider = new WinRTInputProvider();
-                ServiceLocator.UIElementFactory = new WinRTUIElementFactory();
-
+            {                               
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
@@ -87,18 +85,6 @@ namespace ComicDesigner
             // Ensure the current window is active
             Window.Current.Activate();
 XamlInspector.Client.Run();
-        }
-
-        private void SetupBootstrapper()
-        {
-            if (!Bootstrapper.HasInstance)
-            {
-                var bootstrapper = new Bootstrapper();
-
-                bootstrapper.Container.RegisterAssembly(GetType().GetTypeInfo().Assembly);
-
-                bootstrapper.Start();
-            }
         }
 
         /// <summary>
@@ -124,23 +110,5 @@ XamlInspector.Client.Run();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-
-
-        private void SetupPlatformToPclMappings()
-        {
-            Mapper.CreateMap<WinRTPoint, Point>();
-            Mapper.CreateMap<WinRTRect, Rect>()
-                .ForMember(rect => rect.Location, expression => expression.Ignore())
-                .ForMember(rect => rect.Size, expression => expression.Ignore())
-                ;
-
-
-            Mapper.CreateMap<Point, WinRTPoint>();
-            Mapper.CreateMap<Rect, WinRTRect>()               
-                ;
-
-            Mapper.AssertConfigurationIsValid();
-        }
-
     }
 }
