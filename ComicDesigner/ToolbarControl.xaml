@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     view:ViewModel.Name="ToolbarViewModel"    
     d:DesignWidth="400" d:DataContext="{d:DesignInstance local:ToolbarViewModel}">
-    <Grid Background="LightGray">
+    <Grid>
         <ItemsControl ItemsSource="{Binding Tools}">
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">

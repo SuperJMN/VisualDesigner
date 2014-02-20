@@ -1,14 +1,15 @@
+using Glass.Design.WinRT.Annotations;
 using Model;
 using StyleMVVM.DependencyInjection;
 
 namespace ComicDesigner.Tooling.Tools
 {
-    [Export(typeof(ITool))]
+    [Export(typeof(ITool)), UsedImplicitly]
     public class MarioTool : Tool
     {
         public MarioTool()
         {
-            Name = "Mario";
+            Name = "Frame";
             IconKey = "Mario";
         }
         
@@ -16,8 +17,8 @@ namespace ComicDesigner.Tooling.Tools
         {
             return new Mario
                    {
-                       Width = 200, 
-                       Height = 240,
+                       Width = 170, 
+                       Height = 200,
                    };
         }
         

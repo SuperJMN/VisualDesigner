@@ -2,8 +2,8 @@
 
 namespace Model
 {
-    public class Bubble : CanvasItemViewModel
+    public class Bubble : Shape
     {
-        public string Text { get; set; }
+        public string Text { get; set; }       
     }
 }

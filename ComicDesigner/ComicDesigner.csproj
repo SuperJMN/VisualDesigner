@@ -112,8 +112,13 @@
     <Compile Include="EditingContext.cs" />
     <Compile Include="IEditingContext.cs" />
     <Compile Include="InitializationBootstrapper.cs" />
+    <Compile Include="ItemToUserControlConverter.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyPages\ModelColorToSolidColorBrushConverter.cs" />
+    <Compile Include="PropertyPages\SpeechBubbleControl.xaml.cs">
+      <DependentUpon>SpeechBubbleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolbarControl.xaml.cs">
       <DependentUpon>ToolbarControl.xaml</DependentUpon>
@@ -121,6 +126,7 @@
     <Compile Include="Tooling\ITool.cs" />
     <Compile Include="Tooling\IToolProvider.cs" />
     <Compile Include="Tooling\ToolKeyToImageSourceConverter.cs" />
+    <Compile Include="Tooling\Tools\FrameTool.cs" />
     <Compile Include="Tooling\Tools\MarioTool.cs" />
     <Compile Include="ToolbarViewModel.cs" />
     <Compile Include="Tooling\Tools\SpeechBubbleTool.cs" />
@@ -150,7 +156,9 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Images\Mario.png" />
+    <Content Include="Images\UI\Undo.png" />
     <Content Include="Tooling\Tools\Icons\Mario.png" />
+    <Content Include="Tooling\Tools\Icons\Frame.png" />
     <Content Include="Tooling\Tools\Icons\SpeechBubble.png" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +171,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PropertiesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertyPages\SpeechBubbleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

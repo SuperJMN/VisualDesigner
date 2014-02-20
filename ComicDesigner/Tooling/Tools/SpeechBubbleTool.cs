@@ -16,7 +16,7 @@ namespace ComicDesigner.Tooling.Tools
             return new Bubble
                    {
                        Width = 300, 
-                       Height = 300, 
+                       Height = 200, 
                        Text = "Sample Text",
                    };
 

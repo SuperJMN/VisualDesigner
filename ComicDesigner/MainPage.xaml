@@ -40,6 +40,9 @@
             <DataTemplate x:Key="Type:Mario">
                 <Image Source="Images/Mario.png" />
             </DataTemplate>
+            <DataTemplate x:Key="Type:Frame">
+                <Rectangle Fill="White" StrokeThickness="2" Stroke="Black" />
+            </DataTemplate>
             <DataTemplate x:Key="Type:Bubble">
                 <Grid d:DataContext="{d:DesignInstance model:Bubble}">
                     <vectorGraphics:IconControl Data="{StaticResource BubbleSpeechData}" Foreground="Black"
@@ -62,7 +65,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>            
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -70,7 +73,7 @@
         </Grid.RowDefinitions>
         <designSurface:DesignSurface Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
-                                     SelectedItem="{Binding SelectedItem}"
+                                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                      ItemsSource="{Binding Items}" Grid.Column="1">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
@@ -107,6 +110,33 @@
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
         <comicDesigner:ToolbarControl Grid.Row="0" Grid.Column="0" />
-        <comicDesigner:PropertiesControl Height="120" Grid.Row="1" Grid.Column="1" />
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Height="90">
+                <StackPanel.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="50" />
+                    </Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Black" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button>
+                    <Image Source="/Images/UI/Undo.png"  />
+                </Button>
+                <Button>
+                    <Image Source="/Images/UI/Undo.png" RenderTransformOrigin="0.5,0.5">
+                        
+                        <Image.RenderTransform>
+                            <ScaleTransform ScaleX="-1"></ScaleTransform>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+            </StackPanel>
+            <comicDesigner:PropertiesControl SelectedItem="{Binding SelectedItem}" Grid.Column="1" />
+        </Grid>
     </Grid>
 </Page>

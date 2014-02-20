@@ -23,7 +23,7 @@ namespace Glass.Design.WinRT
 
         public CanvasItemControl()
         {
-            //DefaultStyleKey = typeof(CanvasItemControl);
+            DefaultStyleKey = typeof(CanvasItemControl);
 
             SizeChanged += OnSizeChanged;
         }
