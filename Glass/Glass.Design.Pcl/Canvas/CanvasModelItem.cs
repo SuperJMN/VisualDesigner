@@ -1,3 +1,4 @@
+using System;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;
 
@@ -8,6 +9,9 @@ namespace Glass.Design.Pcl.Canvas
     {
         [Child]
         private readonly CanvasItemCollection items = new CanvasItemCollection();
+
+        [Parent]
+        private CanvasModelItem parent;
 
         static CanvasModelItem()
         {
@@ -26,13 +30,18 @@ namespace Glass.Design.Pcl.Canvas
         public override CanvasItemCollection Children
         {
             get { return this.items; }
-            set { throw new System.NotImplementedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         public override double Left { get; set; }
         public override double Top { get; set; }
         public override double Width { get; set; }
         public override double Height { get; set; }
+
+        public override ICanvasItemContainer Parent
+        {
+            get { return this.parent; }
+        }
 
         public static Recorder Recorder { get; private set; }
     }

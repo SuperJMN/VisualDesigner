@@ -1,3 +1,5 @@
+using System;
+
 namespace Glass.Design.Pcl.Canvas
 {
     public class CanvasVisualItem : CanvasItem
@@ -21,5 +23,10 @@ namespace Glass.Design.Pcl.Canvas
         public override double Top { get; set; }
         public override double Width { get; set; }
         public override double Height { get; set; }
+
+        public override ICanvasItemContainer Parent
+        {
+            get { throw new NotSupportedException(); }
+        }
     }
 }

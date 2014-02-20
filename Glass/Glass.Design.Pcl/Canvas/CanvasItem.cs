@@ -29,15 +29,8 @@ namespace Glass.Design.Pcl.Canvas
         internal ChildrenPositioning ChildrenPositioning { get; set; }
 
 
-        [IgnoreAutoChangeNotification]
-        public ICanvasItemContainer Parent
-        {
-            get
-            {
-                return (ICanvasItemContainer)this.QueryInterface<IAggregatable>(true).Parent;
-            }            
-        }
-
+        
+     
         public abstract CanvasItemCollection Children { get; set; }
 
         public abstract double Left { get; set; }
@@ -59,6 +52,8 @@ namespace Glass.Design.Pcl.Canvas
         {
             get { return this.Top + this.Height; }
         }
+
+        public abstract ICanvasItemContainer Parent { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
