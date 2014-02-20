@@ -4,10 +4,14 @@ using StyleMVVM.DependencyInjection;
 namespace ComicDesigner.Tooling.Tools
 {
     [Export(typeof(ITool))]
-    public class SpeechBubbleTool : ITool
+    public class SpeechBubbleTool : Tool
     {
-        public string Name { get; set; }
-        public CanvasItemViewModel CreateItem()
+        public SpeechBubbleTool()
+        {
+            Name = "Speech Bubble";
+            IconKey = "SpeechBubble";
+        }
+        public override CanvasItemViewModel CreateItem()
         {
             return new Bubble
                    {
@@ -16,6 +20,6 @@ namespace ComicDesigner.Tooling.Tools
                        Text = "Sample Text",
                    };
 
-        }
+        }        
     }
 }

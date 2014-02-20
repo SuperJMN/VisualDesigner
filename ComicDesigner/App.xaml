@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="using:System"
-    xmlns:comicDesigner="using:ComicDesigner">
+    xmlns:comicDesigner="using:ComicDesigner"
+    xmlns:tooling="using:ComicDesigner.Tooling">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -12,6 +13,7 @@
                 <ResourceDictionary Source="VectorGraphics/GeometryData.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <comicDesigner:ViewModelLocator x:Key="ViewModelLocator" />
+            <tooling:ToolKeyToImageSourceConverter x:Key="ToolKeyToImageSourceConverter" />
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

@@ -4,10 +4,15 @@ using StyleMVVM.DependencyInjection;
 namespace ComicDesigner.Tooling.Tools
 {
     [Export(typeof(ITool))]
-    public class MarioTool : ITool
+    public class MarioTool : Tool
     {
-        public string Name { get; set; }
-        public CanvasItemViewModel CreateItem()
+        public MarioTool()
+        {
+            Name = "Mario";
+            IconKey = "Mario";
+        }
+        
+        public override CanvasItemViewModel CreateItem()
         {
             return new Mario
                    {
@@ -15,5 +20,6 @@ namespace ComicDesigner.Tooling.Tools
                        Height = 240,
                    };
         }
+        
     }
 }

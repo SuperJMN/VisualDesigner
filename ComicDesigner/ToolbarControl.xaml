@@ -9,23 +9,33 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     view:ViewModel.Name="ToolbarViewModel"    
-    d:DesignWidth="400" d:DataContext="{d:DesignInstance local:ToolbarViewModel}">    
+    d:DesignWidth="400" d:DataContext="{d:DesignInstance local:ToolbarViewModel}">
     <Grid Background="LightGray">
         <ItemsControl ItemsSource="{Binding Tools}">
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Width" Value="100" />
                     <Setter Property="Height" Value="100" />
-                    <Setter Property="Margin" Value="0" />                    
+                    <Setter Property="Margin" Value="0" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Width="100" Height="100" 
                             Command="{Binding Source={StaticResource ViewModelLocator}, Path=ToolbarViewModel.CreateObjectCommand}"
-                            CommandParameter="{Binding}"
-                            />
-                        
+                            CommandParameter="{Binding}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding IconKey, Converter={StaticResource ToolKeyToImageSourceConverter}}" />
+                            <TextBlock Grid.Row="1" Text="{Binding Name}" 
+                                       TextAlignment="Center" 
+                                       TextTrimming="CharacterEllipsis" 
+                                       TextWrapping="WrapWholeWords" />
+                        </Grid>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
