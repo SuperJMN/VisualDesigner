@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Tooling\ITool.cs" />
     <Compile Include="Tooling\IToolProvider.cs" />
+    <Compile Include="Tooling\ToolKeyToImageSourceConverter.cs" />
     <Compile Include="Tooling\Tools\MarioTool.cs" />
     <Compile Include="ToolbarViewModel.cs" />
     <Compile Include="Tooling\Tools\SpeechBubbleTool.cs" />
@@ -146,6 +147,8 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Images\Mario.png" />
+    <Content Include="Tooling\Tools\Icons\Mario.png" />
+    <Content Include="Tooling\Tools\Icons\SpeechBubble.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -218,6 +221,7 @@
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
