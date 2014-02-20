@@ -62,8 +62,12 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition/>            
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <designSurface:DesignSurface Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
                                      SelectedItem="{Binding SelectedItem}"
@@ -102,6 +106,7 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
-        <comicDesigner:ToolbarControl Grid.Column="0" />
+        <comicDesigner:ToolbarControl Grid.Row="0" Grid.Column="0" />
+        <comicDesigner:PropertiesControl Height="120" Grid.Row="1" Grid.Column="1" />
     </Grid>
 </Page>
