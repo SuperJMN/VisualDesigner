@@ -66,6 +66,7 @@
         </Grid.ColumnDefinitions>
         <designSurface:DesignSurface Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
+                                     SelectedItem="{Binding SelectedItem}"
                                      ItemsSource="{Binding Items}" Grid.Column="1">
             <designSurface:DesignSurface.ItemContainerStyle>
                 <Style TargetType="winRt:CanvasItemControl">
@@ -79,7 +80,6 @@
 									Type="Canvas"
 									Property="Left"
 									Binding="{Binding Left, Mode=TwoWay}" />
-
                                 <uiUtils:SetterValueBindingHelper 
 									Type="Canvas"
 									Property="Top"

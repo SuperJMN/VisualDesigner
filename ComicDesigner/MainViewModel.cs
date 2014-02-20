@@ -13,8 +13,8 @@ namespace ComicDesigner
     public class MainViewModel : BaseViewModel
     {
         private IEditingContext EditingContext { get; set; }
-        private CanvasItemViewModelCollection items;
         private static readonly Random RandomGenerator = new Random((int)DateTime.Now.Ticks);
+        private CanvasItemViewModel selectedItem;
 
         [ImportConstructor]
         public MainViewModel(IEditingContext editingContext)
@@ -89,5 +89,15 @@ namespace ComicDesigner
         public double SurfaceWidth { get; set; }
 
         public double SurfaceHeight { get; set; }
+
+        public CanvasItemViewModel SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

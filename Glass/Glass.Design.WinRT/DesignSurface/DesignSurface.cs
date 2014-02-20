@@ -5,12 +5,14 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Pcl.DesignSurface;
@@ -113,17 +115,22 @@ namespace Glass.Design.WinRT.DesignSurface
         {
             var popup = new Popup();
 
+            var surfaceVisual = Window.Current.Content.TransformToVisual(this);
+            var point = surfaceVisual.TransformPoint(new FoundationPoint(0, 0));
+
             var coreInstance = adorner.GetCoreInstance();
             adorner.PropertyChanged += (sender, args) =>
                                        {
+                                          
+
                                            // I don't like how this is implemented. Refactor!
                                            if (args.PropertyName.Equals("Left"))
                                            {
-                                               popup.HorizontalOffset = adorner.Left;
+                                               popup.HorizontalOffset = adorner.Left - point.X;
                                            }
                                            if (args.PropertyName.Equals("Top"))
                                            {
-                                               popup.VerticalOffset = adorner.Top;
+                                               popup.VerticalOffset = adorner.Top - point.Y;
                                            }
                                        };
 
@@ -131,8 +138,8 @@ namespace Glass.Design.WinRT.DesignSurface
 
             popup.Child = (UIElement) uiElementAdapter.GetCoreInstance();
 
-            popup.HorizontalOffset = adorner.Left;
-            popup.VerticalOffset = adorner.Top;
+            popup.HorizontalOffset = adorner.Left - point.X;
+            popup.VerticalOffset = adorner.Top - point.Y;
             popup.IsOpen = true;
 
             PopupsDictionary.Add(adorner, popup);
