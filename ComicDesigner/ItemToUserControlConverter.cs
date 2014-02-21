@@ -14,6 +14,10 @@ namespace ComicDesigner
             {
                 return new SpeechBubbleControl();
             }
+            if (value is Model.Frame)
+            {
+                return new FrameControl();
+            }
 
             return new ContentControl();
         }

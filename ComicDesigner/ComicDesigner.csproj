@@ -119,6 +119,10 @@
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PropertyPages\ColorToModelColorConverter.cs" />
+    <Compile Include="PropertyPages\FrameControl.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>FrameControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PropertyPages\ModelColorToSolidColorBrushConverter.cs" />
     <Compile Include="PropertyPages\SpeechBubbleControl.xaml.cs">
       <DependentUpon>SpeechBubbleControl.xaml</DependentUpon>
@@ -177,6 +181,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PropertiesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertyPages\FrameControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

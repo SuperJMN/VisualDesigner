@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="ComicDesigner.PropertyPages.FrameControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Model"
+    xmlns:colorPicker="using:ComicDesigner.Controls.ColorPicker"
+    mc:Ignorable="d"
+    d:DesignHeight="121"
+    d:DesignWidth="1015" d:DataContext="{d:DesignInstance model:Frame}">
+    <ItemsControl >
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="Panel">
+                <Setter Property="Margin" Value="20" />
+            </Style>
+        </ItemsControl.ItemContainerStyle>       
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Background" />
+            <colorPicker:ColorPicker Grid.Row="1"
+                                     SelectedColor="{Binding Background, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}" Width="300" />
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Border Color" />
+            <colorPicker:ColorPicker Grid.Row="1"
+                                     SelectedColor="{Binding Stroke, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}"  Width="300" />
+        </Grid>
+
+    </ItemsControl>
+</UserControl>

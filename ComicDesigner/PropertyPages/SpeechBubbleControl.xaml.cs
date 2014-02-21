@@ -4,7 +4,7 @@
 
 namespace ComicDesigner.PropertyPages
 {
-    public sealed partial class SpeechBubbleControl : UserControl
+    public sealed partial class SpeechBubbleControl
     {
         public SpeechBubbleControl()
         {

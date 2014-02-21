@@ -41,7 +41,9 @@
                 <Image Source="Images/Mario.png" />
             </DataTemplate>
             <DataTemplate x:Key="Type:Frame">
-                <Rectangle Fill="White" StrokeThickness="2" Stroke="Black" />
+                <Rectangle Fill="{Binding Background, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
+                           StrokeThickness="2" Stroke="{Binding Stroke, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
+                           d:DataContext="{d:DesignInstance model:Frame}" />
             </DataTemplate>
             <DataTemplate x:Key="Type:Bubble">
                 <Grid d:DataContext="{d:DesignInstance model:Bubble}">
