@@ -106,7 +106,7 @@
             </designSurface:DesignSurface.ItemContainerStyle>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior>
-                    <core:InvokeCommandAction Command="{Binding LoadItemsCommand}"/>
+                    <core:InvokeCommandAction Command="{Binding DesignCommandHandler.LoadItemsCommand}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
@@ -125,14 +125,13 @@
                         <Setter Property="Background" Value="Black" />
                     </Style>
                 </StackPanel.Resources>
-                <Button>
+                <Button Command="{Binding DesignCommandHandler.UndoCommand}" >
                     <Image Source="/Images/UI/Undo.png"  />
                 </Button>
-                <Button>
-                    <Image Source="/Images/UI/Undo.png" RenderTransformOrigin="0.5,0.5">
-                        
+                <Button Command="{Binding DesignCommandHandler.RedoCommand}">
+                    <Image Source="/Images/UI/Undo.png" RenderTransformOrigin="0.5,0.5">                        
                         <Image.RenderTransform>
-                            <ScaleTransform ScaleX="-1"></ScaleTransform>
+                            <ScaleTransform ScaleX="-1" />
                         </Image.RenderTransform>
                     </Image>
                 </Button>

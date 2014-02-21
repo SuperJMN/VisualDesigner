@@ -109,7 +109,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DesignCommandHandler.cs" />
     <Compile Include="EditingContext.cs" />
+    <Compile Include="IDesignCommandHandler.cs" />
     <Compile Include="IEditingContext.cs" />
     <Compile Include="InitializationBootstrapper.cs" />
     <Compile Include="ItemToUserControlConverter.cs" />

@@ -12,52 +12,37 @@ namespace ComicDesigner
     public class MainViewModel : BaseViewModel
     {
         private IEditingContext EditingContext { get; set; }
+        public IDesignCommandHandler DesignCommandHandler { get; set; }
         private CanvasItemViewModel selectedItem;
 
         [ImportConstructor]
-        public MainViewModel(IEditingContext editingContext)
+        public MainViewModel(IEditingContext editingContext, IDesignCommandHandler designCommandHandler)
         {
             EditingContext = editingContext;
+            DesignCommandHandler = designCommandHandler;
 
             // Since we're Main, we have to instance the document into the editing context.
-            EditingContext.Document = new Document();
-
-            LoadItemsCommand = new DelegateCommand(OnLoadItems);
+            EditingContext.Document = new Document();            
         }
 
-        private void OnLoadItems(object parameter)
+        public ICommand LoadItemsCommand { get; set; }
+
+        public double SurfaceWidth
         {
-            var middlePoint = new Point(SurfaceWidth / 2, SurfaceHeight / 2);
+            get { return EditingContext.SurfaceWidth; }
+            set { EditingContext.SurfaceWidth = value; } 
+        }
 
-            const int marioWidth = 200;
-            const int marioHeight = 240;
-
-            var mario = new Mario { Left = middlePoint.X - marioWidth / 2D, Top = middlePoint.Y - marioHeight / 2D, Width = marioWidth, Height = marioHeight };
-            var bubble = new Bubble
-                         {
-                             Left = mario.Right - 70,
-                             Top = mario.Top - 170,
-                             Width = 250,
-                             Height = 280,
-                             Text = "WOW. Much decoupled. So AOP. Such Patterns.",
-                             Background = new Color(255, 0, 255, 80),
-                             TextColor = new Color(255, 0, 0, 0),
-                         };
-
-            Items.Add(mario);
-            Items.Add(bubble);
+        public double SurfaceHeight
+        {
+            get { return EditingContext.SurfaceHeight; }
+            set { EditingContext.SurfaceHeight = value; }
         }
 
         public CanvasItemViewModelCollection Items
         {
             get { return EditingContext.Document.Graphics; }
         }
-
-        public ICommand LoadItemsCommand { get; set; }
-
-        public double SurfaceWidth { get; set; }
-
-        public double SurfaceHeight { get; set; }
 
         public CanvasItemViewModel SelectedItem
         {

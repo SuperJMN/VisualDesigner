@@ -15,5 +15,8 @@ namespace ComicDesigner
         }
         [NotNull]
         public Document Document { get; set; }
+
+        public double SurfaceWidth { get; set; }
+        public double SurfaceHeight { get; set; }
     }
 }
