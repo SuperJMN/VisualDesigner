@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="using:System"
     xmlns:comicDesigner="using:ComicDesigner"
-    xmlns:tooling="using:ComicDesigner.Tooling">
+    xmlns:tooling="using:ComicDesigner.Tooling"
+    xmlns:propertyPages="using:ComicDesigner.PropertyPages">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -15,6 +16,8 @@
             <comicDesigner:ViewModelLocator x:Key="ViewModelLocator" />
             <tooling:ToolKeyToImageSourceConverter x:Key="ToolKeyToImageSourceConverter" />
             <comicDesigner:ItemToUserControlConverter x:Key="ItemToUserControlConverter" />
+            <propertyPages:ModelColorToSolidColorBrushConverter x:Key="ModelColorToSolidColorBrushConverter" />
+            <propertyPages:ColorToModelColorConverter x:Key="ColorToModelColorConverter" />
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

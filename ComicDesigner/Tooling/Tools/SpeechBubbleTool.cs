@@ -15,11 +15,13 @@ namespace ComicDesigner.Tooling.Tools
         {
             return new Bubble
                    {
-                       Width = 300, 
-                       Height = 200, 
+                       Width = 300,
+                       Height = 200,
+                       Background = new Color(255, 0, 200, 255),
+                       TextColor = new Color(255,0,0,0),
                        Text = "Sample Text",
                    };
 
-        }        
+        }
     }
 }

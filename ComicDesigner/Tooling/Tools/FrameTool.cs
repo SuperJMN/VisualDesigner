@@ -17,8 +17,8 @@ namespace ComicDesigner.Tooling.Tools
         {
             return new Frame
                    {
-                       Width = 500, 
-                       Height = 400,
+                       Width = 400, 
+                       Height = 300,
                    };
         }
         

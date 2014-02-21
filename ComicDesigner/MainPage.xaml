@@ -45,13 +45,14 @@
             </DataTemplate>
             <DataTemplate x:Key="Type:Bubble">
                 <Grid d:DataContext="{d:DesignInstance model:Bubble}">
-                    <vectorGraphics:IconControl Data="{StaticResource BubbleSpeechData}" Foreground="Black"
+                    <vectorGraphics:IconControl Data="{StaticResource BubbleSpeechData}" Foreground="{Binding Background, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
                                                 Background="Transparent" />
                     <ContentControl Margin="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="{Binding Text}" 
                                    TextWrapping="WrapWholeWords" 
                                    FontFamily="Comic Sans MS"
                                    FontSize="15"
+                                   Foreground="{Binding TextColor, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
                                    TextAlignment="Center" />
                     </ContentControl>
                 </Grid>

@@ -116,6 +116,7 @@
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PropertyPages\ColorToModelColorConverter.cs" />
     <Compile Include="PropertyPages\ModelColorToSolidColorBrushConverter.cs" />
     <Compile Include="PropertyPages\SpeechBubbleControl.xaml.cs">
       <DependentUpon>SpeechBubbleControl.xaml</DependentUpon>
@@ -152,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-140.png" />
+    <Content Include="Assets\Logo.scale-180.png" />
+    <Content Include="Assets\Logo.scale-80.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
@@ -224,6 +228,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ComicDesigner.Controls\ComicDesigner.Controls.csproj">
+      <Project>{e77084e6-5155-4937-9c19-d8c6987e68bf}</Project>
+      <Name>ComicDesigner.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Glass\Glass.Design.Pcl\Glass.Design.Pcl.csproj">
       <Project>{39fa9863-7a33-4db8-b009-553cd76a9d5f}</Project>
       <Name>Glass.Design.Pcl</Name>

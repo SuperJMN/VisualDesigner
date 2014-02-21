@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Windows.UI;
 using AutoMapper;
 using Glass.Design.Pcl.Core;
 using Glass.Design.WinRT.PlatformSpecific;
@@ -37,7 +38,7 @@ namespace ComicDesigner
         }
 
         private void SetupWinRTToPclMappings()
-        {
+        {        
             Mapper.CreateMap<Point, Glass.Design.Pcl.Core.Point>();
             Mapper.CreateMap<Rect, Glass.Design.Pcl.Core.Rect>()
                 .ForMember(rect => rect.Location, expression => expression.Ignore())

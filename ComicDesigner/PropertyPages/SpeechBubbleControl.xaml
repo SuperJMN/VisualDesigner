@@ -5,9 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:Model"
+    xmlns:colorPicker="using:ComicDesigner.Controls.ColorPicker"
     mc:Ignorable="d"
-    d:DesignHeight="84"
-    d:DesignWidth="339" d:DataContext="{d:DesignInstance model:Bubble}">
+    d:DesignHeight="121"
+    d:DesignWidth="1015" d:DataContext="{d:DesignInstance model:Bubble}">
     <ItemsControl >
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -21,7 +22,26 @@
         </ItemsControl.ItemContainerStyle>
         <StackPanel>
             <TextBlock Text="Text" />
-            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="500" MaxLength="120"/>
+            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" MaxLength="120"/>
         </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Foreground" />
+            <colorPicker:ColorPicker Grid.Row="1"
+                                     SelectedColor="{Binding Background, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}" Width="300" />
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Text Color" />
+            <colorPicker:ColorPicker Grid.Row="1"
+                                     SelectedColor="{Binding TextColor, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}"  Width="300" />
+        </Grid>
+
     </ItemsControl>
 </UserControl>
