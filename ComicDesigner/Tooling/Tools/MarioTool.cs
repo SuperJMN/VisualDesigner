@@ -9,7 +9,7 @@ namespace ComicDesigner.Tooling.Tools
     {
         public MarioTool()
         {
-            Name = "Frame";
+            Name = "Mario";
             IconKey = "Mario";
         }
         

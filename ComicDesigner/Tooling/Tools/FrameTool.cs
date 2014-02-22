@@ -9,7 +9,7 @@ namespace ComicDesigner.Tooling.Tools
     {
         public FrameTool()
         {
-            Name = "Frame";
+            Name = "Panel";
             IconKey = "Frame";
             InsertOrder = InsertOrder.ToBeginning;
         }
