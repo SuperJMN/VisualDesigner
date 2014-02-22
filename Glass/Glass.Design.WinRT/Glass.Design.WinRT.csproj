@@ -115,7 +115,6 @@
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\PointExtensions.cs" />
     <Compile Include="DesignSurface\VisualAids\Resize\ResizeControl.cs" />
-    <Compile Include="DesignSurfaceCommandHandler.cs" />
     <Compile Include="DesignSurface\DesignSurfaceBase.cs" />
     <Compile Include="DesignSurface\DesignSurface.cs" />
     <Compile Include="DesignSurface\VisualAids\Drag\MovingControl.cs" />

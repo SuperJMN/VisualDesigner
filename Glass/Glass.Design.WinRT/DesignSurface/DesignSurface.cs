@@ -36,8 +36,7 @@ namespace Glass.Design.WinRT.DesignSurface
             DefaultStyleKey = typeof(DesignSurface);            
 
             DesignAidsProvider = new DesignAidsProvider(this);
-            SelectionHandler = new SelectionHandler(this);
-            CommandHandler = new DesignSurfaceCommandHandler(this, this);
+            SelectionHandler = new SelectionHandler(this);            
 
             PopupsDictionary = new Dictionary<IAdorner, Popup>();
 
@@ -63,9 +62,6 @@ namespace Glass.Design.WinRT.DesignSurface
                 DesignAidsProvider.RemoveItemFromSelection(removedItem);
             }
         }
-
-        private DesignSurfaceCommandHandler CommandHandler { get; set; }
-
 
         private SelectionHandler SelectionHandler { get; set; }
 
@@ -254,10 +250,6 @@ namespace Glass.Design.WinRT.DesignSurface
             DependencyProperty.Register("PlanePlaneOperationMode", typeof(PlaneOperation), typeof(DesignSurface),
                 new PropertyMetadata(PlaneOperation.Resize,
                     OnOperationModeChanged));
-
-        private readonly DesignSurfaceCommandHandler designSurfaceCommandHandler;
-
-        private ICanvasItem _rootCanvasItem;
 
 
         [IgnoreAutoChangeNotification]

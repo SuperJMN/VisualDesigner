@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Glass.Design.Pcl.Canvas;
 using Model;
 
 namespace ComicDesigner
@@ -7,5 +9,6 @@ namespace ComicDesigner
         Document Document { get; set; }
         double SurfaceWidth { get; set; }
         double SurfaceHeight { get; set; }
+        CanvasItemViewModelCollection SelectedItems { get; set; }
     }
 }

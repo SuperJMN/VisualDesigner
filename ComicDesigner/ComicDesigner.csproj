@@ -109,7 +109,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DesignCommandHandler.cs" />
+    <Compile Include="DesignSurfaceCommandHandler.cs" />
+    <Compile Include="DesignSurfaceCommandHandler2.cs" />
     <Compile Include="EditingContext.cs" />
     <Compile Include="IDesignCommandHandler.cs" />
     <Compile Include="IEditingContext.cs" />
@@ -138,6 +139,8 @@
     <Compile Include="ToolbarViewModel.cs" />
     <Compile Include="Tooling\Tools\SpeechBubbleTool.cs" />
     <Compile Include="Tooling\ToolProvider.cs" />
+    <Compile Include="UIUtils\RelayCommand.cs" />
+    <Compile Include="UIUtils\IRelayCommand.cs" />
     <Compile Include="VectorGraphics\IconControl.cs" />
     <Compile Include="UIUtils\SizeChange.cs" />
     <Compile Include="UIUtils\SetterValueBindingHelper.cs" />
@@ -166,6 +169,8 @@
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Images\Mario.png" />
+    <Content Include="Images\UI\SendToBack.png" />
+    <Content Include="Images\UI\BringToFront.png" />
     <Content Include="Images\UI\Undo.png" />
     <Content Include="Tooling\Tools\Icons\Mario.png" />
     <Content Include="Tooling\Tools\Icons\Frame.png" />

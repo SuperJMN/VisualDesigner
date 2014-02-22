@@ -74,7 +74,8 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <designSurface:DesignSurface Background="White" 
+        <designSurface:DesignSurface x:Name="DesignSurface"
+                                     Background="White" 
                                      ItemTemplateSelector="{StaticResource TypedTemplateSelector}" 
                                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                      ItemsSource="{Binding Items}" Grid.Column="1">
@@ -110,6 +111,10 @@
                 <core:EventTriggerBehavior>
                     <core:InvokeCommandAction Command="{Binding DesignCommandHandler.LoadItemsCommand}"/>
                 </core:EventTriggerBehavior>
+                <core:EventTriggerBehavior EventName="SelectionChanged">
+                    <core:InvokeCommandAction InputConverterParameter="" Command="{Binding ChangeSelectedItemsCommand}"
+                                              CommandParameter="{Binding ElementName=DesignSurface, Path=SelectedItems}"/>
+                </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </designSurface:DesignSurface>
         <comicDesigner:ToolbarControl Grid.Row="0" Grid.Column="0" />
@@ -131,11 +136,21 @@
                     <Image Source="/Images/UI/Undo.png"  />
                 </Button>
                 <Button Command="{Binding DesignCommandHandler.RedoCommand}">
-                    <Image Source="/Images/UI/Undo.png" RenderTransformOrigin="0.5,0.5">                        
+                    <Image Source="/Images/UI/Undo.png" RenderTransformOrigin="0.5,0.5">
                         <Image.RenderTransform>
                             <ScaleTransform ScaleX="-1" />
                         </Image.RenderTransform>
                     </Image>
+                </Button>
+                <Button Command="{Binding DesignCommandHandler.BringToFrontCommand}">
+                    <Button.Content>
+                        <Image Source="Images/UI/BringToFront.png"></Image>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding DesignCommandHandler.SendToBackCommand}">
+                    <Button.Content>
+                        <Image Source="Images/UI/SendToBack.png" />
+                    </Button.Content>
                 </Button>
             </StackPanel>
             <comicDesigner:PropertiesControl SelectedItem="{Binding SelectedItem}" Grid.Column="1" />

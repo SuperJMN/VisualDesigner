@@ -25,10 +25,9 @@ namespace ComicDesigner
         }
 
         private void CreateObject(ITool tool)
-        {
-            var item = tool.CreateItem();    
-            item.SetLocation(100, 100);
-            Graphics.Add(item);
+        {            
+            var newItem = tool.CreateItem(EditingContext);
+            newItem.SetLocation(100, 100);                      
         }
 
         private CanvasItemViewModelCollection Graphics

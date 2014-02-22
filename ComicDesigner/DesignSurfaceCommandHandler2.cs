@@ -8,13 +8,13 @@ using IUIElement = Glass.Design.Pcl.PlatformAbstraction.IUIElement;
 
 namespace Glass.Design.WinRT
 {
-    public sealed class DesignSurfaceCommandHandler
+    public sealed class DesignSurfaceCommandHandler2
     {
         private IDesignSurface DesignSurface { get; set; }
         private IUIElement IUIElement { get; set; }
 
 
-        public DesignSurfaceCommandHandler(IDesignSurface designSurface, IUIElement uiElement)
+        public DesignSurfaceCommandHandler2(IDesignSurface designSurface, IUIElement uiElement)
         {
             DesignSurface = designSurface;
             IUIElement = uiElement;

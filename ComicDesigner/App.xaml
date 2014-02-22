@@ -17,7 +17,7 @@
             <tooling:ToolKeyToImageSourceConverter x:Key="ToolKeyToImageSourceConverter" />
             <comicDesigner:ItemToUserControlConverter x:Key="ItemToUserControlConverter" />
             <propertyPages:ModelColorToSolidColorBrushConverter x:Key="ModelColorToSolidColorBrushConverter" />
-            <propertyPages:ColorToModelColorConverter x:Key="ColorToModelColorConverter" />
+            <propertyPages:ColorToModelColorConverter x:Key="ColorToModelColorConverter" />            
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

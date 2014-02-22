@@ -11,6 +11,7 @@ namespace ComicDesigner.Tooling.Tools
         {
             Name = "Frame";
             IconKey = "Frame";
+            InsertOrder = InsertOrder.ToBeginning;
         }
 
         public override CanvasItemViewModel CreateItem()

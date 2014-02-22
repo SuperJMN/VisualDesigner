@@ -1,5 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 using Glass.Design.Pcl;
 using Glass.Design.Pcl.Core;
 using Model;
@@ -14,6 +18,7 @@ namespace ComicDesigner
         private IEditingContext EditingContext { get; set; }
         public IDesignCommandHandler DesignCommandHandler { get; set; }
         private CanvasItemViewModel selectedItem;
+        private CanvasItemViewModelCollection selectedItems;
 
         [ImportConstructor]
         public MainViewModel(IEditingContext editingContext, IDesignCommandHandler designCommandHandler)
@@ -23,9 +28,22 @@ namespace ComicDesigner
 
             // Since we're Main, we have to instance the document into the editing context.
             EditingContext.Document = new Document();            
+            ChangeSelectedItemsCommand = new DelegateCommand(ChangeSelectedItems);
         }
 
-        public ICommand LoadItemsCommand { get; set; }
+        private void ChangeSelectedItems(object param)
+        {
+            var selectionChangedEventArgs = (SelectionChangedEventArgs) param;
+
+            foreach (var addedItem in selectionChangedEventArgs.AddedItems.Cast<CanvasItemViewModel>())
+            {
+                SelectedItems.Add(addedItem);
+            }
+            foreach (var removedItem in selectionChangedEventArgs.RemovedItems.Cast<CanvasItemViewModel>())
+            {
+                SelectedItems.Remove(removedItem);
+            }
+        }
 
         public double SurfaceWidth
         {
@@ -53,5 +71,20 @@ namespace ComicDesigner
                 OnPropertyChanged();
             }
         }
+
+        public CanvasItemViewModelCollection SelectedItems
+        {
+            get
+            {
+                return EditingContext.SelectedItems;
+            }
+            set
+            {
+                EditingContext.SelectedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand ChangeSelectedItemsCommand { get; private set; }
     }
 }
