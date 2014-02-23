@@ -61,6 +61,7 @@ namespace ComicDesigner
                              Text = "WOW. Much decoupled. So AOP. Such Patterns.",
                              Background = new Color(255, 0, 255, 80),
                              TextColor = new Color(255, 0, 0, 0),
+                             FontSize = 16D,
                          };
 
             Items.Add(mario);

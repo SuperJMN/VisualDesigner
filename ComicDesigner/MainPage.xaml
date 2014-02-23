@@ -53,7 +53,7 @@
                         <TextBlock Text="{Binding Text}" 
                                    TextWrapping="WrapWholeWords" 
                                    FontFamily="Comic Sans MS"
-                                   FontSize="15"
+                                   FontSize="{Binding FontSize}"
                                    Foreground="{Binding TextColor, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
                                    TextAlignment="Center" />
                     </ContentControl>

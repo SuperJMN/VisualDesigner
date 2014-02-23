@@ -18,8 +18,9 @@ namespace ComicDesigner.Tooling.Tools
                        Width = 300,
                        Height = 200,
                        Background = new Color(255, 0, 200, 255),
-                       TextColor = new Color(255,0,0,0),
                        Text = "Sample Text",
+                       TextColor = new Color(255, 0, 0, 0),
+                       FontSize = 16D,
                    };
 
         }

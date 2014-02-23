@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:Model"
     xmlns:colorPicker="using:ComicDesigner.Controls.ColorPicker"
+    xmlns:view="using:StyleMVVM.View"
+    view:ViewModel.Name="FrameViewModel"
     mc:Ignorable="d"
     d:DesignHeight="121"
     d:DesignWidth="1015" d:DataContext="{d:DesignInstance model:Frame}">

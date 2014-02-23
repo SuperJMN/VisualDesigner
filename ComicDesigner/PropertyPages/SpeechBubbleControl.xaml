@@ -4,11 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Model"
     xmlns:colorPicker="using:ComicDesigner.Controls.ColorPicker"
+    xmlns:propertyPages="using:ComicDesigner.PropertyPages"
+    xmlns:view="using:StyleMVVM.View"
+    xmlns:uiUtils="using:ComicDesigner.UIUtils"
     mc:Ignorable="d"
+    view:ViewModel.Name="BubbleViewModel"
     d:DesignHeight="121"
-    d:DesignWidth="1015" d:DataContext="{d:DesignInstance model:Bubble}">
+    d:DesignWidth="1015" d:DataContext="{d:DesignInstance propertyPages:BubbleViewModel}">
     <ItemsControl >
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -42,6 +45,83 @@
             <colorPicker:ColorPicker Grid.Row="1"
                                      SelectedColor="{Binding TextColor, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}"  Width="300" />
         </Grid>
+        <StackPanel>
+
+            <StackPanel.Resources>               
+                <Style TargetType="RadioButton">                    
+                    <Setter Property="uiUtils:SetterValueBindingHelper.PropertyBinding">
+                        <Setter.Value>
+                            <uiUtils:SetterValueBindingHelper>
+                                <uiUtils:SetterValueBindingHelper 								
+									Property="Command"
+									Binding="{Binding ChangeFontSizeCommand}" />                               
+                            </uiUtils:SetterValueBindingHelper> 																		
+                        </Setter.Value>                       
+                    </Setter>
+                </Style>
+            </StackPanel.Resources>
+            
+            <RadioButton Content="Tiny">
+                <RadioButton.IsChecked>
+                    <Binding Path="FontSize" Converter="{StaticResource EqualsConverter}" >
+                        <Binding.ConverterParameter>
+                            <x:Double>10</x:Double>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </RadioButton.IsChecked>
+                <RadioButton.CommandParameter>
+                    <x:Double>10</x:Double>
+                </RadioButton.CommandParameter>
+            </RadioButton>
+            <RadioButton Content="Small">
+                <RadioButton.IsChecked>
+                    <Binding Path="FontSize" Converter="{StaticResource EqualsConverter}">
+                        <Binding.ConverterParameter>
+                            <x:Double>12</x:Double>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </RadioButton.IsChecked>
+                <RadioButton.CommandParameter>
+                    <x:Double>12</x:Double>
+                </RadioButton.CommandParameter>
+            </RadioButton>
+            <RadioButton Content="Normal">
+                <RadioButton.IsChecked>
+                    <Binding Path="FontSize" Converter="{StaticResource EqualsConverter}">
+                        <Binding.ConverterParameter>
+                            <x:Double>16</x:Double>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </RadioButton.IsChecked>
+                <RadioButton.CommandParameter>
+                    <x:Double>16</x:Double>
+                </RadioButton.CommandParameter>
+            </RadioButton>
+            <RadioButton Content="Big">
+                <RadioButton.IsChecked>
+                    <Binding Path="FontSize" Converter="{StaticResource EqualsConverter}">
+                        <Binding.ConverterParameter>
+                            <x:Double>20</x:Double>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </RadioButton.IsChecked>
+                <RadioButton.CommandParameter>
+                    <x:Double>20</x:Double>
+                </RadioButton.CommandParameter>
+            </RadioButton>
+            <RadioButton Content="Large">
+                <RadioButton.IsChecked>
+                    <Binding Path="FontSize" Converter="{StaticResource EqualsConverter}">
+                        <Binding.ConverterParameter>
+                            <x:Double>26</x:Double>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </RadioButton.IsChecked>
+                <RadioButton.CommandParameter>
+                    <x:Double>26</x:Double>
+                </RadioButton.CommandParameter>
+            </RadioButton>
+        </StackPanel>
 
     </ItemsControl>
 </UserControl>

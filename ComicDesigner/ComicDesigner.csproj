@@ -110,7 +110,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignSurfaceCommandHandler.cs" />
-    <Compile Include="DesignSurfaceCommandHandler2.cs" />
     <Compile Include="EditingContext.cs" />
     <Compile Include="IDesignCommandHandler.cs" />
     <Compile Include="IEditingContext.cs" />
@@ -119,11 +118,14 @@
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PropertyPages\EqualsConverter.cs" />
+    <Compile Include="PropertyPages\BubbleViewModel.cs" />
     <Compile Include="PropertyPages\ColorToModelColorConverter.cs" />
     <Compile Include="PropertyPages\FrameControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>FrameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PropertyPages\FrameViewModel.cs" />
     <Compile Include="PropertyPages\ModelColorToSolidColorBrushConverter.cs" />
     <Compile Include="PropertyPages\SpeechBubbleControl.xaml.cs">
       <DependentUpon>SpeechBubbleControl.xaml</DependentUpon>

@@ -1,5 +1,4 @@
-﻿using Glass.Design.Pcl.Canvas;
-using PostSharp.Patterns.Model;
+﻿using PostSharp.Patterns.Model;
 
 namespace Model
 {
@@ -8,7 +7,8 @@ namespace Model
         public string Text { get; set; }
 
         [Reference]
-        public object TextColor { get; set; }
+        public Color TextColor { get; set; }
 
+        public double FontSize { get; set; }
     }
 }
