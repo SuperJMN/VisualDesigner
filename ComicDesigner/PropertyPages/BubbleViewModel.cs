@@ -78,6 +78,16 @@ namespace ComicDesigner.PropertyPages
             }
         }
 
+        public string FontName
+        {
+            get { return Bubble.FontName; }
+            set
+            {
+                Bubble.FontName = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Bubble Bubble
         {
             get { return bubble; }
@@ -89,5 +99,7 @@ namespace ComicDesigner.PropertyPages
         }
 
         public ICommand ChangeFontSizeCommand { get; set; }
+
+    
     }
 }

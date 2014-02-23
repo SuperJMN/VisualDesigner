@@ -121,6 +121,7 @@
     <Compile Include="PropertyPages\EqualsConverter.cs" />
     <Compile Include="PropertyPages\BubbleViewModel.cs" />
     <Compile Include="PropertyPages\ColorToModelColorConverter.cs" />
+    <Compile Include="PropertyPages\FontFamilyToFontNameConverter.cs" />
     <Compile Include="PropertyPages\FrameControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>FrameControl.xaml</DependentUpon>

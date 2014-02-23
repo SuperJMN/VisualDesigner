@@ -106,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorPicker\ColorPicker.xaml.cs">
@@ -113,6 +117,7 @@
     </Compile>
     <Compile Include="ColorPicker\ColorSpace.cs" />
     <Compile Include="ColorPicker\HSV.cs" />
+    <Compile Include="FontPicker\FontPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

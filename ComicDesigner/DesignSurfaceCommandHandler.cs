@@ -62,6 +62,7 @@ namespace ComicDesigner
                              Background = new Color(255, 0, 255, 80),
                              TextColor = new Color(255, 0, 0, 0),
                              FontSize = 16D,
+                             FontName = "Comic Sans MS"
                          };
 
             Items.Add(mario);

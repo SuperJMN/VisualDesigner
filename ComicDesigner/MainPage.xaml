@@ -52,7 +52,7 @@
                     <ContentControl Margin="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="{Binding Text}" 
                                    TextWrapping="WrapWholeWords" 
-                                   FontFamily="Comic Sans MS"
+                                   FontFamily="{Binding FontName, Converter={StaticResource FontNameToFontFamilyConverter}}"
                                    FontSize="{Binding FontSize}"
                                    Foreground="{Binding TextColor, Converter={StaticResource ModelColorToSolidColorBrushConverter}}"
                                    TextAlignment="Center" />

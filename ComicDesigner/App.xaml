@@ -19,6 +19,7 @@
             <propertyPages:ModelColorToSolidColorBrushConverter x:Key="ModelColorToSolidColorBrushConverter" />
             <propertyPages:ColorToModelColorConverter x:Key="ColorToModelColorConverter" />
             <propertyPages:EqualsConverter x:Key="EqualsConverter" />
+            <propertyPages:FontFamilyToFontNameConverter x:Key="FontNameToFontFamilyConverter" />
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

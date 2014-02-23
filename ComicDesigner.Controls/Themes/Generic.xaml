@@ -1,0 +1,24 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fontPicker="using:ComicDesigner.Controls.FontPicker">
+
+    <Style TargetType="fontPicker:FontPicker">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="fontPicker:FontPicker">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamilies}"
+                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedFont, Mode=TwoWay}"
+                                  >
+
+                        </ComboBox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

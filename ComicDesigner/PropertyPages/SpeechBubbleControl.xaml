@@ -8,6 +8,7 @@
     xmlns:propertyPages="using:ComicDesigner.PropertyPages"
     xmlns:view="using:StyleMVVM.View"
     xmlns:uiUtils="using:ComicDesigner.UIUtils"
+    xmlns:fontPicker="using:ComicDesigner.Controls.FontPicker"
     mc:Ignorable="d"
     view:ViewModel.Name="BubbleViewModel"
     d:DesignHeight="121"
@@ -34,7 +35,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Foreground" />
             <colorPicker:ColorPicker Grid.Row="1"
-                                     SelectedColor="{Binding Background, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}" Width="300" />
+                                     SelectedColor="{Binding Background, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}" Width="200" />
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -43,8 +44,19 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Text Color" />
             <colorPicker:ColorPicker Grid.Row="1"
-                                     SelectedColor="{Binding TextColor, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}"  Width="300" />
+                                     SelectedColor="{Binding TextColor, Mode=TwoWay, Converter={StaticResource ColorToModelColorConverter}}"  Width="200" />
         </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Font" />
+            <fontPicker:FontPicker Grid.Row="1" Width="160" VerticalAlignment="Top"
+                                     SelectedFont="{Binding FontName, Mode=TwoWay, Converter={StaticResource FontNameToFontFamilyConverter}}"  />
+        </Grid>
+
         <StackPanel>
 
             <StackPanel.Resources>               
@@ -122,6 +134,8 @@
                 </RadioButton.CommandParameter>
             </RadioButton>
         </StackPanel>
+
+       
 
     </ItemsControl>
 </UserControl>
