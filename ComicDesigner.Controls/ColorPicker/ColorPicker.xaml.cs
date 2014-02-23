@@ -116,8 +116,8 @@ namespace ComicDesigner.Controls.ColorPicker
             {
                 PointerPoint p = e.GetCurrentPoint(this.ColorSample);
 
-                float value = 1 - (float)(p.Position.Y / this.ColorSample.Height);
-                float saturation = (float)(p.Position.X / this.ColorSample.Width);
+                float value = 1 - (float)(p.Position.Y / this.ColorSample.ActualHeight);
+                float saturation = (float)(p.Position.X / this.ColorSample.ActualWidth);
 
                 this.SelectedColor = ColorSpace.ConvertHsvToRgb(Hue, saturation, value);
             }

@@ -47,10 +47,10 @@
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
-            <!--Canvas x:Name="SampleSelector" IsHitTestVisible="False" Width="10" Height="10" Canvas.Left="172" Canvas.Top="0">
+            <Grid x:Name="SampleSelector" IsHitTestVisible="False" Width="10" Height="10" Canvas.Left="172" Canvas.Top="0" Visibility="Collapsed">
                 <Ellipse Width="10" Height="10" StrokeThickness="3" Stroke="#FFFFFFFF"/>
                 <Ellipse Width="10" Height="10" StrokeThickness="1" Stroke="#FF000000"/>
-            </Canva-->
+            </Grid>
         </Grid>
         <Grid Grid.Column="4" Background="White">
             <Grid.RowDefinitions>
