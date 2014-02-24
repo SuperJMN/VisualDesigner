@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Bubble.cs" />
     <Compile Include="CanvasItemViewModel.cs" />
-    <Compile Include="CanvasItemViewModelCollection.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Frame.cs" />
     <Compile Include="Document.cs" />

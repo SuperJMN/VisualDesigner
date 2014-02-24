@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using ComicDesigner.UIUtils;
+using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Glass.Design.WinRT.Annotations;
 using Model;
@@ -65,9 +66,9 @@ namespace ComicDesigner
             return SelectedItems.Count > 0;
         }
 
-        public CanvasItemViewModelCollection Items
+        public CanvasItemCollection Items
         {
-            get { return EditingContext.Document.Graphics; }
+            get { return EditingContext.Document.Children; }
         }
 
         private void OnLoadItems()
@@ -123,7 +124,7 @@ namespace ComicDesigner
             }
         }
 
-        public CanvasItemViewModelCollection SelectedItems
+        public CanvasItemCollection SelectedItems
         {
             get { return EditingContext.SelectedItems; }            
         }

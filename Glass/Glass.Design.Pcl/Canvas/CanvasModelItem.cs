@@ -11,7 +11,7 @@ namespace Glass.Design.Pcl.Canvas
         private readonly CanvasItemCollection items = new CanvasItemCollection();
 
         [Parent]
-        private CanvasModelItem parent;
+        private ICanvasItemContainer parent;
 
         static CanvasModelItem()
         {

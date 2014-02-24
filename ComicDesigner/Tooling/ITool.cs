@@ -1,4 +1,5 @@
 using Model;
+using PostSharp.Patterns.Recording;
 
 namespace ComicDesigner.Tooling
 {
@@ -17,19 +18,21 @@ namespace ComicDesigner.Tooling
         public string IconKey { get; set; }
         public CanvasItemViewModel CreateItem(IEditingContext editingContext)
         {
-            var items = editingContext.Document.Graphics;
+            
+            var items = editingContext.Document.Children;
             var canvasItemViewModel = CreateItem();
 
-            if (this.InsertOrder == InsertOrder.ToEnd)
-            {                               
-                items.Add(canvasItemViewModel);
+            if ( this.InsertOrder == InsertOrder.ToEnd )
+            {
+                items.Add( canvasItemViewModel );
             }
             else
             {
-                items.Insert(0, canvasItemViewModel);
+                items.Insert( 0, canvasItemViewModel );
             }
 
             return canvasItemViewModel;
+            
         }
 
         public InsertOrder InsertOrder { get; set; }

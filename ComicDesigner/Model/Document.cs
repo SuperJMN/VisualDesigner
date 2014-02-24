@@ -1,11 +1,20 @@
+using Glass.Design.Pcl.Canvas;
+using PostSharp.Patterns.Model;
+using PostSharp.Patterns.Recording;
+
 namespace Model
 {
-    public class Document
+    [Recordable]
+    public class Document : ICanvasItemContainer
     {
         public Document()
         {
-            Graphics = new CanvasItemViewModelCollection();
+            this.Children = new CanvasItemCollection();
         }
-        public CanvasItemViewModelCollection Graphics { get; set; }
+
+        [Child]
+        public CanvasItemCollection Children { get; set; }
+
+     
     }
 }

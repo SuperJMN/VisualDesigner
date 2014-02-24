@@ -29,7 +29,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
             SnappingEngine = snappingEngine;
             Child = child;                                   
             StartingPoint = startingPoint;            
-            ChildStartingPoint = child.GetLocation();
+            ChildStartingPoint = child.GetPosition();
         }
 
         public IPoint ChildStartingPoint { get; set; }

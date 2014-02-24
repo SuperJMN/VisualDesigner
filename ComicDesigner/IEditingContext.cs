@@ -9,6 +9,6 @@ namespace ComicDesigner
         Document Document { get; set; }
         double SurfaceWidth { get; set; }
         double SurfaceHeight { get; set; }
-        CanvasItemViewModelCollection SelectedItems { get; set; }
+        CanvasItemCollection SelectedItems { get; set; }
     }
 }

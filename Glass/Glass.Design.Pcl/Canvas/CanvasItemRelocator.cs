@@ -35,7 +35,7 @@ namespace Glass.Design.Pcl.Canvas
             var newParent = canvasItem.Parent;
 
             var children = canvasItem.Children.ToList();
-            IPoint location = canvasItem.GetLocation();
+            IPoint location = canvasItem.GetPosition();
 
             foreach (var child in children)
             {

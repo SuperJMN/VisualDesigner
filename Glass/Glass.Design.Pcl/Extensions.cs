@@ -27,7 +27,7 @@ namespace Glass.Design.Pcl
             return new Point(item.Left + item.Width / 2, item.Top + item.Height / 2);
         }
 
-        public static IPoint GetLocation(this IPositionable positionable)
+        public static IPoint GetPosition(this IPositionable positionable)
         {
             return new Point(positionable.Left, positionable.Top);
         }
@@ -43,13 +43,13 @@ namespace Glass.Design.Pcl
             sizable.Height = size.Height;
         }
 
-        public static void SetLocation(this IPositionable positionable, IPoint location)
+        public static void SetPosition(this IPositionable positionable, IPoint location)
         {
             positionable.Left = location.X;
             positionable.Top = location.Y;
         }
 
-        public static void SetLocation(this IPositionable positionable, double x, double y)
+        public static void SetPosition(this IPositionable positionable, double x, double y)
         {
             positionable.Left = x;
             positionable.Top = y;
@@ -146,7 +146,7 @@ namespace Glass.Design.Pcl
 
         public static void SetBounds(this ICanvasItem canvasItem, IRect rect)
         {
-            canvasItem.SetLocation(rect.Left, rect.Top);
+            canvasItem.SetPosition(rect.Left, rect.Top);
             canvasItem.SetSize(rect.Size);
         }
 

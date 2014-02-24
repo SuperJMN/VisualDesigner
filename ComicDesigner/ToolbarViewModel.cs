@@ -2,7 +2,9 @@
 using System.Windows.Input;
 using ComicDesigner.Tooling;
 using Glass.Design.Pcl;
+using Glass.Design.Pcl.Canvas;
 using Model;
+using PostSharp.Patterns.Recording;
 using StyleMVVM.DependencyInjection;
 using StyleMVVM.ViewModel;
 
@@ -25,14 +27,19 @@ namespace ComicDesigner
         }
 
         private void CreateObject(ITool tool)
-        {            
-            var newItem = tool.CreateItem(EditingContext);
-            newItem.SetLocation(100, 100);                      
+        {
+            using ( var scope = RecordingServices.AmbientRecorder.StartAtomicScope( string.Format( "Creating {0}", tool.Name ) ) )
+            {
+                var newItem = tool.CreateItem( EditingContext );
+                newItem.SetPosition( 100, 100 );
+
+                scope.Complete();
+            }
         }
 
-        private CanvasItemViewModelCollection Graphics
+        private CanvasItemCollection Graphics
         {
-            get { return Document.Graphics; }
+            get { return Document.Children; }
         }
 
         private Document Document

@@ -78,7 +78,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
         private void ParentOnMouseMove(object sender, FingerManipulationEventArgs args)
         {
             var position = args.GetPosition(Parent);
-            var parentPositon = ((IUIElement) Parent).GetLocation();
+            var parentPositon = ((IUIElement) Parent).GetPosition();
             var finalPoint = position.Add(parentPositon);
 
             var newPoint = Mapper.Map<Point>(finalPoint);
