@@ -11,8 +11,8 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamilies}"
-                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedFont, Mode=TwoWay}"
+                        <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamilies}"                                  
+                                  SelectedValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=SelectedFont}"                                  
                                   >
 
                         </ComboBox>

@@ -54,7 +54,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Font" />
             <fontPicker:FontPicker Grid.Row="1" Width="160" VerticalAlignment="Top"
-                                     SelectedFont="{Binding FontName, Mode=TwoWay, Converter={StaticResource FontNameToFontFamilyConverter}}"  />
+                                     SelectedFont="{Binding FontName, Mode=TwoWay}"  />
         </Grid>
 
         <StackPanel>

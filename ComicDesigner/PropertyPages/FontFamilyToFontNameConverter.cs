@@ -14,7 +14,7 @@ namespace ComicDesigner.PropertyPages
                 return new FontFamily(fontName);
             }
 
-            return new FontFamily("Arial");
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -27,7 +27,7 @@ namespace ComicDesigner.PropertyPages
                 return fontFamily.Source;
             }
 
-            return string.Empty;
+            return null;
         }
     }
 }
