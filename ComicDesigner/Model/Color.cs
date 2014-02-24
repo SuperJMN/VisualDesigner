@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    public class Color
+    public struct Color
     {
         private readonly byte r;
         private readonly byte g;

@@ -1,9 +1,9 @@
 ﻿namespace SampleModel
 {
 
-    public class Color
+    public struct Color
     {
-        public Color(byte alpha, byte r, byte g, byte b)
+        public Color(byte alpha, byte r, byte g, byte b) : this()
         {
             A = alpha;
             R = r;

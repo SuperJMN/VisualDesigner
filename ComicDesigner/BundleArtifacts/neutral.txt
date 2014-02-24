@@ -1,0 +1,4 @@
+MainPackage=C:\src\VisualDesigner\ComicDesigner\bin\Debug\ComicDesigner_1.0.0.0_Bundle\ComicDesigner_1.0.0.0_AnyCPU_Debug.appx
+SymbolPackage=C:\src\VisualDesigner\ComicDesigner\AppPackages\ComicDesigner_1.0.0.0_Debug_Test\ComicDesigner_1.0.0.0_AnyCPU_Debug.appxsym
+ResourcePack=C:\src\VisualDesigner\ComicDesigner\bin\Debug\ComicDesigner_1.0.0.0_Bundle\ComicDesigner_1.0.0.0_scale-140.appx
+ResourcePack=C:\src\VisualDesigner\ComicDesigner\bin\Debug\ComicDesigner_1.0.0.0_Bundle\ComicDesigner_1.0.0.0_scale-180.appx

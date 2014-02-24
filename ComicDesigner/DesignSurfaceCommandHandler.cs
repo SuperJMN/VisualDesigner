@@ -5,6 +5,7 @@ using ComicDesigner.UIUtils;
 using Glass.Design.Pcl.Core;
 using Glass.Design.WinRT.Annotations;
 using Model;
+using PostSharp.Patterns.Recording;
 using StyleMVVM.DependencyInjection;
 
 namespace ComicDesigner
@@ -22,6 +23,11 @@ namespace ComicDesigner
             LoadItemsCommand = new RelayCommand(OnLoadItems);
             BringToFrontCommand = new RelayCommand(BringToFront, IsSomethingSelected);
             SendToBackCommand = new RelayCommand(SendToBack, IsSomethingSelected);
+            UndoCommand = new RelayCommand( this.Undo, this.CanUndo );
+            RedoCommand = new RelayCommand( this.Redo, this.CanRedo );
+
+            RecordingServices.AmbientRecorder.UndoOperations.CollectionChanged += ( sender, args ) => this.UndoCommand.RaiseCanExecuteChanged();
+            RecordingServices.AmbientRecorder.RedoOperations.CollectionChanged += (sender, args) => this.RedoCommand.RaiseCanExecuteChanged();
         }
 
         private void SelectedItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -30,9 +36,29 @@ namespace ComicDesigner
             SendToBackCommand.RaiseCanExecuteChanged();
         }
 
-        public RelayCommand SendToBackCommand { get; set; }
+        public RelayCommand SendToBackCommand { get; private set; }
 
-        public RelayCommand BringToFrontCommand { get; set; }
+        public RelayCommand BringToFrontCommand { get; private set; }
+
+        private void Undo()
+        {
+            RecordingServices.AmbientRecorder.Undo();
+        }
+
+        private bool CanUndo()
+        {
+            return RecordingServices.AmbientRecorder.CanUndo;
+        }
+
+        private void Redo()
+        {
+            RecordingServices.AmbientRecorder.Redo();
+        }
+
+        private bool CanRedo()
+        {
+            return RecordingServices.AmbientRecorder.CanRedo;
+        }
 
         private bool IsSomethingSelected()
         {
@@ -105,7 +131,7 @@ namespace ComicDesigner
         public RelayCommand LoadItemsCommand { get; set; }
 
         public IEditingContext EditingContext { get; private set; }
-        public ICommand UndoCommand { get; set; }
-        public ICommand RedoCommand { get; private set; }
+        public RelayCommand UndoCommand { get; private set; }
+        public RelayCommand RedoCommand { get; private set; }
     }
 }

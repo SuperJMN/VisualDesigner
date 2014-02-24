@@ -68,16 +68,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AutoMapper.3.2.0-ci1003\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp, Version=3.2.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="PostSharp">
       <HintPath>..\..\packages\PostSharp.3.2.9-alpha\lib\net20\PostSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Common, Version=3.2.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="PostSharp.Patterns.Common">
       <HintPath>..\..\packages\PostSharp.Patterns.Common.3.2.9-alpha\lib\net40\PostSharp.Patterns.Common.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Model, Version=3.2.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="PostSharp.Patterns.Model">
       <HintPath>..\..\packages\PostSharp.Patterns.Model.3.2.9-alpha\lib\net40\PostSharp.Patterns.Model.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />

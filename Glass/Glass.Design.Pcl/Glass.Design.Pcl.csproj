@@ -11,7 +11,7 @@
     <RootNamespace>Glass.Design.Pcl</RootNamespace>
     <AssemblyName>Glass.Design.Pcl</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -167,10 +167,10 @@
       <HintPath>..\..\packages\PostSharp.3.2.9-alpha\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
     </Reference>
     <Reference Include="PostSharp.Patterns.Common">
-      <HintPath>..\..\packages\PostSharp.Patterns.Common.3.2.9-alpha\lib\portable-windows8+sl40+net40+wp8\PostSharp.Patterns.Common.dll</HintPath>
+      <HintPath>..\..\packages\PostSharp.Patterns.Common.3.2.9-alpha\lib\portable-windows8+net45\PostSharp.Patterns.Common.dll</HintPath>
     </Reference>
     <Reference Include="PostSharp.Patterns.Model">
-      <HintPath>..\..\packages\PostSharp.Patterns.Model.3.2.9-alpha\lib\portable-windows8+sl40+net40+wp8\PostSharp.Patterns.Model.dll</HintPath>
+      <HintPath>..\..\packages\PostSharp.Patterns.Model.3.2.9-alpha\lib\portable-windows8+net45\PostSharp.Patterns.Model.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -9,7 +9,7 @@ namespace ComicDesigner.PropertyPages
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var fontName = value as string;
-            if (fontName != null)
+            if (!string.IsNullOrEmpty( fontName ))
             {
                 return new FontFamily(fontName);
             }
