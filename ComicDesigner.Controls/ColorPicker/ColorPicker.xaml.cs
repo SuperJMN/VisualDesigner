@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+using PostSharp.Patterns.Recording;
 
 namespace ComicDesigner.Controls.ColorPicker
 {
@@ -78,6 +79,10 @@ namespace ComicDesigner.Controls.ColorPicker
 
         private void Rectangle_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            if ( this.recordingScope != null )
+                throw new InvalidOperationException("There is already an active recording scope,");
+
+            this.recordingScope = RecordingServices.AmbientRecorder.StartAtomicScope();
             bDetectColor = true;
         }
 
@@ -105,9 +110,17 @@ namespace ComicDesigner.Controls.ColorPicker
 
         private void Border_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            if (this.recordingScope == null)
+                throw new InvalidOperationException("There is no active recording scope,");
+
             GetHue(sender, e);
 
             bDetectColor = false;
+
+            this.recordingScope.Complete();
+            this.recordingScope = null;
+
+
         }
 
         private void GetColorSample(object sender, PointerRoutedEventArgs e)
@@ -222,6 +235,8 @@ namespace ComicDesigner.Controls.ColorPicker
         }
 
         bool bPickSample = false;
+        private RecordingScope recordingScope;
+
         private void ColorSample_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             bPickSample = true;

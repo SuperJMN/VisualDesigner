@@ -44,6 +44,10 @@ namespace ComicDesigner
         private void Undo()
         {
             RecordingServices.AmbientRecorder.Undo();
+
+            // TODO: Fix the event-raising timing issue in Recorder and remove the code below.
+            this.UndoCommand.RaiseCanExecuteChanged();
+            this.RedoCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanUndo()
@@ -54,6 +58,10 @@ namespace ComicDesigner
         private void Redo()
         {
             RecordingServices.AmbientRecorder.Redo();
+
+            // TODO: Fix the event-raising timing issue in Recorder and remove the code below.
+            this.UndoCommand.RaiseCanExecuteChanged();
+            this.RedoCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanRedo()
