@@ -50,10 +50,6 @@ namespace Glass.Design.Wpf
                 chrome = value;
                 if (chrome != null)
                 {
-
-                    Chrome.Width = CanvasItem.Width;
-                    Chrome.Height = CanvasItem.Height;
-
                     AddVisualChild(ChromeCoreInstance);
                 }
             }
