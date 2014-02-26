@@ -62,7 +62,7 @@ namespace Glass.Design.Wpf.DesignSurface
 
         IList<object> IMultiSelector.SelectedItems
         {
-            get { return SelectedItems.Cast<object>().ToList(); }            
+            get { return (IList<object>) SelectedItems; }
         }
 
         public event EventHandler<object> ItemSpecified;
