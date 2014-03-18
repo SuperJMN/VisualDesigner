@@ -82,7 +82,7 @@ namespace ComicDesigner.Controls.ColorPicker
             if ( this.recordingScope != null )
                 throw new InvalidOperationException("There is already an active recording scope,");
 
-            this.recordingScope = RecordingServices.AmbientRecorder.StartAtomicScope();
+            this.recordingScope = RecordingServices.DefaultRecorder.OpenScope("Change color");
             bDetectColor = true;
         }
 

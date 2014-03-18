@@ -28,7 +28,7 @@ namespace ComicDesigner
 
         private void CreateObject(ITool tool)
         {
-            using ( var scope = RecordingServices.AmbientRecorder.StartAtomicScope( string.Format( "Creating {0}", tool.Name ) ) )
+            using ( var scope = RecordingServices.DefaultRecorder.OpenScope( string.Format( "Creating {0}", tool.Name ) ) )
             {
                 var newItem = tool.CreateItem( EditingContext );
                 newItem.SetPosition( 100, 100 );

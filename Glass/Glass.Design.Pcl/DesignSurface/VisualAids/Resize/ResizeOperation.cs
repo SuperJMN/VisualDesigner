@@ -50,7 +50,7 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Resize
             SetCanResize(child, handlePoint);
             Opposite = HandlePoint.GetOpposite(child.Rect().MiddlePoint());
             SnappingEngine = snappingEngine;
-            this.recordingScope = CanvasModelItem.Recorder.StartAtomicScope("Resize", false);
+            this.recordingScope = CanvasModelItem.Recorder.OpenScope("Resize");
         }
 
         private void SetCanResize(ICanvasItem canvasItem, IPoint handlePoint)

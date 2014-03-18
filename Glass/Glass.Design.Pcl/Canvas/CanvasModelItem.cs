@@ -15,7 +15,7 @@ namespace Glass.Design.Pcl.Canvas
 
         static CanvasModelItem()
         {
-            Recorder = RecordingServices.AmbientRecorderProvider.GetAmbientRecorder( null );
+            Recorder = RecordingServices.RecorderProvider.GetRecorder( null );
         }
 
         public CanvasModelItem()

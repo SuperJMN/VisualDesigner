@@ -27,8 +27,8 @@ namespace ComicDesigner
             UndoCommand = new RelayCommand( this.Undo, this.CanUndo );
             RedoCommand = new RelayCommand( this.Redo, this.CanRedo );
 
-            RecordingServices.AmbientRecorder.UndoOperations.CollectionChanged += ( sender, args ) => this.UndoCommand.RaiseCanExecuteChanged();
-            RecordingServices.AmbientRecorder.RedoOperations.CollectionChanged += (sender, args) => this.RedoCommand.RaiseCanExecuteChanged();
+            RecordingServices.DefaultRecorder.UndoOperations.CollectionChanged += ( sender, args ) => this.UndoCommand.RaiseCanExecuteChanged();
+            RecordingServices.DefaultRecorder.RedoOperations.CollectionChanged += (sender, args) => this.RedoCommand.RaiseCanExecuteChanged();
         }
 
         private void SelectedItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -43,7 +43,7 @@ namespace ComicDesigner
 
         private void Undo()
         {
-            RecordingServices.AmbientRecorder.Undo();
+            RecordingServices.DefaultRecorder.Undo();
 
             // TODO: Fix the event-raising timing issue in Recorder and remove the code below.
             this.UndoCommand.RaiseCanExecuteChanged();
@@ -52,12 +52,12 @@ namespace ComicDesigner
 
         private bool CanUndo()
         {
-            return RecordingServices.AmbientRecorder.CanUndo;
+            return RecordingServices.DefaultRecorder.CanUndo;
         }
 
         private void Redo()
         {
-            RecordingServices.AmbientRecorder.Redo();
+            RecordingServices.DefaultRecorder.Redo();
 
             // TODO: Fix the event-raising timing issue in Recorder and remove the code below.
             this.UndoCommand.RaiseCanExecuteChanged();
@@ -66,7 +66,7 @@ namespace ComicDesigner
 
         private bool CanRedo()
         {
-            return RecordingServices.AmbientRecorder.CanRedo;
+            return RecordingServices.DefaultRecorder.CanRedo;
         }
 
         private bool IsSomethingSelected()
