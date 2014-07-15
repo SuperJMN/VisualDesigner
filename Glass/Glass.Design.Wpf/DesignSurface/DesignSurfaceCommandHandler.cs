@@ -116,7 +116,7 @@ namespace Glass.Design.Wpf.DesignSurface
             List<ICanvasItem> selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
 
 
-            using (RecordingScope recordingScope = CanvasModelItem.Recorder.StartAtomicScope("Ungroup"))
+            using (RecordingScope recordingScope = CanvasModelItem.Recorder.OpenScope("Ungroup", RecordingScopeOption.Atomic))
             {
 
                 foreach (var selectedItem in selectedCanvasItems)
@@ -145,7 +145,7 @@ namespace Glass.Design.Wpf.DesignSurface
             IEnumerable<ICanvasItem> items = DesignSurface.GetSelectedCanvasItems().ToList();
             ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            using (RecordingScope scope = CanvasModelItem.Recorder.StartAtomicScope("Group"))
+            using (RecordingScope scope = CanvasModelItem.Recorder.OpenScope("Group", RecordingScopeOption.Atomic))
             {
 
                 // We have to *first* add the group to the document to make it recordable.

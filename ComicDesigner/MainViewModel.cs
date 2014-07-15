@@ -8,17 +8,18 @@ using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
 using Model;
+using PostSharp.Patterns.Model;
 using StyleMVVM.DependencyInjection;
 using StyleMVVM.ViewModel;
 
 namespace ComicDesigner
 {
     [Export("MainViewModel")]
+    [NotifyPropertyChanged]
     public class MainViewModel : BaseViewModel
     {
         private IEditingContext EditingContext { get; set; }
         public IDesignCommandHandler DesignCommandHandler { get; set; }
-        private CanvasItemViewModel selectedItem;
         private CanvasItemCollection selectedItems;
 
         [ImportConstructor]
@@ -63,15 +64,7 @@ namespace ComicDesigner
             get { return EditingContext.Document.Children; }
         }
 
-        public CanvasItemViewModel SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
+        public CanvasItemViewModel SelectedItem { get; set; }
 
         public CanvasItemCollection SelectedItems
         {
@@ -82,7 +75,6 @@ namespace ComicDesigner
             set
             {
                 EditingContext.SelectedItems = value;
-                OnPropertyChanged();
             }
         }
 
