@@ -223,18 +223,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.3.0-ci1008\lib\windows8\AutoMapper.WinRT.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp, Version=3.2.25.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+    <Reference Include="PostSharp, Version=3.2.27.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PostSharp.3.2.25-beta\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
+      <HintPath>..\packages\PostSharp.3.2.27-beta\lib\portable-windows8+net40+sl4+wp7\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Common, Version=3.2.25.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+    <Reference Include="PostSharp.Patterns.Common, Version=3.2.27.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PostSharp.Patterns.Common.3.2.25-beta\lib\portable-windows8+net45\PostSharp.Patterns.Common.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Patterns.Common.3.2.27-beta\lib\portable-windows8+net45\PostSharp.Patterns.Common.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Model, Version=3.2.25.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+    <Reference Include="PostSharp.Patterns.Model, Version=3.2.27.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PostSharp.Patterns.Model.3.2.25-beta\lib\portable-windows8+net45\PostSharp.Patterns.Model.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Patterns.Model.3.2.27-beta\lib\portable-windows8+net45\PostSharp.Patterns.Model.dll</HintPath>
     </Reference>
     <Reference Include="StyleMVVM">
       <HintPath>..\packages\StyleMVVM.3.1.5\lib\netcore45\StyleMVVM.winmd</HintPath>
@@ -274,10 +274,10 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\AutoMapper.3.3.0-ci1008\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0-ci1008\tools\AutoMapper.targets')" />
-  <Import Project="..\packages\PostSharp.3.2.25-beta\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.2.25-beta\tools\PostSharp.targets')" />
+  <Import Project="..\packages\PostSharp.3.2.27-beta\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.2.27-beta\tools\PostSharp.targets')" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\packages\PostSharp.3.2.25-beta\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\packages\PostSharp.3.2.25-beta\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="!Exists('..\packages\PostSharp.3.2.27-beta\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\packages\PostSharp.3.2.27-beta\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
