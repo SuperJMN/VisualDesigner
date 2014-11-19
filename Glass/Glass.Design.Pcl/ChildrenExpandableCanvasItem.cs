@@ -5,7 +5,7 @@ using Glass.Design.Pcl.Canvas;
 
 namespace Glass.Design.Pcl
 {
-    public class ChildrenExpandableCanvasItem : CanvasVisualItem, IDisposable
+    public abstract class ChildrenExpandableCanvasItem : CanvasVisualItem, IDisposable
     {
         protected ChildrenExpandableCanvasItem(IEnumerable<ICanvasItem> children)
         {

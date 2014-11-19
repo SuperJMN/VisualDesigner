@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Model;
 
 namespace Glass.Design.WinRT
@@ -155,6 +156,11 @@ namespace Glass.Design.WinRT
                 default:
                     throw new ArgumentOutOfRangeException("part");
             }
+        }
+
+        string INamed.GetName()
+        {
+            return this.GetType().Name;
         }
     }
 }

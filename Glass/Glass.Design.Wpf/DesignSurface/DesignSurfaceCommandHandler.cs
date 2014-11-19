@@ -116,20 +116,14 @@ namespace Glass.Design.Wpf.DesignSurface
             List<ICanvasItem> selectedCanvasItems = DesignSurface.GetSelectedCanvasItems().ToList();
 
 
-            using (RecordingScope recordingScope = CanvasModelItem.Recorder.OpenScope("Ungroup", RecordingScopeOption.Atomic))
+            using ( RecordingServices.DefaultRecorder.OpenScope("Ungroup") )
             {
-
                 foreach (var selectedItem in selectedCanvasItems)
                 {
                     selectedItem.RemoveAndPromoteChildren();
-                    DesignSurface.CanvasDocument.Children.Remove(selectedItem);
+                    this.DesignSurface.CanvasDocument.Children.Remove(selectedItem);
                 }
-
-                recordingScope.Complete();
-               
             }
-
-
         }
 
         private void CanGroupSelection(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
@@ -145,16 +139,12 @@ namespace Glass.Design.Wpf.DesignSurface
             IEnumerable<ICanvasItem> items = DesignSurface.GetSelectedCanvasItems().ToList();
             ICanvasItem group = groupCommandArgs.CreateHostingItem();
 
-            using (RecordingScope scope = CanvasModelItem.Recorder.OpenScope("Group", RecordingScopeOption.Atomic))
+            using ( RecordingServices.DefaultRecorder.OpenScope("Group") )
             {
-
                 // We have to *first* add the group to the document to make it recordable.
-                DesignSurface.CanvasDocument.Children.Add(group);
+                this.DesignSurface.CanvasDocument.Children.Add(@group);
 
-                items.Reparent(group);
-
-               
-                scope.Complete();
+                items.Reparent(@group);
             }
         }
     }

@@ -10,7 +10,7 @@ using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Pcl.Canvas
 {
-    [NotifyPropertyChanged]
+    [NotifyPropertyChanged(true)]
     public abstract class CanvasItem : ICanvasItem, IRecordableCallback
     {
         private bool undoing;
@@ -229,5 +229,7 @@ namespace Glass.Design.Pcl.Canvas
         {
             this.undoing = false;
         }
+
+        public abstract string GetName();
     }
 }

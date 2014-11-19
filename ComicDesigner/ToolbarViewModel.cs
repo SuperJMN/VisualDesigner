@@ -5,6 +5,7 @@ using Glass.Design.Pcl;
 using Glass.Design.Pcl.Canvas;
 using Model;
 using PostSharp.Patterns.Recording;
+using PostSharp.Patterns.Recording.Operations;
 using StyleMVVM.DependencyInjection;
 using StyleMVVM.ViewModel;
 
@@ -28,23 +29,15 @@ namespace ComicDesigner
 
         private void CreateObject(ITool tool)
         {
-            using ( var scope = RecordingServices.DefaultRecorder.OpenScope( string.Format( "Creating {0}", tool.Name ) ) )
+            using ( var scope = RecordingServices.DefaultRecorder.OpenScope() )
             {
                 var newItem = tool.CreateItem( EditingContext );
                 newItem.SetPosition( 100, 100 );
 
-                scope.Complete();
+                // We name the scope after we created.
+                scope.OperationDescriptor = new NamedOperationDescriptor(string.Format("Creating {0}", newItem.Name));
+
             }
-        }
-
-        private CanvasItemCollection Graphics
-        {
-            get { return Document.Children; }
-        }
-
-        private Document Document
-        {
-            get { return EditingContext.Document; }
         }
 
         public IEnumerable<ITool> Tools

@@ -2,11 +2,11 @@ using System;
 
 namespace Glass.Design.Pcl.Canvas
 {
-    public class CanvasVisualItem : CanvasItem
+    public abstract class CanvasVisualItem : CanvasItem
     {
         private readonly CanvasItemCollection children;
 
-        public CanvasVisualItem()
+        protected CanvasVisualItem()
         {
             this.children = new CanvasItemCollection();
             this.Width = 1;

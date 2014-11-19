@@ -73,9 +73,8 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
 
         private void StartRecorderOperation()
         {
-            // TODO: Generate a better operation name. We would need to enrich the model, for instance with an object name.
-            const string operationName = "Move";
-            this.dragRecordingScope = CanvasModelItem.Recorder.OpenScope(operationName, RecordingScopeOption.Atomic);
+            string operationName = string.Format( "Move {0}", this.ItemToDrag.GetName() );
+            this.dragRecordingScope = RecordingServices.DefaultRecorder.OpenScope(operationName);
             
         }      
 
@@ -112,7 +111,6 @@ namespace Glass.Design.Pcl.DesignSurface.VisualAids.Drag
         {
             if (this.dragRecordingScope != null)
             {
-                this.dragRecordingScope.Complete();
                 this.dragRecordingScope.Dispose();
                 this.dragRecordingScope = null;
             }

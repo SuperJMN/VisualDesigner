@@ -117,7 +117,7 @@ namespace ComicDesigner.Controls.ColorPicker
 
             bDetectColor = false;
 
-            this.recordingScope.Complete();
+            this.recordingScope.Dispose();
             this.recordingScope = null;
 
 

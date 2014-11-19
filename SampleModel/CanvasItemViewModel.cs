@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Glass.Design.Pcl.Canvas;
+using PostSharp.Patterns.Contracts;
 
 namespace SampleModel
 {
@@ -7,13 +8,20 @@ namespace SampleModel
     {
         private static int nextId;
         private readonly int id = Interlocked.Increment(ref nextId);
-
+        
         public CanvasItemViewModel()
         {
             this.Name = this.GetType().Name + id;
         }
 
+        [Required]
         public string Name { get; set; }
+
+        public override string GetName()
+        {
+            return this.Name;
+        }
+
 
         public override string ToString()
         {

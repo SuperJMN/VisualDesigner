@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Glass.Design.Pcl.Canvas;
 using Glass.Design.Pcl.Core;
+using Glass.Design.Pcl.DesignSurface;
 using PostSharp.Patterns.Model;
 
 namespace Glass.Design.Wpf
@@ -145,6 +146,11 @@ namespace Glass.Design.Wpf
                 default:
                     throw new ArgumentOutOfRangeException("part");
             }
+        }
+
+        string INamed.GetName()
+        {
+            return this.GetType().Name;
         }
     }
 }

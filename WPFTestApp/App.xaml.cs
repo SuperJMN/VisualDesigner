@@ -2,6 +2,7 @@
 using AutoMapper;
 using Glass.Design.Pcl.Core;
 using Glass.Design.Wpf.PlatformSpecific;
+using PostSharp.Patterns.Recording;
 using NetCorePoint = System.Windows.Point;
 using PclPoint = Glass.Design.Pcl.Core.Point;
 
@@ -24,6 +25,8 @@ namespace Glass.Design.WpfTester
             SetupPlatformToPclMappings();
             ServiceLocator.InputProvider = new NetCoreInputProvider();
             ServiceLocator.UIElementFactory = new NetCoreUIElementFactory();
+
+            RecordingServices.OperationFormatter = new MyOperationFormatter( RecordingServices.OperationFormatter );
         }
 
         private void SetupPlatformToPclMappings()

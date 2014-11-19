@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="ModelColorToSolidColorBrushConverter.cs" />
+    <Compile Include="MyOperationFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

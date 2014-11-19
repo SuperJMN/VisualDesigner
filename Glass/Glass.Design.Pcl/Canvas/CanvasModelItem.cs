@@ -1,10 +1,11 @@
 using System;
+using System.Reflection;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Recording;
 
 namespace Glass.Design.Pcl.Canvas
 {
-    [Recordable]
+    [Recordable(ProvideMethodContext = true)]
     public class CanvasModelItem : CanvasItem
     {
         [Child]
@@ -13,11 +14,7 @@ namespace Glass.Design.Pcl.Canvas
         [Parent]
         private ICanvasItemContainer parent;
 
-        static CanvasModelItem()
-        {
-            Recorder = RecordingServices.RecorderProvider.GetRecorder( null );
-        }
-
+   
         public CanvasModelItem()
         {
             // We have to set these members here, and not in the parent class, otherwise
@@ -43,6 +40,9 @@ namespace Glass.Design.Pcl.Canvas
             get { return this.parent; }
         }
 
-        public static Recorder Recorder { get; private set; }
+        public override string GetName()
+        {
+            return this.GetType().Name;
+        }
     }
 }

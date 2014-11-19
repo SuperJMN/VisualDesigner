@@ -111,6 +111,7 @@
     <Compile Include="DesignSurface\DesignAidsProvider.cs" />
     <Compile Include="DesignSurface\GroupCommandArgs.cs" />
     <Compile Include="DesignSurface\ICanvasSelector.cs" />
+    <Compile Include="DesignSurface\INamed.cs" />
     <Compile Include="DesignSurface\PlaneOperation.cs" />
     <Compile Include="DesignSurface\IDesignerItem.cs" />
     <Compile Include="DesignSurface\IDesignSurface.cs" />
